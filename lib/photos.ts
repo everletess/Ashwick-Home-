@@ -20,6 +20,7 @@ import marlowe1 from "@/assets/photos/marlowe-1.jpg";
 import marlowe2 from "@/assets/photos/marlowe-2.jpg";
 import marloweStudio from "@/assets/photos/marlowe-studio.jpg";
 import pembroke1 from "@/assets/photos/pembroke-1.jpg";
+import pembroke2 from "@/assets/photos/pembroke-2.jpg";
 
 export const PHOTOS = {
   "burford-1": burford1,
@@ -40,6 +41,7 @@ export const PHOTOS = {
   "marlowe-2": marlowe2,
   "marlowe-studio": marloweStudio,
   "pembroke-1": pembroke1,
+  "pembroke-2": pembroke2,
 } satisfies Record<string, StaticImageData>;
 
 export type PhotoKey = keyof typeof PHOTOS;
