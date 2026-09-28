@@ -8,7 +8,7 @@ export function ProductCard({ p, custom }: { p: Product; custom?: boolean }) {
   return (
     <Link href={"/products/" + p.id + (custom ? "/customize" : "")} className="card">
       <div className="card-img">
-        <Photo src={p.photos[0]} label={p.name} fill sizes={CARD_SIZES} />
+        <Photo src={p.cardPhoto ?? p.photos[0]} label={p.name} fill sizes={CARD_SIZES} />
         {p.photos[1] && !p.cardSingle && <Photo src={p.photos[1]} label={p.name} className="alt" fill sizes={CARD_SIZES} />}
         <span className="card-cta">{custom ? "Customize" : "Shop now"}</span>
       </div>

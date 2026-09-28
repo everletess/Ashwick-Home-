@@ -39,8 +39,10 @@ export type Product = {
   price: number;
   priceFrom?: boolean;
   line: string;
-  /** First photo is the card image. */
+  /** First photo leads the gallery and is the card image unless cardPhoto is set. */
   photos: PhotoKey[];
+  /** Square version of the first photo for cards and the cart, when the original is too wide to crop. */
+  cardPhoto?: PhotoKey;
   /** Don't crossfade to the second photo on card hover. */
   cardSingle?: boolean;
   fabrics: FabricId[];
@@ -69,7 +71,8 @@ export const PRODUCTS: Product[] = [
   {
     id: "cotswold", name: "The Cotswold", type: "Sofa", category: "sofas", price: 8500, priceFrom: true,
     line: "A deep, curved modular sofa in ivory organic wool bouclé, with a chaise.",
-    photos: ["csofa-front", "csofa-studio", "csofa-b", "csofa-c", "csofa-a", "cchair-c", "csofa-d"], cardSingle: true,
+    photos: ["csofa-hero", "csofa-studio", "csofa-b", "csofa-c", "csofa-a", "cchair-c", "csofa-d"], cardSingle: true,
+    cardPhoto: "csofa-hero-square",
     fabrics: ["boucle", "wool", "linen"], designedFabric: "boucle", depth: true, length: true, finish: false,
     materials: "Solid hardwood frame · Ivory organic wool bouclé · Organic wool and kapok fill · Modular sections with chaise",
   },
