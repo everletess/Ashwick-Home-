@@ -70,7 +70,7 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
     cart.add({
       id: p.id,
       name: p.name,
-      photo: p.photos[0],
+      photo: p.cardPhoto ?? p.photos[0],
       // TODO: custom option pricing once supplied; "From" prices go in as the base price.
       price: p.price,
       qty: 1,

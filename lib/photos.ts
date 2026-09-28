@@ -3,6 +3,7 @@
 import type { StaticImageData } from "next/image";
 
 import burford1 from "@/assets/photos/burford-1.jpg";
+import burford2 from "@/assets/photos/burford-2.jpg";
 import cchairC from "@/assets/photos/cchair-c.jpg";
 import cchairStudio from "@/assets/photos/cchair-studio.jpg";
 import chatsworthS1 from "@/assets/photos/chatsworth-s1.jpg";
@@ -12,7 +13,8 @@ import csofaA from "@/assets/photos/csofa-a.jpg";
 import csofaB from "@/assets/photos/csofa-b.jpg";
 import csofaC from "@/assets/photos/csofa-c.jpg";
 import csofaD from "@/assets/photos/csofa-d.jpg";
-import csofaFront from "@/assets/photos/csofa-front.jpg";
+import csofaHero from "@/assets/photos/csofa-hero.jpg";
+import csofaHeroSquare from "@/assets/photos/csofa-hero-square.jpg";
 import csofaStudio from "@/assets/photos/csofa-studio.jpg";
 import frameFillCover from "@/assets/photos/frame-fill-cover.jpg";
 import hero from "@/assets/photos/hero.jpg";
@@ -24,6 +26,7 @@ import pembroke2 from "@/assets/photos/pembroke-2.jpg";
 
 export const PHOTOS = {
   "burford-1": burford1,
+  "burford-2": burford2,
   "cchair-c": cchairC,
   "cchair-studio": cchairStudio,
   "chatsworth-s1": chatsworthS1,
@@ -33,7 +36,8 @@ export const PHOTOS = {
   "csofa-b": csofaB,
   "csofa-c": csofaC,
   "csofa-d": csofaD,
-  "csofa-front": csofaFront,
+  "csofa-hero": csofaHero,
+  "csofa-hero-square": csofaHeroSquare,
   "csofa-studio": csofaStudio,
   "frame-fill-cover": frameFillCover,
   "hero": hero,
