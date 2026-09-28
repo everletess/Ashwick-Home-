@@ -83,7 +83,7 @@ export const PRODUCTS: Product[] = [
   {
     id: "pembroke", name: "The Pembroke", type: "Chair", category: "chairs", price: 5000,
     line: "A sculptural wingback lounge chair in warm organic wool bouclé, no visible legs.",
-    photos: ["pembroke-1"],
+    photos: ["pembroke-1", "pembroke-2"], cardSingle: true,
     fabrics: ["boucle", "wool", "linen"], designedFabric: "boucle", depth: true, length: false, finish: false,
     materials: "Solid hardwood frame · Warm organic wool bouclé · Organic wool and kapok fill",
   },

@@ -2,7 +2,7 @@
 
 // Forms have no backend yet: submitting swaps to a thank-you state, as in the design.
 // TODO: wire each onSubmit to a form endpoint (e.g. a route handler that emails the studio).
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 function ThankYou({ children }: { children: React.ReactNode }) {
   return (
@@ -68,27 +68,100 @@ export function BespokeForm() {
   );
 }
 
-export function TradeForm() {
+const US_STATES = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "District of Columbia", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"];
+
+/** Business contact fields shared by the trade application and the hospitality request. */
+function ContactFields() {
+  return (
+    <>
+      <label><span className="eyebrow">First name *</span><input name="firstName" autoComplete="given-name" required /></label>
+      <label><span className="eyebrow">Last name *</span><input name="lastName" autoComplete="family-name" required /></label>
+      <label><span className="eyebrow">Company *</span><input name="company" autoComplete="organization" required /></label>
+      <label><span className="eyebrow">Title</span><input name="title" autoComplete="organization-title" /></label>
+      <label><span className="eyebrow">Business phone *</span><input name="phone" type="tel" autoComplete="tel" required /></label>
+      <label><span className="eyebrow">Email *</span><input name="email" type="email" autoComplete="email" required /></label>
+      <label className="full"><span className="eyebrow">Business address *</span><input name="address" autoComplete="street-address" required /></label>
+      <label><span className="eyebrow">City *</span><input name="city" autoComplete="address-level2" required /></label>
+      <div className="tform-pair">
+        <label>
+          <span className="eyebrow">State *</span>
+          <select name="state" autoComplete="address-level1" defaultValue="" required>
+            <option value="" disabled>Select</option>
+            {US_STATES.map((st) => <option key={st}>{st}</option>)}
+          </select>
+        </label>
+        <label><span className="eyebrow">ZIP *</span><input name="zip" inputMode="numeric" autoComplete="postal-code" pattern="\d{5}(-\d{4})?" title="5-digit ZIP code" required /></label>
+      </div>
+      <label><span className="eyebrow">Company website</span><input name="website" type="url" inputMode="url" autoComplete="url" placeholder="https://" /></label>
+      <label><span className="eyebrow">Instagram or social link</span><input name="social" /></label>
+    </>
+  );
+}
+
+const DOC_TYPES = ".jpg,.jpeg,.png,.pdf";
+
+export function TradeApplyForm() {
   const [sent, setSent] = useState(false);
+  const [tax, setTax] = useState<"yes" | "no">("no");
+  const card = useRef<HTMLInputElement>(null);
+  const license = useRef<HTMLInputElement>(null);
+
+  // At least one of business card / business license is required.
+  const checkDocs = () => {
+    const ok = !!(card.current?.files?.length || license.current?.files?.length);
+    card.current?.setCustomValidity(ok ? "" : "Upload a business card or a business license.");
+    return ok;
+  };
+
   if (sent) return <ThankYou>We&apos;ve received your application and will be in touch.</ThankYou>;
   return (
-    <form className="tform" onSubmit={(e) => { e.preventDefault(); setSent(true); }}>
-      <label><span className="eyebrow">First name</span><input name="firstName" autoComplete="given-name" required /></label>
-      <label><span className="eyebrow">Last name</span><input name="lastName" autoComplete="family-name" required /></label>
-      <label className="full"><span className="eyebrow">Firm name</span><input name="firm" autoComplete="organization" required /></label>
-      <label><span className="eyebrow">Email</span><input name="email" type="email" autoComplete="email" required /></label>
-      <label><span className="eyebrow">Phone</span><input name="phone" type="tel" autoComplete="tel" /></label>
-      <label className="full"><span className="eyebrow">Website or portfolio</span><input name="website" type="url" autoComplete="url" /></label>
-      <label>
-        <span className="eyebrow">Profession</span>
-        <select name="profession" defaultValue="">
+    <form
+      className="tform"
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (!checkDocs()) return card.current?.reportValidity();
+        setSent(true);
+      }}
+    >
+      <label className="full">
+        <span className="eyebrow">Profession *</span>
+        <select name="profession" defaultValue="" required>
           <option value="" disabled>Select</option>
-          <option>Interior designer</option><option>Architect</option><option>Stylist</option><option>Hospitality</option><option>Other</option>
+          <option>Interior designer</option><option>Architect</option><option>Stylist</option><option>Hospitality</option><option>Developer</option><option>Other</option>
         </select>
       </label>
-      <label><span className="eyebrow">State</span><input name="state" autoComplete="address-level1" /></label>
-      <label className="full"><span className="eyebrow">Tell us about your project</span><textarea name="project" rows={4}></textarea></label>
+      <ContactFields />
+      <div className="full tform-note">
+        <span className="eyebrow">Business card or business license *</span>
+        <p className="fine">Upload either one. JPG, PNG or PDF.</p>
+      </div>
+      <label className="file"><span className="eyebrow">Business card</span><input ref={card} name="businessCard" type="file" accept={DOC_TYPES} onChange={checkDocs} /></label>
+      <label className="file"><span className="eyebrow">Business license</span><input ref={license} name="businessLicense" type="file" accept={DOC_TYPES} onChange={checkDocs} /></label>
+      <div className="full tform-note" role="group" aria-label="Is your business eligible for tax exemption?">
+        <span className="eyebrow">Is your business eligible for tax exemption?</span>
+        <div className="opt-c" style={{ marginTop: 12 }}>
+          {(["yes", "no"] as const).map((v) => (
+            <button type="button" key={v} className={"pill" + (tax === v ? " on" : "")} aria-pressed={tax === v} onClick={() => setTax(v)}>
+              {v === "yes" ? "Yes" : "No"}
+            </button>
+          ))}
+        </div>
+      </div>
+      {tax === "yes" && <label className="full"><span className="eyebrow">Tax ID</span><input name="taxId" /></label>}
       <button className="btn full" type="submit">Submit application</button>
+    </form>
+  );
+}
+
+export function HospitalityForm() {
+  const [sent, setSent] = useState(false);
+  if (sent) return <ThankYou>We&apos;ve received your request and will be in touch.</ThankYou>;
+  return (
+    <form className="tform" onSubmit={(e) => { e.preventDefault(); setSent(true); }}>
+      <ContactFields />
+      <label className="full"><span className="eyebrow">Your project *</span><textarea name="project" rows={5} required placeholder="The property, the rooms, the pieces and quantities, your timeline"></textarea></label>
+      <label className="full file"><span className="eyebrow">Plans, sketches or references</span><input name="files" type="file" multiple accept="image/*,.pdf" /></label>
+      <button className="btn full" type="submit">Send request</button>
     </form>
   );
 }
