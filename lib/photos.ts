@@ -5,6 +5,7 @@ import type { StaticImageData } from "next/image";
 import burford1 from "@/assets/photos/burford-1.jpg";
 import burford2 from "@/assets/photos/burford-2.jpg";
 import burford3 from "@/assets/photos/burford-3.jpg";
+import burfordHero from "@/assets/photos/burford-hero.jpg";
 import cchairC from "@/assets/photos/cchair-c.jpg";
 import cchairStudio from "@/assets/photos/cchair-studio.jpg";
 import chatsworthS1 from "@/assets/photos/chatsworth-s1.jpg";
@@ -29,6 +30,7 @@ export const PHOTOS = {
   "burford-1": burford1,
   "burford-2": burford2,
   "burford-3": burford3,
+  "burford-hero": burfordHero,
   "cchair-c": cchairC,
   "cchair-studio": cchairStudio,
   "chatsworth-s1": chatsworthS1,
