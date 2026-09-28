@@ -3,6 +3,19 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+
+/** Stop the page behind an overlay from scrolling (mainly for touch devices). */
+function useScrollLock(locked: boolean) {
+  useEffect(() => {
+    if (!locked) return;
+    const root = document.documentElement;
+    const prev = root.style.overflow;
+    root.style.overflow = "hidden";
+    return () => {
+      root.style.overflow = prev;
+    };
+  }, [locked]);
+}
 import { useCart } from "@/components/cart";
 import { Photo } from "@/components/photo";
 import { fmt } from "@/lib/products";
@@ -30,6 +43,7 @@ export function Header() {
     setMenuPath(pathname);
     setMenu(false);
   }
+  useScrollLock(menu);
   useEffect(() => {
     if (!menu) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMenu(false);
@@ -77,6 +91,7 @@ export function Header() {
           <nav className="mmenu-sub">
             <Link href="/pages/our-story">Our story</Link>
             <Link href="/pages/materials">Materials</Link>
+            <Link href="/pages/trade">Trade</Link>
             <Link href="/account">Account</Link>
           </nav>
         </div>
@@ -89,6 +104,7 @@ export function CartDrawer() {
   const cart = useCart();
   const close = () => cart.setOpen(false);
 
+  useScrollLock(cart.open);
   useEffect(() => {
     if (!cart.open) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && cart.setOpen(false);

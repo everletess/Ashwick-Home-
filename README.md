@@ -1,7 +1,7 @@
 # Ashwick Home
 
 Storefront for Ashwick Home: organic furniture, handmade to order in the USA.
-Built with Next.js (App Router) from the design handoff in `docs/design-handoff/`.
+Built with Next.js (App Router) from the design handoffs in `docs/design-handoff/` (the Trade page follows `docs/design-handoff/trade/`).
 
 ## Run it
 
@@ -41,6 +41,6 @@ Set `NEXT_PUBLIC_SITE_URL` in production so Open Graph image URLs resolve.
 ## Not wired up yet
 
 - **Checkout.** The "Check out" button has no action. The data is shaped to move to the Shopify Storefront API: product ids are handles, and cart lines carry the mode and options.
-- **Forms.** Newsletter, bespoke, trade and sign-in don't post anywhere yet. They show the thank-you state from the design.
-- **Client placeholders.** `[DIMENSIONS]`, custom option pricing, `[DELIVERY DETAILS]`, `[BESPOKE DETAILS]`, `[BESPOKE ORDERING DETAILS]`, `[TRADE TERMS]`, `[TRADE EMAIL]` and `[APPROVAL DETAILS]`.
+- **Forms.** Newsletter, bespoke, trade application, hospitality request and sign-in don't post anywhere yet. They show the thank-you state from the design. The trade handoff suggests a Shopify customer tagged `trade-pending` (or a form service), with uploads going to secure storage.
+- **Client placeholders.** `[DIMENSIONS]`, custom option pricing, `[DELIVERY DETAILS]`, `[BESPOKE DETAILS]`, `[BESPOKE ORDERING DETAILS]`, `[TRADE TERMS]`, `[TRADE EMAIL]`, `[APPROVAL DETAILS]`, `[HOSPITALITY DETAILS]` and `[SWATCH TERMS]`.
 - **Pages not designed yet.** These links are `#`: Delivery, Ordering, FAQs, Contact, Care and Fabric swatches.

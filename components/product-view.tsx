@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import { useCart } from "@/components/cart";
 import { Photo, Swatch } from "@/components/photo";
 import { DEPTHS, FABRICS, FINISHES, LENGTHS, fmt, getProduct, type FabricId, type Option } from "@/lib/products";
@@ -32,6 +32,19 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
   const cart = useCart();
   const [mode, setModeState] = useState<Mode>(initialMode);
   const [img, setImg] = useState(0);
+  // Horizontal swipe on the main image steps through the gallery on touch screens.
+  const swipeX = useRef<number | null>(null);
+  const onPointerDown = (e: React.PointerEvent) => {
+    if (e.pointerType === "touch") swipeX.current = e.clientX;
+  };
+  const onPointerUp = (e: React.PointerEvent) => {
+    if (swipeX.current == null) return;
+    const dx = e.clientX - swipeX.current;
+    swipeX.current = null;
+    if (Math.abs(dx) < 40) return;
+    const n = p.photos.length;
+    setImg((i) => (i + (dx < 0 ? 1 : -1) + n) % n);
+  };
   const [fabric, setFabric] = useState<FabricId>(p.designedFabric);
   const [depth, setDepth] = useState("standard");
   const [length, setLength] = useState("standard");
@@ -68,7 +81,7 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
   return (
     <section className="pdp wrap">
       <div className="gal">
-        <div className="gal-main">
+        <div className="gal-main" onPointerDown={onPointerDown} onPointerUp={onPointerUp} onPointerCancel={() => (swipeX.current = null)}>
           <Photo src={p.photos[img]} label={p.name} sizes="(max-width: 960px) 100vw, 56vw" preload={img === 0} />
         </div>
         {p.photos.length > 1 && (

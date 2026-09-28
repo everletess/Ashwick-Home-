@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Jost } from "next/font/google";
 import { CartProvider } from "@/components/cart";
 import { Footer } from "@/components/footer";
@@ -19,6 +19,9 @@ export const metadata: Metadata = {
   description:
     "Organic furniture, handmade to order in the USA from solid hardwood, organic wool, linen and kapok. Nothing synthetic.",
 };
+
+// Matches the header, so the mobile browser chrome blends into the page.
+export const viewport: Viewport = { themeColor: "#F6F2EC" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
