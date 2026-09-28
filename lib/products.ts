@@ -76,7 +76,7 @@ export const PRODUCTS: Product[] = [
   {
     id: "burford", name: "The Burford", type: "Sofa", category: "sofas", price: 6500, priceFrom: true,
     line: "A deep, slipcovered sofa in natural organic linen, with a tailored skirt.",
-    photos: ["burford-1"], cardSingle: true,
+    photos: ["burford-1", "burford-2"],
     fabrics: ["linen", "wool", "boucle"], designedFabric: "linen", depth: true, length: true, finish: false,
     materials: "Solid hardwood frame · Removable organic linen slipcover · Organic wool and kapok fill",
   },
