@@ -234,6 +234,11 @@ button.chip{cursor:pointer}
 .spec p{font:300 21px/1.45 var(--serif);margin:10px 0 0}
 .construct-h{text-transform:uppercase;letter-spacing:.02em;font-size:clamp(30px,3.2vw,46px)}
 .construct-grid{margin-top:40px}
+.choices{display:flex;flex-direction:column;gap:24px}
+.custom-req{display:flex;flex-direction:column;gap:22px}
+.custom-req label{display:flex;flex-direction:column;gap:8px}
+.custom-req input,.custom-req textarea{background:transparent;border:0;border-bottom:1px solid rgba(42,37,31,.4);padding:12px 0;font:300 17px var(--sans);color:var(--ink);outline:0;border-radius:0;resize:vertical}
+.custom-req input:focus,.custom-req textarea:focus{border-bottom-color:var(--ink)}
 .gal-note{margin:10px 0 0;font:400 11px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--walnut)}
 .color-chip{width:52px;height:52px}
 .pdp-price+.delivery{margin-top:-18px}

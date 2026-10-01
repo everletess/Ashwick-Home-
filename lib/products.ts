@@ -51,7 +51,15 @@ export const FABRICS: Record<FabricId, Fabric> = {
       { id: "khaki", label: "Khaki", code: "FA154", swatch: "#8D957F" },
     ],
   },
-  irish: { id: "irish", label: "Irish Linen", swatch: "#E3DDD2", tex: "linen" },
+  irish: {
+    id: "irish", label: "Irish Linen", swatch: "#E3DDD2", tex: "linen",
+    colors: [
+      { id: "white", label: "White", swatch: "#F1EEE7" },
+      { id: "cream", label: "Cream", swatch: "#E8E0CF" },
+      { id: "flax", label: "Flax", swatch: "#CDBE9F" },
+      { id: "oatmeal", label: "Oatmeal", swatch: "#D8CDB9" },
+    ],
+  },
   cork: {
     id: "cork", label: "Cork", swatch: "#C9A57E", tex: "leather",
     colors: [
@@ -68,19 +76,6 @@ export const WOODS: Option[] = [
 ];
 export const SWATCH_ORDER: FabricId[] = ["linen", "boucle", "wool", "leather"];
 
-export const DEPTHS: Option[] = [
-  { id: "standard", label: "Standard" },
-  { id: "deep", label: "Deep" },
-];
-export const LENGTHS: Option[] = [
-  { id: "standard", label: "Standard" },
-  { id: "long", label: "Long" },
-];
-export const FINISHES: Option[] = [
-  { id: "natural", label: "Natural" },
-  { id: "warm", label: "Warm" },
-  { id: "deep", label: "Deep" },
-];
 
 export type Product = {
   id: string;
@@ -98,9 +93,6 @@ export type Product = {
   cardSingle?: boolean;
   fabrics: FabricId[];
   designedFabric: FabricId;
-  depth: boolean;
-  length: boolean;
-  finish: boolean;
   materials: string;
   /** Shown on the product page when set, e.g. pieces held ready to ship. */
   leadTime?: string;
@@ -158,9 +150,12 @@ export function photoFor(p: Product, sel: PhotoTag, ignore: (keyof PhotoTag)[] =
   return best;
 }
 
-/** Closest photo for a selection: exact, then ignoring the wood, then the color too. */
+/** Closest photo for a selection: exact, then ignoring the wood, the color, and finally the fabric. */
 export const nearestPhoto = (p: Product, sel: PhotoTag) =>
-  photoFor(p, sel) ?? photoFor(p, sel, ["wood"]) ?? photoFor(p, sel, ["wood", "color"]);
+  photoFor(p, sel) ??
+  photoFor(p, sel, ["wood"]) ??
+  photoFor(p, sel, ["wood", "color"]) ??
+  photoFor(p, sel, ["wood", "color", "fabric"]);
 
 const WHITE_GLOVE = { label: "White glove delivery", price: 750 };
 
@@ -225,7 +220,7 @@ export const PRODUCTS: Product[] = [
       { id: "chair", label: "Chair", price: 4500, fabricPrices: { cork: 5000 } },
       { id: "ottoman", label: "Ottoman", price: 2500, fabricPrices: { cork: 3000 } },
     ],
-    fabrics: ["irish", "cork"], designedFabric: "irish", depth: true, length: false, finish: false, wood: true,
+    fabrics: ["irish", "cork"], designedFabric: "irish", wood: true,
     materials: "Hand-fluted solid walnut or oak plinth · Irish Linen or Cork upholstery · Natural oil finish",
     delivery: WHITE_GLOVE,
   },
@@ -233,7 +228,7 @@ export const PRODUCTS: Product[] = [
     id: "chatsworth", name: "The Chatsworth", type: "Sofa", category: "sofas", price: 10500,
     line: "A sculptural curved sofa in ivory organic wool bouclé.",
     photos: ["chatsworth-s1"],
-    fabrics: ["boucle", "wool", "linen"], designedFabric: "boucle", depth: true, length: true, finish: false,
+    fabrics: ["boucle", "wool", "linen"], designedFabric: "boucle",
     materials: "Solid hardwood frame · Ivory organic wool bouclé",
     delivery: WHITE_GLOVE,
   },
@@ -242,7 +237,7 @@ export const PRODUCTS: Product[] = [
     line: "A deep, curved modular sofa in ivory organic wool bouclé, with a chaise.",
     photos: ["csofa-hero", "csofa-studio", "csofa-b", "csofa-c", "csofa-a", "cchair-c", "csofa-d"], cardSingle: true,
     cardPhoto: "csofa-hero-square",
-    fabrics: ["boucle", "wool", "linen"], designedFabric: "boucle", depth: true, length: true, finish: false,
+    fabrics: ["boucle", "wool", "linen"], designedFabric: "boucle",
     materials: "Solid hardwood frame · Ivory organic wool bouclé · Modular sections with chaise",
     delivery: WHITE_GLOVE,
   },
@@ -250,7 +245,7 @@ export const PRODUCTS: Product[] = [
     id: "burford", name: "The Burford", type: "Sofa", category: "sofas", price: 6500, priceFrom: true,
     line: "A deep, slipcovered sofa in natural organic linen, with a tailored skirt.",
     photos: ["burford-hero", "burford-1", "burford-2", "burford-3"],
-    fabrics: ["linen", "wool", "boucle"], designedFabric: "linen", depth: true, length: true, finish: false,
+    fabrics: ["linen", "wool", "boucle"], designedFabric: "linen",
     materials: "Solid hardwood frame · Removable organic linen slipcover",
     delivery: WHITE_GLOVE,
   },
@@ -277,7 +272,7 @@ export const PRODUCTS: Product[] = [
       "pembroke-italian-moss": { fabric: "italian", color: "moss" },
     },
     photoNotes: { "pembroke-1": "Customized version", "pembroke-2": "Customized version" },
-    fabrics: ["blend", "cotton", "italian"], designedFabric: "blend", depth: true, length: false, finish: false,
+    fabrics: ["blend", "cotton", "italian"], designedFabric: "blend",
     fabricPrices: { cotton: 5200, italian: 5700 },
     delivery: WHITE_GLOVE,
     materials: "Solid hardwood frame · Swivel base · Linen Blend, Organic Cotton or Italian Linen upholstery",
@@ -286,7 +281,7 @@ export const PRODUCTS: Product[] = [
     id: "cotswold-chair", name: "The Cotswold Chair", type: "Chair", category: "chairs", price: 4000,
     line: "A deep, rounded lounge chair in organic wool bouclé, made to sit beside the Cotswold sofa.",
     photos: ["cchair-studio", "cchair-c"], cardSingle: true,
-    fabrics: ["boucle", "wool", "linen"], designedFabric: "boucle", depth: true, length: false, finish: false,
+    fabrics: ["boucle", "wool", "linen"], designedFabric: "boucle",
     materials: "Solid hardwood frame · Organic wool bouclé",
     delivery: WHITE_GLOVE,
   },
@@ -294,7 +289,7 @@ export const PRODUCTS: Product[] = [
     id: "clifton", name: "The Clifton", type: "Chair", category: "chairs", price: 5500,
     line: "A rounded swivel lounge chair in textured ivory weave, with an olive back, a stitched leather band and a walnut base.",
     photos: ["clifton-s1", "clifton-s2"],
-    fabrics: ["boucle", "wool", "linen"], designedFabric: "boucle", depth: true, length: false, finish: true,
+    fabrics: ["boucle", "wool", "linen"], designedFabric: "boucle",
     materials: "Solid walnut swivel base · Textured organic wool weave · Stitched vegetable-tanned leather band",
     delivery: WHITE_GLOVE,
   },
