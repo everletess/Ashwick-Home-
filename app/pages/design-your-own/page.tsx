@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 type Step = { n: string; t: string; d: string; img?: PhotoKey; swatches?: boolean; ph?: string; link?: [string, string] };
 
 const STEPS: Step[] = [
-  { n: "01", t: "Start with a piece, or an idea", d: "Begin with one of our six pieces, or send us a sketch, a photo or a description of something that doesn’t exist yet.", img: "csofa-a" },
+  { n: "01", t: "Start with a piece, or an idea", d: "Begin with one of our pieces, or send us a sketch, a photo or a description of something that doesn’t exist yet.", img: "csofa-a" },
   { n: "02", t: "Make it yours", d: "Choose the fabric, seat depth, length and wood finish. Every option, and every bespoke piece, is made from the same materials: solid hardwood, organic latex, organic wool, coconut coir and natural oils.", swatches: true, link: ["Order fabric swatches", "#"] },
   { n: "03", t: "Talk it through", d: "For customized pieces, write to us any time before you order. For bespoke pieces, we’ll talk through proportions, materials and how the piece will be used before anything is made.", link: ["Contact us", "#"] },
   { n: "04", t: "Order and pay", d: "Customized pieces are ordered online and paid in full at checkout. Bespoke pieces: [BESPOKE ORDERING DETAILS]." },
@@ -41,7 +41,7 @@ export default function DesignPage() {
           <div className="appr">
             <div className="proc-n">01</div>
             <div className="appr-n">Customize a piece</div>
-            <p className="body">Start with one of our six pieces and change the fabric, seat depth, length or wood finish. It&apos;s built to your choices from the first cut.</p>
+            <p className="body">Start with one of our pieces and change the fabric, seat depth, length or wood finish. It&apos;s built to your choices from the first cut.</p>
             <ScrollLink to="choose" className="ulink">Choose a piece</ScrollLink>
           </div>
           <div className="appr">
