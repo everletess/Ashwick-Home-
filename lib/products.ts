@@ -197,7 +197,7 @@ export function constructionFor(p: Product): Construction {
 }
 
 /** Every piece is made by hand to order. */
-export const LEAD_TIME = "Handmade to order with a 3-week lead time, plus shipping.";
+export const LEAD_TIME = "Available to ship within 4 weeks from the date of order.";
 
 export const PRODUCTS: Product[] = [
   {
