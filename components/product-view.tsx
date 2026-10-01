@@ -57,15 +57,20 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
     window.history.replaceState(null, "", "/products/" + p.id + (m === "custom" ? "/customize" : ""));
   };
 
-  // Picking a fabric with colorways selects its first color; picking a color shows that photo.
+  // Picking a fabric with colorways selects its first color; picking a color jumps to that color's photo.
+  const showColor = (f: FabricId, c: string) => {
+    const ph = p.colorPhotos?.[`${f}:${c}`];
+    setImg(ph ? Math.max(0, p.photos.indexOf(ph)) : 0);
+  };
   const setFabric = (f: FabricId) => {
+    const c = FABRICS[f].colors?.[0].id ?? "";
     setFabricState(f);
-    setColorState(FABRICS[f].colors?.[0].id ?? "");
-    setImg(0);
+    setColorState(c);
+    showColor(f, c);
   };
   const setColor = (c: string) => {
     setColorState(c);
-    setImg(0);
+    showColor(fabric, c);
   };
 
   const sel = mode === "designed"
@@ -74,8 +79,10 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
   const selFabric = FABRICS[sel.fabric];
   const selColor = selFabric.colors?.find((c) => c.id === sel.color);
   const price = priceFor(p, sel.fabric);
+  // A color photo that isn't already in the gallery leads it.
   const colorPhoto = selColor && p.colorPhotos?.[`${sel.fabric}:${selColor.id}`];
-  const gallery = colorPhoto ? [colorPhoto, ...p.photos] : p.photos;
+  const gallery = colorPhoto && !p.photos.includes(colorPhoto) ? [colorPhoto, ...p.photos] : p.photos;
+  const note = p.photoNotes?.[gallery[img]];
 
   const summary = [
     ["Fabric", selFabric.label],
@@ -104,6 +111,7 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
         <div className="gal-main" onPointerDown={onPointerDown} onPointerUp={onPointerUp} onPointerCancel={() => (swipeX.current = null)}>
           <Photo src={gallery[img]} label={p.name} sizes="(max-width: 960px) 100vw, 56vw" preload={img === 0} />
         </div>
+        {note && <p className="gal-note">{note}</p>}
         {gallery.length > 1 && (
           <div className="gal-thumbs">
             {gallery.map((ph, i) => (

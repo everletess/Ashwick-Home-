@@ -25,6 +25,9 @@ import marlowe2 from "@/assets/photos/marlowe-2.jpg";
 import marloweStudio from "@/assets/photos/marlowe-studio.jpg";
 import pembroke1 from "@/assets/photos/pembroke-1.jpg";
 import pembroke2 from "@/assets/photos/pembroke-2.jpg";
+import pembrokeItalianCoco from "@/assets/photos/pembroke-italian-coco.jpg";
+import pembrokeItalianIvory from "@/assets/photos/pembroke-italian-ivory.jpg";
+import pembrokeItalianMoss from "@/assets/photos/pembroke-italian-moss.jpg";
 
 export const PHOTOS = {
   "burford-1": burford1,
@@ -50,6 +53,9 @@ export const PHOTOS = {
   "marlowe-studio": marloweStudio,
   "pembroke-1": pembroke1,
   "pembroke-2": pembroke2,
+  "pembroke-italian-coco": pembrokeItalianCoco,
+  "pembroke-italian-ivory": pembrokeItalianIvory,
+  "pembroke-italian-moss": pembrokeItalianMoss,
 } satisfies Record<string, StaticImageData>;
 
 export type PhotoKey = keyof typeof PHOTOS;

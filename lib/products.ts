@@ -93,6 +93,8 @@ export type Product = {
   leadTime?: string;
   /** Price by fabric where it differs from the base price. */
   fabricPrices?: Partial<Record<FabricId, number>>;
+  /** Caption under the main gallery image, e.g. a photo showing a custom fabric. */
+  photoNotes?: Partial<Record<PhotoKey, string>>;
   /** Photo of the piece in each fabric color, keyed "fabric:color" (e.g. "blend:sand"). */
   colorPhotos?: Partial<Record<string, PhotoKey>>;
   /** Delivery charged per piece on top of the price. */
@@ -178,7 +180,13 @@ export const PRODUCTS: Product[] = [
   {
     id: "pembroke", name: "The Pembroke", type: "Chair", category: "chairs", price: 5000,
     line: "A sculptural wingback lounge chair on a swivel base, in Linen Blend, Organic Cotton or Italian Linen.",
-    photos: ["pembroke-1", "pembroke-2"], cardSingle: true,
+    photos: ["pembroke-italian-coco", "pembroke-italian-ivory", "pembroke-italian-moss", "pembroke-1", "pembroke-2"], cardSingle: true,
+    colorPhotos: {
+      "italian:coco": "pembroke-italian-coco",
+      "italian:ivory": "pembroke-italian-ivory",
+      "italian:moss": "pembroke-italian-moss",
+    },
+    photoNotes: { "pembroke-1": "Customized version", "pembroke-2": "Customized version" },
     fabrics: ["blend", "cotton", "italian"], designedFabric: "blend", depth: true, length: false, finish: false,
     fabricPrices: { cotton: 5200, italian: 5700 },
     delivery: WHITE_GLOVE,
