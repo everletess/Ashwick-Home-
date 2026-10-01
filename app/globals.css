@@ -232,6 +232,10 @@ button.chip{cursor:pointer}
 .spec-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:36px 56px}
 .spec{border-top:1px solid rgba(42,37,31,.28);padding-top:18px}
 .spec p{font:300 21px/1.45 var(--serif);margin:10px 0 0}
+.construct-h{text-transform:uppercase;letter-spacing:.02em;font-size:clamp(30px,3.2vw,46px)}
+.construct-grid{margin-top:40px}
+.lead-time{margin:0;font:400 15px/1.5 var(--sans);color:var(--ink);display:flex;align-items:center;gap:12px}
+.lead-time::before{content:'';flex:none;width:7px;height:7px;border-radius:50%;background:var(--sage)}
 
 .prose{max-width:600px;margin:0 auto;padding:0 var(--gut);box-sizing:content-box}
 .prose p{font:300 18px/1.85 var(--sans);color:var(--ink);margin:0 0 26px;text-wrap:pretty}

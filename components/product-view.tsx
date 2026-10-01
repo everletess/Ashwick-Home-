@@ -129,6 +129,7 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
           </div>
         )}
 
+        {p.leadTime && <p className="lead-time">{p.leadTime}</p>}
         <button className="btn full" onClick={add}>Add to cart · {fmt(p.price)}</button>
         <div className="assure">
           <span>Made to order</span><span>Handmade in the USA</span><span>Paid in full at checkout</span>

@@ -51,7 +51,43 @@ export type Product = {
   length: boolean;
   finish: boolean;
   materials: string;
+  /** Shown on the product page when set, e.g. pieces held ready to ship. */
+  leadTime?: string;
 };
+
+/** Construction spec from the workshop (Sue). Same for every sofa, and for every chair. */
+export type Construction = { statement: string; intro: string; rows: [string, string][] };
+
+const NO_PETROCHEMICALS = "No petrochemicals. No plastic polyurethane foams.";
+const FOUNDATIONS = "Solid wood, coconut coir, organic natural latex, and wool.";
+const VEGAN = "TENCEL\u2122 and cotton can replace the wool in the seats, backs and foundations.";
+
+export function constructionFor(p: Product): Construction {
+  const short = p.name.replace(/^The /, "");
+  if (p.type === "Sofa") {
+    return {
+      statement: NO_PETROCHEMICALS,
+      intro: `The ${short} is handcrafted using only organic and natural materials.`,
+      rows: [
+        ["Foundations", FOUNDATIONS],
+        ["Seat cushions", "Organic latex wrapped in organic wool."],
+        ["Back and side cushions", "Organic wool."],
+        ["Vegan models available", VEGAN],
+      ],
+    };
+  }
+  return {
+    statement: NO_PETROCHEMICALS,
+    intro: `The ${short} is handcrafted using organic and natural materials.`,
+    rows: [
+      ["Foundations", FOUNDATIONS],
+      ["Seat and back support", "Organic latex wrapped in organic wool."],
+      ["Vegan models available", VEGAN],
+    ],
+  };
+}
+
+const SHIPS_IN_4_WEEKS = "Available to ship within 4 weeks from the date of order.";
 
 export const PRODUCTS: Product[] = [
   {
@@ -59,14 +95,15 @@ export const PRODUCTS: Product[] = [
     line: "A deep, plush sofa on a hand-fluted solid oak plinth, in brushed organic wool.",
     photos: ["marlowe-studio", "marlowe-1", "marlowe-2"], cardSingle: true,
     fabrics: ["wool", "boucle", "linen"], designedFabric: "wool", depth: true, length: true, finish: true,
-    materials: "Solid oak plinth, hand-fluted · Brushed organic wool · Organic wool and kapok fill · Natural oil finish",
+    materials: "Solid oak plinth, hand-fluted · Brushed organic wool · Natural oil finish",
+    leadTime: SHIPS_IN_4_WEEKS,
   },
   {
     id: "chatsworth", name: "The Chatsworth", type: "Sofa", category: "sofas", price: 10500,
     line: "A sculptural curved sofa in ivory organic wool bouclé.",
     photos: ["chatsworth-s1"],
     fabrics: ["boucle", "wool", "linen"], designedFabric: "boucle", depth: true, length: true, finish: false,
-    materials: "Solid hardwood frame · Ivory organic wool bouclé · Organic wool and kapok fill",
+    materials: "Solid hardwood frame · Ivory organic wool bouclé",
   },
   {
     id: "cotswold", name: "The Cotswold", type: "Sofa", category: "sofas", price: 8500, priceFrom: true,
@@ -74,35 +111,36 @@ export const PRODUCTS: Product[] = [
     photos: ["csofa-hero", "csofa-studio", "csofa-b", "csofa-c", "csofa-a", "cchair-c", "csofa-d"], cardSingle: true,
     cardPhoto: "csofa-hero-square",
     fabrics: ["boucle", "wool", "linen"], designedFabric: "boucle", depth: true, length: true, finish: false,
-    materials: "Solid hardwood frame · Ivory organic wool bouclé · Organic wool and kapok fill · Modular sections with chaise",
+    materials: "Solid hardwood frame · Ivory organic wool bouclé · Modular sections with chaise",
   },
   {
     id: "burford", name: "The Burford", type: "Sofa", category: "sofas", price: 6500, priceFrom: true,
     line: "A deep, slipcovered sofa in natural organic linen, with a tailored skirt.",
     photos: ["burford-hero", "burford-1", "burford-2", "burford-3"],
     fabrics: ["linen", "wool", "boucle"], designedFabric: "linen", depth: true, length: true, finish: false,
-    materials: "Solid hardwood frame · Removable organic linen slipcover · Organic wool and kapok fill",
+    materials: "Solid hardwood frame · Removable organic linen slipcover",
   },
   {
     id: "pembroke", name: "The Pembroke", type: "Chair", category: "chairs", price: 5000,
     line: "A sculptural wingback lounge chair in warm organic wool bouclé, no visible legs.",
     photos: ["pembroke-1", "pembroke-2"], cardSingle: true,
     fabrics: ["boucle", "wool", "linen"], designedFabric: "boucle", depth: true, length: false, finish: false,
-    materials: "Solid hardwood frame · Warm organic wool bouclé · Organic wool and kapok fill",
+    materials: "Solid hardwood frame · Warm organic wool bouclé",
+    leadTime: SHIPS_IN_4_WEEKS,
   },
   {
     id: "cotswold-chair", name: "The Cotswold Chair", type: "Chair", category: "chairs", price: 4000,
     line: "A deep, rounded lounge chair in organic wool bouclé, made to sit beside the Cotswold sofa.",
     photos: ["cchair-studio", "cchair-c"], cardSingle: true,
     fabrics: ["boucle", "wool", "linen"], designedFabric: "boucle", depth: true, length: false, finish: false,
-    materials: "Solid hardwood frame · Organic wool bouclé · Organic wool and kapok fill",
+    materials: "Solid hardwood frame · Organic wool bouclé",
   },
   {
     id: "clifton", name: "The Clifton", type: "Chair", category: "chairs", price: 5500,
     line: "A rounded swivel lounge chair in textured ivory weave, with an olive back, a stitched leather band and a walnut base.",
     photos: ["clifton-s1", "clifton-s2"],
     fabrics: ["boucle", "wool", "linen"], designedFabric: "boucle", depth: true, length: false, finish: true,
-    materials: "Solid walnut swivel base · Textured organic wool weave · Stitched vegetable-tanned leather band · Organic wool and kapok fill",
+    materials: "Solid walnut swivel base · Textured organic wool weave · Stitched vegetable-tanned leather band",
   },
 ];
 
