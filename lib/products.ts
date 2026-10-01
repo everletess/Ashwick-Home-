@@ -221,9 +221,9 @@ export const PRODUCTS: Product[] = [
     },
     pieces: [
       { id: "sofa", label: "Sofa", price: 8500, fabricPrices: { cork: 9500 } },
-      { id: "loveseat", label: "Loveseat", price: 6500, fabrics: ["irish"] },
-      { id: "chair", label: "Chair", price: 4500, fabrics: ["irish"] },
-      { id: "ottoman", label: "Ottoman", price: 2500, fabrics: ["irish"] },
+      { id: "loveseat", label: "Loveseat", price: 6500, fabricPrices: { cork: 7000 } },
+      { id: "chair", label: "Chair", price: 4500, fabricPrices: { cork: 5000 } },
+      { id: "ottoman", label: "Ottoman", price: 2500, fabricPrices: { cork: 3000 } },
     ],
     fabrics: ["irish", "cork"], designedFabric: "irish", depth: true, length: false, finish: false, wood: true,
     materials: "Hand-fluted solid walnut or oak plinth · Irish Linen or Cork upholstery · Natural oil finish",
