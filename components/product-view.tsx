@@ -3,7 +3,7 @@
 import { Fragment, useRef, useState } from "react";
 import { useCart } from "@/components/cart";
 import { Photo, Swatch } from "@/components/photo";
-import { DEPTHS, FABRICS, FINISHES, LEAD_TIME, LENGTHS, fmt, getProduct, priceFor, type FabricId, type Option } from "@/lib/products";
+import { DEPTHS, FABRICS, FINISHES, LEAD_TIME, LENGTHS, WOODS, fabricsFor, fmt, getProduct, photoFor, pieceOf, priceFor, type FabricId, type Option, type PhotoTag } from "@/lib/products";
 
 type Mode = "designed" | "custom";
 
@@ -50,6 +50,8 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
   const [depth, setDepth] = useState("standard");
   const [length, setLength] = useState("standard");
   const [finish, setFinish] = useState("natural");
+  const [piece, setPieceState] = useState(p.pieces?.[0].id);
+  const [wood, setWoodState] = useState(WOODS[0].id);
 
   // Keep the URL in step with the tab (/products/:id vs /products/:id/customize) without a navigation.
   const setMode = (m: Mode) => {
@@ -57,36 +59,61 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
     window.history.replaceState(null, "", "/products/" + p.id + (m === "custom" ? "/customize" : ""));
   };
 
-  // Picking a fabric with colorways selects its first color; picking a color jumps to that color's photo.
-  const showColor = (f: FabricId, c: string) => {
-    const ph = p.colorPhotos?.[`${f}:${c}`];
-    setImg(ph ? Math.max(0, p.photos.indexOf(ph)) : 0);
+  // Choosing an option jumps the gallery to the photo that best matches the new selection.
+  const show = (next: PhotoTag) => {
+    const ph = photoFor(p, next);
+    if (ph) setImg(p.photos.indexOf(ph));
+  };
+  const firstColor = (f: FabricId) => FABRICS[f].colors?.[0].id;
+  const custom = mode === "custom";
+  const current: PhotoTag = custom
+    ? { piece, wood: p.wood ? wood : undefined, fabric, color: color || undefined }
+    : { piece, wood: p.wood ? WOODS[0].id : undefined, fabric: p.designedFabric, color: firstColor(p.designedFabric) };
+
+  const setPiece = (id: string) => {
+    setPieceState(id);
+    // Keep the fabric if this piece offers it, otherwise fall back to the piece's first fabric.
+    const allowed = fabricsFor(p, id);
+    if (custom && !allowed.includes(fabric)) {
+      setFabricState(allowed[0]);
+      setColorState(firstColor(allowed[0]) ?? "");
+      show({ ...current, piece: id, fabric: allowed[0], color: firstColor(allowed[0]) });
+    } else {
+      show({ ...current, piece: id });
+    }
   };
   const setFabric = (f: FabricId) => {
-    const c = FABRICS[f].colors?.[0].id ?? "";
+    const c = firstColor(f) ?? "";
     setFabricState(f);
     setColorState(c);
-    showColor(f, c);
+    show({ ...current, fabric: f, color: c || undefined });
   };
   const setColor = (c: string) => {
     setColorState(c);
-    showColor(fabric, c);
+    show({ ...current, color: c });
+  };
+  const setWood = (w: string) => {
+    setWoodState(w);
+    show({ ...current, wood: w });
   };
 
-  const sel = mode === "designed"
-    ? { fabric: p.designedFabric, color: FABRICS[p.designedFabric].colors?.[0].id ?? "", depth: "standard", length: "standard", finish: "natural" }
-    : { fabric, color, depth, length, finish };
+  const sel = custom
+    ? { fabric, color, depth, length, finish }
+    : { fabric: p.designedFabric, color: firstColor(p.designedFabric) ?? "", depth: "standard", length: "standard", finish: "natural" };
   const selFabric = FABRICS[sel.fabric];
   const selColor = selFabric.colors?.find((c) => c.id === sel.color);
-  const price = priceFor(p, sel.fabric);
-  // A color photo that isn't already in the gallery leads it.
-  const colorPhoto = selColor && p.colorPhotos?.[`${sel.fabric}:${selColor.id}`];
-  const gallery = colorPhoto && !p.photos.includes(colorPhoto) ? [colorPhoto, ...p.photos] : p.photos;
+  const selPiece = pieceOf(p, piece);
+  const price = priceFor(p, sel.fabric, piece);
+  const gallery = p.photos;
   const note = p.photoNotes?.[gallery[img]];
+  const colorName = (c: { label: string; code?: string }) => (c.code ? `${c.label} (${c.code})` : c.label);
+  const fabricChoices = fabricsFor(p, piece);
 
   const summary = [
+    selPiece && ["Piece", selPiece.label],
     ["Fabric", selFabric.label],
-    selColor && ["Color", `${selColor.label} (${selColor.code})`],
+    selColor && ["Color", colorName(selColor)],
+    p.wood && ["Wood", lab(WOODS, current.wood ?? "")],
     p.depth && ["Seat depth", lab(DEPTHS, sel.depth)],
     p.length && ["Length", lab(LENGTHS, sel.length)],
     p.finish && ["Wood finish", lab(FINISHES, sel.finish)],
@@ -95,8 +122,8 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
   const add = () =>
     cart.add({
       id: p.id,
-      name: p.name,
-      photo: p.cardPhoto ?? p.photos[0],
+      name: selPiece ? `${p.name} ${selPiece.label}` : p.name,
+      photo: photoFor(p, current) ?? p.cardPhoto ?? p.photos[0],
       // TODO: depth/length/finish pricing once supplied; "From" prices go in as the base price.
       price,
       delivery: p.delivery,
@@ -130,6 +157,16 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
         {p.delivery && <p className="fine delivery">+ {fmt(p.delivery.price)} {p.delivery.label.toLowerCase()}</p>}
         <p className="body">{p.line}</p>
 
+        {p.pieces && (
+          <OptGroup label="Piece" value={selPiece?.label}>
+            {p.pieces.map((pc) => (
+              <button key={pc.id} type="button" className={"pill" + (piece === pc.id ? " on" : "")} aria-pressed={piece === pc.id} onClick={() => setPiece(pc.id)}>
+                {pc.label} · {fmt(priceFor(p, p.designedFabric, pc.id))}
+              </button>
+            ))}
+          </OptGroup>
+        )}
+
         <div className="mode" role="tablist">
           <button role="tab" aria-selected={mode === "designed"} className={mode === "designed" ? "on" : ""} onClick={() => setMode("designed")}>As designed</button>
           <button role="tab" aria-selected={mode === "custom"} className={mode === "custom" ? "on" : ""} onClick={() => setMode("custom")}>Customize</button>
@@ -146,21 +183,21 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
           </div>
         ) : (
           <div className="custom" role="tabpanel">
-            {p.fabrics.length > 1 && (
-              <OptGroup label="Fabric" value={FABRICS[fabric].label + (p.fabricPrices?.[fabric] ? " · " + fmt(priceFor(p, fabric)) : "")}>
-                {p.fabrics.map((f) => <Swatch key={f} f={f} size={52} on={fabric === f} onClick={() => setFabric(f)} />)}
+            {fabricChoices.length > 1 && (
+              <OptGroup label="Fabric" value={FABRICS[fabric].label + (fabricChoices.some((f) => priceFor(p, f, piece) !== priceFor(p, fabricChoices[0], piece)) ? " · " + fmt(price) : "")}>
+                {fabricChoices.map((f) => <Swatch key={f} f={f} size={52} on={fabric === f} onClick={() => setFabric(f)} />)}
               </OptGroup>
             )}
             {selFabric.colors && (
-              <OptGroup label="Color" value={selColor ? `${selColor.label} · ${selColor.code}` : ""}>
+              <OptGroup label="Color" value={selColor ? [selColor.label, selColor.code].filter(Boolean).join(" · ") : ""}>
                 {selFabric.colors.map((c) => (
                   <button
                     key={c.id}
                     type="button"
                     className={"chip color-chip tex-" + selFabric.tex + (color === c.id ? " on" : "")}
                     style={{ background: c.swatch }}
-                    title={`${c.label} (${c.code})`}
-                    aria-label={`${c.label} (${c.code})`}
+                    title={colorName(c)}
+                    aria-label={colorName(c)}
                     aria-pressed={color === c.id}
                     onClick={() => setColor(c.id)}
                   />
@@ -170,8 +207,9 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
             {selFabric.detail && <p className="fine">{selFabric.label}: {selFabric.detail}</p>}
             {p.depth && <OptGroup label="Seat depth" value={lab(DEPTHS, depth)}><Pills options={DEPTHS} value={depth} onChange={setDepth} /></OptGroup>}
             {p.length && <OptGroup label="Length" value={lab(LENGTHS, length)}><Pills options={LENGTHS} value={length} onChange={setLength} /></OptGroup>}
+            {p.wood && <OptGroup label="Wood" value={lab(WOODS, wood)}><Pills options={WOODS} value={wood} onChange={setWood} /></OptGroup>}
             {p.finish && <OptGroup label="Wood finish" value={lab(FINISHES, finish)}><Pills options={FINISHES} value={finish} onChange={setFinish} /></OptGroup>}
-            <p className="fine">{p.fabricPrices ? "" : "Custom pricing: [PRICE]. "}Dimensions for each option: [DIMENSIONS].</p>
+            <p className="fine">{p.fabricPrices || p.pieces ? "" : "Custom pricing: [PRICE]. "}Dimensions for each option: [DIMENSIONS].</p>
           </div>
         )}
 

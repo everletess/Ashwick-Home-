@@ -22,6 +22,14 @@ import frameFillCover from "@/assets/photos/frame-fill-cover.jpg";
 import hero from "@/assets/photos/hero.jpg";
 import marlowe1 from "@/assets/photos/marlowe-1.jpg";
 import marlowe2 from "@/assets/photos/marlowe-2.jpg";
+import marloweSofaWalnutLinen from "@/assets/photos/marlowe-sofa-walnut-linen.jpg";
+import marloweSofaOakLinen from "@/assets/photos/marlowe-sofa-oak-linen.jpg";
+import marloweLoveseatWalnutLinen from "@/assets/photos/marlowe-loveseat-walnut-linen.jpg";
+import marloweChairWalnutLinen from "@/assets/photos/marlowe-chair-walnut-linen.jpg";
+import marloweOttomanWalnutLinen from "@/assets/photos/marlowe-ottoman-walnut-linen.jpg";
+import marloweSofaOakCorkNatural from "@/assets/photos/marlowe-sofa-oak-cork-natural.jpg";
+import marloweSofaOakCorkIvory from "@/assets/photos/marlowe-sofa-oak-cork-ivory.jpg";
+import marloweSofaOakCorkIvory2 from "@/assets/photos/marlowe-sofa-oak-cork-ivory-2.jpg";
 import marloweStudio from "@/assets/photos/marlowe-studio.jpg";
 import pembroke1 from "@/assets/photos/pembroke-1.jpg";
 import pembroke2 from "@/assets/photos/pembroke-2.jpg";
@@ -55,6 +63,14 @@ export const PHOTOS = {
   "hero": hero,
   "marlowe-1": marlowe1,
   "marlowe-2": marlowe2,
+  "marlowe-sofa-walnut-linen": marloweSofaWalnutLinen,
+  "marlowe-sofa-oak-linen": marloweSofaOakLinen,
+  "marlowe-loveseat-walnut-linen": marloweLoveseatWalnutLinen,
+  "marlowe-chair-walnut-linen": marloweChairWalnutLinen,
+  "marlowe-ottoman-walnut-linen": marloweOttomanWalnutLinen,
+  "marlowe-sofa-oak-cork-natural": marloweSofaOakCorkNatural,
+  "marlowe-sofa-oak-cork-ivory": marloweSofaOakCorkIvory,
+  "marlowe-sofa-oak-cork-ivory-2": marloweSofaOakCorkIvory2,
   "marlowe-studio": marloweStudio,
   "pembroke-1": pembroke1,
   "pembroke-2": pembroke2,

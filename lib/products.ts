@@ -2,11 +2,11 @@
 // API (handles = product ids, collections = categories).
 import type { PhotoKey } from "@/lib/photos";
 
-export type FabricId = "linen" | "boucle" | "wool" | "leather" | "italian" | "blend" | "cotton";
+export type FabricId = "linen" | "boucle" | "wool" | "leather" | "italian" | "blend" | "cotton" | "irish" | "cork";
 export type Category = "sofas" | "chairs";
 export type CollectionHandle = "all" | Category;
 
-export type FabricColor = { id: string; label: string; code: string; swatch: string };
+export type FabricColor = { id: string; label: string; code?: string; swatch: string };
 export type Fabric = {
   id: FabricId;
   label: string;
@@ -51,7 +51,21 @@ export const FABRICS: Record<FabricId, Fabric> = {
       { id: "khaki", label: "Khaki", code: "FA154", swatch: "#8D957F" },
     ],
   },
+  irish: { id: "irish", label: "Irish Linen", swatch: "#E3DDD2", tex: "linen" },
+  cork: {
+    id: "cork", label: "Cork", swatch: "#C9A57E", tex: "leather",
+    colors: [
+      { id: "natural", label: "Natural", swatch: "#B98E63" },
+      { id: "ivory", label: "Ivory", swatch: "#DCD6CB" },
+    ],
+  },
 };
+
+/** Plinth woods for pieces that offer them (replaces the finish option). */
+export const WOODS: Option[] = [
+  { id: "walnut", label: "Walnut" },
+  { id: "oak", label: "Oak" },
+];
 export const SWATCH_ORDER: FabricId[] = ["linen", "boucle", "wool", "leather"];
 
 export const DEPTHS: Option[] = [
@@ -94,19 +108,54 @@ export type Product = {
   fabricPrices?: Partial<Record<FabricId, number>>;
   /** Caption under the main gallery image, e.g. a photo showing a custom fabric. */
   photoNotes?: Partial<Record<PhotoKey, string>>;
-  /** Photo of the piece in each fabric color, keyed "fabric:color" (e.g. "blend:sand"). */
-  colorPhotos?: Partial<Record<string, PhotoKey>>;
+  /** What each photo shows, so picking options can jump to the closest match. */
+  photoTags?: Partial<Record<PhotoKey, PhotoTag>>;
+  /** Sold as separate pieces (sofa, chair…), each with its own price; the first is the default. */
+  pieces?: Piece[];
+  /** Plinth wood choice, in place of the finish option. */
+  wood?: boolean;
   /** Delivery charged per piece on top of the price. */
   delivery?: { label: string; price: number };
 };
 
-export const priceFor = (p: Product, fabric: FabricId) => p.fabricPrices?.[fabric] ?? p.price;
+export type PhotoTag = { piece?: string; wood?: string; fabric?: FabricId; color?: string };
+export type Piece = {
+  id: string;
+  label: string;
+  price: number;
+  fabricPrices?: Partial<Record<FabricId, number>>;
+  /** Fabrics offered for this piece, when narrower than the product's. */
+  fabrics?: FabricId[];
+};
+
+export const pieceOf = (p: Product, id?: string) => p.pieces?.find((x) => x.id === id) ?? p.pieces?.[0];
+export const fabricsFor = (p: Product, pieceId?: string) => pieceOf(p, pieceId)?.fabrics ?? p.fabrics;
+
+export function priceFor(p: Product, fabric: FabricId, pieceId?: string) {
+  const piece = pieceOf(p, pieceId);
+  if (piece) return piece.fabricPrices?.[fabric] ?? piece.price;
+  return p.fabricPrices?.[fabric] ?? p.price;
+}
 
 /** Lowest price, and whether to prefix it with "From" (several prices, or a "from" base price). */
 export function cardPrice(p: Product) {
-  const prices = p.fabrics.map((f) => priceFor(p, f));
-  const min = Math.min(p.price, ...prices);
+  const prices = (p.pieces ?? [undefined]).flatMap((pc) => fabricsFor(p, pc?.id).map((f) => priceFor(p, f, pc?.id)));
+  const min = Math.min(...prices);
   return { price: min, from: !!p.priceFrom || prices.some((x) => x !== min) };
+}
+
+/** The photo whose tags best match a selection; tags that are set must all match. */
+export function photoFor(p: Product, sel: PhotoTag): PhotoKey | undefined {
+  let best: PhotoKey | undefined;
+  let bestScore = 0;
+  for (const ph of p.photos) {
+    const tag = p.photoTags?.[ph];
+    if (!tag) continue;
+    const keys = Object.keys(tag) as (keyof PhotoTag)[];
+    if (keys.some((k) => tag[k] !== sel[k])) continue;
+    if (keys.length > bestScore) [best, bestScore] = [ph, keys.length];
+  }
+  return best;
 }
 
 const WHITE_GLOVE = { label: "White glove delivery", price: 750 };
@@ -149,10 +198,31 @@ export const LEAD_TIME = "Handmade to order with a 3-week lead time, plus shippi
 export const PRODUCTS: Product[] = [
   {
     id: "marlowe", name: "The Marlowe", type: "Sofa", category: "sofas", price: 8500,
-    line: "A deep, plush sofa on a hand-fluted solid oak plinth, in brushed organic wool.",
-    photos: ["marlowe-studio", "marlowe-1", "marlowe-2"], cardSingle: true,
-    fabrics: ["wool", "boucle", "linen"], designedFabric: "wool", depth: true, length: true, finish: true,
-    materials: "Solid oak plinth, hand-fluted · Brushed organic wool · Natural oil finish",
+    line: "A deep sofa on a hand-fluted solid wood plinth, in Irish Linen or Cork. Also as a loveseat, chair and ottoman.",
+    photos: [
+      "marlowe-studio", "marlowe-1", "marlowe-2",
+      "marlowe-sofa-walnut-linen", "marlowe-sofa-oak-linen",
+      "marlowe-sofa-oak-cork-natural", "marlowe-sofa-oak-cork-ivory", "marlowe-sofa-oak-cork-ivory-2",
+      "marlowe-loveseat-walnut-linen", "marlowe-chair-walnut-linen", "marlowe-ottoman-walnut-linen",
+    ],
+    cardSingle: true,
+    photoTags: {
+      "marlowe-sofa-walnut-linen": { piece: "sofa", wood: "walnut", fabric: "irish" },
+      "marlowe-sofa-oak-linen": { piece: "sofa", wood: "oak", fabric: "irish" },
+      "marlowe-sofa-oak-cork-natural": { piece: "sofa", wood: "oak", fabric: "cork", color: "natural" },
+      "marlowe-sofa-oak-cork-ivory": { piece: "sofa", wood: "oak", fabric: "cork", color: "ivory" },
+      "marlowe-loveseat-walnut-linen": { piece: "loveseat", wood: "walnut", fabric: "irish" },
+      "marlowe-chair-walnut-linen": { piece: "chair", wood: "walnut", fabric: "irish" },
+      "marlowe-ottoman-walnut-linen": { piece: "ottoman", wood: "walnut", fabric: "irish" },
+    },
+    pieces: [
+      { id: "sofa", label: "Sofa", price: 8500, fabricPrices: { cork: 9500 } },
+      { id: "loveseat", label: "Loveseat", price: 6500, fabrics: ["irish"] },
+      { id: "chair", label: "Chair", price: 4500, fabrics: ["irish"] },
+      { id: "ottoman", label: "Ottoman", price: 2500, fabrics: ["irish"] },
+    ],
+    fabrics: ["irish", "cork"], designedFabric: "irish", depth: true, length: false, finish: false, wood: true,
+    materials: "Hand-fluted solid walnut or oak plinth · Irish Linen or Cork upholstery · Natural oil finish",
     delivery: WHITE_GLOVE,
   },
   {
@@ -190,15 +260,15 @@ export const PRODUCTS: Product[] = [
       "pembroke-1", "pembroke-2",
     ],
     cardSingle: true,
-    colorPhotos: {
-      "blend:ivory": "pembroke-blend-ivory",
-      "blend:sand": "pembroke-blend-sand",
-      "blend:coco": "pembroke-blend-coco",
-      "cotton:natural": "pembroke-cotton-natural",
-      "cotton:khaki": "pembroke-cotton-khaki",
-      "italian:coco": "pembroke-italian-coco",
-      "italian:ivory": "pembroke-italian-ivory",
-      "italian:moss": "pembroke-italian-moss",
+    photoTags: {
+      "pembroke-blend-ivory": { fabric: "blend", color: "ivory" },
+      "pembroke-blend-sand": { fabric: "blend", color: "sand" },
+      "pembroke-blend-coco": { fabric: "blend", color: "coco" },
+      "pembroke-cotton-natural": { fabric: "cotton", color: "natural" },
+      "pembroke-cotton-khaki": { fabric: "cotton", color: "khaki" },
+      "pembroke-italian-coco": { fabric: "italian", color: "coco" },
+      "pembroke-italian-ivory": { fabric: "italian", color: "ivory" },
+      "pembroke-italian-moss": { fabric: "italian", color: "moss" },
     },
     photoNotes: { "pembroke-1": "Customized version", "pembroke-2": "Customized version" },
     fabrics: ["blend", "cotton", "italian"], designedFabric: "blend", depth: true, length: false, finish: false,
