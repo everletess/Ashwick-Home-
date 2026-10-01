@@ -25,6 +25,11 @@ import marlowe2 from "@/assets/photos/marlowe-2.jpg";
 import marloweStudio from "@/assets/photos/marlowe-studio.jpg";
 import pembroke1 from "@/assets/photos/pembroke-1.jpg";
 import pembroke2 from "@/assets/photos/pembroke-2.jpg";
+import pembrokeBlendIvory from "@/assets/photos/pembroke-blend-ivory.jpg";
+import pembrokeBlendSand from "@/assets/photos/pembroke-blend-sand.jpg";
+import pembrokeBlendCoco from "@/assets/photos/pembroke-blend-coco.jpg";
+import pembrokeCottonNatural from "@/assets/photos/pembroke-cotton-natural.jpg";
+import pembrokeCottonKhaki from "@/assets/photos/pembroke-cotton-khaki.jpg";
 import pembrokeItalianCoco from "@/assets/photos/pembroke-italian-coco.jpg";
 import pembrokeItalianIvory from "@/assets/photos/pembroke-italian-ivory.jpg";
 import pembrokeItalianMoss from "@/assets/photos/pembroke-italian-moss.jpg";
@@ -53,6 +58,11 @@ export const PHOTOS = {
   "marlowe-studio": marloweStudio,
   "pembroke-1": pembroke1,
   "pembroke-2": pembroke2,
+  "pembroke-blend-ivory": pembrokeBlendIvory,
+  "pembroke-blend-sand": pembrokeBlendSand,
+  "pembroke-blend-coco": pembrokeBlendCoco,
+  "pembroke-cotton-natural": pembrokeCottonNatural,
+  "pembroke-cotton-khaki": pembrokeCottonKhaki,
   "pembroke-italian-coco": pembrokeItalianCoco,
   "pembroke-italian-ivory": pembrokeItalianIvory,
   "pembroke-italian-moss": pembrokeItalianMoss,

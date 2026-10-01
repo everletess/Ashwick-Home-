@@ -145,7 +145,7 @@ export function constructionFor(p: Product): Construction {
 }
 
 /** Every piece is made by hand to order. */
-export const LEAD_TIME = "Handmade to order with a 3-week lead time.";
+export const LEAD_TIME = "Handmade to order with a 3-week lead time, plus shipping.";
 
 export const PRODUCTS: Product[] = [
   {
@@ -180,8 +180,19 @@ export const PRODUCTS: Product[] = [
   {
     id: "pembroke", name: "The Pembroke", type: "Chair", category: "chairs", price: 5000,
     line: "A sculptural wingback lounge chair on a swivel base, in Linen Blend, Organic Cotton or Italian Linen.",
-    photos: ["pembroke-italian-coco", "pembroke-italian-ivory", "pembroke-italian-moss", "pembroke-1", "pembroke-2"], cardSingle: true,
+    photos: [
+      "pembroke-blend-ivory", "pembroke-blend-sand", "pembroke-blend-coco",
+      "pembroke-cotton-natural", "pembroke-cotton-khaki",
+      "pembroke-italian-coco", "pembroke-italian-ivory", "pembroke-italian-moss",
+      "pembroke-1", "pembroke-2",
+    ],
+    cardSingle: true,
     colorPhotos: {
+      "blend:ivory": "pembroke-blend-ivory",
+      "blend:sand": "pembroke-blend-sand",
+      "blend:coco": "pembroke-blend-coco",
+      "cotton:natural": "pembroke-cotton-natural",
+      "cotton:khaki": "pembroke-cotton-khaki",
       "italian:coco": "pembroke-italian-coco",
       "italian:ivory": "pembroke-italian-ivory",
       "italian:moss": "pembroke-italian-moss",
