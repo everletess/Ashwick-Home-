@@ -64,9 +64,9 @@ function HomeCollection() {
         <div className="split-head">
           <div>
             <div className="eyebrow">The collection</div>
-            <h2 className="h2">Six pieces, made one at a time.</h2>
+            <h2 className="h2">Every piece, made one at a time.</h2>
           </div>
-          <p className="body">Four sofas and three chairs. Order each as we designed it, or make it yours.</p>
+          <p className="body">Sofas, chairs and an ottoman. Order each as we designed it, or make it yours.</p>
         </div>
         <ProductGrid products={PRODUCTS} />
       </div>
@@ -119,7 +119,7 @@ function HomeName() {
           </p>
         </div>
         <div className="names">
-          {PRODUCTS.map((p) => <Link key={p.id} href={"/products/" + p.id}>{p.name}</Link>)}
+          {PRODUCTS.filter((p) => !p.hideInNames).map((p) => <Link key={p.id} href={"/products/" + p.id}>{p.name}</Link>)}
         </div>
       </div>
     </section>

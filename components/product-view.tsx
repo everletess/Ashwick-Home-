@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import { useCart } from "@/components/cart";
 import { Photo, Swatch } from "@/components/photo";
-import { FABRICS, LEAD_TIME, WOODS, fabricsFor, fmt, getProduct, nearestPhoto, photoFor, pieceOf, priceFor, type FabricId, type Option, type PhotoTag } from "@/lib/products";
+import { FABRICS, LEAD_TIME, WOODS, fmt, getProduct, nearestPhoto, photoFor, priceFor, type FabricId, type Option, type PhotoTag } from "@/lib/products";
 
 type Mode = "designed" | "custom";
 
@@ -65,7 +65,6 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
   const [mode, setModeState] = useState<Mode>(initialMode);
   const [img, setImg] = useState(0);
   const firstColor = (f: FabricId) => FABRICS[f].colors?.[0].id;
-  const [piece, setPieceState] = useState(p.pieces?.[0].id);
   const [fabric, setFabricState] = useState<FabricId>(p.designedFabric);
   const [color, setColorState] = useState(firstColor(p.designedFabric) ?? "");
   const [wood, setWoodState] = useState(WOODS[0].id);
@@ -90,21 +89,11 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
     window.history.replaceState(null, "", "/products/" + p.id + (m === "custom" ? "/customize" : ""));
   };
 
-  const current: PhotoTag = { piece, wood: p.wood ? wood : undefined, fabric, color: color || undefined };
+  const current: PhotoTag = { wood: p.wood ? wood : undefined, fabric, color: color || undefined };
   // Choosing an option jumps the gallery to the photo that best matches the new selection.
   const show = (next: PhotoTag) => {
     const ph = nearestPhoto(p, next);
     setImg(ph ? p.photos.indexOf(ph) : 0);
-  };
-  const setPiece = (pid: string) => {
-    setPieceState(pid);
-    // Keep the fabric if this piece offers it, otherwise fall back to the piece's first fabric.
-    const allowed = fabricsFor(p, pid);
-    const f = allowed.includes(fabric) ? fabric : allowed[0];
-    const c = f === fabric ? color : firstColor(f) ?? "";
-    setFabricState(f);
-    setColorState(c);
-    show({ ...current, piece: pid, fabric: f, color: c || undefined });
   };
   const setFabric = (f: FabricId) => {
     const c = firstColor(f) ?? "";
@@ -123,14 +112,11 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
 
   const selFabric = FABRICS[fabric];
   const selColor = selFabric.colors?.find((c) => c.id === color);
-  const selPiece = pieceOf(p, piece);
-  const price = priceFor(p, fabric, piece);
-  const fabricChoices = fabricsFor(p, piece);
+  const price = priceFor(p, fabric);
+  const fabricChoices = p.fabrics;
   const note = p.photoNotes?.[p.photos[img]];
-  const name = selPiece ? `${p.name} ${selPiece.label}` : p.name;
 
   const summary = [
-    selPiece && ["Piece", selPiece.label],
     ["Fabric", selFabric.label],
     selColor && ["Color", colorName(selColor)],
     p.wood && ["Wood", lab(WOODS, wood)],
@@ -139,7 +125,7 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
   const add = () =>
     cart.add({
       id: p.id,
-      name,
+      name: p.name,
       photo: photoFor(p, current) ?? p.cardPhoto ?? p.photos[0],
       // "From" prices go in as the base price.
       price,
@@ -175,17 +161,8 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
         <p className="body">{p.line}</p>
 
         <div className="choices">
-          {p.pieces && (
-            <OptGroup label="Piece" value={selPiece?.label}>
-              {p.pieces.map((pc) => (
-                <button key={pc.id} type="button" className={"pill" + (piece === pc.id ? " on" : "")} aria-pressed={piece === pc.id} onClick={() => setPiece(pc.id)}>
-                  {pc.label} · {fmt(priceFor(p, fabricsFor(p, pc.id).includes(fabric) ? fabric : fabricsFor(p, pc.id)[0], pc.id))}
-                </button>
-              ))}
-            </OptGroup>
-          )}
           {fabricChoices.length > 1 && (
-            <OptGroup label="Fabric" value={selFabric.label + (fabricChoices.some((f) => priceFor(p, f, piece) !== priceFor(p, fabricChoices[0], piece)) ? " · " + fmt(price) : "")}>
+            <OptGroup label="Fabric" value={selFabric.label + (fabricChoices.some((f) => priceFor(p, f) !== priceFor(p, fabricChoices[0])) ? " · " + fmt(price) : "")}>
               {fabricChoices.map((f) => <Swatch key={f} f={f} size={52} on={fabric === f} onClick={() => setFabric(f)} />)}
             </OptGroup>
           )}
@@ -221,7 +198,7 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
           </div>
         ) : (
           <div className="custom" role="tabpanel">
-            <CustomRequest about={[name, ...summary.filter(([k]) => k !== "Piece").map(([, v]) => v)].join(" · ")} />
+            <CustomRequest about={[p.name, ...summary.map(([, v]) => v)].join(" · ")} />
           </div>
         )}
 

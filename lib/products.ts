@@ -80,7 +80,7 @@ export const SWATCH_ORDER: FabricId[] = ["linen", "boucle", "wool", "leather"];
 export type Product = {
   id: string;
   name: string;
-  type: "Sofa" | "Chair";
+  type: "Sofa" | "Loveseat" | "Chair" | "Ottoman";
   category: Category;
   price: number;
   priceFrom?: boolean;
@@ -102,37 +102,22 @@ export type Product = {
   photoNotes?: Partial<Record<PhotoKey, string>>;
   /** What each photo shows, so picking options can jump to the closest match. */
   photoTags?: Partial<Record<PhotoKey, PhotoTag>>;
-  /** Sold as separate pieces (sofa, chair…), each with its own price; the first is the default. */
-  pieces?: Piece[];
+  /** Leave out of the home page's list of names (e.g. the Marlowe's companion pieces). */
+  hideInNames?: boolean;
   /** Plinth wood choice, in place of the finish option. */
   wood?: boolean;
   /** Delivery charged per piece on top of the price. */
   delivery?: { label: string; price: number };
 };
 
-export type PhotoTag = { piece?: string; wood?: string; fabric?: FabricId; color?: string };
-export type Piece = {
-  id: string;
-  label: string;
-  price: number;
-  fabricPrices?: Partial<Record<FabricId, number>>;
-  /** Fabrics offered for this piece, when narrower than the product's. */
-  fabrics?: FabricId[];
-};
+export type PhotoTag = { wood?: string; fabric?: FabricId; color?: string };
 
-export const pieceOf = (p: Product, id?: string) => p.pieces?.find((x) => x.id === id) ?? p.pieces?.[0];
-export const fabricsFor = (p: Product, pieceId?: string) => pieceOf(p, pieceId)?.fabrics ?? p.fabrics;
-
-export function priceFor(p: Product, fabric: FabricId, pieceId?: string) {
-  const piece = pieceOf(p, pieceId);
-  if (piece) return piece.fabricPrices?.[fabric] ?? piece.price;
-  return p.fabricPrices?.[fabric] ?? p.price;
-}
+export const priceFor = (p: Product, fabric: FabricId) => p.fabricPrices?.[fabric] ?? p.price;
 
 /** Lowest price, and whether to prefix it with "From" (several prices, or a "from" base price). */
 export function cardPrice(p: Product) {
-  const prices = (p.pieces ?? [undefined]).flatMap((pc) => fabricsFor(p, pc?.id).map((f) => priceFor(p, f, pc?.id)));
-  const min = Math.min(...prices);
+  const prices = p.fabrics.map((f) => priceFor(p, f));
+  const min = Math.min(p.price, ...prices);
   return { price: min, from: !!p.priceFrom || prices.some((x) => x !== min) };
 }
 
@@ -168,7 +153,7 @@ const VEGAN = "TENCEL\u2122 and cotton can replace the wool in the seats, backs 
 
 export function constructionFor(p: Product): Construction {
   const short = p.name.replace(/^The /, "");
-  if (p.type === "Sofa") {
+  if (p.type === "Sofa" || p.type === "Loveseat") {
     return {
       statement: NO_PETROCHEMICALS,
       intro: `The ${short} is handcrafted using only organic and natural materials.`,
@@ -176,6 +161,17 @@ export function constructionFor(p: Product): Construction {
         ["Foundations", FOUNDATIONS],
         ["Seat cushions", "Organic latex wrapped in organic wool."],
         ["Back and side cushions", "Organic wool."],
+        ["Vegan models available", VEGAN],
+      ],
+    };
+  }
+  if (p.type === "Ottoman") {
+    return {
+      statement: NO_PETROCHEMICALS,
+      intro: `The ${short} is handcrafted using organic and natural materials.`,
+      rows: [
+        ["Foundations", FOUNDATIONS],
+        ["Cushion", "Organic latex wrapped in organic wool."],
         ["Vegan models available", VEGAN],
       ],
     };
@@ -196,33 +192,33 @@ export const LEAD_TIME = "Available to ship within 4 weeks from the date of orde
 
 export const PRODUCTS: Product[] = [
   {
-    id: "marlowe", name: "The Marlowe", type: "Sofa", category: "sofas", price: 8500,
-    line: "A deep sofa on a hand-fluted solid wood plinth, in Irish Linen or Cork. Also as a loveseat, chair and ottoman.",
+    id: "marlowe", name: "The Marlowe Sofa", type: "Sofa", category: "sofas", price: 8500,
+    line: "A deep sofa on a hand-fluted solid wood plinth, in Irish Linen or Cork.",
     photos: [
       "marlowe-studio", "marlowe-1", "marlowe-2",
       "marlowe-sofa-walnut-linen", "marlowe-sofa-oak-linen",
       "marlowe-sofa-oak-cork-natural", "marlowe-sofa-oak-cork-ivory", "marlowe-sofa-oak-cork-ivory-2",
-      "marlowe-loveseat-walnut-linen", "marlowe-chair-walnut-linen", "marlowe-ottoman-walnut-linen",
     ],
     cardSingle: true,
     photoTags: {
-      "marlowe-sofa-walnut-linen": { piece: "sofa", wood: "walnut", fabric: "irish" },
-      "marlowe-sofa-oak-linen": { piece: "sofa", wood: "oak", fabric: "irish" },
-      "marlowe-sofa-oak-cork-natural": { piece: "sofa", wood: "oak", fabric: "cork", color: "natural" },
-      "marlowe-sofa-oak-cork-ivory": { piece: "sofa", wood: "oak", fabric: "cork", color: "ivory" },
-      "marlowe-loveseat-walnut-linen": { piece: "loveseat", wood: "walnut", fabric: "irish" },
-      "marlowe-chair-walnut-linen": { piece: "chair", wood: "walnut", fabric: "irish" },
-      "marlowe-ottoman-walnut-linen": { piece: "ottoman", wood: "walnut", fabric: "irish" },
+      "marlowe-sofa-walnut-linen": { wood: "walnut", fabric: "irish" },
+      "marlowe-sofa-oak-linen": { wood: "oak", fabric: "irish" },
+      "marlowe-sofa-oak-cork-natural": { wood: "oak", fabric: "cork", color: "natural" },
+      "marlowe-sofa-oak-cork-ivory": { wood: "oak", fabric: "cork", color: "ivory" },
     },
-    pieces: [
-      { id: "sofa", label: "Sofa", price: 8500, fabricPrices: { cork: 9500 } },
-      { id: "loveseat", label: "Loveseat", price: 6500, fabricPrices: { cork: 7000 } },
-      { id: "chair", label: "Chair", price: 4500, fabricPrices: { cork: 5000 } },
-      { id: "ottoman", label: "Ottoman", price: 2500, fabricPrices: { cork: 3000 } },
-    ],
+    fabricPrices: { cork: 9500 },
     fabrics: ["irish", "cork"], designedFabric: "irish", wood: true,
-    materials: "Hand-fluted solid walnut or oak plinth · Irish Linen or Cork upholstery · Natural oil finish",
     delivery: WHITE_GLOVE,
+    materials: "Hand-fluted solid walnut or oak plinth · Irish Linen or Cork upholstery · Natural oil finish",
+  },
+  {
+    id: "marlowe-loveseat", name: "The Marlowe Loveseat", type: "Loveseat", category: "sofas", price: 6500,
+    line: "The Marlowe as a two-seat loveseat, on the same hand-fluted solid wood plinth, in Irish Linen or Cork.",
+    photos: ["marlowe-loveseat-walnut-linen"], hideInNames: true,
+    fabricPrices: { cork: 7000 },
+    fabrics: ["irish", "cork"], designedFabric: "irish", wood: true,
+    delivery: WHITE_GLOVE,
+    materials: "Hand-fluted solid walnut or oak plinth · Irish Linen or Cork upholstery · Natural oil finish",
   },
   {
     id: "chatsworth", name: "The Chatsworth", type: "Sofa", category: "sofas", price: 10500,
@@ -293,14 +289,32 @@ export const PRODUCTS: Product[] = [
     materials: "Solid walnut swivel base · Textured organic wool weave · Stitched vegetable-tanned leather band",
     delivery: WHITE_GLOVE,
   },
+  {
+    id: "marlowe-chair", name: "The Marlowe Chair", type: "Chair", category: "chairs", price: 4500,
+    line: "A deep lounge chair on a hand-fluted solid wood plinth, made to sit beside the Marlowe sofa. In Irish Linen or Cork.",
+    photos: ["marlowe-chair-walnut-linen"], hideInNames: true,
+    fabricPrices: { cork: 5000 },
+    fabrics: ["irish", "cork"], designedFabric: "irish", wood: true,
+    delivery: WHITE_GLOVE,
+    materials: "Hand-fluted solid walnut or oak plinth · Irish Linen or Cork upholstery · Natural oil finish",
+  },
+  {
+    id: "marlowe-ottoman", name: "The Marlowe Ottoman", type: "Ottoman", category: "chairs", price: 2500,
+    line: "An ottoman on a hand-fluted solid wood plinth, to pair with the Marlowe sofa or chair. In Irish Linen or Cork.",
+    photos: ["marlowe-ottoman-walnut-linen"], hideInNames: true,
+    fabricPrices: { cork: 3000 },
+    fabrics: ["irish", "cork"], designedFabric: "irish", wood: true,
+    delivery: WHITE_GLOVE,
+    materials: "Hand-fluted solid walnut or oak plinth · Irish Linen or Cork upholstery · Natural oil finish",
+  },
 ];
 
 export const getProduct = (id: string) => PRODUCTS.find((p) => p.id === id);
 
 export const COLLECTIONS: Record<CollectionHandle, { title: string; description: string }> = {
-  all: { title: "The collection", description: "Four sofas and three chairs. Order each as we designed it, or make it yours." },
-  sofas: { title: "Sofas", description: "Four sofas, each made to order by hand." },
-  chairs: { title: "Chairs", description: "Three chairs, each made to order by hand." },
+  all: { title: "The collection", description: "Sofas, chairs and an ottoman. Order each as we designed it, or make it yours." },
+  sofas: { title: "Sofas", description: "Sofas and a loveseat, each made to order by hand." },
+  chairs: { title: "Chairs", description: "Chairs and an ottoman, each made to order by hand." },
 };
 
 export const productsIn = (handle: CollectionHandle) =>
