@@ -102,6 +102,8 @@ export type Product = {
   photoNotes?: Partial<Record<PhotoKey, string>>;
   /** What each photo shows, so picking options can jump to the closest match. */
   photoTags?: Partial<Record<PhotoKey, PhotoTag>>;
+  /** Taken off the site for now (no page, card or link); set back to false to restore it. */
+  hidden?: boolean;
   /** Leave out of the home page's list of names (e.g. the Marlowe's companion pieces). */
   hideInNames?: boolean;
   /** Plinth wood choice, in place of the finish option. */
@@ -190,7 +192,7 @@ export function constructionFor(p: Product): Construction {
 /** Every piece is made by hand to order. */
 export const LEAD_TIME = "Available to ship within 4 weeks from the date of order.";
 
-export const PRODUCTS: Product[] = [
+const ALL_PRODUCTS: Product[] = [
   {
     id: "marlowe", name: "The Marlowe Sofa", type: "Sofa", category: "sofas", price: 8500,
     line: "A deep sofa on a hand-fluted solid wood plinth, in Irish Linen or Cork.",
@@ -282,7 +284,7 @@ export const PRODUCTS: Product[] = [
     delivery: WHITE_GLOVE,
   },
   {
-    id: "clifton", name: "The Clifton", type: "Chair", category: "chairs", price: 5500,
+    id: "clifton", name: "The Clifton", type: "Chair", category: "chairs", price: 5500, hidden: true,
     line: "A rounded swivel lounge chair in textured ivory weave, with an olive back, a stitched leather band and a walnut base.",
     photos: ["clifton-s1", "clifton-s2"],
     fabrics: ["boucle", "wool", "linen"], designedFabric: "boucle",
@@ -308,6 +310,9 @@ export const PRODUCTS: Product[] = [
     materials: "Hand-fluted solid walnut or oak plinth · Irish Linen or Cork upholstery · Natural oil finish",
   },
 ];
+
+/** Products on the site. */
+export const PRODUCTS = ALL_PRODUCTS.filter((p) => !p.hidden);
 
 export const getProduct = (id: string) => PRODUCTS.find((p) => p.id === id);
 

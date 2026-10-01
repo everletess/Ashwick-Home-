@@ -234,6 +234,10 @@ button.chip{cursor:pointer}
 .spec p{font:300 21px/1.45 var(--serif);margin:10px 0 0}
 .construct-h{text-transform:uppercase;letter-spacing:.02em;font-size:clamp(30px,3.2vw,46px)}
 .construct-grid{margin-top:40px}
+.hp{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
+.form-error{margin:0;font:400 14px/1.6 var(--sans);color:#8A3B2B}
+.nl-form+.form-error{margin-top:16px}
+.btn:disabled{opacity:.6;cursor:wait}
 .choices{display:flex;flex-direction:column;gap:24px}
 .custom-req{display:flex;flex-direction:column;gap:22px}
 .custom-req label{display:flex;flex-direction:column;gap:8px}

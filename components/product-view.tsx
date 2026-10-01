@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { useCart } from "@/components/cart";
+import { FormError, Honeypot, useFormSend } from "@/components/forms";
 import { Photo, Swatch } from "@/components/photo";
 import { FABRICS, LEAD_TIME, WOODS, fmt, getProduct, nearestPhoto, photoFor, priceFor, type FabricId, type Option, type PhotoTag } from "@/lib/products";
 
@@ -28,9 +29,8 @@ const lab = (arr: Option[], v: string) => arr.find((o) => o.id === v)?.label ?? 
 const colorName = (c: { label: string; code?: string }) => (c.code ? `${c.label} (${c.code})` : c.label);
 
 /** "Customize" tab: anything beyond the standard choices is a request we follow up on. */
-// TODO: post to the same form endpoint as the bespoke and trade forms once one exists.
 function CustomRequest({ about }: { about: string }) {
-  const [sent, setSent] = useState(false);
+  const { sent, sending, error, onSubmit } = useFormSend("custom");
   if (sent) {
     return (
       <div className="trade-done" role="status">
@@ -40,7 +40,8 @@ function CustomRequest({ about }: { about: string }) {
     );
   }
   return (
-    <form className="custom-req" onSubmit={(e) => { e.preventDefault(); setSent(true); }}>
+    <form className="custom-req" onSubmit={onSubmit}>
+      <Honeypot />
       <p className="body small">
         Want something different, like a deeper seat, another size or your own fabric? Tell us what you have in mind and we&apos;ll get back to you.
       </p>
@@ -53,7 +54,8 @@ function CustomRequest({ about }: { about: string }) {
         <span className="eyebrow">Details *</span>
         <textarea name="details" rows={5} required placeholder="What you'd like changed: seat depth, size, fabric, finish, the room it's for" />
       </label>
-      <button className="btn full" type="submit">Send request</button>
+      <FormError message={error} />
+      <button className="btn full" type="submit" disabled={sending}>{sending ? "Sending…" : "Send request"}</button>
     </form>
   );
 }
