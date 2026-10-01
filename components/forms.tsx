@@ -1,8 +1,54 @@
 "use client";
 
-// Forms have no backend yet: submitting swaps to a thank-you state, as in the design.
-// TODO: wire each onSubmit to a form endpoint (e.g. a route handler that emails the studio).
+// Every form posts to /api/forms, which emails the studio. A failed send shows an
+// error with the studio's address rather than a thank-you.
 import { useRef, useState } from "react";
+
+export const STUDIO_EMAIL = "hello@ashwickhome.com";
+const MAX_UPLOAD_BYTES = 4 * 1024 * 1024; // matches the limit in app/api/forms/route.ts
+
+type FormName = "newsletter" | "bespoke" | "trade" | "hospitality" | "custom";
+type Status = "idle" | "sending" | "sent" | "error";
+
+/** Submit state for one form. `validate` can veto the send (and should report why). */
+export function useFormSend(form: FormName, validate?: () => boolean) {
+  const [status, setStatus] = useState<Status>("idle");
+  const [error, setError] = useState("");
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (status === "sending" || (validate && !validate())) return;
+    const data = new FormData(e.currentTarget);
+    data.set("form", form);
+    const bytes = [...data.values()].reduce((n, v) => n + (typeof v === "string" ? 0 : v.size), 0);
+    if (bytes > MAX_UPLOAD_BYTES) {
+      setStatus("error");
+      setError(`Attachments must be under 4 MB in total. You can email larger files to ${STUDIO_EMAIL}.`);
+      return;
+    }
+    setStatus("sending");
+    setError("");
+    try {
+      const res = await fetch("/api/forms", { method: "POST", body: data });
+      const body = await res.json().catch(() => ({}));
+      if (!res.ok || !body.ok) throw new Error(body.error);
+      setStatus("sent");
+    } catch (err) {
+      setStatus("error");
+      const reason = err instanceof Error && err.message ? err.message + " " : "";
+      setError(`${reason}Please try again, or email us at ${STUDIO_EMAIL}.`);
+    }
+  };
+  return { status, error, onSubmit, sending: status === "sending", sent: status === "sent" };
+}
+
+/** Hidden field that only bots fill in; the server drops those submissions. */
+export function Honeypot() {
+  return <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" className="hp" aria-hidden="true" />;
+}
+
+export function FormError({ message }: { message: string }) {
+  return message ? <p className="form-error full" role="alert">{message}</p> : null;
+}
 
 function ThankYou({ children }: { children: React.ReactNode }) {
   return (
@@ -14,19 +60,23 @@ function ThankYou({ children }: { children: React.ReactNode }) {
 }
 
 export function Newsletter() {
-  const [done, setDone] = useState(false);
+  const { sent, sending, error, onSubmit } = useFormSend("newsletter");
   return (
     <section className="sec nl">
       <div className="wrap center-head">
         <h2 className="h2">New pieces, when they&apos;re ready.</h2>
         <p className="body" style={{ marginTop: 20 }}>A short letter when something new leaves the workshop. Nothing more.</p>
-        {done ? (
+        {sent ? (
           <p className="nl-done" role="status">Thank you. You&apos;re on the list.</p>
         ) : (
-          <form className="nl-form" onSubmit={(e) => { e.preventDefault(); setDone(true); }}>
-            <input type="email" name="email" required placeholder="Email address" aria-label="Email address" />
-            <button type="submit">Subscribe</button>
-          </form>
+          <>
+            <form className="nl-form" onSubmit={onSubmit}>
+              <Honeypot />
+              <input type="email" name="email" required placeholder="Email address" aria-label="Email address" />
+              <button type="submit" disabled={sending}>{sending ? "Sending…" : "Subscribe"}</button>
+            </form>
+            <FormError message={error} />
+          </>
         )}
       </div>
     </section>
@@ -36,12 +86,14 @@ export function Newsletter() {
 const BESPOKE_MATERIALS = ["Solid hardwood", "Organic wool", "Organic linen", "Organic wool bouclé", "Brushed organic wool", "Vegetable-tanned leather"];
 
 export function BespokeForm() {
-  const [sent, setSent] = useState(false);
+  const { sent, sending, error, onSubmit } = useFormSend("bespoke");
   const [mats, setMats] = useState<string[]>([]);
   const toggle = (m: string) => setMats((c) => (c.includes(m) ? c.filter((x) => x !== m) : [...c, m]));
   if (sent) return <ThankYou>We&apos;ve received your idea and will be in touch to talk it through.</ThankYou>;
   return (
-    <form className="tform" onSubmit={(e) => { e.preventDefault(); setSent(true); }}>
+    <form className="tform" onSubmit={onSubmit}>
+      <Honeypot />
+      <input type="hidden" name="materials" value={mats.join(", ")} />
       <label><span className="eyebrow">Name</span><input name="name" autoComplete="name" required /></label>
       <label><span className="eyebrow">Email</span><input name="email" type="email" autoComplete="email" required /></label>
       <label><span className="eyebrow">Phone</span><input name="phone" type="tel" autoComplete="tel" /></label>
@@ -63,7 +115,8 @@ export function BespokeForm() {
       </div>
       <label className="full"><span className="eyebrow">Describe your piece</span><textarea name="description" rows={5} placeholder="How you'll use it, the room it's for, the feeling you want"></textarea></label>
       <label className="full file"><span className="eyebrow">Sketches or inspiration photos</span><input name="files" type="file" multiple accept="image/*,.pdf" /></label>
-      <button className="btn full" type="submit">Send your idea</button>
+      <FormError message={error} />
+      <button className="btn full" type="submit" disabled={sending}>{sending ? "Sending…" : "Send your idea"}</button>
     </form>
   );
 }
@@ -101,7 +154,6 @@ function ContactFields() {
 const DOC_TYPES = ".jpg,.jpeg,.png,.pdf";
 
 export function TradeApplyForm() {
-  const [sent, setSent] = useState(false);
   const [tax, setTax] = useState<"yes" | "no">("no");
   const card = useRef<HTMLInputElement>(null);
   const license = useRef<HTMLInputElement>(null);
@@ -113,16 +165,13 @@ export function TradeApplyForm() {
     return ok;
   };
 
+  const { sent, sending, error, onSubmit } = useFormSend("trade", () => checkDocs() || (card.current?.reportValidity(), false));
+
   if (sent) return <ThankYou>We&apos;ve received your application and will be in touch.</ThankYou>;
   return (
-    <form
-      className="tform"
-      onSubmit={(e) => {
-        e.preventDefault();
-        if (!checkDocs()) return card.current?.reportValidity();
-        setSent(true);
-      }}
-    >
+    <form className="tform" onSubmit={onSubmit}>
+      <Honeypot />
+      <input type="hidden" name="taxExempt" value={tax === "yes" ? "Yes" : "No"} />
       <label className="full">
         <span className="eyebrow">Profession *</span>
         <select name="profession" defaultValue="" required>
@@ -148,20 +197,23 @@ export function TradeApplyForm() {
         </div>
       </div>
       {tax === "yes" && <label className="full"><span className="eyebrow">Tax ID</span><input name="taxId" /></label>}
-      <button className="btn full" type="submit">Submit application</button>
+      <FormError message={error} />
+      <button className="btn full" type="submit" disabled={sending}>{sending ? "Sending…" : "Submit application"}</button>
     </form>
   );
 }
 
 export function HospitalityForm() {
-  const [sent, setSent] = useState(false);
+  const { sent, sending, error, onSubmit } = useFormSend("hospitality");
   if (sent) return <ThankYou>We&apos;ve received your request and will be in touch.</ThankYou>;
   return (
-    <form className="tform" onSubmit={(e) => { e.preventDefault(); setSent(true); }}>
+    <form className="tform" onSubmit={onSubmit}>
+      <Honeypot />
       <ContactFields />
       <label className="full"><span className="eyebrow">Your project *</span><textarea name="project" rows={5} required placeholder="The property, the rooms, the pieces and quantities, your timeline"></textarea></label>
       <label className="full file"><span className="eyebrow">Plans, sketches or references</span><input name="files" type="file" multiple accept="image/*,.pdf" /></label>
-      <button className="btn full" type="submit">Send request</button>
+      <FormError message={error} />
+      <button className="btn full" type="submit" disabled={sending}>{sending ? "Sending…" : "Send request"}</button>
     </form>
   );
 }
