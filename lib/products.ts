@@ -35,7 +35,6 @@ export const FABRICS: Record<FabricId, Fabric> = {
   },
   blend: {
     id: "blend", label: "Linen Blend", swatch: "#D9D1C2", tex: "linen",
-    detail: "39% linen, 35% cotton, 26% PET.",
     colors: [
       { id: "ivory", label: "Ivory", code: "FA6025", swatch: "#E2DCCF" },
       { id: "sand", label: "Sand", code: "FA6053", swatch: "#CDC3B1" },
@@ -154,6 +153,7 @@ export const PRODUCTS: Product[] = [
     photos: ["marlowe-studio", "marlowe-1", "marlowe-2"], cardSingle: true,
     fabrics: ["wool", "boucle", "linen"], designedFabric: "wool", depth: true, length: true, finish: true,
     materials: "Solid oak plinth, hand-fluted · Brushed organic wool · Natural oil finish",
+    delivery: WHITE_GLOVE,
   },
   {
     id: "chatsworth", name: "The Chatsworth", type: "Sofa", category: "sofas", price: 10500,
@@ -161,6 +161,7 @@ export const PRODUCTS: Product[] = [
     photos: ["chatsworth-s1"],
     fabrics: ["boucle", "wool", "linen"], designedFabric: "boucle", depth: true, length: true, finish: false,
     materials: "Solid hardwood frame · Ivory organic wool bouclé",
+    delivery: WHITE_GLOVE,
   },
   {
     id: "cotswold", name: "The Cotswold", type: "Sofa", category: "sofas", price: 8500, priceFrom: true,
@@ -169,6 +170,7 @@ export const PRODUCTS: Product[] = [
     cardPhoto: "csofa-hero-square",
     fabrics: ["boucle", "wool", "linen"], designedFabric: "boucle", depth: true, length: true, finish: false,
     materials: "Solid hardwood frame · Ivory organic wool bouclé · Modular sections with chaise",
+    delivery: WHITE_GLOVE,
   },
   {
     id: "burford", name: "The Burford", type: "Sofa", category: "sofas", price: 6500, priceFrom: true,
@@ -176,6 +178,7 @@ export const PRODUCTS: Product[] = [
     photos: ["burford-hero", "burford-1", "burford-2", "burford-3"],
     fabrics: ["linen", "wool", "boucle"], designedFabric: "linen", depth: true, length: true, finish: false,
     materials: "Solid hardwood frame · Removable organic linen slipcover",
+    delivery: WHITE_GLOVE,
   },
   {
     id: "pembroke", name: "The Pembroke", type: "Chair", category: "chairs", price: 5000,
@@ -209,6 +212,7 @@ export const PRODUCTS: Product[] = [
     photos: ["cchair-studio", "cchair-c"], cardSingle: true,
     fabrics: ["boucle", "wool", "linen"], designedFabric: "boucle", depth: true, length: false, finish: false,
     materials: "Solid hardwood frame · Organic wool bouclé",
+    delivery: WHITE_GLOVE,
   },
   {
     id: "clifton", name: "The Clifton", type: "Chair", category: "chairs", price: 5500,
@@ -216,6 +220,7 @@ export const PRODUCTS: Product[] = [
     photos: ["clifton-s1", "clifton-s2"],
     fabrics: ["boucle", "wool", "linen"], designedFabric: "boucle", depth: true, length: false, finish: true,
     materials: "Solid walnut swivel base · Textured organic wool weave · Stitched vegetable-tanned leather band",
+    delivery: WHITE_GLOVE,
   },
 ];
 
@@ -242,6 +247,6 @@ export const MATERIALS: [string, string][] = [
   ["Solid hardwood", "Frames built to hold for generations."],
   ["Organic wool", "Natural loft and resilience in every cushion."],
   ["Organic linen", "Breathable, and softer with every year."],
-  ["Kapok", "A light, plant-based fill in place of foam."],
+  ["Latex and coir", "Organic natural latex and coconut coir, in place of polyurethane foam."],
   ["Natural oils", "Plant-based finishes for the wood."],
 ];

@@ -47,7 +47,7 @@ export function MaterialsBlock({ heading = true }: { heading?: boolean }) {
           </div>
         ))}
       </div>
-      <p className="closing">Nothing synthetic. No foam, no chemical flame retardants, no plastic.</p>
+      <p className="closing">Nothing synthetic. No polyurethane foam, no chemical flame retardants, no plastic.</p>
     </>
   );
 }

@@ -13,7 +13,7 @@ function HomeHero() {
         <div className="eyebrow">Organic furniture · Handmade in the USA</div>
         <h1 className="h1">Made of nature. Built to last.</h1>
         <p className="hero-body">
-          Sofas and chairs made by hand, one at a time, from solid hardwood, organic wool, linen and kapok. Nothing synthetic.
+          Sofas and chairs made by hand, one at a time, from solid hardwood, organic latex, organic wool, coconut coir and linen. Nothing synthetic.
         </p>
         <div className="btns">
           <Link href="/collections/all" className="btn light">Shop the collection</Link>
@@ -26,8 +26,8 @@ function HomeHero() {
 
 const VALUES: [string, string][] = [
   ["Handmade in the USA", "Built to order in our American workshop."],
-  ["Organic, all natural", "Solid hardwood, organic wool, linen and kapok."],
-  ["Nothing synthetic", "No foam, no chemical flame retardants, no plastic."],
+  ["Organic, all natural", "Solid hardwood, organic latex, organic wool and coconut coir."],
+  ["Nothing synthetic", "No polyurethane foam, no chemical flame retardants, no plastic."],
   ["As designed, or yours", "Choose fabric, seat depth, length and finish."],
 ];
 

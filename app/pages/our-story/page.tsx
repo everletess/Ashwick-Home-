@@ -23,7 +23,7 @@ export default function StoryPage() {
           <h2>Made by hand, in the USA</h2>
           <p>Every piece is built to order by skilled craftspeople in our American workshop. Frames are cut and joined by hand, the fill is layered by hand, and the fabric is fitted and stitched by hand. Nothing sits in a warehouse. Your piece is started when you order it and finished for your home.</p>
           <h2>What goes into it</h2>
-          <p>Solid hardwood frames. Organic wool, linen and kapok. Natural oils. Nothing synthetic: no foam, no chemical flame retardants, no plastic. If we can&apos;t make a piece from materials we trust, we don&apos;t make it.</p>
+          <p>Solid hardwood frames. Organic latex, organic wool and coconut coir. Natural oils. Nothing synthetic: no polyurethane foam, no chemical flame retardants, no plastic. If we can&apos;t make a piece from materials we trust, we don&apos;t make it.</p>
           <h2>As designed, or as you&apos;d like it</h2>
           <p>Choose a piece as we designed it, or make it your own with a different fabric, depth, length or finish. Either way, it&apos;s made once, for one home.</p>
           <p className="prose-close">One piece at a time, for one home at a time. Built to last a lifetime, then handed down.</p>

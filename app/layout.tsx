@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
   title: { default: "Ashwick Home — Made of nature. Built to last.", template: "%s — Ashwick Home" },
   description:
-    "Organic furniture, handmade to order in the USA from solid hardwood, organic wool, linen and kapok. Nothing synthetic.",
+    "Organic furniture, handmade to order in the USA from solid hardwood, organic latex, organic wool, coconut coir and linen. Nothing synthetic.",
 };
 
 // Matches the header, so the mobile browser chrome blends into the page.
