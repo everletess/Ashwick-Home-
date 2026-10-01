@@ -259,7 +259,7 @@ export const PRODUCTS: Product[] = [
     line: "A sculptural wingback lounge chair on a swivel base, in Linen Blend, Organic Cotton or Italian Linen.",
     photos: [
       "pembroke-blend-ivory", "pembroke-blend-sand", "pembroke-blend-coco", "pembroke-blend-dove",
-      "pembroke-cotton-natural", "pembroke-cotton-khaki",
+      "pembroke-cotton-cream", "pembroke-cotton-khaki",
       "pembroke-italian-coco", "pembroke-italian-ivory", "pembroke-italian-moss",
       "pembroke-1", "pembroke-2",
     ],
@@ -269,7 +269,7 @@ export const PRODUCTS: Product[] = [
       "pembroke-blend-sand": { fabric: "blend", color: "sand" },
       "pembroke-blend-coco": { fabric: "blend", color: "coco" },
       "pembroke-blend-dove": { fabric: "blend", color: "dove" },
-      "pembroke-cotton-natural": { fabric: "cotton", color: "natural" },
+      "pembroke-cotton-cream": { fabric: "cotton", color: "cream" },
       "pembroke-cotton-khaki": { fabric: "cotton", color: "khaki" },
       "pembroke-italian-coco": { fabric: "italian", color: "coco" },
       "pembroke-italian-ivory": { fabric: "italian", color: "ivory" },
