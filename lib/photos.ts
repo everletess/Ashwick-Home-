@@ -33,6 +33,7 @@ import marloweSofaOakCorkIvory2 from "@/assets/photos/marlowe-sofa-oak-cork-ivor
 import marloweStudio from "@/assets/photos/marlowe-studio.jpg";
 import pembroke1 from "@/assets/photos/pembroke-1.jpg";
 import pembroke2 from "@/assets/photos/pembroke-2.jpg";
+import pembrokeBlendDove from "@/assets/photos/pembroke-blend-dove.jpg";
 import pembrokeBlendIvory from "@/assets/photos/pembroke-blend-ivory.jpg";
 import pembrokeBlendSand from "@/assets/photos/pembroke-blend-sand.jpg";
 import pembrokeBlendCoco from "@/assets/photos/pembroke-blend-coco.jpg";
@@ -75,6 +76,7 @@ export const PHOTOS = {
   "pembroke-1": pembroke1,
   "pembroke-2": pembroke2,
   "pembroke-blend-ivory": pembrokeBlendIvory,
+  "pembroke-blend-dove": pembrokeBlendDove,
   "pembroke-blend-sand": pembrokeBlendSand,
   "pembroke-blend-coco": pembrokeBlendCoco,
   "pembroke-cotton-natural": pembrokeCottonNatural,

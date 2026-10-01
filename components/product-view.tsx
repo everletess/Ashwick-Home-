@@ -3,7 +3,7 @@
 import { Fragment, useRef, useState } from "react";
 import { useCart } from "@/components/cart";
 import { Photo, Swatch } from "@/components/photo";
-import { DEPTHS, FABRICS, FINISHES, LEAD_TIME, LENGTHS, WOODS, fabricsFor, fmt, getProduct, photoFor, pieceOf, priceFor, type FabricId, type Option, type PhotoTag } from "@/lib/products";
+import { DEPTHS, FABRICS, FINISHES, LEAD_TIME, LENGTHS, WOODS, fabricsFor, fmt, getProduct, nearestPhoto, photoFor, pieceOf, priceFor, type FabricId, type Option, type PhotoTag } from "@/lib/products";
 
 type Mode = "designed" | "custom";
 
@@ -61,8 +61,8 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
 
   // Choosing an option jumps the gallery to the photo that best matches the new selection.
   const show = (next: PhotoTag) => {
-    const ph = photoFor(p, next);
-    if (ph) setImg(p.photos.indexOf(ph));
+    const ph = nearestPhoto(p, next);
+    setImg(ph ? p.photos.indexOf(ph) : 0);
   };
   const firstColor = (f: FabricId) => FABRICS[f].colors?.[0].id;
   const custom = mode === "custom";

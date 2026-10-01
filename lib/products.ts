@@ -144,19 +144,23 @@ export function cardPrice(p: Product) {
   return { price: min, from: !!p.priceFrom || prices.some((x) => x !== min) };
 }
 
-/** The photo whose tags best match a selection; tags that are set must all match. */
-export function photoFor(p: Product, sel: PhotoTag): PhotoKey | undefined {
+/** The photo whose tags best match a selection; tags that are set must all match, except ignored ones. */
+export function photoFor(p: Product, sel: PhotoTag, ignore: (keyof PhotoTag)[] = []): PhotoKey | undefined {
   let best: PhotoKey | undefined;
   let bestScore = 0;
   for (const ph of p.photos) {
     const tag = p.photoTags?.[ph];
     if (!tag) continue;
-    const keys = Object.keys(tag) as (keyof PhotoTag)[];
+    const keys = (Object.keys(tag) as (keyof PhotoTag)[]).filter((k) => !ignore.includes(k));
     if (keys.some((k) => tag[k] !== sel[k])) continue;
     if (keys.length > bestScore) [best, bestScore] = [ph, keys.length];
   }
   return best;
 }
+
+/** Closest photo for a selection: exact, then ignoring the wood, then the color too. */
+export const nearestPhoto = (p: Product, sel: PhotoTag) =>
+  photoFor(p, sel) ?? photoFor(p, sel, ["wood"]) ?? photoFor(p, sel, ["wood", "color"]);
 
 const WHITE_GLOVE = { label: "White glove delivery", price: 750 };
 
@@ -254,7 +258,7 @@ export const PRODUCTS: Product[] = [
     id: "pembroke", name: "The Pembroke", type: "Chair", category: "chairs", price: 5000,
     line: "A sculptural wingback lounge chair on a swivel base, in Linen Blend, Organic Cotton or Italian Linen.",
     photos: [
-      "pembroke-blend-ivory", "pembroke-blend-sand", "pembroke-blend-coco",
+      "pembroke-blend-ivory", "pembroke-blend-sand", "pembroke-blend-coco", "pembroke-blend-dove",
       "pembroke-cotton-natural", "pembroke-cotton-khaki",
       "pembroke-italian-coco", "pembroke-italian-ivory", "pembroke-italian-moss",
       "pembroke-1", "pembroke-2",
@@ -264,6 +268,7 @@ export const PRODUCTS: Product[] = [
       "pembroke-blend-ivory": { fabric: "blend", color: "ivory" },
       "pembroke-blend-sand": { fabric: "blend", color: "sand" },
       "pembroke-blend-coco": { fabric: "blend", color: "coco" },
+      "pembroke-blend-dove": { fabric: "blend", color: "dove" },
       "pembroke-cotton-natural": { fabric: "cotton", color: "natural" },
       "pembroke-cotton-khaki": { fabric: "cotton", color: "khaki" },
       "pembroke-italian-coco": { fabric: "italian", color: "coco" },
