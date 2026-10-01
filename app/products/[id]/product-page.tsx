@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { ProductView } from "@/components/product-view";
 import { ProductGrid } from "@/components/sections";
 import { PHOTOS } from "@/lib/photos";
-import { PRODUCTS, getProduct, relatedTo } from "@/lib/products";
+import { LEAD_TIME, PRODUCTS, constructionFor, getProduct, relatedTo } from "@/lib/products";
 
 // Shared by /products/:id ("As designed") and /products/:id/customize ("Customize").
 export type ProductParams = { params: Promise<{ id: string }> };
@@ -22,6 +22,7 @@ export async function productMetadata({ params }: ProductParams): Promise<Metada
 export async function ProductPage({ params, mode }: ProductParams & { mode: "designed" | "custom" }) {
   const p = getProduct((await params).id);
   if (!p) notFound();
+  const construction = constructionFor(p);
   return (
     <main>
       <div className="crumb wrap">
@@ -44,12 +45,30 @@ export async function ProductPage({ params, mode }: ProductParams & { mode: "des
             <div className="spec"><div className="eyebrow">Materials</div><p>{p.materials}</p></div>
             <div className="spec"><div className="eyebrow">Dimensions</div><p>[DIMENSIONS]</p></div>
             <div className="spec"><div className="eyebrow">Made</div><p>To order, by hand, in our American workshop.</p></div>
+            <div className="spec"><div className="eyebrow">Lead time</div><p>{p.leadTime ?? LEAD_TIME}</p></div>
             <div className="spec"><div className="eyebrow">Payment</div><p>In full at checkout.</p></div>
           </div>
         </div>
       </section>
 
-      <section className="sec">
+      <section className="sec" id="construction">
+        <div className="wrap specs">
+          <div>
+            <div className="eyebrow">Construction</div>
+            <h2 className="h2 construct-h">{construction.statement}</h2>
+          </div>
+          <div>
+            <p className="body">{construction.intro}</p>
+            <div className="spec-grid construct-grid">
+              {construction.rows.map(([k, v]) => (
+                <div className="spec" key={k}><div className="eyebrow">{k}</div><p>{v}</p></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="sec linen">
         <div className="wrap">
           <div className="split-head">
             <div>

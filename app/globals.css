@@ -133,8 +133,8 @@ button.chip{cursor:pointer}
 .card-img{position:relative;aspect-ratio:1/1;overflow:hidden;background:var(--linen)}
 .card-img img,.card-img .ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.6,.2,1),opacity .6s}
 .card-img .alt{opacity:0}
-.card-img img[alt="The Marlowe"]{transform:scale(1.18);transform-origin:39% 66%}.card-img img[alt="The Pembroke"]{transform:scale(1.28);transform-origin:52% 60%}
-@media (hover:hover){.card:hover .card-img .alt{opacity:1}.card:hover .card-img img{transform:scale(1.025)}.card:hover .card-img img[alt="The Pembroke"]{transform:scale(1.31)}.card:hover .card-img img[alt="The Marlowe"]{transform:scale(1.2)}}
+.card-img img[alt="The Marlowe"]{transform:scale(1.18);transform-origin:39% 66%}
+@media (hover:hover){.card:hover .card-img .alt{opacity:1}.card:hover .card-img img{transform:scale(1.025)}.card:hover .card-img img[alt="The Marlowe"]{transform:scale(1.2)}}
 .card-cta{position:absolute;left:16px;right:16px;bottom:16px;background:rgba(246,242,236,.96);color:var(--ink);text-align:center;padding:15px;font:500 10px var(--sans);letter-spacing:.26em;text-transform:uppercase;opacity:0;transform:translateY(8px);transition:opacity .35s,transform .35s}
 @media (hover:hover){.card:hover .card-cta{opacity:1;transform:none}}
 .card:hover{color:var(--ink)}
@@ -232,6 +232,18 @@ button.chip{cursor:pointer}
 .spec-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:36px 56px}
 .spec{border-top:1px solid rgba(42,37,31,.28);padding-top:18px}
 .spec p{font:300 21px/1.45 var(--serif);margin:10px 0 0}
+.construct-h{text-transform:uppercase;letter-spacing:.02em;font-size:clamp(30px,3.2vw,46px)}
+.construct-grid{margin-top:40px}
+.choices{display:flex;flex-direction:column;gap:24px}
+.custom-req{display:flex;flex-direction:column;gap:22px}
+.custom-req label{display:flex;flex-direction:column;gap:8px}
+.custom-req input,.custom-req textarea{background:transparent;border:0;border-bottom:1px solid rgba(42,37,31,.4);padding:12px 0;font:300 17px var(--sans);color:var(--ink);outline:0;border-radius:0;resize:vertical}
+.custom-req input:focus,.custom-req textarea:focus{border-bottom-color:var(--ink)}
+.gal-note{margin:10px 0 0;font:400 11px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--walnut)}
+.color-chip{width:52px;height:52px}
+.pdp-price+.delivery{margin-top:-18px}
+.lead-time{margin:0;font:400 15px/1.5 var(--sans);color:var(--ink);display:flex;align-items:center;gap:12px}
+.lead-time::before{content:'';flex:none;width:7px;height:7px;border-radius:50%;background:var(--sage)}
 
 .prose{max-width:600px;margin:0 auto;padding:0 var(--gut);box-sizing:content-box}
 .prose p{font:300 18px/1.85 var(--sans);color:var(--ink);margin:0 0 26px;text-wrap:pretty}

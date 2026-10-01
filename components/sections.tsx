@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Photo } from "@/components/photo";
-import { MATERIALS, fmt, type Product } from "@/lib/products";
+import { MATERIALS, cardPrice, fmt, type Product } from "@/lib/products";
 
 const CARD_SIZES = "(max-width: 620px) 100vw, (max-width: 1180px) 50vw, 460px";
 
@@ -14,7 +14,7 @@ export function ProductCard({ p, custom }: { p: Product; custom?: boolean }) {
       </div>
       <div className="card-row">
         <span className="card-name">{p.name}</span>
-        <span className="card-price">{p.priceFrom ? "From " : ""}{fmt(p.price)}</span>
+        <span className="card-price">{cardPrice(p).from ? "From " : ""}{fmt(cardPrice(p).price)}</span>
       </div>
       <p className="card-line">{p.line}</p>
       <div className="card-meta">{p.type} · Made to order · Customizable</div>
@@ -47,7 +47,7 @@ export function MaterialsBlock({ heading = true }: { heading?: boolean }) {
           </div>
         ))}
       </div>
-      <p className="closing">Nothing synthetic. No foam, no chemical flame retardants, no plastic.</p>
+      <p className="closing">Nothing synthetic. No polyurethane foam, no chemical flame retardants, no plastic.</p>
     </>
   );
 }

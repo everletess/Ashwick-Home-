@@ -3,7 +3,7 @@ import { MadeByHand, MaterialsBlock } from "@/components/sections";
 
 export const metadata: Metadata = {
   title: "Materials",
-  description: "Solid hardwood, organic wool, organic linen, kapok and natural oils. If we can't make a piece from materials we trust, we don't make it.",
+  description: "Solid hardwood, organic latex, organic wool, coconut coir, organic linen and natural oils. If we can't make a piece from materials we trust, we don't make it.",
 };
 
 export default function MaterialsPage() {

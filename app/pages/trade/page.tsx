@@ -67,7 +67,7 @@ export default function TradePage() {
               <div className="eyebrow">The trade program</div>
               <h2 className="proc-h">Organic furniture, specified to your project.</h2>
               <p className="body">For interior designers, architects and stylists working on residential projects. Order any piece as designed or customized, request fabric swatches, and place orders through your trade account.</p>
-              <p className="body">Solid hardwood, organic wool, organic linen, kapok and natural oils. No foam, no chemical flame retardants, no plastic.</p>
+              <p className="body">Solid hardwood, organic latex, organic wool, coconut coir and natural oils. No polyurethane foam, no chemical flame retardants, no plastic.</p>
               <ScrollLink to="apply" className="ulink">Apply for a trade account</ScrollLink>
             </div>
           </div>
