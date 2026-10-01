@@ -12,6 +12,8 @@ export type CartLine = {
   qty: number;
   mode: "As designed" | "Customized";
   options: [string, string][];
+  /** Per-piece delivery charge (e.g. white glove), added to the subtotal. */
+  delivery?: { label: string; price: number };
 };
 
 type Cart = {
@@ -63,7 +65,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const value = useMemo<Cart>(() => {
     const count = items.reduce((s, i) => s + i.qty, 0);
     const unpriced = items.some((i) => i.price == null);
-    const subtotal = unpriced ? null : items.reduce((s, i) => s + (i.price ?? 0) * i.qty, 0);
+    const subtotal = unpriced ? null : items.reduce((s, i) => s + ((i.price ?? 0) + (i.delivery?.price ?? 0)) * i.qty, 0);
     return { items, open, setOpen, add, remove, qty, count, subtotal };
   }, [items, open, add, remove, qty]);
 

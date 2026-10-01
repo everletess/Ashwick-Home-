@@ -2,11 +2,21 @@
 // API (handles = product ids, collections = categories).
 import type { PhotoKey } from "@/lib/photos";
 
-export type FabricId = "linen" | "boucle" | "wool" | "leather";
+export type FabricId = "linen" | "boucle" | "wool" | "leather" | "italian" | "blend" | "cotton";
 export type Category = "sofas" | "chairs";
 export type CollectionHandle = "all" | Category;
 
-export type Fabric = { id: FabricId; label: string; swatch: string; tex: string };
+export type FabricColor = { id: string; label: string; code: string; swatch: string };
+export type Fabric = {
+  id: FabricId;
+  label: string;
+  swatch: string;
+  tex: string;
+  /** Composition / mill line shown under the fabric picker. */
+  detail?: string;
+  /** Colorways; the first is the default. */
+  colors?: FabricColor[];
+};
 export type Option = { id: string; label: string };
 
 export const FABRICS: Record<FabricId, Fabric> = {
@@ -14,6 +24,34 @@ export const FABRICS: Record<FabricId, Fabric> = {
   boucle: { id: "boucle", label: "Organic wool bouclé", swatch: "#ECE5D8", tex: "boucle" },
   wool: { id: "wool", label: "Brushed organic wool", swatch: "#B8AB96", tex: "wool" },
   leather: { id: "leather", label: "Vegetable-tanned leather", swatch: "#A36A40", tex: "leather" },
+  italian: {
+    id: "italian", label: "Italian Linen", swatch: "#B9AD94", tex: "linen",
+    detail: "Washed wool and linen blend: 51% linen, 49% wool.",
+    colors: [
+      { id: "coco", label: "Coco", code: "FAQ559 0007", swatch: "#B5A88D" },
+      { id: "moss", label: "Moss", code: "FAQ559 0001", swatch: "#5F6752" },
+      { id: "ivory", label: "Ivory", code: "FAQ559 0005", swatch: "#D8D5CC" },
+    ],
+  },
+  blend: {
+    id: "blend", label: "Linen Blend", swatch: "#D9D1C2", tex: "linen",
+    detail: "39% linen, 35% cotton, 26% PET.",
+    colors: [
+      { id: "ivory", label: "Ivory", code: "FA6025", swatch: "#E2DCCF" },
+      { id: "sand", label: "Sand", code: "FA6053", swatch: "#CDC3B1" },
+      { id: "coco", label: "Coco", code: "FA6059", swatch: "#A5896A" },
+      { id: "dove", label: "Dove", code: "FA6078", swatch: "#B8B3A9" },
+    ],
+  },
+  cotton: {
+    id: "cotton", label: "Organic Cotton", swatch: "#D6D2C4", tex: "linen",
+    detail: "100% certified organic cotton.",
+    colors: [
+      { id: "cream", label: "Cream", code: "FA152", swatch: "#E4E0D6" },
+      { id: "natural", label: "Natural", code: "FA151", swatch: "#C9C5B5" },
+      { id: "khaki", label: "Khaki", code: "FA154", swatch: "#8D957F" },
+    ],
+  },
 };
 export const SWATCH_ORDER: FabricId[] = ["linen", "boucle", "wool", "leather"];
 
@@ -53,7 +91,24 @@ export type Product = {
   materials: string;
   /** Shown on the product page when set, e.g. pieces held ready to ship. */
   leadTime?: string;
+  /** Price by fabric where it differs from the base price. */
+  fabricPrices?: Partial<Record<FabricId, number>>;
+  /** Photo of the piece in each fabric color, keyed "fabric:color" (e.g. "blend:sand"). */
+  colorPhotos?: Partial<Record<string, PhotoKey>>;
+  /** Delivery charged per piece on top of the price. */
+  delivery?: { label: string; price: number };
 };
+
+export const priceFor = (p: Product, fabric: FabricId) => p.fabricPrices?.[fabric] ?? p.price;
+
+/** Lowest price, and whether to prefix it with "From" (several prices, or a "from" base price). */
+export function cardPrice(p: Product) {
+  const prices = p.fabrics.map((f) => priceFor(p, f));
+  const min = Math.min(p.price, ...prices);
+  return { price: min, from: !!p.priceFrom || prices.some((x) => x !== min) };
+}
+
+const WHITE_GLOVE = { label: "White glove delivery", price: 750 };
 
 /** Construction spec from the workshop (Sue). Same for every sofa, and for every chair. */
 export type Construction = { statement: string; intro: string; rows: [string, string][] };
@@ -87,7 +142,8 @@ export function constructionFor(p: Product): Construction {
   };
 }
 
-const SHIPS_IN_4_WEEKS = "Available to ship within 4 weeks from the date of order.";
+/** Every piece is made by hand to order. */
+export const LEAD_TIME = "Handmade to order with a 3-week lead time.";
 
 export const PRODUCTS: Product[] = [
   {
@@ -96,7 +152,6 @@ export const PRODUCTS: Product[] = [
     photos: ["marlowe-studio", "marlowe-1", "marlowe-2"], cardSingle: true,
     fabrics: ["wool", "boucle", "linen"], designedFabric: "wool", depth: true, length: true, finish: true,
     materials: "Solid oak plinth, hand-fluted · Brushed organic wool · Natural oil finish",
-    leadTime: SHIPS_IN_4_WEEKS,
   },
   {
     id: "chatsworth", name: "The Chatsworth", type: "Sofa", category: "sofas", price: 10500,
@@ -122,11 +177,12 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "pembroke", name: "The Pembroke", type: "Chair", category: "chairs", price: 5000,
-    line: "A sculptural wingback lounge chair in warm organic wool bouclé, no visible legs.",
+    line: "A sculptural wingback lounge chair on a swivel base, in Linen Blend, Organic Cotton or Italian Linen.",
     photos: ["pembroke-1", "pembroke-2"], cardSingle: true,
-    fabrics: ["boucle", "wool", "linen"], designedFabric: "boucle", depth: true, length: false, finish: false,
-    materials: "Solid hardwood frame · Warm organic wool bouclé",
-    leadTime: SHIPS_IN_4_WEEKS,
+    fabrics: ["blend", "cotton", "italian"], designedFabric: "blend", depth: true, length: false, finish: false,
+    fabricPrices: { cotton: 5200, italian: 5700 },
+    delivery: WHITE_GLOVE,
+    materials: "Solid hardwood frame · Swivel base · Linen Blend, Organic Cotton or Italian Linen upholstery",
   },
   {
     id: "cotswold-chair", name: "The Cotswold Chair", type: "Chair", category: "chairs", price: 4000,

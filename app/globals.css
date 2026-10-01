@@ -234,6 +234,8 @@ button.chip{cursor:pointer}
 .spec p{font:300 21px/1.45 var(--serif);margin:10px 0 0}
 .construct-h{text-transform:uppercase;letter-spacing:.02em;font-size:clamp(30px,3.2vw,46px)}
 .construct-grid{margin-top:40px}
+.color-chip{width:52px;height:52px}
+.pdp-price+.delivery{margin-top:-18px}
 .lead-time{margin:0;font:400 15px/1.5 var(--sans);color:var(--ink);display:flex;align-items:center;gap:12px}
 .lead-time::before{content:'';flex:none;width:7px;height:7px;border-radius:50%;background:var(--sage)}
 

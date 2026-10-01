@@ -139,6 +139,9 @@ export function CartDrawer() {
                 {i.options.map(([k, v]) => (
                   <div className="line-opt" key={k}><span>{k}</span>{v}</div>
                 ))}
+                {i.delivery && (
+                  <div className="line-opt"><span>Delivery</span>{i.delivery.label} · {fmt(i.delivery.price * i.qty)}</div>
+                )}
                 <div className="line-act">
                   <div className="qty">
                     <button aria-label="Decrease quantity" onClick={() => cart.qty(i.lineId, i.qty - 1)}>−</button>
@@ -157,7 +160,11 @@ export function CartDrawer() {
               <span className="eyebrow">Subtotal</span>
               <span className="sub-v">{fmt(cart.subtotal)}</span>
             </div>
-            <p className="fine">Paid in full at checkout. Taxes and shipping calculated at checkout.</p>
+            <p className="fine">
+              {cart.items.every((i) => i.delivery)
+                ? "Paid in full at checkout. Includes delivery shown above. Taxes calculated at checkout."
+                : "Paid in full at checkout. Taxes and shipping calculated at checkout."}
+            </p>
             {/* TODO: create a Shopify checkout from the cart lines and redirect to its checkoutUrl. */}
             <button className="btn full">Check out</button>
           </div>
