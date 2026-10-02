@@ -55,7 +55,11 @@ export async function POST(req: Request) {
       };
     });
 
-    const checkoutUrl = await createCheckout(checkoutLines);
+    const rawUrl = await createCheckout(checkoutLines);
+    // Shopify returns the checkoutUrl using the store's custom domain (ashwickhome.com),
+    // but Next.js intercepts /cart/... paths and 404s. Send the browser directly to
+    // Shopify's own domain instead.
+    const checkoutUrl = rawUrl.replace("https://ashwickhome.com", "https://1j0scj-ce.myshopify.com");
     return NextResponse.json({ checkoutUrl });
   } catch (err) {
     console.error("[/api/checkout]", err);
