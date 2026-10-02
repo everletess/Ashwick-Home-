@@ -103,6 +103,32 @@ export function Header() {
 export function CartDrawer() {
   const cart = useCart();
   const close = () => cart.setOpen(false);
+  const [checking, setChecking] = useState(false);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
+
+  const checkout = async () => {
+    setChecking(true);
+    setCheckoutError(null);
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          lines: cart.items.map((i) => ({
+            productId: i.id,
+            qty: i.qty,
+            options: i.options,
+          })),
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.checkoutUrl) throw new Error(data.error ?? "Checkout failed");
+      window.location.href = data.checkoutUrl;
+    } catch (err) {
+      setCheckoutError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+      setChecking(false);
+    }
+  };
 
   useScrollLock(cart.open);
   useEffect(() => {
@@ -165,8 +191,10 @@ export function CartDrawer() {
                 ? "Paid in full at checkout. Includes delivery shown above. Taxes calculated at checkout."
                 : "Paid in full at checkout. Taxes and shipping calculated at checkout."}
             </p>
-            {/* TODO: create a Shopify checkout from the cart lines and redirect to its checkoutUrl. */}
-            <button className="btn full">Check out</button>
+            {checkoutError && <p className="fine" style={{ color: "var(--err, #b00)" }}>{checkoutError}</p>}
+            <button className="btn full" onClick={checkout} disabled={checking}>
+              {checking ? "Redirecting…" : "Check out"}
+            </button>
           </div>
         )}
       </aside>
