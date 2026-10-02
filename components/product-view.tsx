@@ -129,11 +129,10 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
       id: p.id,
       name: p.name,
       photo: photoFor(p, current) ?? p.cardPhoto ?? p.photos[0],
-      // "From" prices go in as the base price.
       price,
       delivery: p.delivery,
       qty: 1,
-      mode: "As designed",
+      mode: p.preorder ? "Pre-order" : "As designed",
       options: summary,
     });
 
@@ -196,7 +195,12 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
         {mode === "designed" ? (
           <div className="designed" role="tabpanel">
             <p className="lead-time">{p.leadTime ?? LEAD_TIME}</p>
-            <button className="btn full" onClick={add}>Add to cart · {fmt(price)}</button>
+            <button className="btn full" onClick={add}>
+              {p.preorder ? "Pre-order" : "Add to cart"} · {fmt(price)}
+            </button>
+            {p.preorder && (
+              <p className="fine">This piece is available to pre-order. We'll confirm your order and estimated ship date by email.</p>
+            )}
           </div>
         ) : (
           <div className="custom" role="tabpanel">

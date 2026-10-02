@@ -104,6 +104,8 @@ export type Product = {
   photoTags?: Partial<Record<PhotoKey, PhotoTag>>;
   /** Taken off the site for now (no page, card or link); set back to false to restore it. */
   hidden?: boolean;
+  /** Pre-order only — not yet ready to ship. */
+  preorder?: boolean;
   /** Leave out of the home page's list of names (e.g. the Marlowe's companion pieces). */
   hideInNames?: boolean;
   /** Plinth wood choice, in place of the finish option. */
@@ -224,6 +226,7 @@ const ALL_PRODUCTS: Product[] = [
   },
   {
     id: "chatsworth", name: "The Chatsworth", type: "Sofa", category: "sofas", price: 10500,
+    preorder: true,
     line: "A sculptural curved sofa in ivory organic wool bouclé.",
     photos: ["chatsworth-s1"],
     fabrics: ["boucle", "wool", "linen"], designedFabric: "boucle",
@@ -232,6 +235,7 @@ const ALL_PRODUCTS: Product[] = [
   },
   {
     id: "cotswold", name: "The Cotswold", type: "Sofa", category: "sofas", price: 8500, priceFrom: true,
+    preorder: true,
     line: "A deep, curved modular sofa in ivory organic wool bouclé, with a chaise.",
     photos: ["csofa-hero", "csofa-studio", "csofa-b", "csofa-c", "csofa-a", "cchair-c", "csofa-d"], cardSingle: true,
     cardPhoto: "csofa-hero-square",
@@ -241,6 +245,7 @@ const ALL_PRODUCTS: Product[] = [
   },
   {
     id: "burford", name: "The Burford", type: "Sofa", category: "sofas", price: 6500, priceFrom: true,
+    preorder: true,
     line: "A deep, slipcovered sofa in natural organic linen, with a tailored skirt.",
     photos: ["burford-hero", "burford-1", "burford-2", "burford-3"],
     fabrics: ["linen", "wool", "boucle"], designedFabric: "linen",
@@ -277,6 +282,7 @@ const ALL_PRODUCTS: Product[] = [
   },
   {
     id: "cotswold-chair", name: "The Cotswold Chair", type: "Chair", category: "chairs", price: 4000,
+    preorder: true,
     line: "A deep, rounded lounge chair in organic wool bouclé, made to sit beside the Cotswold sofa.",
     photos: ["cchair-studio", "cchair-c"], cardSingle: true,
     fabrics: ["boucle", "wool", "linen"], designedFabric: "boucle",

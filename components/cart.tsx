@@ -10,7 +10,7 @@ export type CartLine = {
   photo: PhotoKey;
   price: number | null;
   qty: number;
-  mode: "As designed" | "Customized";
+  mode: "As designed" | "Customized" | "Pre-order";
   options: [string, string][];
   /** Per-piece delivery charge (e.g. white glove), added to the subtotal. */
   delivery?: { label: string; price: number };
