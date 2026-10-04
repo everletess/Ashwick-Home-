@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRef, useState } from "react";
 import { useCart } from "@/components/cart";
 import { FormError, Honeypot, useFormSend } from "@/components/forms";
@@ -117,6 +118,19 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
   const price = priceFor(p, fabric);
   const fabricChoices = p.fabrics;
   const note = p.photoNotes?.[p.photos[img]];
+  // When the photo shows a different fabric, color or wood than the one chosen, say so.
+  const shown = p.photoTags?.[p.photos[img]];
+  const shownFabric = shown?.fabric && FABRICS[shown.fabric];
+  const differs = !!shown && (
+    (!!shown.fabric && shown.fabric !== fabric) ||
+    (!!shown.color && shown.color !== color) ||
+    (!!shown.wood && !!p.wood && shown.wood !== wood)
+  );
+  const shownAs = differs && shownFabric
+    ? [shownFabric.label, shownFabric.colors?.find((c) => c.id === shown?.color)?.label, shown?.wood && p.wood ? `on ${lab(WOODS, shown.wood).toLowerCase()}` : ""]
+        .filter(Boolean).join(" ")
+    : "";
+  const hasChoices = p.fabrics.length > 1 || !!selFabric.colors;
 
   const summary = [
     ["Fabric", selFabric.label],
@@ -141,8 +155,17 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
       <div className="gal">
         <div className="gal-main" onPointerDown={onPointerDown} onPointerUp={onPointerUp} onPointerCancel={() => (swipeX.current = null)}>
           <Photo src={p.photos[img]} label={p.name} sizes="(max-width: 960px) 100vw, 56vw" preload={img === 0} />
+          {hasChoices && (
+            <div className="sel-swatch" aria-live="polite">
+              <span className={"sel-chip tex-" + selFabric.tex} style={{ background: selColor?.swatch ?? selFabric.swatch }} />
+              <span className="sel-label">
+                <span className="eyebrow">Your selection</span>
+                {[selFabric.label, selColor?.label, p.wood ? lab(WOODS, wood) : ""].filter(Boolean).join(" · ")}
+              </span>
+            </div>
+          )}
         </div>
-        {note && <p className="gal-note">{note}</p>}
+        {(note || shownAs) && <p className="gal-note">{note ?? `Photo shows ${shownAs}`}</p>}
         {p.photos.length > 1 && (
           <div className="gal-thumbs">
             {p.photos.map((ph, i) => (
@@ -199,7 +222,7 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
               {p.preorder ? "Pre-order" : "Add to cart"} · {fmt(price)}
             </button>
             {p.preorder && (
-              <p className="fine">This piece is available to pre-order. We'll confirm your order and estimated ship date by email.</p>
+              <p className="fine">This piece is available to pre-order. We&apos;ll confirm your order and estimated ship date by email.</p>
             )}
           </div>
         ) : (
@@ -211,7 +234,7 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
         <div className="assure">
           <span>Made to order</span><span>Handmade in the USA</span><span>Paid in full at checkout</span>
         </div>
-        <a href="#" className="ulink">Order fabric swatches</a>
+        <Link href={`/pages/fabric-swatches?fabric=${fabric}${color ? `&color=${color}` : ""}`} className="ulink">Order fabric swatches</Link>
       </div>
     </section>
   );

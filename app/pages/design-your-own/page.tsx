@@ -14,7 +14,7 @@ type Step = { n: string; t: string; d: string; img?: PhotoKey; swatches?: boolea
 
 const STEPS: Step[] = [
   { n: "01", t: "Start with a piece, or an idea", d: "Begin with one of our pieces, or send us a sketch, a photo or a description of something that doesn’t exist yet.", img: "csofa-a" },
-  { n: "02", t: "Make it yours", d: "Choose the fabric, seat depth, length and wood finish. Every option, and every bespoke piece, is made from the same materials: solid hardwood, organic latex, organic wool, coconut coir and natural oils.", swatches: true, link: ["Order fabric swatches", "#"] },
+  { n: "02", t: "Make it yours", d: "Choose the fabric, seat depth, length and wood finish. Every option, and every bespoke piece, is made from the same materials: solid hardwood, organic latex, organic wool, coconut coir and natural oils.", swatches: true, link: ["Order fabric swatches", "/pages/fabric-swatches"] },
   { n: "03", t: "Talk it through", d: "For customized pieces, write to us any time before you order. For bespoke pieces, we’ll talk through proportions, materials and how the piece will be used before anything is made.", link: ["Contact us", "#"] },
   { n: "04", t: "Order and pay", d: "Customized pieces are ordered online and paid in full at checkout. Bespoke pieces: [BESPOKE ORDERING DETAILS]." },
   { n: "05", t: "Made by hand, in the USA", d: "Your piece is started when you order it. In our American workshop the frame is cut and joined by hand, the fill is layered by hand, and the cover is fitted and stitched by hand.", ph: "Hands at work in the workshop" },

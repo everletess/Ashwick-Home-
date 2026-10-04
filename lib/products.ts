@@ -74,7 +74,7 @@ export const WOODS: Option[] = [
   { id: "walnut", label: "Walnut" },
   { id: "oak", label: "Oak" },
 ];
-export const SWATCH_ORDER: FabricId[] = ["linen", "boucle", "wool", "leather"];
+export const SWATCH_ORDER: FabricId[] = ["irish", "blend", "cotton", "italian"];
 
 
 export type Product = {
@@ -191,6 +191,9 @@ export function constructionFor(p: Product): Construction {
   };
 }
 
+/** Price of one fabric swatch. */
+export const SWATCH_PRICE = 7;
+
 /** Every piece is made by hand to order. */
 export const LEAD_TIME = "Available to ship within 4 weeks from the date of order.";
 
@@ -219,6 +222,7 @@ const ALL_PRODUCTS: Product[] = [
     id: "marlowe-loveseat", name: "The Marlowe Loveseat", type: "Loveseat", category: "sofas", price: 6500,
     line: "The Marlowe as a two-seat loveseat, on the same hand-fluted solid wood plinth, in Irish Linen or Cork.",
     photos: ["marlowe-loveseat-walnut-linen"], hideInNames: true,
+    photoTags: { "marlowe-loveseat-walnut-linen": { wood: "walnut", fabric: "irish" } },
     fabricPrices: { cork: 7000 },
     fabrics: ["irish", "cork"], designedFabric: "irish", wood: true,
     delivery: WHITE_GLOVE,
@@ -227,29 +231,29 @@ const ALL_PRODUCTS: Product[] = [
   {
     id: "chatsworth", name: "The Chatsworth", type: "Sofa", category: "sofas", price: 10500,
     preorder: true,
-    line: "A sculptural curved sofa in ivory organic wool bouclé.",
+    line: "A sculptural curved sofa, in Linen Blend, Organic Cotton, Italian Linen or Irish Linen.",
     photos: ["chatsworth-s1"],
-    fabrics: ["boucle", "wool", "linen"], designedFabric: "boucle",
-    materials: "Solid hardwood frame · Ivory organic wool bouclé",
+    fabrics: ["blend", "cotton", "italian", "irish"], designedFabric: "blend",
+    materials: "Solid hardwood frame · Linen Blend, Organic Cotton, Italian Linen or Irish Linen upholstery",
     delivery: WHITE_GLOVE,
   },
   {
     id: "cotswold", name: "The Cotswold", type: "Sofa", category: "sofas", price: 8500, priceFrom: true,
     preorder: true,
-    line: "A deep, curved modular sofa in ivory organic wool bouclé, with a chaise.",
+    line: "A deep, curved modular sofa with a chaise, in Linen Blend, Organic Cotton, Italian Linen or Irish Linen.",
     photos: ["csofa-hero", "csofa-studio", "csofa-b", "csofa-c", "csofa-a", "cchair-c", "csofa-d"], cardSingle: true,
     cardPhoto: "csofa-hero-square",
-    fabrics: ["boucle", "wool", "linen"], designedFabric: "boucle",
-    materials: "Solid hardwood frame · Ivory organic wool bouclé · Modular sections with chaise",
+    fabrics: ["blend", "cotton", "italian", "irish"], designedFabric: "blend",
+    materials: "Solid hardwood frame · Modular sections with chaise · Linen Blend, Organic Cotton, Italian Linen or Irish Linen upholstery",
     delivery: WHITE_GLOVE,
   },
   {
     id: "burford", name: "The Burford", type: "Sofa", category: "sofas", price: 6500, priceFrom: true,
     preorder: true,
-    line: "A deep, slipcovered sofa in natural organic linen, with a tailored skirt.",
+    line: "A deep, slipcovered sofa with a tailored skirt, in Irish Linen, Linen Blend, Organic Cotton or Italian Linen.",
     photos: ["burford-hero", "burford-1", "burford-2", "burford-3"],
-    fabrics: ["linen", "wool", "boucle"], designedFabric: "linen",
-    materials: "Solid hardwood frame · Removable organic linen slipcover",
+    fabrics: ["irish", "blend", "cotton", "italian"], designedFabric: "irish",
+    materials: "Solid hardwood frame · Removable slipcover in Irish Linen, Linen Blend, Organic Cotton or Italian Linen",
     delivery: WHITE_GLOVE,
   },
   {
@@ -283,10 +287,10 @@ const ALL_PRODUCTS: Product[] = [
   {
     id: "cotswold-chair", name: "The Cotswold Chair", type: "Chair", category: "chairs", price: 4000,
     preorder: true,
-    line: "A deep, rounded lounge chair in organic wool bouclé, made to sit beside the Cotswold sofa.",
+    line: "A deep, rounded lounge chair made to sit beside the Cotswold sofa, in Linen Blend, Organic Cotton, Italian Linen or Irish Linen.",
     photos: ["cchair-studio", "cchair-c"], cardSingle: true,
-    fabrics: ["boucle", "wool", "linen"], designedFabric: "boucle",
-    materials: "Solid hardwood frame · Organic wool bouclé",
+    fabrics: ["blend", "cotton", "italian", "irish"], designedFabric: "blend",
+    materials: "Solid hardwood frame · Linen Blend, Organic Cotton, Italian Linen or Irish Linen upholstery",
     delivery: WHITE_GLOVE,
   },
   {
@@ -301,6 +305,7 @@ const ALL_PRODUCTS: Product[] = [
     id: "marlowe-chair", name: "The Marlowe Chair", type: "Chair", category: "chairs", price: 4500,
     line: "A deep lounge chair on a hand-fluted solid wood plinth, made to sit beside the Marlowe sofa. In Irish Linen or Cork.",
     photos: ["marlowe-chair-walnut-linen"], hideInNames: true,
+    photoTags: { "marlowe-chair-walnut-linen": { wood: "walnut", fabric: "irish" } },
     fabricPrices: { cork: 5000 },
     fabrics: ["irish", "cork"], designedFabric: "irish", wood: true,
     delivery: WHITE_GLOVE,
@@ -310,6 +315,7 @@ const ALL_PRODUCTS: Product[] = [
     id: "marlowe-ottoman", name: "The Marlowe Ottoman", type: "Ottoman", category: "chairs", price: 2500,
     line: "An ottoman on a hand-fluted solid wood plinth, to pair with the Marlowe sofa or chair. In Irish Linen or Cork.",
     photos: ["marlowe-ottoman-walnut-linen"], hideInNames: true,
+    photoTags: { "marlowe-ottoman-walnut-linen": { wood: "walnut", fabric: "irish" } },
     fabricPrices: { cork: 3000 },
     fabrics: ["irish", "cork"], designedFabric: "irish", wood: true,
     delivery: WHITE_GLOVE,
