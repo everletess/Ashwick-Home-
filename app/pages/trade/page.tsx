@@ -109,7 +109,7 @@ export default function TradePage() {
           <div className="proc-t">
             <div className="eyebrow">Fabric swatches</div>
             <h2 className="proc-h">Feel the fabrics before you specify.</h2>
-            <p className="body">Physical swatches of our organic linen, organic wool bouclé, brushed organic wool and vegetable-tanned leather, sent to your studio. [SWATCH TERMS]</p>
+            <p className="body">Physical swatches of our Irish Linen, Linen Blend, Organic Cotton, Italian Linen and Cork, sent to your studio. $7 per swatch.</p>
             <Link href="/pages/fabric-swatches" className="ulink">Request swatches</Link>
           </div>
           <SwatchGrid className="proc-v swgrid" />

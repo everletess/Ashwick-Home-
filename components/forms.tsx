@@ -83,7 +83,7 @@ export function Newsletter() {
   );
 }
 
-const BESPOKE_MATERIALS = ["Solid hardwood", "Organic wool", "Organic linen", "Organic wool bouclé", "Brushed organic wool", "Vegetable-tanned leather"];
+const BESPOKE_MATERIALS = ["Solid hardwood", "Irish Linen", "Linen Blend", "Organic Cotton", "Italian Linen", "Cork"];
 
 export function BespokeForm() {
   const { sent, sending, error, onSubmit } = useFormSend("bespoke");

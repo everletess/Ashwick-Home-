@@ -4,7 +4,7 @@
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { FormError, Honeypot, useFormSend } from "@/components/forms";
-import { FABRICS, type FabricId } from "@/lib/products";
+import { FABRICS, SWATCH_PRICE, fmt, type FabricId } from "@/lib/products";
 
 const MAX_SWATCHES = 8;
 
@@ -39,7 +39,7 @@ export function SwatchOrder({ fabrics }: { fabrics: FabricId[] }) {
     return (
       <div className="trade-done" role="status">
         <h3 className="proc-h">Thank you.</h3>
-        <p className="body">We&apos;ve received your swatch request and will be in touch when they&apos;re on their way.</p>
+        <p className="body">We&apos;ve received your swatch request. We&apos;ll email you a payment link for {fmt(picked.length * SWATCH_PRICE)}, and send your swatches once it&apos;s paid.</p>
       </div>
     );
   }
@@ -47,6 +47,7 @@ export function SwatchOrder({ fabrics }: { fabrics: FabricId[] }) {
   return (
     <form className="swatch-order" onSubmit={onSubmit}>
       <Honeypot />
+      <input type="hidden" name="total" value={`${fmt(picked.length * SWATCH_PRICE)} (${picked.length} × ${fmt(SWATCH_PRICE)})`} />
       <input type="hidden" name="swatches" value={all.filter((s) => picked.includes(s.key)).map((s) => s.label + (s.code ? ` (${s.code})` : "")).join("; ")} />
       {fabrics.map((f) => {
         const group = all.filter((s) => s.fabric === f);
@@ -69,7 +70,8 @@ export function SwatchOrder({ fabrics }: { fabrics: FabricId[] }) {
         );
       })}
       <p className="fine" aria-live="polite">
-        {picked.length} of {MAX_SWATCHES} chosen{limitHit ? `. You can choose up to ${MAX_SWATCHES} swatches.` : "."}
+        {picked.length} of {MAX_SWATCHES} chosen · {fmt(SWATCH_PRICE)} each · Total {fmt(picked.length * SWATCH_PRICE)}
+        {limitHit ? `. You can choose up to ${MAX_SWATCHES} swatches.` : ""}
       </p>
       {needOne && <p className="form-error" role="alert">Choose at least one swatch above.</p>}
 

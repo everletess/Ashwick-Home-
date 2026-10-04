@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { SwatchOrder } from "@/components/swatch-order";
-import { PRODUCTS, type FabricId } from "@/lib/products";
+import { PRODUCTS, SWATCH_PRICE, fmt, type FabricId } from "@/lib/products";
 
 export const metadata: Metadata = {
   title: "Fabric swatches",
@@ -17,7 +17,7 @@ export default function SwatchesPage() {
       <section className="page-head wrap">
         <div className="eyebrow">Fabric swatches</div>
         <h1 className="h1">Feel the fabrics first.</h1>
-        <p className="body">Choose up to eight swatches and tell us where to send them. Colors on screen are close, but nothing replaces holding the cloth.</p>
+        <p className="body">Swatches are {fmt(SWATCH_PRICE)} each. Choose up to eight and tell us where to send them; we&apos;ll email you a payment link before they go out.</p>
       </section>
       <section className="wrap" style={{ paddingBottom: 140, maxWidth: 1000 }}>
         <Suspense>
