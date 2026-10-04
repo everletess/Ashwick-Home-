@@ -110,7 +110,7 @@ export default function TradePage() {
             <div className="eyebrow">Fabric swatches</div>
             <h2 className="proc-h">Feel the fabrics before you specify.</h2>
             <p className="body">Physical swatches of our organic linen, organic wool bouclé, brushed organic wool and vegetable-tanned leather, sent to your studio. [SWATCH TERMS]</p>
-            <ScrollLink to="apply" className="ulink">Request swatches</ScrollLink>
+            <Link href="/pages/fabric-swatches" className="ulink">Request swatches</Link>
           </div>
           <SwatchGrid className="proc-v swgrid" />
         </div>

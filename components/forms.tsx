@@ -7,7 +7,7 @@ import { useRef, useState } from "react";
 export const STUDIO_EMAIL = "hello@ashwickhome.com";
 const MAX_UPLOAD_BYTES = 4 * 1024 * 1024; // matches the limit in app/api/forms/route.ts
 
-type FormName = "newsletter" | "bespoke" | "trade" | "hospitality" | "custom";
+type FormName = "newsletter" | "bespoke" | "trade" | "hospitality" | "custom" | "swatches";
 type Status = "idle" | "sending" | "sent" | "error";
 
 /** Submit state for one form. `validate` can veto the send (and should report why). */
@@ -214,17 +214,6 @@ export function HospitalityForm() {
       <label className="full file"><span className="eyebrow">Plans, sketches or references</span><input name="files" type="file" multiple accept="image/*,.pdf" /></label>
       <FormError message={error} />
       <button className="btn full" type="submit" disabled={sending}>{sending ? "Sending…" : "Send request"}</button>
-    </form>
-  );
-}
-
-export function SignInForm() {
-  return (
-    // TODO: Shopify customer accounts.
-    <form className="acct-form" onSubmit={(e) => e.preventDefault()}>
-      <label><span className="eyebrow">Email</span><input type="email" name="email" autoComplete="email" /></label>
-      <label><span className="eyebrow">Password</span><input type="password" name="password" autoComplete="current-password" /></label>
-      <button className="btn full" type="submit">Sign in</button>
     </form>
   );
 }

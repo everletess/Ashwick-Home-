@@ -7,6 +7,7 @@ const FORMS = {
   trade: "Trade application",
   hospitality: "Hospitality request",
   custom: "Customization request",
+  swatches: "Swatch request",
 } as const;
 type FormName = keyof typeof FORMS;
 
