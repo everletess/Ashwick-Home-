@@ -3,6 +3,7 @@ import Link from "next/link";
 import { HospitalityForm, ScrollLink, TradeApplyForm } from "@/components/forms";
 import { Photo, SwatchGrid } from "@/components/photo";
 import { MaterialsBlock } from "@/components/sections";
+import { SWATCH_PRICE, fmt } from "@/lib/products";
 import type { PhotoKey } from "@/lib/photos";
 
 export const metadata: Metadata = {
@@ -109,7 +110,7 @@ export default function TradePage() {
           <div className="proc-t">
             <div className="eyebrow">Fabric swatches</div>
             <h2 className="proc-h">Feel the fabrics before you specify.</h2>
-            <p className="body">Physical swatches of our Irish Linen, Linen Blend, Organic Cotton, Italian Linen and Cork, sent to your studio. $7 per swatch.</p>
+            <p className="body">Physical swatches of our Irish Linen, Linen Blend, Organic Cotton, Italian Linen and Cork, sent to your studio. {fmt(SWATCH_PRICE)} per swatch.</p>
             <Link href="/pages/fabric-swatches" className="ulink">Request swatches</Link>
           </div>
           <SwatchGrid className="proc-v swgrid" />
