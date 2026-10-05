@@ -53,5 +53,5 @@ Optional variables: `FORMS_TO` (default `hello@ashwickhome.com`) and `FORMS_FROM
 
 - **Checkout pricing.** Checkout goes to Shopify (`app/api/checkout`, `lib/shopify.ts`), mapping each piece to one Shopify product; fabric, color and wood go along as line notes, so per-fabric prices must match in Shopify.
 - **Swatch payment.** Swatch requests (/pages/fabric-swatches, $2 each) are emailed; the studio sends a payment link.
-- **Client placeholders.** `[DIMENSIONS]`, custom option pricing, `[DELIVERY DETAILS]`, `[BESPOKE DETAILS]`, `[BESPOKE ORDERING DETAILS]`, `[TRADE TERMS]`, `[TRADE EMAIL]`, `[APPROVAL DETAILS]` and `[HOSPITALITY DETAILS]`.
+- **Client placeholders.** `[DIMENSIONS]`, custom option pricing, `[DELIVERY DETAILS]`, `[BESPOKE DETAILS]`, `[BESPOKE ORDERING DETAILS]`, `[TRADE TERMS]`, `[APPROVAL DETAILS]` and `[HOSPITALITY DETAILS]`.
 - **Pages not designed yet.** These links are `#`: Delivery, Ordering, FAQs, Contact and Care.
