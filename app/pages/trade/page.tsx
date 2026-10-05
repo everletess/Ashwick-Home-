@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { HospitalityForm, ScrollLink, TradeApplyForm } from "@/components/forms";
+import { STUDIO_EMAIL } from "@/lib/site";
 import { Photo, SwatchGrid } from "@/components/photo";
 import { MaterialsBlock } from "@/components/sections";
 import { SWATCH_PRICE, fmt } from "@/lib/products";
@@ -141,7 +142,7 @@ export default function TradePage() {
             <p className="body" style={{ marginTop: 24 }}>Complete the application and we&apos;ll be in touch to set up your trade account.</p>
             <div className="trade-contact">
               <div className="eyebrow">Trade enquiries</div>
-              <p>[TRADE EMAIL]</p>
+              <p><a href={`mailto:${STUDIO_EMAIL}`}>{STUDIO_EMAIL}</a></p>
             </div>
           </div>
           <TradeApplyForm />

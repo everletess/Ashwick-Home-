@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { STUDIO_EMAIL } from "@/components/forms";
+import { STUDIO_EMAIL } from "@/lib/site";
 
 export const metadata: Metadata = { title: "Account" };
 

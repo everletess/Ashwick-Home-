@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandStory } from "@/components/brand-story";
 import { Newsletter } from "@/components/forms";
 import { Photo, SwatchGrid } from "@/components/photo";
 import { MadeByHand, MaterialsBlock, ProductGrid } from "@/components/sections";
@@ -132,6 +133,7 @@ export default function HomePage() {
       <HomeHero />
       <ValueStrip />
       <HomeStatement />
+      <BrandStory />
       <HomeCollection />
       <HomeWays />
       <MadeByHand />

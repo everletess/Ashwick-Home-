@@ -4,7 +4,9 @@
 // error with the studio's address rather than a thank-you.
 import { useRef, useState } from "react";
 
-export const STUDIO_EMAIL = "hello@ashwickhome.com";
+import { STUDIO_EMAIL } from "@/lib/site";
+
+export { STUDIO_EMAIL };
 const MAX_UPLOAD_BYTES = 4 * 1024 * 1024; // matches the limit in app/api/forms/route.ts
 
 type FormName = "newsletter" | "bespoke" | "trade" | "hospitality" | "custom" | "swatches";
