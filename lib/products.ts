@@ -192,7 +192,7 @@ export function constructionFor(p: Product): Construction {
 }
 
 /** Price of one fabric swatch. */
-export const SWATCH_PRICE = 7;
+export const SWATCH_PRICE = 2;
 
 /** Every piece is made by hand to order. */
 export const LEAD_TIME = "Available to ship within 4 weeks from the date of order.";
