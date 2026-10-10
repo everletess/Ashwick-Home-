@@ -27,6 +27,12 @@ function Pills({ options, value, onChange }: { options: Option[]; value: string;
   ));
 }
 
+/** Swatch color of the fabric and color a photo is tagged with. */
+const shownSwatch = (t: PhotoTag) => {
+  const f = t.fabric && FABRICS[t.fabric];
+  return f ? (f.colors?.find((c) => c.id === t.color)?.swatch ?? f.swatch) : undefined;
+};
+
 const lab = (arr: Option[], v: string) => arr.find((o) => o.id === v)?.label ?? "";
 const colorName = (c: { label: string; code?: string }) => (c.code ? `${c.label} (${c.code})` : c.label);
 
@@ -122,7 +128,7 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
   const shown = p.photoTags?.[photo];
   // No photo of this fabric and color: recolor the upholstery of a photo that has a mask for it.
   const tint = shown && (shown.fabric !== fabric || shown.color !== (color || undefined))
-    ? tintFor(photo, selColor?.swatch ?? selFabric.swatch)
+    ? tintFor(photo, selColor?.swatch ?? selFabric.swatch, shownSwatch(shown))
     : undefined;
   const note = p.photoNotes?.[photo] ?? (tint ? "Color shown digitally. Order a swatch to see it in person." : undefined);
   // When the photo shows a different fabric, color or wood than the one chosen, say so.

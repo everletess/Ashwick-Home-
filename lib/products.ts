@@ -272,7 +272,7 @@ const ALL_PRODUCTS: Product[] = [
     preorder: true,
     line: "A deep, slipcovered sofa with a tailored skirt, in Irish Linen, Linen Blend, Organic Cotton or Italian Linen.",
     photos: ["burford-hero", "burford-1", "burford-2", "burford-3"],
-    photoTags: { "burford-1": { fabric: "irish", color: "cream" } },
+    photoTags: { "burford-1": { fabric: "irish", color: "white" } },
     fabrics: ["irish", "blend", "cotton", "italian"], designedFabric: "irish",
     materials: "Solid hardwood frame · Removable slipcover in Irish Linen, Linen Blend, Organic Cotton or Italian Linen",
     delivery: WHITE_GLOVE,

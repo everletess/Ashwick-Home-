@@ -107,10 +107,14 @@ export const TINTABLE: Partial<Record<PhotoKey, string>> = {
   "cchair-studio": "#d6c4b8",
 };
 
-/** Color to multiply a tintable photo's upholstery by so it reads as `target`. */
-export function tintFor(key: PhotoKey, target: string): string | undefined {
-  const base = TINTABLE[key];
-  if (!base) return;
+/**
+ * Color to multiply a tintable photo's upholstery by so it reads as `target`. `shown` is the swatch of the
+ * fabric color the photo actually shows; scaling relative to it keeps the steps between swatches (White to
+ * Cream to Oatmeal) as visible on the sofa as they are on the swatches.
+ */
+export function tintFor(key: PhotoKey, target: string, shown?: string): string | undefined {
+  if (!TINTABLE[key]) return;
+  const base = shown ?? TINTABLE[key];
   const ch = (hex: string, i: number) => parseInt(hex.slice(1 + i * 2, 3 + i * 2), 16);
   return "#" + [0, 1, 2]
     .map((i) => Math.min(255, Math.round((ch(target, i) / ch(base, i)) * 255)).toString(16).padStart(2, "0"))
