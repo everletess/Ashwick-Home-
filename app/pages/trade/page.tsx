@@ -4,6 +4,7 @@ import { HospitalityForm, ScrollLink, TradeApplyForm } from "@/components/forms"
 import { STUDIO_EMAIL } from "@/lib/site";
 import { Photo, SwatchGrid } from "@/components/photo";
 import { MaterialsBlock } from "@/components/sections";
+import { TradeTerms } from "@/components/trade-terms";
 import { SWATCH_PRICE, fmt } from "@/lib/products";
 import type { PhotoKey } from "@/lib/photos";
 
@@ -14,8 +15,8 @@ export const metadata: Metadata = {
 
 const HALF = "(max-width: 960px) 100vw, 50vw";
 
-const BENEFITS: [string, string, string][] = [
-  ["01", "Trade terms", "[TRADE TERMS]"],
+const BENEFITS: [string, string, React.ReactNode][] = [
+  ["01", "Trade terms", <TradeTerms key="terms" />],
   ["02", "Made to order", "Every piece is built by hand in our American workshop once the order is placed."],
   ["03", "Custom and bespoke", "Specify fabric, seat depth, length and wood finish, or commission a piece that doesn’t exist yet."],
   ["04", "Personal support", "Talk through proportions, materials and specification with us before you order."],
@@ -52,10 +53,10 @@ export default function TradePage() {
       <section className="sec">
         <div className="wrap offer-grid">
           {BENEFITS.map(([n, t, d]) => (
-            <div className="tstep" key={n}>
+            <div className={"tstep" + (typeof d === "string" ? "" : " tstep-wide")} key={n}>
               <div className="proc-n">{n}</div>
               <h2 className="proc-h">{t}</h2>
-              <p className="body small">{d}</p>
+              {typeof d === "string" ? <p className="body small">{d}</p> : d}
             </div>
           ))}
         </div>

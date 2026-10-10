@@ -91,6 +91,22 @@ button.chip{cursor:pointer}
 .offer-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:32px}
 .tsteps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:48px}
 .tstep{border-top:1px solid rgba(42,37,31,.28);padding-top:28px;display:flex;flex-direction:column;gap:14px}
+/* Trade terms: the "01" step spans the row, its blocks flow in two columns. Also the warranty page. */
+.tstep-wide{grid-column:1/-1}
+.offer-grid:has(.tstep-wide){grid-template-columns:repeat(3,minmax(0,1fr))}
+.terms{columns:2;column-gap:64px;margin-top:12px}
+.terms-block{break-inside:avoid;margin:0 0 36px}
+.terms-h{margin:0 0 12px}
+.terms .body{max-width:none}
+.terms .body+.body,.terms-table+.body{margin-top:14px}
+.terms-table{width:100%;border-collapse:collapse;margin:16px 0 0;font:300 15px/1.5 var(--sans);color:var(--walnut)}
+.terms-table th,.terms-table td{text-align:left;padding:10px 12px 10px 0;border-bottom:1px solid rgba(42,37,31,.15);font-weight:300}
+.terms-table thead th{font:400 10px/1.5 var(--sans);letter-spacing:.24em;text-transform:uppercase;border-bottom-color:rgba(42,37,31,.28)}
+.terms-table tbody th{font-weight:400;color:var(--ink)}
+.terms-list{padding-left:1.2em;margin:0}
+.terms-list li+li{margin-top:6px}
+.terms-page{columns:1;max-width:720px}
+.terms-sec{padding-top:0}
 .trade-apply{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:96px;align-items:start}
 .trade-contact{margin-top:48px;padding-top:24px;border-top:1px solid var(--hair)}
 .trade-contact p{font:300 22px var(--serif);margin:10px 0 0}
@@ -362,6 +378,8 @@ button.chip{cursor:pointer}
   .proc.rev .proc-v{order:0}
   .proc.txt{padding-top:40px}
   .offer-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px 20px}
+  .offer-grid:has(.tstep-wide){grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .terms{columns:1}
   .tsteps{grid-template-columns:minmax(0,1fr);gap:32px}
   .trade-apply{grid-template-columns:minmax(0,1fr);gap:48px}
   .tform{grid-template-columns:minmax(0,1fr)}
@@ -395,6 +413,10 @@ button.chip{cursor:pointer}
   .sw-lg .sw-i{width:calc(50% - 16px)}.sw-lg .chip{width:100%!important;height:auto!important;aspect-ratio:1}
 }
 @media (max-width:620px){
+  .terms-table thead{display:none}
+  .terms-table tr{display:block;padding:10px 0;border-bottom:1px solid rgba(42,37,31,.15)}
+  .terms-table th,.terms-table td{display:flex;justify-content:space-between;gap:16px;padding:4px 0;border:0}
+  .terms-table [data-label]::before{content:attr(data-label);font:400 10px/2 var(--sans);letter-spacing:.24em;text-transform:uppercase}
   .grid3{grid-template-columns:minmax(0,1fr);gap:56px}
   .mat-grid{grid-template-columns:minmax(0,1fr)}
   .btns .btn{width:100%}

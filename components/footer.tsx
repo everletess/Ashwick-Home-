@@ -36,6 +36,7 @@ export function Footer() {
           <span>Handmade in the USA</span>
           <a href="#">Instagram</a>
           <a href="#">Pinterest</a>
+          <Link href="/pages/warranty">Warranty</Link>
           <a href="#">Privacy</a>
           <a href="#">Terms</a>
         </div>
