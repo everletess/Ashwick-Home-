@@ -28,3 +28,4 @@ export const TRADE_TERMS = {
 };
 
 export const WARRANTY_PATH = "/pages/warranty";
+export const TRADE_TERMS_PATH = "/pages/trade-terms";

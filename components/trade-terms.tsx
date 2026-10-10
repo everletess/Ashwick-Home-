@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { TRADE_TERMS as T, WARRANTY_PATH } from "@/lib/trade-terms";
+import { TRADE_TERMS as T, TRADE_TERMS_PATH, WARRANTY_PATH } from "@/lib/trade-terms";
 
 const usd = (n: number) => "$" + n.toLocaleString("en-US");
 
@@ -12,15 +12,25 @@ function Block({ title, children }: { title: string; children: React.ReactNode }
   );
 }
 
-/** "01 Trade terms" on the Trade page. Wording is deliberate business terms: don't reword; change figures in lib/trade-terms.ts. */
+// Wording is deliberate business terms: don't reword; change figures in lib/trade-terms.ts.
+
+/** "01 Trade terms" on the Trade page: eligibility, then a link to the full terms. */
+export function TradeEligibility() {
+  return (
+    <div className="terms-block">
+      <h3 className="eyebrow terms-h">Eligibility</h3>
+      <p className="body small">
+        The Ashwick Trade Program is open to interior designers, architects, stagers, developers and hospitality professionals. To apply, please provide one of the following: a business license, a resale certificate, a professional membership (ASID, IIDA, AIA or equivalent), or a website or portfolio showing current work. Applications are reviewed within {T.reviewDays} business days.
+      </p>
+      <Link href={TRADE_TERMS_PATH} className="ulink terms-more">Read the full trade terms</Link>
+    </div>
+  );
+}
+
+/** The rest of the trade terms, on their own page. */
 export function TradeTerms() {
   return (
     <div className="terms">
-      <Block title="Eligibility">
-        <p className="body small">
-          The Ashwick Trade Program is open to interior designers, architects, stagers, developers and hospitality professionals. To apply, please provide one of the following: a business license, a resale certificate, a professional membership (ASID, IIDA, AIA or equivalent), or a website or portfolio showing current work. Applications are reviewed within {T.reviewDays} business days.
-        </p>
-      </Block>
       <Block title="Trade pricing">
         <p className="body small">Trade members receive tiered pricing based on net purchases in a calendar year:</p>
         <table className="terms-table">
