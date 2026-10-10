@@ -220,7 +220,7 @@ const ALL_PRODUCTS: Product[] = [
     delivery: WHITE_GLOVE,
     materials: "Hand-fluted solid walnut or oak plinth · Irish Linen or Cork upholstery · Natural oil finish",
     dimensions: {
-      overall: "88.5″ W × 40″ D",
+      overall: "88.5″ W × 40″ D × 27″ H",
       rows: [
         ["Seat width", "80″"],
         ["Seat depth", "23″"],
