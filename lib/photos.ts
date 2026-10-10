@@ -89,3 +89,30 @@ export const PHOTOS = {
 } satisfies Record<string, StaticImageData>;
 
 export type PhotoKey = keyof typeof PHOTOS;
+
+/**
+ * Photos whose upholstery can be recolored on the product page, with the fabric's lit color in the photo.
+ * Each has a mask of just the upholstery in public/tint/<key>.png (made from the photo with background removal).
+ */
+export const TINTABLE: Partial<Record<PhotoKey, string>> = {
+  "marlowe-sofa-walnut-linen": "#dfd7d1",
+  "marlowe-sofa-oak-linen": "#e2dcd5",
+  "marlowe-loveseat-walnut-linen": "#e1d6cd",
+  "marlowe-chair-walnut-linen": "#ddd1c7",
+  "marlowe-ottoman-walnut-linen": "#d8cbc0",
+  "chatsworth-s1": "#ccbbac",
+  "csofa-hero": "#dfd7d3",
+  "csofa-studio": "#e9e1db",
+  "burford-1": "#d4c4b9",
+  "cchair-studio": "#d6c4b8",
+};
+
+/** Color to multiply a tintable photo's upholstery by so it reads as `target`. */
+export function tintFor(key: PhotoKey, target: string): string | undefined {
+  const base = TINTABLE[key];
+  if (!base) return;
+  const ch = (hex: string, i: number) => parseInt(hex.slice(1 + i * 2, 3 + i * 2), 16);
+  return "#" + [0, 1, 2]
+    .map((i) => Math.min(255, Math.round((ch(target, i) / ch(base, i)) * 255)).toString(16).padStart(2, "0"))
+    .join("");
+}

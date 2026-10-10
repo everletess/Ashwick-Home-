@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import { useCart } from "@/components/cart";
 import { FormError, Honeypot, useFormSend } from "@/components/forms";
 import { Photo, Swatch } from "@/components/photo";
+import { tintFor } from "@/lib/photos";
 import { FABRICS, LEAD_TIME, WOODS, fmt, getProduct, nearestPhoto, photoFor, priceFor, type FabricId, type Option, type PhotoTag } from "@/lib/products";
 
 type Mode = "designed" | "custom";
@@ -117,18 +118,25 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
   const selColor = selFabric.colors?.find((c) => c.id === color);
   const price = priceFor(p, fabric);
   const fabricChoices = p.fabrics;
-  const note = p.photoNotes?.[p.photos[img]];
+  const photo = p.photos[img];
+  const shown = p.photoTags?.[photo];
+  // No photo of this fabric and color: recolor the upholstery of a photo that has a mask for it.
+  const tint = shown && (shown.fabric !== fabric || shown.color !== (color || undefined))
+    ? tintFor(photo, selColor?.swatch ?? selFabric.swatch)
+    : undefined;
+  const note = p.photoNotes?.[photo] ?? (tint ? "Color shown digitally. Order a swatch to see it in person." : undefined);
   // When the photo shows a different fabric, color or wood than the one chosen, say so.
-  const shown = p.photoTags?.[p.photos[img]];
   const shownFabric = shown?.fabric && FABRICS[shown.fabric];
   const differs = !!shown && (
-    (!!shown.fabric && shown.fabric !== fabric) ||
-    (!!shown.color && shown.color !== color) ||
+    (!tint && !!shown.fabric && shown.fabric !== fabric) ||
+    (!tint && !!shown.color && shown.color !== color) ||
     (!!shown.wood && !!p.wood && shown.wood !== wood)
   );
   const shownAs = differs && shownFabric
-    ? [shownFabric.label, shownFabric.colors?.find((c) => c.id === shown?.color)?.label, shown?.wood && p.wood ? `on ${lab(WOODS, shown.wood).toLowerCase()}` : ""]
-        .filter(Boolean).join(" ")
+    ? (tint
+        ? [`the ${lab(WOODS, shown.wood!).toLowerCase()} plinth`]
+        : [shownFabric.label, shownFabric.colors?.find((c) => c.id === shown?.color)?.label, shown?.wood && p.wood ? `on ${lab(WOODS, shown.wood).toLowerCase()}` : ""]
+      ).filter(Boolean).join(" ")
     : "";
   const hasChoices = p.fabrics.length > 1 || !!selFabric.colors;
 
@@ -154,7 +162,16 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
     <section className="pdp wrap">
       <div className="gal">
         <div className="gal-main" onPointerDown={onPointerDown} onPointerUp={onPointerUp} onPointerCancel={() => (swipeX.current = null)}>
-          <Photo src={p.photos[img]} label={p.name} sizes="(max-width: 960px) 100vw, 56vw" preload={img === 0} />
+          <div className="gal-photo">
+            <Photo src={photo} label={p.name} sizes="(max-width: 960px) 100vw, 56vw" preload={img === 0} />
+            {tint && (
+              <span
+                className="tint"
+                aria-hidden="true"
+                style={{ backgroundColor: tint, maskImage: `url(/tint/${photo}.png)`, WebkitMaskImage: `url(/tint/${photo}.png)` }}
+              />
+            )}
+          </div>
           {hasChoices && (
             <div className="sel-swatch" aria-live="polite">
               <span className={"sel-chip tex-" + selFabric.tex} style={{ background: selColor?.swatch ?? selFabric.swatch }} />
@@ -165,7 +182,7 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
             </div>
           )}
         </div>
-        {(note || shownAs) && <p className="gal-note">{note ?? `Photo shows ${shownAs}`}</p>}
+        {(note || shownAs) && <p className="gal-note">{[note, shownAs && `Photo shows ${shownAs}.`].filter(Boolean).join(" ")}</p>}
         {p.photos.length > 1 && (
           <div className="gal-thumbs">
             {p.photos.map((ph, i) => (
