@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import { useCart } from "@/components/cart";
 import { FormError, Honeypot, useFormSend } from "@/components/forms";
 import { Photo, Swatch } from "@/components/photo";
+import { TintedPhoto } from "@/components/tinted-photo";
 import { tintFor } from "@/lib/photos";
 import { FABRICS, LEAD_TIME, WOODS, fmt, getProduct, nearestPhoto, photoFor, priceFor, type FabricId, type Option, type PhotoTag } from "@/lib/products";
 
@@ -170,13 +171,7 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
         <div className="gal-main" onPointerDown={onPointerDown} onPointerUp={onPointerUp} onPointerCancel={() => (swipeX.current = null)}>
           <div className="gal-photo">
             <Photo src={photo} label={p.name} sizes="(max-width: 960px) 100vw, 56vw" preload={img === 0} />
-            {tint && (
-              <span
-                className="tint"
-                aria-hidden="true"
-                style={{ backgroundColor: tint, maskImage: `url(/tint/${photo}.png)`, WebkitMaskImage: `url(/tint/${photo}.png)` }}
-              />
-            )}
+            {tint && <TintedPhoto photo={photo} tint={tint} />}
           </div>
           {hasChoices && (
             <div className="sel-swatch" aria-live="polite">

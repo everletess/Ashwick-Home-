@@ -233,9 +233,9 @@ button.chip{cursor:pointer}
 .gal-main img{width:100%;height:auto;max-height:82vh;object-fit:contain;display:block;margin:0 auto}
 .gal-main .ph{aspect-ratio:4/3}
 .gal-photo{position:relative}
-/* Recolors a photo's upholstery: the selected color, multiplied through a mask of just the fabric. Matches the img's object-fit: contain. */
-.tint{position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;transition:background-color .35s ease;
-  mask-size:contain;mask-position:center;mask-repeat:no-repeat;-webkit-mask-size:contain;-webkit-mask-position:center;-webkit-mask-repeat:no-repeat}
+/* Recolored photo drawn over the gallery image; contain matches the img. */
+.tint-canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none;opacity:0;transition:opacity .3s ease}
+.tint-canvas.on{opacity:1}
 .gal-thumbs{display:flex;gap:12px;margin-top:12px;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none}.gal-thumbs::-webkit-scrollbar{display:none}
 .gal-main{touch-action:pan-y}
 .gal-thumbs button{flex:none;scroll-snap-align:start;width:84px;aspect-ratio:1/1;padding:0;border:1px solid var(--hair);background:none;cursor:pointer;overflow:hidden}
