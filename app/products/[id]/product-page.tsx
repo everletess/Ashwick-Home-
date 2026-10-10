@@ -43,7 +43,17 @@ export async function ProductPage({ params, mode }: ProductParams & { mode: "des
           </div>
           <div className="spec-grid">
             <div className="spec"><div className="eyebrow">Materials</div><p>{p.materials}</p></div>
-            <div className="spec"><div className="eyebrow">Dimensions</div><p>[DIMENSIONS]</p></div>
+            <div className="spec">
+              <div className="eyebrow">Dimensions</div>
+              <p>{p.dimensions?.overall ?? "[DIMENSIONS]"}</p>
+              {p.dimensions && (
+                <dl className="dims">
+                  {p.dimensions.rows.map(([k, v]) => (
+                    <div key={k}><dt>{k}</dt><dd>{v}</dd></div>
+                  ))}
+                </dl>
+              )}
+            </div>
             <div className="spec"><div className="eyebrow">Made</div><p>To order, by hand, in our American workshop.</p></div>
             <div className="spec"><div className="eyebrow">Lead time</div><p>{p.leadTime ?? LEAD_TIME}</p></div>
             <div className="spec"><div className="eyebrow">Payment</div><p>In full at checkout.</p></div>

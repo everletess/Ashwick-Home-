@@ -260,6 +260,10 @@ button.chip{cursor:pointer}
 .spec-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:36px 56px}
 .spec{border-top:1px solid rgba(42,37,31,.28);padding-top:18px}
 .spec p{font:300 21px/1.45 var(--serif);margin:10px 0 0}
+.dims{margin:14px 0 0;font-size:15px;line-height:1.5}
+.dims div{display:flex;justify-content:space-between;gap:16px;padding:6px 0;border-bottom:1px solid rgba(42,37,31,.12)}
+.dims dt{color:rgba(42,37,31,.7)}
+.dims dd{margin:0;font-variant-numeric:tabular-nums}
 .construct-h{text-transform:uppercase;letter-spacing:.02em;font-size:clamp(30px,3.2vw,46px)}
 .construct-grid{margin-top:40px}
 .hp{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}

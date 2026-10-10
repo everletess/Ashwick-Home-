@@ -112,6 +112,8 @@ export type Product = {
   wood?: boolean;
   /** Delivery charged per piece on top of the price. */
   delivery?: { label: string; price: number };
+  /** Measurements in inches: overall size first, then the detail rows. */
+  dimensions?: { overall: string; rows: [string, string][] };
 };
 
 export type PhotoTag = { wood?: string; fabric?: FabricId; color?: string };
@@ -217,6 +219,16 @@ const ALL_PRODUCTS: Product[] = [
     fabrics: ["irish", "cork"], designedFabric: "irish", wood: true,
     delivery: WHITE_GLOVE,
     materials: "Hand-fluted solid walnut or oak plinth · Irish Linen or Cork upholstery · Natural oil finish",
+    dimensions: {
+      overall: "88.5″ W × 40″ D",
+      rows: [
+        ["Seat width", "80″"],
+        ["Seat depth", "23″"],
+        ["Arm height", "20″"],
+        ["Seat cushion", "7″ thick"],
+        ["Plinth", "80″ W × 32.5″ D × 7″ H"],
+      ],
+    },
   },
   {
     id: "marlowe-loveseat", name: "The Marlowe Loveseat", type: "Loveseat", category: "sofas", price: 6500,
@@ -283,6 +295,17 @@ const ALL_PRODUCTS: Product[] = [
     fabricPrices: { cotton: 5200, italian: 5700 },
     delivery: WHITE_GLOVE,
     materials: "Solid hardwood frame · Swivel base · Linen Blend, Organic Cotton or Italian Linen upholstery",
+    dimensions: {
+      overall: "36″ W × 36.5″ D × 39″ H",
+      rows: [
+        ["Seat height", "18.5″"],
+        ["Seat width", "22.5″"],
+        ["Seat depth", "22.5″"],
+        ["Arm height", "24″"],
+        ["Inside back height", "23″"],
+        ["Base width", "34.5″"],
+      ],
+    },
   },
   {
     id: "cotswold-chair", name: "The Cotswold Chair", type: "Chair", category: "chairs", price: 4000,
