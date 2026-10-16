@@ -44,8 +44,8 @@ export const MATERIAL_GROUPS: MaterialGroup[] = [
         body: "Naturally fine and exceptionally soft, cashmere is chosen for the quiet luxury it brings to the mattress. It sits in the topper, among the layers closest to you.",
         where: `The ${MAT} topper.`,
         origin: "OEKO-TEX Standard 100 certified",
-        photo: "fiber-kashmir",
-        alt: "Long, silky cashmere fiber",
+        photo: "materials-cashmere",
+        alt: "Close-up of long, silky cream cashmere fiber",
       },
       {
         id: "horsehair", short: "Horsehair", name: "Swedish horsehair", descriptor: "The spring inside the softness.",
