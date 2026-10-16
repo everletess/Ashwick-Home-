@@ -95,7 +95,7 @@ export default function MaterialsPage() {
 
       <Group g={fillings} offset={offsets[0]} />
       <Group g={fabrics} offset={offsets[1]} />
-      <Band alt="Cream wool and dark curled horsehair blended together" title="The right fiber, in the right place." center />
+      <Band photo="materials-band-blend" alt="Cream wool and dark curled horsehair blended together" title="The right fiber, in the right place." center />
       <Group g={structure} offset={offsets[2]} />
       <Group g={finish} offset={offsets[3]} />
 

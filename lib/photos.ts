@@ -36,6 +36,9 @@ import marloweSofaOakCorkIvory from "@/assets/photos/marlowe-sofa-oak-cork-ivory
 import marloweSofaOakCorkIvory2 from "@/assets/photos/marlowe-sofa-oak-cork-ivory-2.jpg";
 import marloweStudio from "@/assets/photos/marlowe-studio.jpg";
 import materialsRosettes from "@/assets/photos/materials-rosettes.jpg";
+import materialsBandBlend from "@/assets/photos/materials-band-blend.jpg";
+import materialsLinen from "@/assets/photos/materials-linen.jpg";
+import materialsWool from "@/assets/photos/materials-wool.jpg";
 import materialsHorsehair from "@/assets/photos/materials-horsehair.jpg";
 import materialsBandFillings from "@/assets/photos/materials-band-fillings.jpg";
 import materialsBandFabrics from "@/assets/photos/materials-band-fabrics.jpg";
@@ -107,6 +110,9 @@ export const PHOTOS = {
   "marlowe-sofa-oak-cork-ivory-2": marloweSofaOakCorkIvory2,
   "marlowe-studio": marloweStudio,
   "materials-rosettes": materialsRosettes,
+  "materials-band-blend": materialsBandBlend,
+  "materials-linen": materialsLinen,
+  "materials-wool": materialsWool,
   "materials-horsehair": materialsHorsehair,
   "materials-band-fillings": materialsBandFillings,
   "materials-band-fabrics": materialsBandFabrics,

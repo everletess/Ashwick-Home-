@@ -36,8 +36,8 @@ export const MATERIAL_GROUPS: MaterialGroup[] = [
         body: "Our Living Wool comes from Lanas Trinidad in Uruguay, from sheep shorn as part of their natural seasonal cycle. Each fiber has a natural crimp that compresses under weight and springs back when you move. Wool holds warmth when the room is cool and releases heat when you run warm, and it draws moisture away from the body so the surface stays dry.",
         where: `The comfort layers of the ${MAT} and its topper. [Confirm whether the base wool layers and furniture cushions also use Lanas Trinidad wool, and whether to call all of it Living Wool.]`,
         origin: "Lanas Trinidad, Uruguay · GOTS-certified organic",
-        photo: "fiber-wool",
-        alt: "Crimped cream organic wool fiber",
+        photo: "materials-wool",
+        alt: "Close-up of crimped cream organic wool",
       },
       {
         id: "cashmere", short: "Cashmere", name: "Cashmere", descriptor: "The softest layer.",
@@ -73,6 +73,7 @@ export const MATERIAL_GROUPS: MaterialGroup[] = [
         body: "Linen is woven from flax, one of the oldest fibers people have made cloth from. It's strong, breathable and cool to the touch, and it softens with use rather than wearing thin. Its natural slub gives every slipcover a relaxed, lived-in texture from the first day.",
         where: "[Confirm pieces, e.g. the Cotswold slipcover.]",
         origin: "[Confirm: organic certification and origin]",
+        photo: "materials-linen",
         alt: "Close-up of oat linen weave showing natural slubs",
       },
       {
