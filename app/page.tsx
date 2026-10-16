@@ -51,7 +51,7 @@ function ValueStrip() {
 
 function HomeStatement() {
   return (
-    <section className="statement">
+    <section className="statement statement-sm">
       <p>Most furniture is built to be replaced.</p>
       <div className="gap"></div>
       <p>We build ours to be inherited.</p>
@@ -136,7 +136,6 @@ export default function HomePage() {
       <ValueStrip />
       <MattressFeature />
       <Fibers />
-      <HomeStatement />
       <BrandStory />
       <HomeCollection />
       <HomeWays />
@@ -145,6 +144,7 @@ export default function HomePage() {
         <div className="wrap"><MaterialsBlock /></div>
       </section>
       <HomeName />
+      <HomeStatement />
       <Newsletter />
     </main>
   );
