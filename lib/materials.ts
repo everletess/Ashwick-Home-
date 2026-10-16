@@ -29,7 +29,7 @@ export type MaterialGroup = { id: string; eyebrow: string; title: string; photo?
 
 export const MATERIAL_GROUPS: MaterialGroup[] = [
   {
-    id: "fillings", eyebrow: "The Fillings", title: "What you sink into.", alt: "Lofty raw wool",
+    id: "fillings", eyebrow: "The Fillings", title: "What you sink into.", photo: "materials-band-fillings", alt: "Lofty cream raw wool, close up",
     materials: [
       {
         id: "living-wool", short: "Living Wool", name: "Living Wool", descriptor: "Grown, not made.",
@@ -52,28 +52,21 @@ export const MATERIAL_GROUPS: MaterialGroup[] = [
         body: "Long, curled strands of horsehair act like thousands of small springs: they compress under weight, return to shape and leave space for air to move between them. Ours comes from tail clippings in Sweden, and no horse is harmed. Blended with Living Wool, it gives the mattress and topper their lift and breathability.",
         where: `The ${MAT} comfort layer and topper.`,
         origin: "Sweden · OEKO-TEX certified [Confirm how the horsehair is cleaned and prepared, if we want to describe it.]",
-        photo: "fiber-horsehair",
-        alt: "Curled dark horsehair strands",
-      },
-      {
-        id: "kapok", short: "Kapok", name: "Kapok", descriptor: "A fiber from the pod of a tree.",
-        body: "Kapok is a silky fiber collected from the seed pods of the ceiba tree, harvested without cutting the tree down. Each fiber is hollow, which makes it remarkably light and airy. Blended with wool, it gives our cushions a soft, cloud-like sit, with no foam and no latex.",
-        where: "[Confirm: sofa and chair seat cushions, back cushions, pillows.]",
-        origin: "[Origin — confirm] · [Certification — confirm, or remove line]",
-        alt: "An opened ceiba seed pod with silky white kapok fiber",
+        photo: "materials-horsehair",
+        alt: "Curled dark horsehair strands on a warm stone surface",
       },
     ],
   },
   {
-    id: "fabrics", eyebrow: "The Fabrics", title: "What you touch.", alt: "A stack of folded linen, bouclé and cotton twill",
+    id: "fabrics", eyebrow: "The Fabrics", title: "What you touch.", photo: "materials-band-fabrics", alt: "A stack of folded linen, bouclé and Mocha cotton twill on an oak table",
     materials: [
       {
         id: "organic-cotton", short: "Organic Cotton", name: "Organic cotton", descriptor: "Breathable at every layer.",
         body: "Our cotton is GOTS-certified organic, grown without synthetic pesticides or fertilizers. Inside the mattress it wraps the pocket coils on both sides, keeping the layers quiet and letting the whole mattress breathe. It also forms the quilted shell of the topper.",
         where: `The ${MAT} and topper. [Confirm what the colored mattress cover is made of, organic cotton or another fabric, and how it's colored (undyed fiber, plant dye or GOTS-approved dye). If it's cotton, add a sentence here about the color.]`,
         origin: "GOTS-certified organic",
-        photo: "fiber-cotton",
-        alt: "Soft white organic cotton fiber",
+        photo: "materials-cotton-rosette",
+        alt: "Quilted cream cotton twill with a hand-tied wool rosette",
       },
       {
         id: "linen", short: "Linen", name: "Organic linen", descriptor: "Softer every year.",
@@ -87,7 +80,8 @@ export const MATERIAL_GROUPS: MaterialGroup[] = [
         body: "We upholster in wool because it's resilient and slow to show wear. Bouclé's looped yarn catches the light and softens the shape of a piece; brushed wool has a dense, velvety hand. Both are naturally resilient, so they keep their look through years of everyday use.",
         where: "[Confirm pieces and fabric names, e.g. Chatsworth, Pembroke, the sectional.]",
         origin: "[Confirm: organic certification and origin]",
-        alt: "Macro of cream wool bouclé loops in raking light",
+        photo: "materials-boucle",
+        alt: "Close-up of cream wool bouclé loops",
       },
       // Vegetable-tanned leather is left out: no piece in the current collection uses it (the Clifton is hidden).
       // Per the handoff, restore the entry and its index link if leather comes back.
@@ -130,7 +124,7 @@ export const ALL_MATERIALS = MATERIAL_GROUPS.flatMap((g) => g.materials.map((m) 
 export const MATERIALS_PENDING = {
   latex: "[Our sofas, chairs and ottoman currently list organic latex in their seat cushions and foundations. Confirm before publishing, or scope this to the mattress.]",
   glue: "[Confirm \"no glue\" applies to the furniture as well as the mattress; if not, scope it: \"No glue in our mattresses.\"]",
-  sofaCushions: "[Confirm cushion build, e.g. kapok core · wrapped in organic wool · organic cotton ticking · upholstery fabric.]",
+  sofaCushions: "[Confirm cushion build, e.g. core · wrapped in organic wool · organic cotton ticking · upholstery fabric.]",
   fireReport: "[Link test report.]",
   furnitureFire: "[Confirm furniture compliance, e.g. California TB 117-2013, and add it here.]",
   fireReportShort: "[Link report.]",

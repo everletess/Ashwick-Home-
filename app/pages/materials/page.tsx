@@ -9,7 +9,7 @@ import type { PhotoKey } from "@/lib/photos";
 
 export const metadata: Metadata = {
   title: "Our Materials",
-  description: "Every Ashwick piece is built from materials you'd recognize: wool, horsehair, kapok, cotton, linen and solid wood.",
+  description: "Every Ashwick piece is built from materials you'd recognize: wool, horsehair, cotton, linen and solid wood.",
 };
 
 const HALF = "(max-width: 960px) 100vw, 50vw";
@@ -70,7 +70,7 @@ export default function MaterialsPage() {
         alt="The mattress in Mocha Mousse on a walnut platform in a warm plaster room"
         eyebrow="Our Materials"
         title="What it's made of is the point."
-        body="Every Ashwick piece is built from materials you'd recognize: wool, horsehair, kapok, cotton, linen and solid wood. Each one is there because of what it does."
+        body="Every Ashwick piece is built from materials you'd recognize: wool, horsehair, cotton, linen and solid wood. Each one is there because of what it does."
       />
 
       <section className="sec linen">
