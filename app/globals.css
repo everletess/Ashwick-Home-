@@ -214,6 +214,7 @@ button.chip{cursor:pointer}
 .m-ctas{justify-content:center;margin-top:72px}
 .proc-h.small{font-size:clamp(26px,2.4vw,34px)}
 .layers{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px}
+.layers-cover{grid-column:1/-1}
 .layers-h{font:300 clamp(24px,2.2vw,30px)/1.15 var(--serif);margin:0 0 14px}
 .layers-l{list-style:none;padding:0;margin:0;font:300 15px/1.6 var(--sans);color:var(--walnut)}
 .layers-l li{padding:9px 0;border-top:1px solid var(--hair)}
