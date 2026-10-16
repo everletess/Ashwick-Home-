@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BrandStory } from "@/components/brand-story";
 import { Newsletter } from "@/components/forms";
+import { MattressFeature } from "@/components/mattress-feature";
 import { Photo, SwatchGrid } from "@/components/photo";
 import { MadeByHand, MaterialsBlock, ProductGrid } from "@/components/sections";
 import { PRODUCTS } from "@/lib/products";
@@ -131,6 +132,7 @@ export default function HomePage() {
   return (
     <main>
       <HomeHero />
+      <MattressFeature />
       <ValueStrip />
       <HomeStatement />
       <BrandStory />
