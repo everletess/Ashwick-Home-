@@ -18,6 +18,9 @@ import csofaD from "@/assets/photos/csofa-d.jpg";
 import csofaHero from "@/assets/photos/csofa-hero.jpg";
 import csofaHeroSquare from "@/assets/photos/csofa-hero-square.jpg";
 import csofaStudio from "@/assets/photos/csofa-studio.jpg";
+import fiberWool from "@/assets/photos/fiber-wool.jpg";
+import fiberHorsehair from "@/assets/photos/fiber-horsehair.jpg";
+import fiberCotton from "@/assets/photos/fiber-cotton.jpg";
 import frameFillCover from "@/assets/photos/frame-fill-cover.jpg";
 import hero from "@/assets/photos/hero.jpg";
 import marlowe1 from "@/assets/photos/marlowe-1.jpg";
@@ -80,6 +83,9 @@ export const PHOTOS = {
   "csofa-hero": csofaHero,
   "csofa-hero-square": csofaHeroSquare,
   "csofa-studio": csofaStudio,
+  "fiber-wool": fiberWool,
+  "fiber-horsehair": fiberHorsehair,
+  "fiber-cotton": fiberCotton,
   "frame-fill-cover": frameFillCover,
   "hero": hero,
   "marlowe-1": marlowe1,

@@ -36,14 +36,16 @@ export const MATERIAL_GROUPS: MaterialGroup[] = [
         body: "Our Living Wool comes from Lanas Trinidad in Uruguay, from sheep shorn as part of their natural seasonal cycle. Each fiber has a natural crimp that compresses under weight and springs back when you move. Wool holds warmth when the room is cool and releases heat when you run warm, and it draws moisture away from the body so the surface stays dry.",
         where: `The comfort layers of the ${MAT} and its topper. [Confirm whether the base wool layers and furniture cushions also use Lanas Trinidad wool, and whether to call all of it Living Wool.]`,
         origin: "Lanas Trinidad, Uruguay · GOTS-certified organic",
-        alt: "Macro of crimped cream organic wool fiber",
+        photo: "fiber-wool",
+        alt: "Crimped cream organic wool fiber",
       },
       {
         id: "horsehair", short: "Horsehair", name: "Swedish horsehair", descriptor: "The spring inside the softness.",
         body: "Long, curled strands of horsehair act like thousands of small springs: they compress under weight, return to shape and leave space for air to move between them. Ours comes from tail clippings in Sweden, and no horse is harmed. Blended with Living Wool, it gives the mattress and topper their lift and breathability.",
         where: `The ${MAT} comfort layer and topper.`,
         origin: "Sweden · OEKO-TEX certified [Confirm how the horsehair is cleaned and prepared, if we want to describe it.]",
-        alt: "Macro of long curled horsehair strands",
+        photo: "fiber-horsehair",
+        alt: "Curled dark horsehair strands",
       },
       {
         id: "kapok", short: "Kapok", name: "Kapok", descriptor: "A fiber from the pod of a tree.",
@@ -62,7 +64,8 @@ export const MATERIAL_GROUPS: MaterialGroup[] = [
         body: "Our cotton is GOTS-certified organic, grown without synthetic pesticides or fertilizers. Inside the mattress it wraps the pocket coils on both sides, keeping the layers quiet and letting the whole mattress breathe. It also forms the quilted shell of the topper.",
         where: `The ${MAT} and topper. [Confirm what the colored mattress cover is made of, organic cotton or another fabric, and how it's colored (undyed fiber, plant dye or GOTS-approved dye). If it's cotton, add a sentence here about the color.]`,
         origin: "GOTS-certified organic",
-        alt: "Quilted cotton twill with a hand-tied wool rosette",
+        photo: "fiber-cotton",
+        alt: "Soft white organic cotton fiber",
       },
       {
         id: "linen", short: "Linen", name: "Organic linen", descriptor: "Softer every year.",
