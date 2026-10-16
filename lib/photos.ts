@@ -41,6 +41,7 @@ import mattressStudioKhaki from "@/assets/photos/mattress-studio-khaki.jpg";
 import mattressStudioSafari from "@/assets/photos/mattress-studio-safari.jpg";
 import mattressStudioMocha from "@/assets/photos/mattress-studio-mocha.jpg";
 import mattressStudioNatural from "@/assets/photos/mattress-studio-natural.jpg";
+import mattressStudioDove from "@/assets/photos/mattress-studio-dove.jpg";
 import mattressSwatchNatural from "@/assets/photos/mattress-swatch-natural.jpg";
 import mattressColors from "@/assets/photos/mattress-colors.jpg";
 import mattressMochaBedroom from "@/assets/photos/mattress-mocha-bedroom.jpg";
@@ -98,6 +99,7 @@ export const PHOTOS = {
   "mattress-studio-safari": mattressStudioSafari,
   "mattress-studio-mocha": mattressStudioMocha,
   "mattress-studio-natural": mattressStudioNatural,
+  "mattress-studio-dove": mattressStudioDove,
   "mattress-swatch-natural": mattressSwatchNatural,
   "mattress-colors": mattressColors,
   "mattress-mocha-bedroom": mattressMochaBedroom,
