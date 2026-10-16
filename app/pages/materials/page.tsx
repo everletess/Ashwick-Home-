@@ -131,7 +131,7 @@ export default function MaterialsPage() {
               <div className="panel-img"><Photo src="mattress-cutaway" label="Cutaway of the mattress showing its layers" sizes={HALF} /></div>
               <h3 className="proc-h">The {MAT} — {MATTRESS.combinedHeight}</h3>
               <dl className="deflist">
-                <div><dt>Topper ({MATTRESS.topperHeight})</dt><dd>Quilted organic cotton shell · Living Wool · Living Wool and Swedish horsehair</dd></div>
+                <div><dt>Topper ({MATTRESS.topperHeight})</dt><dd>Quilted organic cotton shell · cashmere · Living Wool · Living Wool and Swedish horsehair</dd></div>
                 <div><dt>Mattress ({MATTRESS.mattressHeight})</dt><dd>Living Wool and horsehair, hand-tufted · organic wool · organic cotton · pocket coils · organic cotton · organic wool</dd></div>
               </dl>
               <Link href={MATTRESS_PATH} className="ulink">Shop the mattress →</Link>
@@ -157,7 +157,7 @@ export default function MaterialsPage() {
           <Columns
             items={[
               ["GOTS", <>Organic wool and organic cotton. Made by a GOTS-certified manufacturer ({MATTRESS.gotsManufacturer}).</>],
-              ["OEKO-TEX", "Swedish horsehair, tested for harmful substances."],
+              ["OEKO-TEX", "Swedish horsehair and cashmere (Standard 100), tested for harmful substances."],
               ["Fire safety", <>Our mattress meets US federal flammability standards without chemical flame retardants. {P.fireReport} {P.furnitureFire}</>],
             ]}
           />

@@ -22,7 +22,8 @@ export function Accordion({ items }: { items: [string, React.ReactNode][] }) {
   );
 }
 
-const TOPPER = ["Quilted organic cotton shell (GOTS)", "Living Wool surface", "Living Wool + Swedish horsehair"];
+// Where the cashmere sits within the topper is to confirm; it is listed after the shell.
+const TOPPER = ["Quilted organic cotton shell (GOTS)", "Cashmere (OEKO-TEX Standard 100)", "Living Wool surface", "Living Wool + Swedish horsehair"];
 const CORE = [
   "Living Wool + horsehair comfort layer, hand-tufted with wool rosettes",
   "Organic wool (GOTS)",
@@ -98,6 +99,6 @@ export function Columns({ items, numbered }: { items: [string, React.ReactNode][
 
 export const CERTIFICATIONS: [string, React.ReactNode][] = [
   ["GOTS", <>GOTS-certified organic wool and cotton, made by a GOTS-certified manufacturer ({M.gotsManufacturer}).</>],
-  ["OEKO-TEX", "OEKO-TEX certified horsehair."],
+  ["OEKO-TEX", "OEKO-TEX certified horsehair. OEKO-TEX Standard 100 certified cashmere."],
   ["Flammability", <>Federal standards met without chemical flame retardants {MATTRESS_PENDING.flammabilityReportShort}.</>],
 ];

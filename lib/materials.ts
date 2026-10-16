@@ -40,6 +40,14 @@ export const MATERIAL_GROUPS: MaterialGroup[] = [
         alt: "Crimped cream organic wool fiber",
       },
       {
+        id: "cashmere", short: "Cashmere", name: "Cashmere", descriptor: "The softest layer.",
+        body: "Naturally fine and exceptionally soft, cashmere is chosen for the quiet luxury it brings to the mattress. It sits in the topper, among the layers closest to you.",
+        where: `The ${MAT} topper.`,
+        origin: "OEKO-TEX Standard 100 certified",
+        photo: "fiber-kashmir",
+        alt: "Long, silky cashmere fiber",
+      },
+      {
         id: "horsehair", short: "Horsehair", name: "Swedish horsehair", descriptor: "The spring inside the softness.",
         body: "Long, curled strands of horsehair act like thousands of small springs: they compress under weight, return to shape and leave space for air to move between them. Ours comes from tail clippings in Sweden, and no horse is harmed. Blended with Living Wool, it gives the mattress and topper their lift and breathability.",
         where: `The ${MAT} comfort layer and topper.`,
