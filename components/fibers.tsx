@@ -8,6 +8,7 @@ type Fiber = { name: string; line: string; photo?: PhotoKey; alt?: string };
 
 const FIBERS: Fiber[] = [
   { name: "Living Wool", photo: "fiber-wool", alt: "Crimped cream organic wool fiber on a dark background", line: "Organic wool from Lanas Trinidad in Uruguay. Keeps an even temperature and a dry surface, and gives buoyant support that springs back." },
+  { name: "Kashmir Wool", photo: "fiber-kashmir", alt: "Long, silky Kashmir wool fiber on a dark background", line: "[Add a line about Kashmir Wool: what it is, where it comes from and where it sits in the mattress.]" },
   { name: "Swedish horsehair", photo: "fiber-horsehair", alt: "Curled dark horsehair on a dark background", line: "From tail clippings; no horse is harmed. Each curled strand acts like a small spring, letting air move through the layers." },
   { name: "Organic cotton", photo: "fiber-cotton", alt: "Soft white organic cotton fiber on a dark background", line: "GOTS-certified. Wraps the coils on both sides and forms the topper's quilted shell." },
 ];
