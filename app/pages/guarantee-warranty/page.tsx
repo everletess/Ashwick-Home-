@@ -1,0 +1,150 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { Accordion, Columns } from "@/components/mattress";
+import { MATTRESS, MATTRESS_PATH, MATTRESS_PENDING as P } from "@/lib/mattress";
+import { WARRANTY_PATH } from "@/lib/trade-terms";
+
+const M = MATTRESS;
+
+export const metadata: Metadata = {
+  title: "Guarantee & warranty",
+  description: "Thirty nights to be sure. A lifetime to keep it. The Ashwick Natural Mattress guarantee and warranty.",
+};
+
+function Terms({ rows }: { rows: [string, React.ReactNode][] }) {
+  return (
+    <dl className="deflist">
+      {rows.map(([k, v]) => (
+        <div key={k}><dt>{k}</dt><dd>{v}</dd></div>
+      ))}
+    </dl>
+  );
+}
+
+function Note({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <aside className="note">
+      <p className="note-h">{title}</p>
+      <p className="body small">{children}</p>
+    </aside>
+  );
+}
+
+// Copy is final (from the mattress handoff); bracketed values are pending and live in lib/mattress.ts.
+export default function GuaranteePage() {
+  return (
+    <main>
+      <section className="page-head wrap">
+        <div className="eyebrow">{M.title}</div>
+        <h1 className="h1">Sleep on it.</h1>
+        <p className="body">Thirty nights to be sure. A lifetime to keep it.</p>
+      </section>
+
+      <section className="sec linen">
+        <div className="wrap grid2">
+          <div className="panel">
+            <div className="eyebrow">{M.guaranteeNights} nights</div>
+            <h2 className="proc-h">Sleep on it at home.</h2>
+            <p className="body">If it isn&apos;t right within {M.guaranteeNights} nights of delivery, we&apos;ll collect it at no cost to you and refund you in full.</p>
+          </div>
+          <div className="panel">
+            <div className="eyebrow">For life</div>
+            <h2 className="proc-h">Built to be inherited.</h2>
+            <p className="body">Every Ashwick mattress is covered against defects in materials and workmanship for as long as you own it.</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="sec">
+        <div className="wrap specs">
+          <div>
+            <div className="eyebrow">{M.guarantee}</div>
+            <h2 className="h2">How it works</h2>
+          </div>
+          <div>
+            <Terms
+              rows={[
+                ["Your 30 nights", "Begin the day your mattress is delivered."],
+                ["Returns", "Free. We arrange collection from your home and cover the return freight."],
+                ["Your refund", <>The full purchase price, returned to your original payment method within {P.refundDays} of collection.</>],
+                ["Condition", "The mattress should be clean and free of stains or damage. We recommend a breathable mattress protector from the first night."],
+                ["Custom sizes", P.customSizesCovered],
+                ["What happens next", <>Returned mattresses are {P.returnedMattresses}, never resold as new.</>],
+              ]}
+            />
+            <Note title="Give it a few nights.">
+              A natural mattress feels different from foam. Wool and horsehair settle gently to your body over the first weeks, so we suggest sleeping on it for at least two weeks before deciding.
+            </Note>
+          </div>
+        </div>
+      </section>
+
+      <section className="sec linen">
+        <div className="wrap specs">
+          <div>
+            <div className="eyebrow">{M.warranty}</div>
+            <h2 className="h2">What&apos;s covered</h2>
+          </div>
+          <div>
+            <Terms
+              rows={[
+                ["Who", "The original purchaser, for as long as they own the mattress."],
+                ["Covered", <>Defects in materials and workmanship, including broken or loose coils, failed seams or tufting, and body impressions deeper than {P.indentationDepth} when the mattress is on a suitable foundation.</>],
+                ["Not covered", "Normal wear, stains, misuse, and natural settling of the wool and horsehair layers within normal limits."],
+                ["Our remedy", <>We&apos;ll repair or replace the affected mattress {P.warrantyRemedy}.</>],
+                ["Care", "Rotate the mattress 180° every 3–6 months and keep it on a supportive base. This helps the natural layers wear evenly."],
+              ]}
+            />
+            <Note title="About natural settling.">
+              Unlike foam, wool and horsehair gently conform to the person sleeping on them. A slight impression in the first months is normal and is part of how a natural mattress becomes yours. Regular rotation keeps it even.
+            </Note>
+          </div>
+        </div>
+      </section>
+
+      <section className="sec">
+        <div className="wrap">
+          <div className="center-head" style={{ marginBottom: 64 }}>
+            <h2 className="h2">Making a claim or a return</h2>
+          </div>
+          <Columns
+            numbered
+            items={[
+              ["Get in touch.", <>Email {P.supportEmail} with your order number and, for warranty claims, a few photos.</>],
+              ["We arrange it.", "We'll confirm the details and schedule a collection or repair at a time that suits you."],
+              ["It's resolved.", "Refunds are issued after collection. Warranty repairs or replacements are made by hand, like the original."],
+            ]}
+          />
+        </div>
+      </section>
+
+      <section className="sec linen">
+        <div className="wrap specs">
+          <div>
+            <div className="eyebrow">FAQ</div>
+            <h2 className="h2">Questions</h2>
+          </div>
+          <Accordion
+            items={[
+              ["Does the guarantee cover the topper?", <p className="body small" key="1">The mattress and topper are sold as one system, and the guarantee covers the set. {P.topperTerms}</p>],
+              ["What if my mattress arrives damaged?", <p className="body small" key="2">Contact us within {P.damageWindow} of delivery with photos, and we&apos;ll replace it.</p>],
+              ["Can I choose between soft and firm?", <p className="body small" key="3">Yes. The Natural Mattress comes in soft and firm. If you&apos;re unsure, our team can help you choose before you order.</p>],
+              [
+                "Do furniture pieces have the same guarantee?",
+                <p className="body small" key="4">
+                  The 30-night guarantee applies to the Natural Mattress. Our made-to-order furniture is covered by the <Link href={WARRANTY_PATH} className="inl">lifetime warranty</Link>; see {P.orderingPage} for its terms.
+                </p>,
+              ],
+            ]}
+          />
+        </div>
+      </section>
+
+      <section className="sec">
+        <div className="wrap center-head">
+          <Link href={MATTRESS_PATH} className="btn">Shop the Natural Mattress</Link>
+        </div>
+      </section>
+    </main>
+  );
+}

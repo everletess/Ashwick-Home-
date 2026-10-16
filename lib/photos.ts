@@ -31,6 +31,12 @@ import marloweSofaOakCorkNatural from "@/assets/photos/marlowe-sofa-oak-cork-nat
 import marloweSofaOakCorkIvory from "@/assets/photos/marlowe-sofa-oak-cork-ivory.jpg";
 import marloweSofaOakCorkIvory2 from "@/assets/photos/marlowe-sofa-oak-cork-ivory-2.jpg";
 import marloweStudio from "@/assets/photos/marlowe-studio.jpg";
+import mattressMochaRoom from "@/assets/photos/mattress-mocha-room.jpg";
+import mattressSafariRoom from "@/assets/photos/mattress-safari-room.jpg";
+import mattressCutaway from "@/assets/photos/mattress-cutaway.jpg";
+import mattressSwatchMocha from "@/assets/photos/mattress-swatch-mocha.jpg";
+import mattressSwatchSafari from "@/assets/photos/mattress-swatch-safari.jpg";
+import mattressSwatchDove from "@/assets/photos/mattress-swatch-dove.jpg";
 import pembroke1 from "@/assets/photos/pembroke-1.jpg";
 import pembroke2 from "@/assets/photos/pembroke-2.jpg";
 import pembrokeBlendDove from "@/assets/photos/pembroke-blend-dove.jpg";
@@ -74,6 +80,12 @@ export const PHOTOS = {
   "marlowe-sofa-oak-cork-ivory": marloweSofaOakCorkIvory,
   "marlowe-sofa-oak-cork-ivory-2": marloweSofaOakCorkIvory2,
   "marlowe-studio": marloweStudio,
+  "mattress-mocha-room": mattressMochaRoom,
+  "mattress-safari-room": mattressSafariRoom,
+  "mattress-cutaway": mattressCutaway,
+  "mattress-swatch-mocha": mattressSwatchMocha,
+  "mattress-swatch-safari": mattressSwatchSafari,
+  "mattress-swatch-dove": mattressSwatchDove,
   "pembroke-1": pembroke1,
   "pembroke-2": pembroke2,
   "pembroke-blend-ivory": pembrokeBlendIvory,
