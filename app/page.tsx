@@ -9,7 +9,7 @@ import { PRODUCTS } from "@/lib/products";
 
 function HomeHero() {
   return (
-    <section className="hero">
+    <section className="hero home-hero">
       <Photo src="hero" label="The Cotswold sofa and chair in a sunlit living room by the fire" className="hero-img" fill preload />
       <div className="hero-scrim home-scrim"></div>
       <div className="hero-txt">
@@ -133,9 +133,9 @@ export default function HomePage() {
   return (
     <main>
       <HomeHero />
+      <ValueStrip />
       <MattressFeature />
       <Fibers />
-      <ValueStrip />
       <HomeStatement />
       <BrandStory />
       <HomeCollection />

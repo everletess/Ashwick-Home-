@@ -63,7 +63,7 @@ export default function MattressPage() {
     [
       "Certifications",
       <p className="body small" key="c">
-        GOTS-certified organic wool and cotton, made by a GOTS-certified manufacturer ({M.gotsManufacturer}). OEKO-TEX certified horsehair. Meets US federal mattress flammability standards without chemical flame retardants {P.flammabilityReport}.
+        GOTS-certified organic wool and cotton, made by a GOTS-certified manufacturer ({M.gotsManufacturer}). OEKO-TEX certified horsehair. OEKO-TEX Standard 100 certified cashmere. Meets US federal mattress flammability standards without chemical flame retardants {P.flammabilityReport}.
       </p>,
     ],
   ];

@@ -12,7 +12,7 @@ export function MattressFeature() {
           <Photo src="mattress-mocha-bedroom" label="The Ashwick mattress in Mocha Mousse, shown in a sunlit bedroom" sizes="(max-width: 960px) 100vw, 50vw" />
         </Link>
         <div className="m-feature-t">
-          <div className="eyebrow">Now introducing</div>
+          <div className="m-feature-new"><span>New</span>Now introducing</div>
           <h2 className="h2">The Ashwick Home Luxury Organic Mattress Collection</h2>
           <p className="m-feature-tag">Dare to sleep in color.</p>
           <p className="body">

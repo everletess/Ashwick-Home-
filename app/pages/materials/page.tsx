@@ -9,7 +9,7 @@ import type { PhotoKey } from "@/lib/photos";
 
 export const metadata: Metadata = {
   title: "Our Materials",
-  description: "Every Ashwick piece is built from materials you'd recognize: wool, horsehair, kapok, cotton, linen and solid wood.",
+  description: "Every Ashwick piece is built from materials you'd recognize: wool, horsehair, cotton, linen and solid wood.",
 };
 
 const HALF = "(max-width: 960px) 100vw, 50vw";
@@ -70,7 +70,7 @@ export default function MaterialsPage() {
         alt="The mattress in Mocha Mousse on a walnut platform in a warm plaster room"
         eyebrow="Our Materials"
         title="What it's made of is the point."
-        body="Every Ashwick piece is built from materials you'd recognize: wool, horsehair, kapok, cotton, linen and solid wood. Each one is there because of what it does."
+        body="Every Ashwick piece is built from materials you'd recognize: wool, horsehair, cotton, linen and solid wood. Each one is there because of what it does."
       />
 
       <section className="sec linen">
@@ -95,7 +95,7 @@ export default function MaterialsPage() {
 
       <Group g={fillings} offset={offsets[0]} />
       <Group g={fabrics} offset={offsets[1]} />
-      <Band alt="Cream wool and dark curled horsehair blended together" title="The right fiber, in the right place." center />
+      <Band photo="materials-band-blend" alt="Cream wool and dark curled horsehair blended together" title="The right fiber, in the right place." center />
       <Group g={structure} offset={offsets[2]} />
       <Group g={finish} offset={offsets[3]} />
 
@@ -131,7 +131,7 @@ export default function MaterialsPage() {
               <div className="panel-img"><Photo src="mattress-cutaway" label="Cutaway of the mattress showing its layers" sizes={HALF} /></div>
               <h3 className="proc-h">The {MAT} — {MATTRESS.combinedHeight}</h3>
               <dl className="deflist">
-                <div><dt>Topper ({MATTRESS.topperHeight})</dt><dd>Quilted organic cotton shell · Living Wool · Living Wool and Swedish horsehair</dd></div>
+                <div><dt>Topper ({MATTRESS.topperHeight})</dt><dd>Quilted organic cotton shell · cashmere · Living Wool · Living Wool and Swedish horsehair</dd></div>
                 <div><dt>Mattress ({MATTRESS.mattressHeight})</dt><dd>Living Wool and horsehair, hand-tufted · organic wool · organic cotton · pocket coils · organic cotton · organic wool</dd></div>
               </dl>
               <Link href={MATTRESS_PATH} className="ulink">Shop the mattress →</Link>
@@ -157,7 +157,7 @@ export default function MaterialsPage() {
           <Columns
             items={[
               ["GOTS", <>Organic wool and organic cotton. Made by a GOTS-certified manufacturer ({MATTRESS.gotsManufacturer}).</>],
-              ["OEKO-TEX", "Swedish horsehair, tested for harmful substances."],
+              ["OEKO-TEX", "Swedish horsehair and cashmere (Standard 100), tested for harmful substances."],
               ["Fire safety", <>Our mattress meets US federal flammability standards without chemical flame retardants. {P.fireReport} {P.furnitureFire}</>],
             ]}
           />
