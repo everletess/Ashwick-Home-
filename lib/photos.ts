@@ -21,6 +21,8 @@ import csofaStudio from "@/assets/photos/csofa-studio.jpg";
 import fiberWool from "@/assets/photos/fiber-wool.jpg";
 import fiberHorsehair from "@/assets/photos/fiber-horsehair.jpg";
 import fiberCotton from "@/assets/photos/fiber-cotton.jpg";
+import fiberCoir from "@/assets/photos/fiber-coir.jpg";
+import fiberWood from "@/assets/photos/fiber-wood.jpg";
 import fiberKashmir from "@/assets/photos/fiber-kashmir.jpg";
 import frameFillCover from "@/assets/photos/frame-fill-cover.jpg";
 import hero from "@/assets/photos/hero.jpg";
@@ -98,6 +100,8 @@ export const PHOTOS = {
   "fiber-wool": fiberWool,
   "fiber-horsehair": fiberHorsehair,
   "fiber-cotton": fiberCotton,
+  "fiber-coir": fiberCoir,
+  "fiber-wood": fiberWood,
   "fiber-kashmir": fiberKashmir,
   "frame-fill-cover": frameFillCover,
   "hero": hero,

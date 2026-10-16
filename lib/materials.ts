@@ -39,7 +39,8 @@ export const FURNITURE_GROUPS: MaterialGroup[] = [
         body: "Every frame is built by hand in the USA from solid, kiln-dried [species: confirm, e.g. oak, ash, walnut]. No particleboard and no plastic parts. It's the part of a sofa you'll never see, and the part that decides whether it lasts a decade or a lifetime.",
         where: "Frames, plinths and legs. [Confirm: any plywood or engineered wood? If so, adjust \"No particleboard.\"]",
         origin: "Handmade in the USA",
-        alt: "End grain and oiled surface of solid oak",
+        photo: "fiber-wood",
+        alt: "Blocks of solid oak and walnut showing end grain",
       },
       {
         id: "natural-oils", short: "Natural Oils", name: "Natural oils", descriptor: "Finished to be touched.",
@@ -65,7 +66,8 @@ export const FURNITURE_GROUPS: MaterialGroup[] = [
         body: "Coir is the fiber from the outer husk of the coconut. It's firm, springy and breathable, which makes it a natural foundation in place of foam.",
         where: "Seat foundations and firm support layers.",
         origin: "[Origin and certification — confirm, or remove line]",
-        alt: "Coconut coir fiber",
+        photo: "fiber-coir",
+        alt: "Coarse golden-brown coconut coir fiber",
       },
       {
         id: "agave", short: "Agave", name: "Organic agave", descriptor: "Strength from the desert.",
