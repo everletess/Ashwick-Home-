@@ -129,9 +129,9 @@ button.chip{cursor:pointer}
 /* Home: the fibers inside the mattress */
 .fibers{background:var(--ink);color:var(--alabaster);padding:104px 0}
 .fibers .h2{color:var(--alabaster)}
-.fibers-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:48px;margin:64px auto 0;max-width:1040px}
+.fibers-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:32px;margin:64px auto 0;max-width:1240px}
 .fiber{margin:0;text-align:center}
-.fiber-img{position:relative;aspect-ratio:3/4;overflow:hidden;background:#3a342c}
+.fiber-img{position:relative;aspect-ratio:2/3;overflow:hidden;background:#1c1a17}
 .fiber-img img{width:100%;height:100%;object-fit:cover}
 .fiber-img .ph{background-color:#3a342c;background-image:repeating-linear-gradient(135deg,rgba(246,242,236,.06) 0 1px,transparent 1px 16px)}
 .fiber-img .ph span{color:var(--drift)}
@@ -455,6 +455,7 @@ button.chip{cursor:pointer}
   .hdr-in{grid-template-columns:44px minmax(0,1fr) auto;padding:12px 20px;gap:12px}
 }
 @media (max-width:1180px){
+  .fibers-grid{grid-template-columns:repeat(2,minmax(0,1fr));max-width:760px;gap:48px 32px}
   .grid3{grid-template-columns:repeat(2,minmax(0,1fr))}
   .mat-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
   .made,.name{gap:56px}
@@ -490,7 +491,7 @@ button.chip{cursor:pointer}
   .leave-list{flex-direction:column;align-items:center}
   .fibers{padding:72px 0}
   .fibers-grid{grid-template-columns:minmax(0,1fr);gap:40px;margin-top:40px}
-  .fiber-img{aspect-ratio:4/3}
+  .fiber-img{aspect-ratio:4/5}
   .m-feature-in{grid-template-columns:minmax(0,1fr);gap:40px}
   .m-colors{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 16px}
   .deflist div{grid-template-columns:minmax(0,1fr);gap:6px}
