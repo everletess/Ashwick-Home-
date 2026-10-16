@@ -40,7 +40,10 @@ import mattressSwatchDove from "@/assets/photos/mattress-swatch-dove.jpg";
 import mattressStudioKhaki from "@/assets/photos/mattress-studio-khaki.jpg";
 import mattressStudioSafari from "@/assets/photos/mattress-studio-safari.jpg";
 import mattressStudioMocha from "@/assets/photos/mattress-studio-mocha.jpg";
-import mattressStudioDove from "@/assets/photos/mattress-studio-dove.jpg";
+import mattressStudioNatural from "@/assets/photos/mattress-studio-natural.jpg";
+import mattressSwatchNatural from "@/assets/photos/mattress-swatch-natural.jpg";
+import mattressColors from "@/assets/photos/mattress-colors.jpg";
+import mattressMochaBedroom from "@/assets/photos/mattress-mocha-bedroom.jpg";
 import mattressSwatchKhaki from "@/assets/photos/mattress-swatch-khaki.jpg";
 import pembroke1 from "@/assets/photos/pembroke-1.jpg";
 import pembroke2 from "@/assets/photos/pembroke-2.jpg";
@@ -94,7 +97,10 @@ export const PHOTOS = {
   "mattress-studio-khaki": mattressStudioKhaki,
   "mattress-studio-safari": mattressStudioSafari,
   "mattress-studio-mocha": mattressStudioMocha,
-  "mattress-studio-dove": mattressStudioDove,
+  "mattress-studio-natural": mattressStudioNatural,
+  "mattress-swatch-natural": mattressSwatchNatural,
+  "mattress-colors": mattressColors,
+  "mattress-mocha-bedroom": mattressMochaBedroom,
   "mattress-swatch-khaki": mattressSwatchKhaki,
   "pembroke-1": pembroke1,
   "pembroke-2": pembroke2,
