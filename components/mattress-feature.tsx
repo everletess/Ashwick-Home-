@@ -1,7 +1,8 @@
 // Home page feature announcing the mattress collection.
 import Link from "next/link";
 import { Photo } from "@/components/photo";
-import { LIVING_WOOL_PATH, MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
+import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
+import { MATERIALS_PATH } from "@/lib/materials";
 
 export function MattressFeature() {
   return (
@@ -29,7 +30,7 @@ export function MattressFeature() {
           </ul>
           <div className="btns">
             <Link href={MATTRESS_PATH} className="btn">Discover the mattress</Link>
-            <Link href={LIVING_WOOL_PATH} className="btn ghost">Living Wool</Link>
+            <Link href={MATERIALS_PATH} className="btn ghost">Our materials</Link>
           </div>
         </div>
       </div>

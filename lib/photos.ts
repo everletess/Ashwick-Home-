@@ -31,6 +31,7 @@ import marloweSofaOakCorkNatural from "@/assets/photos/marlowe-sofa-oak-cork-nat
 import marloweSofaOakCorkIvory from "@/assets/photos/marlowe-sofa-oak-cork-ivory.jpg";
 import marloweSofaOakCorkIvory2 from "@/assets/photos/marlowe-sofa-oak-cork-ivory-2.jpg";
 import marloweStudio from "@/assets/photos/marlowe-studio.jpg";
+import materialsRosettes from "@/assets/photos/materials-rosettes.jpg";
 import marloweLoveseatCard from "@/assets/photos/marlowe-loveseat-card.jpg";
 import marloweChairCard from "@/assets/photos/marlowe-chair-card.jpg";
 import marloweOttomanCard from "@/assets/photos/marlowe-ottoman-card.jpg";
@@ -92,6 +93,7 @@ export const PHOTOS = {
   "marlowe-sofa-oak-cork-ivory": marloweSofaOakCorkIvory,
   "marlowe-sofa-oak-cork-ivory-2": marloweSofaOakCorkIvory2,
   "marlowe-studio": marloweStudio,
+  "materials-rosettes": materialsRosettes,
   "marlowe-loveseat-card": marloweLoveseatCard,
   "marlowe-chair-card": marloweChairCard,
   "marlowe-ottoman-card": marloweOttomanCard,

@@ -7,8 +7,7 @@
  */
 import type { PhotoKey } from "@/lib/photos";
 
-export const MATTRESS_PATH = "/products/natural-mattress";
-export const LIVING_WOOL_PATH = "/pages/living-wool";
+export const MATTRESS_PATH = "/products/luxury-organic-mattress";
 export const GUARANTEE_PATH = "/pages/guarantee-warranty";
 
 export type MattressSize = { id: string; label: string; dims: string; price: number };
@@ -27,7 +26,7 @@ export const MATTRESS = {
 
   /** Prices include the 3" topper and shipping. */
   sizes: [
-    { id: "twin", label: "Twin", dims: '38" × 75"', price: 3200 },
+    { id: "twin", label: "Twin", dims: '39" × 75"', price: 3200 },
     { id: "twin-xl", label: "Twin XL", dims: '38" × 80"', price: 3400 },
     { id: "full", label: "Full", dims: '54" × 75"', price: 3900 },
     { id: "queen", label: "Queen", dims: '60" × 80"', price: 4800 },

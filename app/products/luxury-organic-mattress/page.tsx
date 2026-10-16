@@ -3,7 +3,8 @@ import Link from "next/link";
 import { Accordion, Construction, Recovery } from "@/components/mattress";
 import { MattressView } from "@/components/mattress-view";
 import { Photo } from "@/components/photo";
-import { GUARANTEE_PATH, LIVING_WOOL_PATH, MATTRESS, MATTRESS_PENDING as P } from "@/lib/mattress";
+import { GUARANTEE_PATH, MATTRESS, MATTRESS_PENDING as P } from "@/lib/mattress";
+import { MATERIALS_PATH } from "@/lib/materials";
 import { PHOTOS } from "@/lib/photos";
 import { fmt } from "@/lib/products";
 
@@ -115,7 +116,7 @@ export default function MattressPage() {
               </div>
             ))}
           </div>
-          <div className="m-more"><Link href={LIVING_WOOL_PATH} className="ulink">Discover Living Wool →</Link></div>
+          <div className="m-more"><Link href={MATERIALS_PATH} className="ulink">Explore our materials →</Link></div>
         </div>
       </section>
 
