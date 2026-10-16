@@ -31,6 +31,9 @@ import marloweSofaOakCorkNatural from "@/assets/photos/marlowe-sofa-oak-cork-nat
 import marloweSofaOakCorkIvory from "@/assets/photos/marlowe-sofa-oak-cork-ivory.jpg";
 import marloweSofaOakCorkIvory2 from "@/assets/photos/marlowe-sofa-oak-cork-ivory-2.jpg";
 import marloweStudio from "@/assets/photos/marlowe-studio.jpg";
+import marloweLoveseatCard from "@/assets/photos/marlowe-loveseat-card.jpg";
+import marloweChairCard from "@/assets/photos/marlowe-chair-card.jpg";
+import marloweOttomanCard from "@/assets/photos/marlowe-ottoman-card.jpg";
 import mattressMochaRoom from "@/assets/photos/mattress-mocha-room.jpg";
 import mattressSafariRoom from "@/assets/photos/mattress-safari-room.jpg";
 import mattressCutaway from "@/assets/photos/mattress-cutaway.jpg";
@@ -89,6 +92,9 @@ export const PHOTOS = {
   "marlowe-sofa-oak-cork-ivory": marloweSofaOakCorkIvory,
   "marlowe-sofa-oak-cork-ivory-2": marloweSofaOakCorkIvory2,
   "marlowe-studio": marloweStudio,
+  "marlowe-loveseat-card": marloweLoveseatCard,
+  "marlowe-chair-card": marloweChairCard,
+  "marlowe-ottoman-card": marloweOttomanCard,
   "mattress-mocha-room": mattressMochaRoom,
   "mattress-safari-room": mattressSafariRoom,
   "mattress-cutaway": mattressCutaway,
