@@ -113,7 +113,7 @@ button.chip{cursor:pointer}
 .info>.ulink{margin:22px 28px 0 0}
 .linkbtn.ulink{border-width:0 0 1px;border-style:solid;border-color:currentColor;letter-spacing:.26em;text-transform:uppercase;font:500 11px var(--sans);padding-bottom:5px}
 .info .custom-req{margin-top:20px}
-.m-colors{margin-top:64px}
+.m-colors{margin-top:64px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:32px}
 .m-color{margin:0}
 .m-color-img{position:relative;aspect-ratio:1/1;overflow:hidden;background:var(--alabaster)}
 .m-color-img img{width:100%;height:100%;object-fit:cover}
@@ -426,6 +426,7 @@ button.chip{cursor:pointer}
   .proc.txt{padding-top:40px}
   .offer-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px 20px}
   .layers{grid-template-columns:minmax(0,1fr)}
+  .m-colors{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 16px}
   .deflist div{grid-template-columns:minmax(0,1fr);gap:6px}
   .terms{columns:1}
   .tsteps{grid-template-columns:minmax(0,1fr);gap:32px}

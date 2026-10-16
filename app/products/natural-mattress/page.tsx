@@ -8,6 +8,7 @@ import { PHOTOS } from "@/lib/photos";
 import { fmt } from "@/lib/products";
 
 const M = MATTRESS;
+const COUNT: Record<number, string> = { 2: "two", 3: "three", 4: "four", 5: "five", 6: "six" };
 
 export const metadata: Metadata = {
   title: M.title,
@@ -80,10 +81,10 @@ export default function MattressPage() {
           <div className="center-head">
             <h2 className="h2">Your bed, in color.</h2>
             <p className="body" style={{ marginTop: 24 }}>
-              Natural mattresses are almost always white. Ours comes in three colors, made to be seen: {M.colors.map((c) => c.label).join(", ").replace(/, ([^,]*)$/, " and $1")}.
+              Natural mattresses are almost always white. Ours comes in {COUNT[M.colors.length] ?? M.colors.length} colors, made to be seen: {M.colors.map((c) => c.label).join(", ").replace(/, ([^,]*)$/, " and $1")}.
             </p>
           </div>
-          <div className="grid3 m-colors">
+          <div className="m-colors">
             {M.colors.map((c) => (
               <figure className="m-color" key={c.id}>
                 <div className="m-color-img"><Photo src={c.swatch} label={`${c.label} fabric, hand-tufted`} sizes="(max-width: 960px) 100vw, 33vw" /></div>
