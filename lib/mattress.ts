@@ -47,6 +47,8 @@ export const MATTRESS = {
     { id: "dove", label: "Morning Dove", swatch: "mattress-swatch-dove", alt: "The Ashwick Natural Mattress in Morning Dove" },
   ] satisfies MattressColor[],
 
+  /** false shows "Coming soon" in place of Add to cart (until the Shopify product and checkout are set up). */
+  available: false,
   leadTime: "Made to order. Ships in 1–2 weeks.",
   shipping: "Free shipping.",
   guarantee: "30-night money-back guarantee",

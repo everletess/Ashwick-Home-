@@ -120,7 +120,11 @@ export function MattressView() {
         </div>
 
         <div className="designed">
-          <button className="btn full" onClick={add}>Add to cart · {fmt(sz.price)}</button>
+          {M.available ? (
+            <button className="btn full" onClick={add}>Add to cart · {fmt(sz.price)}</button>
+          ) : (
+            <button className="btn full" disabled aria-disabled="true">Coming soon</button>
+          )}
           <ul className="buy-notes">
             <li>{M.leadTime}</li>
             <li>{M.shipping} {M.guarantee}.</li>
