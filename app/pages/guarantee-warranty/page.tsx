@@ -8,7 +8,7 @@ const M = MATTRESS;
 
 export const metadata: Metadata = {
   title: "Guarantee & warranty",
-  description: "Thirty nights to be sure. A lifetime to keep it. The Ashwick Natural Mattress guarantee and warranty.",
+  description: "Thirty nights to be sure. A lifetime to keep it. The Ashwick Home Luxury Organic Mattress guarantee and warranty.",
 };
 
 function Terms({ rows }: { rows: [string, React.ReactNode][] }) {
@@ -128,11 +128,11 @@ export default function GuaranteePage() {
             items={[
               ["Does the guarantee cover the topper?", <p className="body small" key="1">The mattress and topper are sold as one system, and the guarantee covers the set. {P.topperTerms}</p>],
               ["What if my mattress arrives damaged?", <p className="body small" key="2">Contact us within {P.damageWindow} of delivery with photos, and we&apos;ll replace it.</p>],
-              ["Can I choose between soft and firm?", <p className="body small" key="3">Yes. The Natural Mattress comes in soft and firm. If you&apos;re unsure, our team can help you choose before you order.</p>],
+              ["Can I choose between soft and firm?", <p className="body small" key="3">Yes. The {M.shortName} comes in soft and firm. If you&apos;re unsure, our team can help you choose before you order.</p>],
               [
                 "Do furniture pieces have the same guarantee?",
                 <p className="body small" key="4">
-                  The 30-night guarantee applies to the Natural Mattress. Our made-to-order furniture is covered by the <Link href={WARRANTY_PATH} className="inl">lifetime warranty</Link>; see {P.orderingPage} for its terms.
+                  The 30-night guarantee applies to the {M.shortName}. Our made-to-order furniture is covered by the <Link href={WARRANTY_PATH} className="inl">lifetime warranty</Link>; see {P.orderingPage} for its terms.
                 </p>,
               ],
             ]}
@@ -142,7 +142,7 @@ export default function GuaranteePage() {
 
       <section className="sec">
         <div className="wrap center-head">
-          <Link href={MATTRESS_PATH} className="btn">Shop the Natural Mattress</Link>
+          <Link href={MATTRESS_PATH} className="btn">Shop the {M.shortName}</Link>
         </div>
       </section>
     </main>

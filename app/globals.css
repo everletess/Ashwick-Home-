@@ -21,7 +21,7 @@ button{font:inherit;color:inherit}
 .btns{display:flex;gap:14px;flex-wrap:wrap;margin-top:44px}
 .ulink{position:relative;align-self:flex-start;font:500 11px var(--sans);letter-spacing:.26em;text-transform:uppercase;border-bottom:1px solid currentColor;padding-bottom:5px;display:inline-block}
 .ulink::after{content:'';position:absolute;left:-4px;right:-4px;top:-12px;bottom:-12px}
-.ulink.light{color:var(--alabaster);margin-top:56px}.ulink.light:hover{color:var(--oat)}
+.ulink.light{color:var(--alabaster);margin-top:36px}.ulink.light:hover{color:var(--oat)}
 .sec{padding:140px 0}
 .sec.linen{background:var(--linen)}
 .sec.tint{background:#F1ECE3}
@@ -58,6 +58,10 @@ button.chip{cursor:pointer}
 
 .hero{position:relative;height:88vh;height:88svh;min-height:640px;max-height:1000px;overflow:hidden;background:var(--linen)}
 .hero>img,.hero>.ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+/* Home hero: keep the sofa and fireplace in frame when narrow screens crop the sides. */
+.hero>img.hero-img{object-position:62% 50%}
+.hero-scrim.home-scrim{background:radial-gradient(ellipse 60% 55% at 50% 62%,rgba(20,18,14,.42),rgba(20,18,14,0) 100%),linear-gradient(180deg,rgba(20,18,14,.08) 0%,rgba(20,18,14,.18) 45%,rgba(20,18,14,.55) 100%)}
+.hero .h1,.hero-body,.hero .eyebrow{text-shadow:0 1px 18px rgba(20,18,14,.35)}
 .hero-scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,18,14,0) 30%,rgba(20,18,14,.52) 100%)}
 .hero-txt{position:absolute;left:0;right:0;bottom:10%;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 24px;color:var(--alabaster)}
 .hero .eyebrow{color:var(--alabaster)}
@@ -213,10 +217,10 @@ button.chip{cursor:pointer}
 .film-s{font:400 clamp(11px,1vw,13px) var(--sans);letter-spacing:.3em;text-transform:uppercase;margin:16px 0 0}
 @media (prefers-reduced-motion:reduce){.film-still{animation:none}.film-still:first-child{opacity:1}}
 
-.statement{background:var(--ink);color:var(--alabaster);text-align:center;padding:170px var(--gut);display:flex;flex-direction:column;align-items:center}
-.statement.tall{padding:190px var(--gut) 180px}
-.statement p{font:italic 300 clamp(32px,4.4vw,62px)/1.2 var(--serif);margin:0;max-width:20ch;text-wrap:balance}
-.statement .gap{height:40px}
+.statement{background:var(--ink);color:var(--alabaster);text-align:center;padding:104px var(--gut);display:flex;flex-direction:column;align-items:center}
+.statement.tall{padding:128px var(--gut) 120px}
+.statement p{font:italic 300 clamp(28px,3.3vw,46px)/1.2 var(--serif);margin:0;max-width:20ch;text-wrap:balance}
+.statement .gap{height:20px}
 .statement .ulink{align-self:center}
 
 .split-head{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:48px;align-items:end;margin-bottom:64px}
@@ -448,8 +452,8 @@ button.chip{cursor:pointer}
   .tsteps{grid-template-columns:minmax(0,1fr);gap:32px}
   .trade-apply{grid-template-columns:minmax(0,1fr);gap:48px}
   .tform{grid-template-columns:minmax(0,1fr)}
-  .statement{padding:110px 24px}
-  .statement.tall{padding:120px 24px}
+  .statement{padding:72px 24px}
+  .statement.tall{padding:88px 24px}
   .split-head{grid-template-columns:minmax(0,1fr);gap:18px;margin-bottom:44px}
   .grid2{grid-template-columns:minmax(0,1fr)}
   .panel{padding:28px}

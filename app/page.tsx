@@ -9,8 +9,8 @@ import { PRODUCTS } from "@/lib/products";
 function HomeHero() {
   return (
     <section className="hero">
-      <Photo src="hero" label="Ashwick Home living room" fill preload />
-      <div className="hero-scrim"></div>
+      <Photo src="hero" label="The Cotswold sofa and chair in a sunlit living room by the fire" className="hero-img" fill preload />
+      <div className="hero-scrim home-scrim"></div>
       <div className="hero-txt">
         <div className="eyebrow">Organic furniture · Handmade in the USA</div>
         <h1 className="h1">Made of nature. Built to last.</h1>

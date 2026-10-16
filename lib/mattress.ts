@@ -1,5 +1,5 @@
 /**
- * The Ashwick Natural Mattress: every price, size, name and policy value used on the mattress page, the Living Wool
+ * The Ashwick Home Luxury Organic Mattress Collection: every price, size, name and policy value used on the mattress page, the Living Wool
  * page and the Guarantee & warranty page. Change values here, not in the page markup.
  *
  * Anything in [square brackets] is pending confirmation and is shown on the pages as written so it gets caught in
@@ -19,7 +19,9 @@ export const MATTRESS = {
   id: "natural-mattress",
   /** Shopify product handle. */
   handle: "natural-mattress",
-  title: "The Ashwick Natural Mattress",
+  title: "The Ashwick Home Luxury Organic Mattress Collection",
+  /** Shorter name for buttons and running text. */
+  shortName: "Luxury Organic Mattress",
   type: "Mattress",
   vendor: "Ashwick Home",
 
@@ -43,11 +45,11 @@ export const MATTRESS = {
 
   /** Same price for every color, in this order on the page. Names are editable ("Mocha Mousse" may be renamed). */
   colors: [
-    { id: "mocha", label: "Mocha Mousse", swatch: "mattress-swatch-mocha", photos: ["mattress-mocha-bedroom", "mattress-studio-mocha", "mattress-mocha-room"], alt: "The Ashwick Natural Mattress in Mocha Mousse" },
-    { id: "safari", label: "Safari", swatch: "mattress-swatch-safari", photos: ["mattress-studio-safari", "mattress-safari-room"], alt: "The Ashwick Natural Mattress in Safari" },
-    { id: "dove", label: "Morning Dove", swatch: "mattress-swatch-dove", photos: ["mattress-studio-dove"], alt: "The Ashwick Natural Mattress in Morning Dove" },
-    { id: "khaki", label: "Khaki", swatch: "mattress-swatch-khaki", photos: ["mattress-studio-khaki"], alt: "The Ashwick Natural Mattress in Khaki" },
-    { id: "natural", label: "Natural", swatch: "mattress-swatch-natural", photos: ["mattress-studio-natural"], alt: "The Ashwick Natural Mattress in Natural" },
+    { id: "mocha", label: "Mocha Mousse", swatch: "mattress-swatch-mocha", photos: ["mattress-mocha-bedroom", "mattress-studio-mocha", "mattress-mocha-room"], alt: "The Ashwick Home Luxury Organic Mattress in Mocha Mousse" },
+    { id: "safari", label: "Safari", swatch: "mattress-swatch-safari", photos: ["mattress-studio-safari", "mattress-safari-room"], alt: "The Ashwick Home Luxury Organic Mattress in Safari" },
+    { id: "dove", label: "Morning Dove", swatch: "mattress-swatch-dove", photos: ["mattress-studio-dove"], alt: "The Ashwick Home Luxury Organic Mattress in Morning Dove" },
+    { id: "khaki", label: "Khaki", swatch: "mattress-swatch-khaki", photos: ["mattress-studio-khaki"], alt: "The Ashwick Home Luxury Organic Mattress in Khaki" },
+    { id: "natural", label: "Natural", swatch: "mattress-swatch-natural", photos: ["mattress-studio-natural"], alt: "The Ashwick Home Luxury Organic Mattress in Natural" },
   ] satisfies MattressColor[],
 
   /** false shows "Coming soon" in place of Add to cart (until the Shopify product and checkout are set up). */
@@ -67,7 +69,7 @@ export const MATTRESS = {
 /** Shots shown after the selected color's own, for every color. */
 export const MATTRESS_GALLERY: { photo: PhotoKey; alt: string }[] = [
   { photo: "mattress-colors", alt: "The mattress in Mocha Mousse, Safari, Morning Dove, Khaki and Natural" },
-  { photo: "mattress-cutaway", alt: "The Ashwick Natural Mattress: the layers inside" },
+  { photo: "mattress-cutaway", alt: "The Ashwick Home Luxury Organic Mattress: the layers inside" },
 ];
 
 /** Values pending confirmation, shown as written until replaced. */
