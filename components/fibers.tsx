@@ -2,7 +2,7 @@
 // set `photo` on a fiber (a key in lib/photos.ts) to show one.
 import Link from "next/link";
 import { Photo } from "@/components/photo";
-import { LIVING_WOOL_PATH } from "@/lib/mattress";
+import { MATERIALS_PATH } from "@/lib/materials";
 import type { PhotoKey } from "@/lib/photos";
 
 type Fiber = { name: string; line: string; photo?: PhotoKey };
@@ -33,7 +33,7 @@ export function Fibers() {
           ))}
         </div>
         <div className="fibers-cta">
-          <Link href={LIVING_WOOL_PATH} className="btn outline-light">Explore our materials</Link>
+          <Link href={MATERIALS_PATH} className="btn outline-light">Explore our materials</Link>
         </div>
       </div>
     </section>
