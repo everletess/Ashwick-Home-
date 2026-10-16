@@ -12,7 +12,8 @@ export const LIVING_WOOL_PATH = "/pages/living-wool";
 export const GUARANTEE_PATH = "/pages/guarantee-warranty";
 
 export type MattressSize = { id: string; label: string; dims: string; price: number };
-export type MattressColor = { id: string; label: string; swatch: PhotoKey; photo?: PhotoKey; alt: string };
+/** studio: the product shot that leads the gallery; photo: a room shot, where one exists. */
+export type MattressColor = { id: string; label: string; swatch: PhotoKey; studio: PhotoKey; photo?: PhotoKey; alt: string };
 
 export const MATTRESS = {
   id: "natural-mattress",
@@ -40,13 +41,16 @@ export const MATTRESS = {
     { id: "firm", label: "Firm" },
   ],
 
-  /** Same price for every color. Names are editable ("Mocha Mousse" may be renamed). */
+  /** Same price for every color, in this order on the page. Names are editable ("Mocha Mousse" may be renamed). */
   colors: [
-    { id: "mocha", label: "Mocha Mousse", swatch: "mattress-swatch-mocha", photo: "mattress-mocha-room", alt: "The Ashwick Natural Mattress in Mocha Mousse on a walnut platform" },
-    { id: "safari", label: "Safari", swatch: "mattress-swatch-safari", photo: "mattress-safari-room", alt: "The Ashwick Natural Mattress in Safari on a light oak platform" },
-    { id: "dove", label: "Morning Dove", swatch: "mattress-swatch-dove", alt: "The Ashwick Natural Mattress in Morning Dove" },
+    { id: "khaki", label: "Khaki", swatch: "mattress-swatch-khaki", studio: "mattress-studio-khaki", alt: "The Ashwick Natural Mattress in Khaki" },
+    { id: "safari", label: "Safari", swatch: "mattress-swatch-safari", studio: "mattress-studio-safari", photo: "mattress-safari-room", alt: "The Ashwick Natural Mattress in Safari" },
+    { id: "mocha", label: "Mocha Mousse", swatch: "mattress-swatch-mocha", studio: "mattress-studio-mocha", photo: "mattress-mocha-room", alt: "The Ashwick Natural Mattress in Mocha Mousse" },
+    { id: "dove", label: "Morning Dove", swatch: "mattress-swatch-dove", studio: "mattress-studio-dove", alt: "The Ashwick Natural Mattress in Morning Dove" },
   ] satisfies MattressColor[],
 
+  /** false shows "Coming soon" in place of Add to cart (until the Shopify product and checkout are set up). */
+  available: false,
   leadTime: "Made to order. Ships in 1–2 weeks.",
   shipping: "Free shipping.",
   guarantee: "30-night money-back guarantee",

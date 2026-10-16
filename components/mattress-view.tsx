@@ -52,8 +52,8 @@ export function MattressView() {
 
   const sel = colorById(color);
   const sz = sizeById(size);
-  // The color's room photo (or a placeholder until one exists), then the construction.
-  const gallery: (PhotoKey | undefined)[] = [sel.photo, "mattress-cutaway"];
+  // The color's product shot, its room shot where there is one, then the construction.
+  const gallery: PhotoKey[] = [sel.studio, ...(sel.photo ? [sel.photo] : []), "mattress-cutaway"];
   const setColor = (c: string) => {
     setColorState(c);
     setImg(0);
@@ -64,7 +64,7 @@ export function MattressView() {
     cart.add({
       id: M.id,
       name: M.title,
-      photo: sel.photo ?? sel.swatch,
+      photo: sel.studio,
       price: sz.price,
       qty: 1,
       mode: "As designed",
@@ -76,13 +76,13 @@ export function MattressView() {
       <div className="gal">
         <div className="gal-main">
           <div className="gal-photo">
-            <Photo src={gallery[img]} label={img === 0 ? `${M.title} in ${sel.label}` : `${M.title}: the layers inside`} sizes="(max-width: 960px) 100vw, 56vw" preload />
+            <Photo src={gallery[img]} label={gallery[img] === "mattress-cutaway" ? `${M.title}: the layers inside` : sel.alt} sizes="(max-width: 960px) 100vw, 56vw" preload />
           </div>
         </div>
         <div className="gal-thumbs">
           {gallery.map((ph, i) => (
             <button key={i} className={i === img ? "on" : ""} aria-label={"Image " + (i + 1)} aria-pressed={i === img} onClick={() => setImg(i)}>
-              <Photo src={ph ?? sel.swatch} label="" sizes="84px" />
+              <Photo src={ph} label="" sizes="84px" />
             </button>
           ))}
         </div>
@@ -120,7 +120,11 @@ export function MattressView() {
         </div>
 
         <div className="designed">
-          <button className="btn full" onClick={add}>Add to cart · {fmt(sz.price)}</button>
+          {M.available ? (
+            <button className="btn full" onClick={add}>Add to cart · {fmt(sz.price)}</button>
+          ) : (
+            <button className="btn full" disabled aria-disabled="true">Coming soon</button>
+          )}
           <ul className="buy-notes">
             <li>{M.leadTime}</li>
             <li>{M.shipping} {M.guarantee}.</li>
