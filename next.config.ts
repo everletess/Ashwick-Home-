@@ -5,8 +5,8 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       { source: "/products/natural-mattress", destination: "/products/luxury-organic-mattress", permanent: true },
-      // The Living Wool page became the Living Wool entry on Our Materials.
-      { source: "/pages/living-wool", destination: "/pages/materials#living-wool", permanent: true },
+      // The Living Wool page became the Living Wool entry on Inside the Ashbury.
+      { source: "/pages/living-wool", destination: "/pages/inside-the-ashbury#living-wool", permanent: true },
     ];
   },
 };

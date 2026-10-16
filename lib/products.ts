@@ -160,7 +160,7 @@ const WHITE_GLOVE = { label: "White glove delivery", price: 750 };
 export type Construction = { statement: string; intro: string; rows: [string, string][] };
 
 const NO_PETROCHEMICALS = "No petrochemicals. No plastic polyurethane foams.";
-const FOUNDATIONS = "Solid wood, coconut coir, organic natural latex, and wool.";
+const FOUNDATIONS = "Solid wood, coconut coir and wool.";
 const VEGAN = "TENCEL\u2122 and cotton can replace the wool in the seats, backs and foundations.";
 
 export function constructionFor(p: Product): Construction {
@@ -171,7 +171,7 @@ export function constructionFor(p: Product): Construction {
       intro: `The ${short} is handcrafted using only organic and natural materials.`,
       rows: [
         ["Foundations", FOUNDATIONS],
-        ["Seat cushions", "Organic latex wrapped in organic wool."],
+        ["Seat cushions", "[Build to be confirmed]"],
         ["Back and side cushions", "Organic wool."],
         ["Vegan models available", VEGAN],
       ],
@@ -183,7 +183,7 @@ export function constructionFor(p: Product): Construction {
       intro: `The ${short} is handcrafted using organic and natural materials.`,
       rows: [
         ["Foundations", FOUNDATIONS],
-        ["Cushion", "Organic latex wrapped in organic wool."],
+        ["Cushion", "[Build to be confirmed]"],
         ["Vegan models available", VEGAN],
       ],
     };
@@ -193,7 +193,7 @@ export function constructionFor(p: Product): Construction {
     intro: `The ${short} is handcrafted using organic and natural materials.`,
     rows: [
       ["Foundations", FOUNDATIONS],
-      ["Seat and back support", "Organic latex wrapped in organic wool."],
+      ["Seat and back support", "[Build to be confirmed]"],
       ["Vegan models available", VEGAN],
     ],
   };
@@ -383,8 +383,9 @@ export const fmt = (n: number | null) => (n == null ? "[PRICE]" : "$" + n.toLoca
 
 export const MATERIALS: [string, string][] = [
   ["Solid hardwood", "Frames built to hold for generations."],
-  ["Organic wool", "Natural loft and resilience in every cushion."],
-  ["Organic linen", "Breathable, and softer with every year."],
-  ["Latex and coir", "Organic natural latex and coconut coir, in place of polyurethane foam."],
+  ["Wool", "Natural loft and resilience in every cushion."],
+  ["Linen", "Breathable, and softer with every year."],
+  ["Coconut coir", "Firm, springy fiber from the coconut husk, in place of foam."],
+  ["Organic agave", "A strong natural fiber from the agave plant, grown with little water."],
   ["Natural oils", "Plant-based finishes for the wood."],
-];
+]
