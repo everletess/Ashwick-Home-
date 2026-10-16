@@ -3,7 +3,7 @@ import Link from "next/link";
 import { CERTIFICATIONS, Columns, Construction, Recovery } from "@/components/mattress";
 import { Photo } from "@/components/photo";
 import { PageHero } from "@/components/sections";
-import { GUARANTEE_PATH, MATTRESS_PATH } from "@/lib/mattress";
+import { GUARANTEE_PATH, MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
 
 export const metadata: Metadata = {
   title: "Living Wool",
@@ -16,7 +16,7 @@ export default function LivingWoolPage() {
     <main>
       <PageHero
         photo="mattress-safari-room"
-        alt="The Ashwick Natural Mattress in Safari on a light oak platform"
+        alt="The Ashwick Home Luxury Organic Mattress in Safari on a light oak platform"
         eyebrow="Materials"
         title="Living Wool."
         body="Organic wool from Lanas Trinidad in Uruguay, at the heart of every Ashwick mattress. Grown, not made. Built for the hours your body spends recovering."
@@ -85,7 +85,7 @@ export default function LivingWoolPage() {
           </div>
           <Columns items={CERTIFICATIONS} />
           <div className="btns m-ctas">
-            <Link href={MATTRESS_PATH} className="btn">Shop the Natural Mattress</Link>
+            <Link href={MATTRESS_PATH} className="btn">Shop the {MATTRESS.shortName}</Link>
             <Link href={GUARANTEE_PATH} className="btn ghost">Our 30-night guarantee</Link>
           </div>
         </div>
