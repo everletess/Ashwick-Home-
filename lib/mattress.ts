@@ -7,7 +7,7 @@
  */
 import type { PhotoKey } from "@/lib/photos";
 
-export const MATTRESS_PATH = "/products/natural-mattress";
+export const MATTRESS_PATH = "/products/luxury-organic-mattress";
 export const LIVING_WOOL_PATH = "/pages/living-wool";
 export const GUARANTEE_PATH = "/pages/guarantee-warranty";
 
