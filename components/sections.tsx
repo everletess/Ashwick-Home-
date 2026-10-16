@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FURNITURE_MATERIALS_PATH } from "@/lib/materials";
 import { Photo } from "@/components/photo";
 import { MATERIALS, cardPrice, fmt, type Product } from "@/lib/products";
 
@@ -48,6 +49,7 @@ export function MaterialsBlock({ heading = true }: { heading?: boolean }) {
         ))}
       </div>
       <p className="closing">Nothing synthetic. No polyurethane foam, no chemical flame retardants, no plastic.</p>
+      <div className="mat-recap-link"><Link href={FURNITURE_MATERIALS_PATH} className="ulink">Explore furniture materials →</Link></div>
     </>
   );
 }

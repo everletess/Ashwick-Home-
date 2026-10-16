@@ -8,7 +8,7 @@ const M = MATTRESS;
 
 export const metadata: Metadata = {
   title: "Guarantee & warranty",
-  description: "Thirty nights to be sure. A lifetime to keep it. The Ashwick Home Luxury Organic Mattress guarantee and warranty.",
+  description: "Thirty nights to be sure. A lifetime to keep it. The Ashbury guarantee and warranty.",
 };
 
 function Terms({ rows }: { rows: [string, React.ReactNode][] }) {

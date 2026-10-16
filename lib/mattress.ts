@@ -1,6 +1,6 @@
 /**
- * The Ashwick Home Luxury Organic Mattress Collection: every price, size, name and policy value used on the mattress page, the Living Wool
- * page and the Guarantee & warranty page. Change values here, not in the page markup.
+ * The Ashbury (Organic Luxury Collection): every price, size, name and policy value used on the mattress page, Inside
+ * the Ashbury and the Guarantee & warranty page. Change values here, not in the page markup.
  *
  * Anything in [square brackets] is pending confirmation and is shown on the pages as written so it gets caught in
  * review.
@@ -18,9 +18,11 @@ export const MATTRESS = {
   id: "natural-mattress",
   /** Shopify product handle. */
   handle: "natural-mattress",
-  title: "The Ashwick Home Luxury Organic Mattress Collection",
-  /** Shorter name for buttons and running text. */
-  shortName: "Luxury Organic Mattress",
+  title: "The Ashbury",
+  /** Shown beneath the title. */
+  collection: "Organic Luxury Collection",
+  /** Name in running copy and buttons ("the Ashbury", "Shop the Ashbury"). */
+  shortName: "Ashbury",
   type: "Mattress",
   vendor: "Ashwick Home",
 
@@ -42,14 +44,20 @@ export const MATTRESS = {
     { id: "firm", label: "Firm" },
   ],
 
-  /** Same price for every color, in this order on the page. Names are editable ("Mocha Mousse" may be renamed). */
+  /**
+   * Same price for every color, in this order on the page. Ids are the original color ids (kept so variants don't
+   * change); labels are the current names. File names still use the old names (mocha, safari, dove, khaki, natural).
+   */
   colors: [
-    { id: "mocha", label: "Mocha Mousse", swatch: "mattress-swatch-mocha", photos: ["mattress-mocha-bedroom", "mattress-studio-mocha", "mattress-mocha-room"], alt: "The Ashwick Home Luxury Organic Mattress in Mocha Mousse" },
-    { id: "safari", label: "Safari", swatch: "mattress-swatch-safari", photos: ["mattress-studio-safari", "mattress-safari-room"], alt: "The Ashwick Home Luxury Organic Mattress in Safari" },
-    { id: "dove", label: "Morning Dove", swatch: "mattress-swatch-dove", photos: ["mattress-studio-dove"], alt: "The Ashwick Home Luxury Organic Mattress in Morning Dove" },
-    { id: "khaki", label: "Khaki", swatch: "mattress-swatch-khaki", photos: ["mattress-studio-khaki"], alt: "The Ashwick Home Luxury Organic Mattress in Khaki" },
-    { id: "natural", label: "Natural", swatch: "mattress-swatch-natural", photos: ["mattress-studio-natural"], alt: "The Ashwick Home Luxury Organic Mattress in Natural" },
+    { id: "natural", label: "Fleece", swatch: "mattress-swatch-natural", photos: ["mattress-studio-natural"], alt: "The Ashbury in Fleece" },
+    { id: "dove", label: "Flint", swatch: "mattress-swatch-dove", photos: ["mattress-studio-dove"], alt: "The Ashbury in Flint" },
+    { id: "khaki", label: "Moss", swatch: "mattress-swatch-khaki", photos: ["mattress-studio-khaki"], alt: "The Ashbury in Moss" },
+    // The new Hazel render replaces the old Safari studio shot in the gallery (the old file is kept, unused).
+    { id: "safari", label: "Hazel", swatch: "mattress-swatch-hazel", photos: ["mattress-studio-hazel", "mattress-safari-room"], alt: "The Ashbury in Hazel" },
+    { id: "mocha", label: "Sorrel", swatch: "mattress-swatch-mocha", photos: ["mattress-mocha-bedroom", "mattress-studio-mocha", "mattress-mocha-room"], alt: "The Ashbury in Sorrel" },
   ] satisfies MattressColor[],
+  /** Color selected when the page opens (its first photo leads the gallery and the social preview). */
+  defaultColor: "mocha",
 
   /** false shows "Coming soon" in place of Add to cart (until the Shopify product and checkout are set up). */
   available: false,
@@ -66,9 +74,9 @@ export const MATTRESS = {
 };
 
 /** Shots shown after the selected color's own, for every color. */
+// The color lineup graphic (mattress-colors) is out of the gallery until it's regenerated with the new color names.
 export const MATTRESS_GALLERY: { photo: PhotoKey; alt: string }[] = [
-  { photo: "mattress-colors", alt: "The mattress in Mocha Mousse, Safari, Morning Dove, Khaki and Natural" },
-  { photo: "mattress-cutaway", alt: "The Ashwick Home Luxury Organic Mattress: the layers inside" },
+  { photo: "mattress-cutaway", alt: "The Ashbury: the layers inside" },
 ];
 
 /** Values pending confirmation, shown as written until replaced. */

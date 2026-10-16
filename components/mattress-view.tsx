@@ -46,7 +46,7 @@ export function MattressView() {
   const cart = useCart();
   const [size, setSize] = useState(M.defaultSize);
   const [feel, setFeel] = useState(M.feels[0].id);
-  const [color, setColorState] = useState(M.colors[0].id);
+  const [color, setColorState] = useState(M.defaultColor);
   const [img, setImg] = useState(0);
   const [custom, setCustom] = useState(false);
 
@@ -103,9 +103,10 @@ export function MattressView() {
       <div className="info">
         <div className="eyebrow">{M.type} · Made to order</div>
         <h1 className="pdp-name">{M.title}</h1>
+        <div className="pdp-collection">{M.collection}</div>
         <div className="pdp-price">{fmt(sz.price)}</div>
         <p className="body">
-          Living Wool, Swedish horsehair and organic cotton, hand-tufted and made in color. An {M.mattressHeight} mattress with a {M.topperHeight} topper included: {M.combinedHeight} of natural fiber, with no foam, no latex and no chemical flame retardants.
+          An all-natural, organic mattress made from nature&apos;s finest materials: organic Living Wool, organic cotton and Swedish horsehair, hand-tufted and made in color. An {M.mattressHeight} mattress with a {M.topperHeight} topper included: {M.combinedHeight} of natural fiber, with no foam, no latex and no chemical flame retardants.
         </p>
 
         <div className="choices">

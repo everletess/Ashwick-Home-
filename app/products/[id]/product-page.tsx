@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ProductView } from "@/components/product-view";
 import { ProductGrid } from "@/components/sections";
+import { FURNITURE_MATERIALS_PATH } from "@/lib/materials";
 import { PHOTOS } from "@/lib/photos";
 import { LEAD_TIME, PRODUCTS, constructionFor, getProduct, relatedTo } from "@/lib/products";
 
@@ -74,6 +75,7 @@ export async function ProductPage({ params, mode }: ProductParams & { mode: "des
                 <div className="spec" key={k}><div className="eyebrow">{k}</div><p>{v}</p></div>
               ))}
             </div>
+            <Link href={FURNITURE_MATERIALS_PATH} className="ulink construct-more">Explore our furniture materials →</Link>
           </div>
         </div>
       </section>

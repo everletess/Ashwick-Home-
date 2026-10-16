@@ -4,16 +4,15 @@ import { Accordion, Construction, Recovery } from "@/components/mattress";
 import { MattressView } from "@/components/mattress-view";
 import { Photo } from "@/components/photo";
 import { GUARANTEE_PATH, MATTRESS, MATTRESS_PENDING as P } from "@/lib/mattress";
-import { MATERIALS_PATH } from "@/lib/materials";
+import { ASHBURY_PATH } from "@/lib/materials";
 import { PHOTOS } from "@/lib/photos";
 import { fmt } from "@/lib/products";
 
 const M = MATTRESS;
-const COUNT: Record<number, string> = { 2: "two", 3: "three", 4: "four", 5: "five", 6: "six" };
 
 export const metadata: Metadata = {
-  title: M.title,
-  description: `Living Wool, Swedish horsehair and organic cotton, hand-tufted and made in color. An ${M.mattressHeight} mattress with a ${M.topperHeight} topper included.`,
+  title: `${M.title} · ${M.collection}`,
+  description: `An all-natural, organic mattress made from nature's finest materials: Living Wool, organic cotton and Swedish horsehair, hand-tufted and made in color. An ${M.mattressHeight} mattress with a ${M.topperHeight} topper included.`,
   openGraph: { images: [PHOTOS["mattress-mocha-bedroom"].src] },
 };
 
@@ -82,7 +81,7 @@ export default function MattressPage() {
           <div className="center-head">
             <h2 className="h2">Your bed, in color.</h2>
             <p className="body" style={{ marginTop: 24 }}>
-              Natural mattresses are almost always white. Ours comes in {COUNT[M.colors.length] ?? M.colors.length} colors, made to be seen: {M.colors.map((c) => c.label).join(", ").replace(/, ([^,]*)$/, " and $1")}.
+              Natural mattresses are almost always white. Ours comes in five colors drawn from the English countryside, made to be seen: {M.colors.map((c) => c.label).join(", ").replace(/, ([^,]*)$/, " and $1")}.
             </p>
           </div>
           <div className="m-colors">
@@ -116,7 +115,7 @@ export default function MattressPage() {
               </div>
             ))}
           </div>
-          <div className="m-more"><Link href={MATERIALS_PATH} className="ulink">Explore our materials →</Link></div>
+          <div className="m-more"><Link href={ASHBURY_PATH} className="ulink">Inside the Ashbury →</Link></div>
         </div>
       </section>
 

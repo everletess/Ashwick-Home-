@@ -27,7 +27,7 @@ export function Footer() {
           />
           <FootCol
             title="Ashwick"
-            links={[["Our story", "/pages/our-story"], ["Materials", "/pages/materials"], ["Care", "#"], ["Trade", "/pages/trade"]]}
+            links={[["Our story", "/pages/our-story"], ["Materials", "/pages/materials"], ["Furniture materials", "/pages/furniture-materials"], ["Inside the Ashbury", "/pages/inside-the-ashbury"], ["Care", "#"], ["Trade", "/pages/trade"]]}
           />
           <FootCol title="Help" links={[["Guarantee & Warranty", "/pages/guarantee-warranty"], ["Delivery", "#"], ["Ordering", "#"], ["FAQs", "#"], ["Contact", "#"]]} />
         </div>

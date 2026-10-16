@@ -72,7 +72,7 @@ export function BrandStory() {
           <h2 className="brand-h">Ashwick Home</h2>
           <p className="brand-sub">From the forest floor to your living room.</p>
           <p className="body">
-            Every piece is handmade to order in our American workshop from solid hardwood, organic latex, organic wool, coconut coir and linen. Materials you&apos;d recognize, put together by hand.
+            Every piece is handmade to order in our American workshop from solid hardwood, organic wool, coconut coir and linen. Materials you&apos;d recognize, put together by hand.
           </p>
           <p className="body">
             No petrochemicals, no plastic polyurethane foams and no chemical flame retardants. Just natural materials, built to last a lifetime and then be handed down.
