@@ -23,19 +23,21 @@ export function Footer() {
           </div>
           <FootCol
             title="Shop"
-            links={[["All pieces", "/collections/all"], ["Sofas", "/collections/sofas"], ["Chairs", "/collections/chairs"], ["Design your own", "/pages/design-your-own"], ["Fabric swatches", "/pages/fabric-swatches"]]}
+            links={[["All pieces", "/collections/all"], ["Sofas", "/collections/sofas"], ["Chairs", "/collections/chairs"], ["Mattress", "/products/natural-mattress"], ["Design your own", "/pages/design-your-own"], ["Fabric swatches", "/pages/fabric-swatches"]]}
           />
           <FootCol
             title="Ashwick"
-            links={[["Our story", "/pages/our-story"], ["Materials", "/pages/materials"], ["Care", "#"], ["Trade", "/pages/trade"]]}
+            links={[["Our story", "/pages/our-story"], ["Materials", "/pages/materials"], ["Living Wool", "/pages/living-wool"], ["Care", "#"], ["Trade", "/pages/trade"]]}
           />
-          <FootCol title="Help" links={[["Delivery", "#"], ["Ordering", "#"], ["FAQs", "#"], ["Contact", "#"]]} />
+          <FootCol title="Help" links={[["Guarantee & Warranty", "/pages/guarantee-warranty"], ["Delivery", "#"], ["Ordering", "#"], ["FAQs", "#"], ["Contact", "#"]]} />
         </div>
         <div className="ftr-bot">
           <span>© 2026 Ashwick Home, LLC</span>
           <span>Handmade in the USA</span>
           <a href="#">Instagram</a>
           <a href="#">Pinterest</a>
+          <Link href="/pages/trade-terms">Trade terms</Link>
+          <Link href="/pages/warranty">Warranty</Link>
           <a href="#">Privacy</a>
           <a href="#">Terms</a>
         </div>

@@ -11,7 +11,7 @@ import { FABRICS, LEAD_TIME, WOODS, fmt, getProduct, nearestPhoto, photoFor, pri
 
 type Mode = "designed" | "custom";
 
-function OptGroup({ label, value, children }: { label: string; value?: string; children: React.ReactNode }) {
+export function OptGroup({ label, value, children }: { label: string; value?: string; children: React.ReactNode }) {
   return (
     <div className="opt" role="group" aria-label={label}>
       <div className="opt-l"><span className="eyebrow">{label}</span><span className="opt-v">{value}</span></div>
@@ -20,7 +20,7 @@ function OptGroup({ label, value, children }: { label: string; value?: string; c
   );
 }
 
-function Pills({ options, value, onChange }: { options: Option[]; value: string; onChange: (id: string) => void }) {
+export function Pills({ options, value, onChange }: { options: Option[]; value: string; onChange: (id: string) => void }) {
   return options.map((o) => (
     <button key={o.id} type="button" className={"pill" + (value === o.id ? " on" : "")} aria-pressed={value === o.id} onClick={() => onChange(o.id)}>
       {o.label}

@@ -61,6 +61,7 @@ export function Header() {
           <Link href="/collections/all">Shop</Link>
           <Link href="/collections/sofas">Sofas</Link>
           <Link href="/collections/chairs">Chairs</Link>
+          <Link href="/products/natural-mattress">Mattress</Link>
           <Link href="/pages/design-your-own">Design your own</Link>
           <Link href="/pages/trade" className="nav-trade">Trade</Link>
         </nav>
@@ -87,6 +88,7 @@ export function Header() {
             <Link href="/collections/all">Shop</Link>
             <Link href="/collections/sofas">Sofas</Link>
             <Link href="/collections/chairs">Chairs</Link>
+            <Link href="/products/natural-mattress">Mattress</Link>
             <Link href="/pages/design-your-own">Design your own</Link>
             <Link href="/pages/trade">Trade</Link>
           </nav>
