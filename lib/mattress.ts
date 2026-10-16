@@ -45,7 +45,7 @@ export const MATTRESS = {
   colors: [
     { id: "mocha", label: "Mocha Mousse", swatch: "mattress-swatch-mocha", photos: ["mattress-mocha-bedroom", "mattress-studio-mocha", "mattress-mocha-room"], alt: "The Ashwick Natural Mattress in Mocha Mousse" },
     { id: "safari", label: "Safari", swatch: "mattress-swatch-safari", photos: ["mattress-studio-safari", "mattress-safari-room"], alt: "The Ashwick Natural Mattress in Safari" },
-    { id: "dove", label: "Morning Dove", swatch: "mattress-swatch-dove", photos: [], alt: "The Ashwick Natural Mattress in Morning Dove" },
+    { id: "dove", label: "Morning Dove", swatch: "mattress-swatch-dove", photos: ["mattress-studio-dove"], alt: "The Ashwick Natural Mattress in Morning Dove" },
     { id: "khaki", label: "Khaki", swatch: "mattress-swatch-khaki", photos: ["mattress-studio-khaki"], alt: "The Ashwick Natural Mattress in Khaki" },
     { id: "natural", label: "Natural", swatch: "mattress-swatch-natural", photos: ["mattress-studio-natural"], alt: "The Ashwick Natural Mattress in Natural" },
   ] satisfies MattressColor[],
