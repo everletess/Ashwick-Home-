@@ -12,8 +12,8 @@ export const LIVING_WOOL_PATH = "/pages/living-wool";
 export const GUARANTEE_PATH = "/pages/guarantee-warranty";
 
 export type MattressSize = { id: string; label: string; dims: string; price: number };
-/** studio: the product shot that leads the gallery; photo: a room shot, where one exists. */
-export type MattressColor = { id: string; label: string; swatch: PhotoKey; studio: PhotoKey; photo?: PhotoKey; alt: string };
+/** photos: this color's own shots, first one leading the gallery; the shared shots in MATTRESS_GALLERY follow. */
+export type MattressColor = { id: string; label: string; swatch: PhotoKey; photos: PhotoKey[]; alt: string };
 
 export const MATTRESS = {
   id: "natural-mattress",
@@ -43,10 +43,11 @@ export const MATTRESS = {
 
   /** Same price for every color, in this order on the page. Names are editable ("Mocha Mousse" may be renamed). */
   colors: [
-    { id: "khaki", label: "Khaki", swatch: "mattress-swatch-khaki", studio: "mattress-studio-khaki", alt: "The Ashwick Natural Mattress in Khaki" },
-    { id: "safari", label: "Safari", swatch: "mattress-swatch-safari", studio: "mattress-studio-safari", photo: "mattress-safari-room", alt: "The Ashwick Natural Mattress in Safari" },
-    { id: "mocha", label: "Mocha Mousse", swatch: "mattress-swatch-mocha", studio: "mattress-studio-mocha", photo: "mattress-mocha-room", alt: "The Ashwick Natural Mattress in Mocha Mousse" },
-    { id: "dove", label: "Morning Dove", swatch: "mattress-swatch-dove", studio: "mattress-studio-dove", alt: "The Ashwick Natural Mattress in Morning Dove" },
+    { id: "mocha", label: "Mocha Mousse", swatch: "mattress-swatch-mocha", photos: ["mattress-mocha-bedroom", "mattress-studio-mocha", "mattress-mocha-room"], alt: "The Ashwick Natural Mattress in Mocha Mousse" },
+    { id: "safari", label: "Safari", swatch: "mattress-swatch-safari", photos: ["mattress-studio-safari", "mattress-safari-room"], alt: "The Ashwick Natural Mattress in Safari" },
+    { id: "dove", label: "Morning Dove", swatch: "mattress-swatch-dove", photos: [], alt: "The Ashwick Natural Mattress in Morning Dove" },
+    { id: "khaki", label: "Khaki", swatch: "mattress-swatch-khaki", photos: ["mattress-studio-khaki"], alt: "The Ashwick Natural Mattress in Khaki" },
+    { id: "natural", label: "Natural", swatch: "mattress-swatch-natural", photos: ["mattress-studio-natural"], alt: "The Ashwick Natural Mattress in Natural" },
   ] satisfies MattressColor[],
 
   /** false shows "Coming soon" in place of Add to cart (until the Shopify product and checkout are set up). */
@@ -62,6 +63,12 @@ export const MATTRESS = {
   customSize: "Custom sizes available. A surcharge applies; we'll quote it on request.",
   gotsManufacturer: "IDFL No. 32860",
 };
+
+/** Shots shown after the selected color's own, for every color. */
+export const MATTRESS_GALLERY: { photo: PhotoKey; alt: string }[] = [
+  { photo: "mattress-colors", alt: "The mattress in Mocha Mousse, Safari, Morning Dove, Khaki and Natural" },
+  { photo: "mattress-cutaway", alt: "The Ashwick Natural Mattress: the layers inside" },
+];
 
 /** Values pending confirmation, shown as written until replaced. */
 export const MATTRESS_PENDING = {

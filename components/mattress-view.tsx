@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useCart } from "@/components/cart";
 import { FormError, Honeypot, useFormSend } from "@/components/forms";
 import { Photo } from "@/components/photo";
 import { OptGroup, Pills } from "@/components/product-view";
-import { GUARANTEE_PATH, MATTRESS, colorById, sizeById } from "@/lib/mattress";
+import { GUARANTEE_PATH, MATTRESS, MATTRESS_GALLERY, colorById, sizeById } from "@/lib/mattress";
 import { PHOTOS, type PhotoKey } from "@/lib/photos";
 import { fmt } from "@/lib/products";
 
@@ -52,8 +52,20 @@ export function MattressView() {
 
   const sel = colorById(color);
   const sz = sizeById(size);
-  // The color's product shot, its room shot where there is one, then the construction.
-  const gallery: PhotoKey[] = [sel.studio, ...(sel.photo ? [sel.photo] : []), "mattress-cutaway"];
+  // The color's own shots, then the five-color lineup and the construction.
+  const gallery: { photo: PhotoKey; alt: string }[] = [...sel.photos.map((photo) => ({ photo, alt: sel.alt })), ...MATTRESS_GALLERY];
+  // Horizontal swipe on the main image steps through the gallery on touch screens.
+  const swipeX = useRef<number | null>(null);
+  const onPointerDown = (e: React.PointerEvent) => {
+    if (e.pointerType === "touch") swipeX.current = e.clientX;
+  };
+  const onPointerUp = (e: React.PointerEvent) => {
+    if (swipeX.current == null) return;
+    const dx = e.clientX - swipeX.current;
+    swipeX.current = null;
+    if (Math.abs(dx) < 40) return;
+    setImg((i) => (i + (dx < 0 ? 1 : -1) + gallery.length) % gallery.length);
+  };
   const setColor = (c: string) => {
     setColorState(c);
     setImg(0);
@@ -64,7 +76,7 @@ export function MattressView() {
     cart.add({
       id: M.id,
       name: M.title,
-      photo: sel.studio,
+      photo: sel.photos[0] ?? sel.swatch,
       price: sz.price,
       qty: 1,
       mode: "As designed",
@@ -74,13 +86,13 @@ export function MattressView() {
   return (
     <section className="pdp wrap">
       <div className="gal">
-        <div className="gal-main">
+        <div className="gal-main" onPointerDown={onPointerDown} onPointerUp={onPointerUp} onPointerCancel={() => (swipeX.current = null)}>
           <div className="gal-photo">
-            <Photo src={gallery[img]} label={gallery[img] === "mattress-cutaway" ? `${M.title}: the layers inside` : sel.alt} sizes="(max-width: 960px) 100vw, 56vw" preload />
+            <Photo src={gallery[img].photo} label={gallery[img].alt} sizes="(max-width: 960px) 100vw, 56vw" preload={img === 0} />
           </div>
         </div>
         <div className="gal-thumbs">
-          {gallery.map((ph, i) => (
+          {gallery.map(({ photo: ph }, i) => (
             <button key={i} className={i === img ? "on" : ""} aria-label={"Image " + (i + 1)} aria-pressed={i === img} onClick={() => setImg(i)}>
               <Photo src={ph} label="" sizes="84px" />
             </button>

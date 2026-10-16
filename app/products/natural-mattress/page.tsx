@@ -13,7 +13,7 @@ const COUNT: Record<number, string> = { 2: "two", 3: "three", 4: "four", 5: "fiv
 export const metadata: Metadata = {
   title: M.title,
   description: `Living Wool, Swedish horsehair and organic cotton, hand-tufted and made in color. An ${M.mattressHeight} mattress with a ${M.topperHeight} topper included.`,
-  openGraph: { images: [PHOTOS["mattress-mocha-room"].src] },
+  openGraph: { images: [PHOTOS["mattress-mocha-bedroom"].src] },
 };
 
 const MATERIALS: [string, string][] = [
