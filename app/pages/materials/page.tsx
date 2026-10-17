@@ -19,8 +19,8 @@ export default function MaterialsPage() {
     <main>
       <MovedAnchors />
       <PageHero
-        photo="mattress-mocha-room"
-        alt="The Ashbury in Sorrel on a walnut platform in a warm plaster room"
+        photo="materials-sheep"
+        alt="Sheep grazing in a meadow by a dry stone wall, rolling green countryside beyond"
         eyebrow="Our Materials"
         title="What it's made of is the point."
         body="Every Ashwick piece is built from materials you'd recognize: wool, cotton, linen, horsehair and solid wood. Each one is there because of what it does."
