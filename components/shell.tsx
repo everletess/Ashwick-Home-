@@ -175,6 +175,18 @@ export function CartDrawer() {
       });
       const data = await res.json();
       if (!res.ok || !data.checkoutUrl) throw new Error(data.error ?? "Checkout failed");
+
+      // Meta Pixel — fire InitiateCheckout before redirect
+      if (typeof window !== "undefined" && typeof (window as any).fbq === "function") {
+        (window as any).fbq("track", "InitiateCheckout", {
+          value: cart.subtotal ?? 0,
+          currency: "USD",
+          num_items: cart.items.reduce((s, i) => s + i.qty, 0),
+          content_ids: cart.items.map((i) => i.id),
+          content_type: "product",
+        });
+      }
+
       window.location.href = data.checkoutUrl;
     } catch (err) {
       setCheckoutError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
