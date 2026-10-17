@@ -12,9 +12,21 @@ import { fmt } from "@/lib/products";
 const M = MATTRESS;
 
 export const metadata: Metadata = {
-  title: `${M.title} · ${M.collection}`,
-  description: `An all-natural, organic mattress made from nature's finest materials: Living Wool, organic cotton and Swedish horsehair, hand-tufted and made in color. An ${M.mattressHeight} mattress with a ${M.topperHeight} topper included.`,
-  openGraph: { images: [PHOTOS["mattress-mocha-bedroom"].src] },
+  title: "The Ashbury Organic Mattress — Horsehair, Wool & Organic Cotton",
+  description: `A natural, organic mattress handmade in the USA from Living Wool, Swedish horsehair and GOTS-certified organic cotton. Hand-tufted, made in color, ${M.mattressHeight} mattress with ${M.topperHeight} topper included. From $3,200. Free shipping. 30-night guarantee.`,
+  keywords: [
+    "organic mattress", "natural mattress", "horsehair mattress", "wool mattress",
+    "organic cotton mattress", "non-toxic mattress", "GOTS certified mattress",
+    "handmade mattress USA", "luxury organic mattress", "chemical-free mattress",
+    "the Ashbury mattress", "Ashwick Home mattress",
+  ],
+  openGraph: {
+    title: "The Ashbury — An Organic Mattress Made From Nature",
+    description: "Horsehair · Living Wool · GOTS organic cotton · cashmere. Five colours. Handmade to order in the USA. From $3,200.",
+    images: [PHOTOS["mattress-mocha-bedroom"].src],
+    type: "website",
+  },
+  alternates: { canonical: "/products/luxury-organic-mattress" },
 };
 
 const MATERIALS: [string, string][] = [

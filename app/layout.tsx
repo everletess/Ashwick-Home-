@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
   title: { default: "Ashwick Home — Made of nature. Built to last.", template: "%s — Ashwick Home" },
   description:
-    "Organic furniture, handmade to order in the USA from solid hardwood, organic wool, coconut coir and linen. Nothing synthetic.",
+    "Organic furniture and natural mattresses, handmade to order in the USA. Solid hardwood, organic wool, horsehair and linen — nothing synthetic. The Ashbury organic mattress from $3,200.",
 };
 
 // Matches the header, so the mobile browser chrome blends into the page.
@@ -41,7 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               t.src=v;s=b.getElementsByTagName(e)[0];
               s.parentNode.insertBefore(t,s)}(window,document,'script',
               'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', '2374903172913431');
+              fbq('init', '1118741870615996');
               fbq('track', 'PageView');
             `,
           }}
@@ -51,7 +51,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             height="1"
             width="1"
             style={{ display: "none" }}
-            src="https://www.facebook.com/tr?id=2374903172913431&ev=PageView&noscript=1"
+            src="https://www.facebook.com/tr?id=1118741870615996&ev=PageView&noscript=1"
             alt=""
           />
         </noscript>
