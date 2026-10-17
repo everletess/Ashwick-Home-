@@ -33,6 +33,7 @@ import frameFillCover from "@/assets/photos/frame-fill-cover.jpg";
 import hero from "@/assets/photos/hero.jpg";
 import heroFamily from "@/assets/photos/hero-family.jpg";
 import materialsSheep from "@/assets/photos/materials-sheep.jpg";
+import fiberAgave from "@/assets/photos/fiber-agave.jpg";
 import marlowe1 from "@/assets/photos/marlowe-1.jpg";
 import marlowe2 from "@/assets/photos/marlowe-2.jpg";
 import marloweSofaWalnutLinen from "@/assets/photos/marlowe-sofa-walnut-linen.jpg";
@@ -119,6 +120,7 @@ export const PHOTOS = {
   "hero": hero,
   "hero-family": heroFamily,
   "materials-sheep": materialsSheep,
+  "fiber-agave": fiberAgave,
   "marlowe-1": marlowe1,
   "marlowe-2": marlowe2,
   "marlowe-sofa-walnut-linen": marloweSofaWalnutLinen,
