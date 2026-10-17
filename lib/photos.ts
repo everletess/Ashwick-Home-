@@ -34,6 +34,7 @@ import hero from "@/assets/photos/hero.jpg";
 import heroFamily from "@/assets/photos/hero-family.jpg";
 import materialsSheep from "@/assets/photos/materials-sheep.jpg";
 import fiberAgave from "@/assets/photos/fiber-agave.jpg";
+import fiberAgaveCard from "@/assets/photos/fiber-agave-card.jpg";
 import materialsOil from "@/assets/photos/materials-oil.jpg";
 import furnitureFamily from "@/assets/photos/furniture-family.jpg";
 import materialsBandFurniture from "@/assets/photos/materials-band-furniture.jpg";
@@ -124,6 +125,7 @@ export const PHOTOS = {
   "hero-family": heroFamily,
   "materials-sheep": materialsSheep,
   "fiber-agave": fiberAgave,
+  "fiber-agave-card": fiberAgaveCard,
   "materials-oil": materialsOil,
   "furniture-family": furnitureFamily,
   "materials-band-furniture": materialsBandFurniture,
