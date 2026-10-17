@@ -41,6 +41,7 @@ import bespokeSwatches from "@/assets/photos/bespoke-swatches.jpg";
 import bespokeDrawing from "@/assets/photos/bespoke-drawing.jpg";
 import bespokeStitching from "@/assets/photos/bespoke-stitching.jpg";
 import mattressLayers from "@/assets/photos/mattress-layers.jpg";
+import materialsBandFill from "@/assets/photos/materials-band-fill.jpg";
 import mattressRoomDove from "@/assets/photos/mattress-room-dove.jpg";
 import mattressRoomSafari from "@/assets/photos/mattress-room-safari.jpg";
 import mattressRoomNatural from "@/assets/photos/mattress-room-natural.jpg";
@@ -142,6 +143,7 @@ export const PHOTOS = {
   "bespoke-drawing": bespokeDrawing,
   "bespoke-stitching": bespokeStitching,
   "mattress-layers": mattressLayers,
+  "materials-band-fill": materialsBandFill,
   "mattress-room-dove": mattressRoomDove,
   "mattress-room-safari": mattressRoomSafari,
   "mattress-room-natural": mattressRoomNatural,

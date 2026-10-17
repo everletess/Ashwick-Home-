@@ -52,7 +52,7 @@ export const FURNITURE_GROUPS: MaterialGroup[] = [
     ],
   },
   {
-    id: "fill", eyebrow: "The Fill", title: "What you sink into.", alt: "Kapok and wool together",
+    id: "fill", eyebrow: "The Fill", title: "What you sink into.", photo: "materials-band-fill", alt: "Soft natural fiber and curled cream wool spilling across linen beside an open seed pod",
     materials: [
       {
         id: "wool", short: "Wool", name: "Wool", descriptor: "Shape that springs back.",
