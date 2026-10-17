@@ -23,7 +23,7 @@ export function Footer() {
           </div>
           <FootCol
             title="Shop"
-            links={[["All pieces", "/collections/all"], ["Sofas", "/collections/sofas"], ["Chairs", "/collections/chairs"], ["Mattress", "/products/luxury-organic-mattress"], ["Design your own", "/pages/design-your-own"], ["Fabric swatches", "/pages/fabric-swatches"]]}
+            links={[["All pieces", "/collections/all"], ["Sofas", "/collections/sofas"], ["Chairs", "/collections/chairs"], ["Mattress", "/products/luxury-organic-mattress"], ["Bespoke", "/pages/bespoke"], ["Fabric swatches", "/pages/fabric-swatches"]]}
           />
           <FootCol
             title="Ashwick"

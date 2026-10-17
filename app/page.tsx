@@ -20,7 +20,7 @@ function HomeHero() {
         </p>
         <div className="btns">
           <Link href="/collections/all" className="btn light">Shop the collection</Link>
-          <Link href="/pages/design-your-own" className="btn outline-light">Design your own</Link>
+          <Link href="/pages/bespoke" className="btn outline-light">Explore Bespoke</Link>
         </div>
       </div>
     </section>
@@ -31,7 +31,7 @@ const VALUES: [string, string][] = [
   ["Handmade in the USA", "Built to order in our American workshop."],
   ["Organic, all natural", "Solid hardwood, organic wool and coconut coir."],
   ["Nothing synthetic", "No polyurethane foam, no chemical flame retardants, no plastic."],
-  ["As designed, or yours", "Choose fabric, seat depth, length and finish."],
+  ["As designed, or bespoke", "Choose fabric, seat depth, length and finish."],
 ];
 
 function ValueStrip() {
@@ -99,9 +99,9 @@ function HomeWays() {
           </div>
           <div className="panel">
             <SwatchGrid className="panel-img swgrid" />
-            <div className="eyebrow">Made your way</div>
-            <p className="body">Choose the fabric, seat depth, length and wood finish.</p>
-            <Link href="/pages/design-your-own" className="ulink">Design your own</Link>
+            <div className="eyebrow">Bespoke</div>
+            <p className="body">Change any piece, or commission something new.</p>
+            <Link href="/pages/bespoke" className="ulink">Explore Bespoke</Link>
           </div>
         </div>
       </div>

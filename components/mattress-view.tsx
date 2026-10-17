@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { useCart } from "@/components/cart";
-import { FormError, Honeypot, useFormSend } from "@/components/forms";
 import { Photo } from "@/components/photo";
 import { OptGroup, Pills } from "@/components/product-view";
 import { GUARANTEE_PATH, MATTRESS, MATTRESS_GALLERY, colorById, sizeById } from "@/lib/mattress";
@@ -12,35 +11,6 @@ import { fmt } from "@/lib/products";
 
 const M = MATTRESS;
 
-/** "Request a custom size": emailed to the studio as a customization request. */
-function CustomSizeRequest({ about }: { about: string }) {
-  const { sent, sending, error, onSubmit } = useFormSend("custom");
-  if (sent) {
-    return (
-      <div className="trade-done" role="status">
-        <h3 className="proc-h">Thank you.</h3>
-        <p className="body">We&apos;ve received your request and will be in touch with a quote.</p>
-      </div>
-    );
-  }
-  return (
-    <form className="custom-req" onSubmit={onSubmit}>
-      <Honeypot />
-      <p className="body small">{M.customSize}</p>
-      <input type="hidden" name="selection" value={about} />
-      <label><span className="eyebrow">Name *</span><input name="name" autoComplete="name" required /></label>
-      <label><span className="eyebrow">Email *</span><input name="email" type="email" autoComplete="email" required /></label>
-      <label><span className="eyebrow">Phone</span><input name="phone" type="tel" autoComplete="tel" /></label>
-      <label>
-        <span className="eyebrow">Size you need *</span>
-        <textarea name="details" rows={3} required placeholder="Width and length, and the bed or frame it's for" />
-      </label>
-      <FormError message={error} />
-      <button className="btn full" type="submit" disabled={sending}>{sending ? "Sending…" : "Send request"}</button>
-    </form>
-  );
-}
-
 /** Gallery + buy box for the mattress. The gallery follows the Color selection. */
 export function MattressView() {
   const cart = useCart();
@@ -48,7 +18,6 @@ export function MattressView() {
   const [feel, setFeel] = useState(M.feels[0].id);
   const [color, setColorState] = useState(M.defaultColor);
   const [img, setImg] = useState(0);
-  const [custom, setCustom] = useState(false);
 
   const sel = colorById(color);
   const sz = sizeById(size);
@@ -145,10 +114,7 @@ export function MattressView() {
           </ul>
         </div>
 
-        <button type="button" className="ulink linkbtn" aria-expanded={custom} onClick={() => setCustom((v) => !v)}>
-          Request a custom size
-        </button>
-        {custom && <CustomSizeRequest about={`${M.title} · custom size · ${feelLabel} · ${sel.label}`} />}
+        <Link href="/pages/bespoke#mattresses" className="ulink">Request a custom size</Link>
         <Link href={GUARANTEE_PATH} className="ulink">Guarantee &amp; warranty</Link>
       </div>
     </section>

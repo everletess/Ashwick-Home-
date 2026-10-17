@@ -25,7 +25,7 @@ const BENEFITS: [string, string, React.ReactNode][] = [
 const TILES: [string, string, PhotoKey][] = [
   ["Sofas", "/collections/sofas", "csofa-b"],
   ["Chairs", "/collections/chairs", "cchair-studio"],
-  ["Design your own", "/pages/design-your-own", "frame-fill-cover"],
+  ["Bespoke", "/pages/bespoke", "frame-fill-cover"],
 ];
 
 export default function TradePage() {
