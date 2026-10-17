@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Jost } from "next/font/google";
 import Script from "next/script";
 import { CartProvider } from "@/components/cart";
+import { EmailPopup } from "@/components/email-popup";
 import { Footer } from "@/components/footer";
 import { AnnouncementBar, CartDrawer, Header } from "@/components/shell";
 import "./globals.css";
@@ -61,6 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
           <Footer />
           <CartDrawer />
+          <EmailPopup />
         </CartProvider>
       </body>
     </html>

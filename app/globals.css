@@ -636,3 +636,25 @@ button.chip{cursor:pointer}
 .bsp-band .h2{max-width:22ch;text-wrap:balance}
 @media (max-width:1180px){.bsp-tiles{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:960px){.bsp-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.bsp-palette{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px}.bsp-palette figure{flex:0 0 132px;scroll-snap-align:start}.bsp-band{aspect-ratio:auto;min-height:440px}}
+
+/* ── Email popup ─────────────────────────────────────────── */
+.ep-scrim{position:fixed;inset:0;background:rgba(42,37,31,.55);z-index:80;animation:ep-fade-in .3s ease both}
+.ep{position:fixed;inset:0;z-index:81;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.ep>*{pointer-events:auto}
+.ep-form,.ep-done{position:relative;background:var(--alabaster);width:min(480px,calc(100vw - 32px));padding:52px 48px 44px;display:flex;flex-direction:column;gap:18px;animation:ep-slide-up .35s cubic-bezier(.2,.8,.2,1) both}
+@media(max-width:520px){.ep-form,.ep-done{padding:44px 28px 36px}}
+.ep-x{position:absolute;top:14px;right:14px;z-index:1}
+.ep-eyebrow{color:var(--walnut)}
+.ep-h{margin:0}
+.ep-body{color:var(--walnut);max-width:none}
+.ep-field{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+.ep-label{color:var(--walnut)}
+.ep-input{background:transparent;border:0;border-bottom:1px solid rgba(42,37,31,.4);padding:12px 0;font:300 17px var(--sans);color:var(--ink);outline:0;border-radius:0;width:100%}
+.ep-input:focus{border-bottom-color:var(--ink)}
+.ep-err{color:var(--err,#b00);margin-top:-6px}
+.ep-skip{background:none;border:0;cursor:pointer;text-align:center;color:var(--ash);text-decoration:underline;padding:4px 0}
+.ep-skip:hover{color:var(--walnut)}
+.ep-done{align-items:flex-start;gap:16px}
+@keyframes ep-fade-in{from{opacity:0}to{opacity:1}}
+@keyframes ep-slide-up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.ep-code{font:400 30px/1 var(--serif);letter-spacing:.3em;margin:4px 0 0;padding:18px 0;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);width:100%;text-align:center}
