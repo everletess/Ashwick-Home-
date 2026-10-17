@@ -54,6 +54,7 @@ import imagineChairs from "@/assets/photos/imagine-chairs.jpg";
 import imagineFourPoster from "@/assets/photos/imagine-four-poster.jpg";
 import imagineBaySofa from "@/assets/photos/imagine-bay-sofa.jpg";
 import imagineDaybed from "@/assets/photos/imagine-daybed.jpg";
+import bespokeSketch from "@/assets/photos/bespoke-sketch.jpg";
 import mattressRoomDove from "@/assets/photos/mattress-room-dove.jpg";
 import mattressRoomSafari from "@/assets/photos/mattress-room-safari.jpg";
 import mattressRoomNatural from "@/assets/photos/mattress-room-natural.jpg";
@@ -168,6 +169,7 @@ export const PHOTOS = {
   "imagine-four-poster": imagineFourPoster,
   "imagine-bay-sofa": imagineBaySofa,
   "imagine-daybed": imagineDaybed,
+  "bespoke-sketch": bespokeSketch,
   "mattress-room-dove": mattressRoomDove,
   "mattress-room-safari": mattressRoomSafari,
   "mattress-room-natural": mattressRoomNatural,
