@@ -32,7 +32,7 @@ export const MATTRESS = {
     { id: "twin-xl", label: "Twin XL", dims: '38" × 80"', price: 3400 },
     { id: "full", label: "Full", dims: '54" × 75"', price: 3900 },
     { id: "queen", label: "Queen", dims: '60" × 80"', price: 4800 },
-    { id: "eastern-king", label: "Eastern King", dims: '76" × 80"', price: 5800 },
+    { id: "eastern-king", label: "King", dims: '76" × 80"', price: 5800 },
     { id: "cal-king", label: "Cal King", dims: '72" × 84"', price: 5800 },
   ] satisfies MattressSize[],
   /** Size selected when the page opens. */

@@ -11,7 +11,7 @@
  */
 
 import { NextResponse } from "next/server";
-import { createCheckout, fetchProductVariants } from "@/lib/shopify";
+import { createCheckout, fetchProductVariants, type ShopifyVariant } from "@/lib/shopify";
 import { MATTRESS } from "@/lib/mattress";
 
 export type CheckoutRequestLine = {
@@ -34,12 +34,13 @@ const SHOPIFY_HANDLES: Record<string, string> = {
   "marlowe-ottoman":  "the-marlowe-ottoman",
 };
 
-/** The Ashbury's Shopify handle, with the older ones it may still be published under. */
+/** The Ashbury's likely Shopify handles; failing those, any product titled or typed as the Ashbury or a mattress. */
 const MATTRESS_HANDLES = ["luxury-organic-mattress", MATTRESS.handle, "the-ashbury"];
+const isMattress = (v: ShopifyVariant) => /ashbury|mattress/i.test(`${v.productHandle} ${v.productTitle} ${v.productType}`);
 
 /** Names a Shopify variant option may use for a size or color, besides our current label. */
 const ALIASES: Record<string, string[]> = {
-  "eastern-king": ["King"],
+  "eastern-king": ["Eastern King"],
   "cal-king": ["California King"],
   natural: ["Natural"],
   dove: ["Morning Dove", "Dove"],
@@ -54,7 +55,7 @@ const norm = (s: string) => s.trim().toLowerCase();
  * The Ashbury has a Shopify variant per size (and per feel and color, if those are variant options too). Pick the
  * variant whose every option is one we chose, never a different size, so Shopify charges the right price.
  */
-function mattressVariant(variants: { productHandle: string; variantId: string; title: string }[], options: [string, string][]) {
+function mattressVariant(variants: ShopifyVariant[], options: [string, string][]) {
   const opt = (k: string) => options.find(([key]) => key === k)?.[1] ?? "";
   const size = MATTRESS.sizes.find((z) => opt("Size").startsWith(`${z.label} (`));
   const color = MATTRESS.colors.find((c) => c.label === opt("Color"));
@@ -62,14 +63,22 @@ function mattressVariant(variants: { productHandle: string; variantId: string; t
   const sizeNames = [size.label, ...(ALIASES[size.id] ?? [])].map(norm);
   const wanted = new Set([...sizeNames, norm(opt("Feel")), ...(color ? [color.label, ...(ALIASES[color.id] ?? [])].map(norm) : [])]);
 
-  const handle = MATTRESS_HANDLES.find((h) => variants.some((v) => v.productHandle === h));
-  if (!handle) throw new Error(`No Shopify product found for the mattress (tried ${MATTRESS_HANDLES.join(", ")})`);
+  const handle =
+    MATTRESS_HANDLES.find((h) => variants.some((v) => v.productHandle === h)) ?? variants.find(isMattress)?.productHandle;
+  if (!handle) {
+    throw new Error(
+      "The mattress isn't available to the website yet: in Shopify, make it available on the sales channel the website uses (the same one as the sofas).",
+    );
+  }
   const match = variants
     .filter((v) => v.productHandle === handle)
     .map((v) => ({ v, parts: v.title.split(" / ").map(norm) }))
     .filter(({ parts }) => parts.some((p) => sizeNames.includes(p)) && parts.every((p) => wanted.has(p)))
     .sort((a, b) => b.parts.length - a.parts.length)[0];
-  if (!match) throw new Error(`No Shopify variant for the mattress in ${options.map(([, v]) => v).join(" / ")}`);
+  if (!match) {
+    const seen = [...new Set(variants.filter((v) => v.productHandle === handle).map((v) => v.title))].slice(0, 8).join("; ");
+    throw new Error(`No Shopify option for the mattress in ${options.map(([, v]) => v).join(" / ")} (Shopify has: ${seen})`);
+  }
   return match.v;
 }
 
