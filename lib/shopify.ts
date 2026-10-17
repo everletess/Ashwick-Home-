@@ -59,14 +59,16 @@ export async function createCheckout(lines: CheckoutLine[]): Promise<string> {
   return cart.checkoutUrl as string;
 }
 
-/** Fetch all published product variants from Shopify for ID mapping. */
-export async function fetchProductVariants(): Promise<
-  { productHandle: string; variantId: string; title: string }[]
-> {
+export type ShopifyVariant = { productHandle: string; productTitle: string; productType: string; variantId: string; title: string };
+
+/** Fetch all product variants the website's sales channel can see, for ID mapping. */
+export async function fetchProductVariants(): Promise<ShopifyVariant[]> {
   const data = await storefrontFetch(
-    `{ products(first: 50) {
+    `{ products(first: 250) {
         edges { node {
           handle
+          title
+          productType
           variants(first: 100) {
             edges { node { id title } }
           }
@@ -74,10 +76,10 @@ export async function fetchProductVariants(): Promise<
       }
     }`
   );
-  const results: { productHandle: string; variantId: string; title: string }[] = [];
+  const results: ShopifyVariant[] = [];
   for (const { node: product } of data.products.edges) {
     for (const { node: variant } of product.variants.edges) {
-      results.push({ productHandle: product.handle, variantId: variant.id, title: variant.title });
+      results.push({ productHandle: product.handle, productTitle: product.title, productType: product.productType, variantId: variant.id, title: variant.title });
     }
   }
   return results;
