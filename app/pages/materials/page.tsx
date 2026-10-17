@@ -44,13 +44,13 @@ export default function MaterialsPage() {
       <section className="sec">
         <div className="wrap grid2 mat-cards">
           <Link href={FURNITURE_MATERIALS_PATH} className="panel mat-card">
-            <div className="panel-img"><Photo src="csofa-studio" label="The Cotswold sofa" sizes={HALF} /></div>
+            <div className="panel-img"><Photo src="workshop-sofa" label="An upholsterer laying wool over a solid hardwood sofa frame in the workshop" sizes={HALF} /></div>
             <h2 className="proc-h">Our Furniture</h2>
             <p className="body">Solid hardwood, natural fills and woven fabrics, built by hand in the USA.</p>
             <span className="ulink">Explore furniture materials →</span>
           </Link>
           <Link href={ASHBURY_PATH} className="panel mat-card">
-            <div className="panel-img"><Photo src="mattress-mocha-room" label="The Ashbury in Sorrel" sizes={HALF} /></div>
+            <div className="panel-img"><Photo src="workshop-mattress" label="A maker hand-tying wool rosettes on an Ashbury in the workshop" sizes={HALF} /></div>
             <h2 className="proc-h">The Ashbury</h2>
             <p className="body">Living Wool, Swedish horsehair and organic cotton, hand-tufted into an all-natural, organic mattress.</p>
             <span className="ulink">Inside the Ashbury →</span>
