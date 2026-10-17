@@ -45,7 +45,7 @@ export function MattressFeature() {
             ))}
           </ul>
           <div className="btns">
-            <Link href={href} className="btn">Discover the Ashbury</Link>
+            <Link href={href} className="btn">Shop the Ashbury</Link>
             <Link href={ASHBURY_PATH} className="btn ghost">Inside the Ashbury</Link>
           </div>
         </div>
