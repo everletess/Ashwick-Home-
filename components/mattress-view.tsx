@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useRef, useState } from "react";
 import { useCart } from "@/components/cart";
 import { Photo } from "@/components/photo";
@@ -12,11 +13,17 @@ import { fmt } from "@/lib/products";
 const M = MATTRESS;
 
 /** Gallery + buy box for the mattress. The gallery follows the Color selection. */
-export function MattressView() {
+/** The buy box in the color named by ?color=<id> (from the home page feature). Render inside <Suspense>. */
+export function MattressViewFromURL() {
+  const c = useSearchParams().get("color");
+  return <MattressView initialColor={c && M.colors.some((x) => x.id === c) ? c : undefined} />;
+}
+
+export function MattressView({ initialColor }: { initialColor?: string }) {
   const cart = useCart();
   const [size, setSize] = useState(M.defaultSize);
   const [feel, setFeel] = useState(M.feels[0].id);
-  const [color, setColorState] = useState(M.defaultColor);
+  const [color, setColorState] = useState(initialColor ?? M.defaultColor);
   const [img, setImg] = useState(0);
 
   const sel = colorById(color);

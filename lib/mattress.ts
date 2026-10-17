@@ -11,7 +11,7 @@ export const MATTRESS_PATH = "/products/luxury-organic-mattress";
 export const GUARANTEE_PATH = "/pages/guarantee-warranty";
 
 export type MattressSize = { id: string; label: string; dims: string; price: number };
-/** photos: this color's own shots, first one leading the gallery; the shared shots in MATTRESS_GALLERY follow. */
+/** photos: this color's own shots, first one leading the gallery (and shown on the home page feature); the shared shots in MATTRESS_GALLERY follow. */
 export type MattressColor = { id: string; label: string; swatch: PhotoKey; photos: PhotoKey[]; alt: string };
 
 export const MATTRESS = {
@@ -49,11 +49,11 @@ export const MATTRESS = {
    * change); labels are the current names. File names still use the old names (mocha, safari, dove, khaki, natural).
    */
   colors: [
-    { id: "natural", label: "Fleece", swatch: "mattress-swatch-natural", photos: ["mattress-studio-natural"], alt: "The Ashbury in Fleece" },
-    { id: "dove", label: "Flint", swatch: "mattress-swatch-dove", photos: ["mattress-studio-dove"], alt: "The Ashbury in Flint" },
-    { id: "khaki", label: "Moss", swatch: "mattress-swatch-khaki", photos: ["mattress-studio-khaki"], alt: "The Ashbury in Moss" },
+    { id: "natural", label: "Fleece", swatch: "mattress-swatch-natural", photos: ["mattress-room-natural", "mattress-studio-natural"], alt: "The Ashbury in Fleece" },
+    { id: "dove", label: "Flint", swatch: "mattress-swatch-dove", photos: ["mattress-room-dove", "mattress-studio-dove"], alt: "The Ashbury in Flint" },
+    { id: "khaki", label: "Moss", swatch: "mattress-swatch-khaki", photos: ["mattress-room-khaki", "mattress-studio-khaki"], alt: "The Ashbury in Moss" },
     // The new Hazel render replaces the old Safari studio shot in the gallery (the old file is kept, unused).
-    { id: "safari", label: "Hazel", swatch: "mattress-swatch-hazel", photos: ["mattress-studio-hazel", "mattress-safari-room"], alt: "The Ashbury in Hazel" },
+    { id: "safari", label: "Hazel", swatch: "mattress-swatch-hazel", photos: ["mattress-room-safari", "mattress-studio-hazel", "mattress-safari-room"], alt: "The Ashbury in Hazel" },
     { id: "mocha", label: "Sorrel", swatch: "mattress-swatch-mocha", photos: ["mattress-mocha-bedroom", "mattress-studio-mocha", "mattress-mocha-room"], alt: "The Ashbury in Sorrel" },
   ] satisfies MattressColor[],
   /** Color selected when the page opens (its first photo leads the gallery and the social preview). */

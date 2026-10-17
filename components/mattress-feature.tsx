@@ -1,15 +1,30 @@
-// Home page feature announcing the mattress collection.
+"use client";
+
+// Home page feature announcing the mattress collection. The color chips switch the photo in place; the buttons then
+// open the product page in that color.
 import Link from "next/link";
+import { useState } from "react";
 import { Photo } from "@/components/photo";
-import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
+import { MATTRESS, MATTRESS_PATH, colorById } from "@/lib/mattress";
 import { ASHBURY_PATH } from "@/lib/materials";
 
 export function MattressFeature() {
+  const [color, setColor] = useState(MATTRESS.defaultColor);
+  const sel = colorById(color);
+  const href = `${MATTRESS_PATH}?color=${color}`;
   return (
     <section className="sec linen m-feature">
       <div className="wrap m-feature-in">
-        <Link href={MATTRESS_PATH} className="m-feature-img" aria-label={`${MATTRESS.title}, shown in Sorrel`}>
-          <Photo src="mattress-mocha-bedroom" label="The Ashbury in Sorrel, shown in a sunlit bedroom." sizes="(max-width: 960px) 100vw, 50vw" />
+        <Link href={href} className="m-feature-img" aria-label={`${MATTRESS.title}, shown in ${sel.label}`}>
+          {MATTRESS.colors.map((c) => (
+            <Photo
+              key={c.id}
+              src={c.photos[0]}
+              label={`${MATTRESS.title} in ${c.label}, shown in a sunlit bedroom.`}
+              className={c.id === color ? "on" : undefined}
+              sizes="(max-width: 960px) 100vw, 50vw"
+            />
+          ))}
         </Link>
         <div className="m-feature-t">
           <div className="m-feature-new"><span>New</span>Now introducing</div>
@@ -22,15 +37,15 @@ export function MattressFeature() {
           <ul className="m-feature-colors" aria-label="Colors">
             {MATTRESS.colors.map((c) => (
               <li key={c.id}>
-                <Link href={MATTRESS_PATH} title={c.label}>
+                <button type="button" title={c.label} aria-pressed={c.id === color} className={c.id === color ? "on" : undefined} onClick={() => setColor(c.id)}>
                   <span className="m-feature-chip"><Photo src={c.swatch} label="" sizes="56px" /></span>
                   <span className="m-feature-name">{c.label}</span>
-                </Link>
+                </button>
               </li>
             ))}
           </ul>
           <div className="btns">
-            <Link href={MATTRESS_PATH} className="btn">Discover the Ashbury</Link>
+            <Link href={href} className="btn">Discover the Ashbury</Link>
             <Link href={ASHBURY_PATH} className="btn ghost">Inside the Ashbury</Link>
           </div>
         </div>

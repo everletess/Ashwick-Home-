@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Suspense } from "react";
 import { Accordion, Construction, Recovery } from "@/components/mattress";
-import { MattressView } from "@/components/mattress-view";
+import { MattressView, MattressViewFromURL } from "@/components/mattress-view";
 import { Photo } from "@/components/photo";
 import { GUARANTEE_PATH, MATTRESS, MATTRESS_PENDING as P } from "@/lib/mattress";
 import { ASHBURY_PATH } from "@/lib/materials";
@@ -83,7 +84,9 @@ export default function MattressPage() {
         <span>/</span>
         <span>Mattress</span>
       </div>
-      <MattressView />
+      <Suspense fallback={<MattressView />}>
+        <MattressViewFromURL />
+      </Suspense>
 
       <section className="sec linen">
         <div className="wrap">
