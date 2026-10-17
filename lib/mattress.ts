@@ -59,8 +59,8 @@ export const MATTRESS = {
   /** Color selected when the page opens (its first photo leads the gallery and the social preview). */
   defaultColor: "mocha",
 
-  /** false shows "Coming soon" in place of Add to cart (until the Shopify product and checkout are set up). */
-  available: false,
+  /** false shows "Coming soon" in place of Add to cart. */
+  available: true,
   leadTime: "Made to order. Ships in 1–2 weeks.",
   shipping: "Free shipping.",
   guarantee: "30-night money-back guarantee",

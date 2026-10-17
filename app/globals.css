@@ -40,6 +40,18 @@ button.chip{cursor:pointer}
 .hdr-in{display:grid;grid-template-columns:minmax(max-content,1fr) auto minmax(max-content,1fr);align-items:center;gap:24px;padding:18px var(--gut);max-width:1440px;margin:0 auto}
 .nav{display:flex;gap:24px;font:400 11px var(--sans);letter-spacing:.16em;text-transform:uppercase;flex-wrap:nowrap;white-space:nowrap}
 .nav.r{justify-content:flex-end}
+.nav-dd{position:relative}
+.nav-dd-btn{display:inline-flex;align-items:center;gap:7px}
+.nav-dd-caret{width:5px;height:5px;border-right:1px solid currentColor;border-bottom:1px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .2s}
+.nav-dd-btn[aria-expanded="true"] .nav-dd-caret{transform:translateY(1px) rotate(225deg)}
+.nav-dd-panel{position:absolute;top:100%;right:-20px;margin-top:22px;min-width:250px;background:var(--alabaster);border:1px solid var(--hair);box-shadow:0 18px 40px rgba(42,37,31,.08);padding:10px 0;z-index:60;white-space:normal;text-transform:none;letter-spacing:0}
+.nav-dd-panel::before{content:"";position:absolute;left:0;right:0;top:-23px;height:23px}
+.nav-dd-item{display:flex;flex-direction:column;gap:3px;padding:12px 22px}
+.nav-dd-item:hover{background:var(--linen)}
+.nav-dd-t{font:300 20px/1.2 var(--serif);color:var(--ink)}
+.nav-dd-d{font:300 12.5px/1.4 var(--sans);color:var(--walnut)}
+.nav-dd-all{display:block;margin:6px 22px 4px;padding-top:12px;border-top:1px solid var(--hair);font:400 10.5px var(--sans);letter-spacing:.22em;text-transform:uppercase}
+.mmenu-sub .mmenu-child{padding-left:18px;margin-top:-6px;color:var(--walnut)}
 .nav .nav-trade{border:1px solid var(--ink);padding:6px 12px;margin:-7px 0}.nav .nav-trade:hover{background:var(--ink);color:var(--alabaster)}
 .wm{display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center}
 .wm-t{font:400 19px/1 var(--serif);letter-spacing:.44em;margin-right:-.44em;white-space:nowrap}
@@ -202,6 +214,7 @@ button.chip{cursor:pointer}
 .m-ctas{justify-content:center;margin-top:72px}
 .proc-h.small{font-size:clamp(26px,2.4vw,34px)}
 .layers{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px}
+.layers-cover{grid-column:1/-1}
 .layers-h{font:300 clamp(24px,2.2vw,30px)/1.15 var(--serif);margin:0 0 14px}
 .layers-l{list-style:none;padding:0;margin:0;font:300 15px/1.6 var(--sans);color:var(--walnut)}
 .layers-l li{padding:9px 0;border-top:1px solid var(--hair)}

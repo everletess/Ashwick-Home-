@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Band, Groups, MatIndex } from "@/components/materials";
-import { Accordion, Columns } from "@/components/mattress";
+import { Accordion, Columns, Layers } from "@/components/mattress";
 import { Photo } from "@/components/photo";
 import { PageHero } from "@/components/sections";
 import { GUARANTEE_PATH, MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
@@ -15,16 +15,6 @@ export const metadata: Metadata = {
 };
 
 const HALF = "(max-width: 960px) 100vw, 50vw";
-
-const TOPPER = ["Quilted organic cotton shell", "Cashmere", "Living Wool surface", "Living Wool + Swedish horsehair"];
-const CORE = [
-  "Living Wool + horsehair comfort layer, hand-tufted with wool rosettes",
-  "Organic wool",
-  "Organic cotton",
-  "Double-tempered steel pocket coils",
-  "Organic cotton",
-  "Organic wool",
-];
 
 // Copy is final (materials handoff); entries and pending values live in lib/materials.ts.
 export default function InsideTheAshburyPage() {
@@ -43,8 +33,8 @@ export default function InsideTheAshburyPage() {
   return (
     <main>
       <PageHero
-        photo="mattress-mocha-room"
-        alt="The Ashbury in Sorrel on a walnut platform in a warm plaster room"
+        photo="mattress-meadow"
+        alt="A cutaway of the Ashbury in Sorrel in a meadow, showing the wool, horsehair and pocket coils inside"
         eyebrow={`${M.title} · ${M.collection}`}
         title="Inside the Ashbury."
         body="An all-natural, organic mattress made from nature's finest materials: Living Wool, Swedish horsehair and organic cotton, hand-tufted and made in color."
@@ -66,12 +56,12 @@ export default function InsideTheAshburyPage() {
 
       <section className="sec linen" id="hand-tufting">
         <div className="wrap proc">
-          <div className="proc-v mat-portrait"><Photo src="materials-rosettes" label="Hand-tied wool rosettes on the quilted top of the Ashbury in Hazel" sizes={HALF} /></div>
+          <div className="proc-v mat-portrait"><Photo src="materials-rosettes" label="Hand-tied wool rosettes on the Ashbury topper in Hazel" sizes={HALF} /></div>
           <div className="proc-t">
             <div className="eyebrow">Craft</div>
             <h2 className="proc-h">Held together by hand.</h2>
             <p className="body">
-              Natural materials can&apos;t be poured into a mold. Wool is layered evenly, horsehair opened and blended, and then every Ashbury is hand-tufted: the layers are drawn through with a needle and held with a rosette of wool, so they stay in place without glue. The rosettes on the surface are the mark of the work inside.
+              Natural materials can&apos;t be poured into a mold. Wool is layered evenly, horsehair opened and blended, and then every Ashbury topper is hand-tufted: the layers are drawn through with a needle and held with a rosette of wool, so they stay in place without glue. The rosettes on the surface are the mark of the work inside. Over it all goes a super soft 100% organic cotton twill cover, colored with GOTS-approved plant dyes.
             </p>
           </div>
         </div>
@@ -85,16 +75,7 @@ export default function InsideTheAshburyPage() {
           <div className="proc-t">
             <h2 className="proc-h">Eleven inches, layer by layer.</h2>
             <p className="body">An {M.mattressHeight} mattress and a {M.topperHeight} topper, made as one system.</p>
-            <div className="layers">
-              <div>
-                <h3 className="layers-h">Topper — {M.topperHeight}</h3>
-                <ul className="layers-l">{TOPPER.map((l) => <li key={l}>{l}</li>)}</ul>
-              </div>
-              <div>
-                <h3 className="layers-h">Mattress — {M.mattressHeight}</h3>
-                <ul className="layers-l">{CORE.map((l, i) => <li key={i}>{l}</li>)}</ul>
-              </div>
-            </div>
+            <Layers />
           </div>
         </div>
       </section>
@@ -167,7 +148,7 @@ export default function InsideTheAshburyPage() {
           </div>
           <Accordion
             items={[
-              ["What is Living Wool?", <p className="body small" key="1">Our name for the organic wool from Lanas Trinidad in Uruguay that forms the comfort layers of the Ashbury.</p>],
+              ["What is Living Wool?", <p className="body small" key="1">Our name for the organic wool from Lanas Trinidad in Uruguay that forms the comfort layers of the Ashbury topper.</p>],
               ["Is the horsehair ethically sourced?", <p className="body small" key="2">Yes. It comes from tail clippings in Sweden. No horse is harmed.</p>],
               ["Why no foam or latex?", <p className="body small" key="3">Natural fibers let air move, manage moisture and recover their shape. We&apos;d rather build a mattress that settles in over time than one engineered to feel soft on day one.</p>],
               ["How is it fire-safe without chemical flame retardants?", <p className="body small" key="4">Wool is naturally flame-resistant, so it does the work chemical treatments do in many mattresses. The Ashbury meets US federal flammability standards. {P.fireReportShort}</p>],

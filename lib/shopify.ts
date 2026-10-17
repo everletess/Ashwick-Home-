@@ -67,7 +67,7 @@ export async function fetchProductVariants(): Promise<
     `{ products(first: 50) {
         edges { node {
           handle
-          variants(first: 50) {
+          variants(first: 100) {
             edges { node { id title } }
           }
         }}

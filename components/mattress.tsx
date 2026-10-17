@@ -22,16 +22,40 @@ export function Accordion({ items }: { items: [string, React.ReactNode][] }) {
   );
 }
 
-// Where the cashmere sits within the topper is to confirm; it is listed after the shell.
-const TOPPER = ["Quilted organic cotton shell (GOTS)", "Cashmere (OEKO-TEX Standard 100)", "Living Wool surface", "Living Wool + Swedish horsehair"];
+// The topper holds the hand-tufted comfort layers; the cotton twill cover wraps the whole mattress.
+const TOPPER = [
+  "Cashmere (OEKO-TEX Standard 100)",
+  "Living Wool (GOTS)",
+  "Swedish horsehair (OEKO-TEX)",
+  "Hand-tufted with wool rosettes",
+];
 const CORE = [
-  "Living Wool + horsehair comfort layer, hand-tufted with wool rosettes",
   "Organic wool (GOTS)",
   "Organic cotton (GOTS)",
   "Double-tempered steel pocket coils",
   "Organic cotton (GOTS)",
   "Organic wool (GOTS)",
 ];
+
+/** Topper and mattress layer lists, with the cover across both. */
+export function Layers() {
+  return (
+    <div className="layers">
+      <div>
+        <h3 className="layers-h">Topper — {M.topperHeight}</h3>
+        <ul className="layers-l">{TOPPER.map((l) => <li key={l}>{l}</li>)}</ul>
+      </div>
+      <div>
+        <h3 className="layers-h">Mattress — {M.mattressHeight}</h3>
+        <ul className="layers-l">{CORE.map((l, i) => <li key={i}>{l}</li>)}</ul>
+      </div>
+      <div className="layers-cover">
+        <h3 className="layers-h">Cover</h3>
+        <ul className="layers-l"><li>Super soft 100% organic cotton twill (GOTS) over the entire mattress, in five colors with GOTS-approved plant dyes</li></ul>
+      </div>
+    </div>
+  );
+}
 
 /** The cutaway beside the layer list, then "No foam. Not even latex." */
 export function Construction() {
@@ -44,16 +68,7 @@ export function Construction() {
           </div>
           <div className="proc-t">
             <div className="eyebrow">Construction</div>
-            <div className="layers">
-              <div>
-                <h3 className="layers-h">Topper — {M.topperHeight}</h3>
-                <ul className="layers-l">{TOPPER.map((l) => <li key={l}>{l}</li>)}</ul>
-              </div>
-              <div>
-                <h3 className="layers-h">Mattress — {M.mattressHeight}</h3>
-                <ul className="layers-l">{CORE.map((l, i) => <li key={i}>{l}</li>)}</ul>
-              </div>
-            </div>
+            <Layers />
           </div>
         </div>
       </section>
@@ -61,7 +76,7 @@ export function Construction() {
         <div className="wrap center-head">
           <h2 className="h2">No foam. Not even latex.</h2>
           <p className="body" style={{ marginTop: 24 }}>
-            No foam, no latex, no chemical flame retardants and no glue. The layers are held in place by hand-placed wool rosettes.
+            No foam, no latex, no chemical flame retardants and no glue. The topper&apos;s layers are held in place by hand-tied wool rosettes.
           </p>
         </div>
       </section>

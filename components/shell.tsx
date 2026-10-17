@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /** Stop the page behind an overlay from scrolling (mainly for touch devices). */
 function useScrollLock(locked: boolean) {
@@ -17,6 +17,54 @@ function useScrollLock(locked: boolean) {
   }, [locked]);
 }
 import { useCart } from "@/components/cart";
+import { ASHBURY_PATH, FURNITURE_MATERIALS_PATH, MATERIALS_PATH } from "@/lib/materials";
+
+const MATERIAL_LINKS: [string, string, string][] = [
+  ["The Ashbury", "Inside the mattress", ASHBURY_PATH],
+  ["Furniture", "Frames, fills and fabrics", FURNITURE_MATERIALS_PATH],
+];
+
+/** "Materials" in the header: opens on hover or click and lists the mattress and furniture materials pages. */
+function MaterialsMenu() {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const [path, setPath] = useState(pathname);
+  if (path !== pathname) {
+    setPath(pathname);
+    setOpen(false);
+  }
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const onDown = (e: PointerEvent) => !ref.current?.contains(e.target as Node) && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    window.addEventListener("pointerdown", onDown);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("pointerdown", onDown);
+    };
+  }, [open]);
+  const hover = (v: boolean) => (e: React.PointerEvent) => e.pointerType === "mouse" && setOpen(v);
+  return (
+    <div className="nav-dd" ref={ref} onPointerEnter={hover(true)} onPointerLeave={hover(false)}>
+      <button type="button" className="linkbtn nav-dd-btn" aria-expanded={open} aria-controls="materials-menu" onClick={() => setOpen((v) => !v)}>
+        Materials<span className="nav-dd-caret" aria-hidden="true" />
+      </button>
+      {open && (
+        <div className="nav-dd-panel" id="materials-menu">
+          {MATERIAL_LINKS.map(([t, d, href]) => (
+            <Link key={href} href={href} className="nav-dd-item">
+              <span className="nav-dd-t">{t}</span>
+              <span className="nav-dd-d">{d}</span>
+            </Link>
+          ))}
+          <Link href={MATERIALS_PATH} className="nav-dd-all">All materials</Link>
+        </div>
+      )}
+    </div>
+  );
+}
 import { Photo } from "@/components/photo";
 import { fmt } from "@/lib/products";
 
@@ -72,7 +120,7 @@ export function Header() {
         <Wordmark />
         <nav className="nav r" aria-label="Ashwick">
           <Link href="/pages/our-story">Our story</Link>
-          <Link href="/pages/materials">Materials</Link>
+          <MaterialsMenu />
           <Link href="/account">Account</Link>
           <button type="button" className="linkbtn" onClick={openCart}>{cartLabel}</button>
         </nav>
@@ -94,7 +142,8 @@ export function Header() {
           </nav>
           <nav className="mmenu-sub">
             <Link href="/pages/our-story">Our story</Link>
-            <Link href="/pages/materials">Materials</Link>
+            <Link href={MATERIALS_PATH}>Materials</Link>
+            {MATERIAL_LINKS.map(([t, , href]) => <Link key={href} href={href} className="mmenu-child">{t}</Link>)}
             <Link href="/account">Account</Link>
           </nav>
         </div>
