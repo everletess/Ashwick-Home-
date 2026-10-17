@@ -5,7 +5,7 @@ import { BespokeForm } from "@/components/forms";
 import { Accordion } from "@/components/mattress";
 import { Photo } from "@/components/photo";
 import { PageHero, ProductGrid } from "@/components/sections";
-import { BESPOKE_PENDING as P } from "@/lib/bespoke";
+import { BESPOKE_REPLY } from "@/lib/bespoke";
 import { ASHBURY_PATH, FURNITURE_MATERIALS_PATH } from "@/lib/materials";
 import type { PhotoKey } from "@/lib/photos";
 import { PRODUCTS } from "@/lib/products";
@@ -20,35 +20,35 @@ const HALF = "(max-width: 960px) 100vw, 50vw";
 // Kapok is left out of the material lists for now (Tessa, Oct 16), as on the materials pages.
 const ONE_RULE = "solid hardwood, wool, cashmere, linen, cotton, horsehair, coir and agave";
 
-type Tile = { t: string; photo?: PhotoKey; alt: string; href?: string; id?: string; pending?: boolean };
+type Tile = { t: string; photo?: PhotoKey; alt: string; href?: string };
 const TILES: Tile[] = [
   { t: "Sofas & sectionals", photo: "csofa-a", alt: "The Cotswold sofa in a living room" },
   { t: "Chairs", photo: "cchair-studio", alt: "The Cotswold Chair" },
   { t: "Mattresses", photo: "mattress-mocha-room", alt: "The Ashbury in Sorrel on a walnut platform", href: "#mattresses" },
-  { t: "Beds & headboards", alt: "Beds and headboards", pending: true },
+  { t: "Beds & headboards", alt: "Beds and headboards" },
   { t: "Benches, ottomans & daybeds", photo: "marlowe-ottoman-card", alt: "The Marlowe Ottoman" },
-  { t: "Window seats & banquettes", alt: "Window seats and banquettes", pending: true },
+  { t: "Window seats & banquettes", alt: "Window seats and banquettes" },
   { t: "Whole rooms & trade projects", photo: "furniture-family", alt: "A living room furnished with a sofa, armchair and ottoman", href: "/pages/trade" },
 ];
 
 // Possibilities, not past commissions: there are no images yet (handoff shots B2–B7).
-const IMAGINE: [string, string, boolean?][] = [
+const IMAGINE: [string, string][] = [
   ["A curved sofa that follows the line of a bay window.", "Curved sofa in a bay window"],
   ["A deep daybed for a sunroom, upholstered in undyed linen.", "Daybed in a sunroom"],
-  ["An Ashbury mattress cut to fit a hundred-year-old four-poster.", "Mattress in an antique four-poster", true],
+  ["An Ashbury mattress cut to fit a hundred-year-old four-poster.", "Mattress in an antique four-poster"],
   ["A long dining bench in solid oak with a horsehair-and-wool cushion.", "Oak dining bench"],
   ["A pair of reading chairs scaled to the person who'll sit in them.", "Pair of reading chairs"],
-  ["A headboard wrapped in the same Sorrel cotton as the bed.", "Upholstered headboard", true],
+  ["A headboard wrapped in the same Sorrel cotton as the bed.", "Upholstered headboard"],
 ];
 
-type Step = { t: string; d: React.ReactNode; img?: PhotoKey; alt?: string };
+type Step = { t: string; d: string; img?: PhotoKey; alt?: string };
 const STEPS: Step[] = [
   { t: "Share your idea.", d: "A sketch, a photo, a Pinterest board, the measurements of your room. As rough as you like." },
-  { t: "Talk it through.", d: <>A design consultation by video or phone, {P.reply}. We&apos;ll talk about how you&apos;ll use it, the proportions and the materials.</> },
-  { t: "See it drawn.", d: <>We send a scaled drawing, a material proposal and a quote. <span className="pending-inline">{P.drawings}</span></>, img: "bespoke-drawing", alt: "A pencil sketch of a sofa beside linen, bouclé and twill swatches and oiled oak and walnut samples" },
+  { t: "Talk it through.", d: `A design consultation by video or phone, ${BESPOKE_REPLY}. We'll talk about how you'll use it, the proportions and the materials.` },
+  { t: "See it drawn.", d: "We send a scaled drawing, a material proposal and a quote. Our drawing and design service is available for every commission.", img: "bespoke-drawing", alt: "A pencil sketch of a sofa beside linen, bouclé and twill swatches and oiled oak and walnut samples" },
   { t: "Choose your materials.", d: "We send swatches of the wool, linen, cotton and wood finishes so you can touch them at home.", img: "bespoke-swatches", alt: "Swatches of linen, cream bouclé, oat and moss weaves and clay twill on an old oak table" },
-  { t: "Made by hand.", d: <>Your piece is built in our USA workshop, one at a time. <span className="pending-inline">{P.progressPhotos}</span></>, img: "bespoke-stitching", alt: "Hands stitching the piped edge of a linen cushion on a workshop bench" },
-  { t: "Delivered to your home.", d: P.delivery },
+  { t: "Made by hand.", d: "Your piece is built in our USA workshop, one at a time, and we send you photos from the workshop as it comes together.", img: "bespoke-stitching", alt: "Hands stitching the piped edge of a linen cushion on a workshop bench" },
+  { t: "Delivered to your home.", d: "Every commission arrives by white-glove delivery." },
 ];
 
 const PALETTE: [string, PhotoKey][] = [
@@ -64,7 +64,7 @@ const PALETTE: [string, PhotoKey][] = [
   ["Organic agave", "fiber-agave-card"],
 ];
 
-// Ashwick Bespoke handoff (Oct 16). Copy is final; bracketed values live in lib/bespoke.ts.
+// Ashwick Bespoke handoff (Oct 16), with Tessa's answers to its open questions (Oct 17).
 export default function BespokePage() {
   return (
     <main>
@@ -121,7 +121,6 @@ export default function BespokePage() {
                 <>
                   <div className="tile-img"><Photo src={x.photo} label={x.alt} sizes="(max-width: 620px) 50vw, (max-width: 1180px) 33vw, 320px" /></div>
                   <div className="tile-row"><span className="card-name">{x.t}</span></div>
-                  {x.pending && <p className="fine pending">{P.capability}</p>}
                 </>
               );
               return x.href ? <Link href={x.href} className="tile" key={x.t}>{inner}</Link> : <div className="tile" key={x.t}>{inner}</div>;
@@ -131,7 +130,7 @@ export default function BespokePage() {
           <div className="bsp-mattress" id="mattresses">
             <h3 className="proc-h">The bespoke Ashbury.</h3>
             <p className="body">
-              Our all-natural, organic mattress, made to your measurements: extra long, extra wide, <span className="pending-inline">[cut-corner for antique and four-poster beds — confirm]</span>, <span className="pending-inline">[split for narrow staircases — confirm]</span>, <span className="pending-inline">[a different feel on each side — confirm]</span>, in any of our five colors.
+              Our all-natural, organic mattress, made to your measurements in any size or shape: extra long, extra wide, with cut corners for antique and four-poster beds, split for narrow staircases, or with a different feel on each side, in any of our five colors.
             </p>
             <Link href={ASHBURY_PATH} className="ulink">Inside the Ashbury →</Link>
           </div>
@@ -146,10 +145,10 @@ export default function BespokePage() {
             <p className="body" style={{ marginTop: 24 }}>A few of the things you could commission.</p>
           </div>
           <div className="grid3">
-            {IMAGINE.map(([line, ph, pending]) => (
+            {IMAGINE.map(([line, ph]) => (
               <figure className="bsp-imagine" key={line}>
                 <div className="tile-img"><Photo label={ph} /></div>
-                <figcaption className="body">{line}{pending && <> <span className="pending-inline">{P.capability}</span></>}</figcaption>
+                <figcaption className="body">{line}</figcaption>
               </figure>
             ))}
           </div>
@@ -188,9 +187,9 @@ export default function BespokePage() {
             ))}
           </div>
           <div className="bsp-timing">
-            <div className="eyebrow">Timing and investment</div>
+            <div className="eyebrow">Timing and payment</div>
             <p className="body">
-              Most commissions take {P.leadTime} from approval to delivery. Bespoke pieces begin at {P.startingPrice}. <span className="pending-inline">{P.payment}</span>
+              Lead time depends on the project, and you&apos;ll have a timeline with your quote. Commissions are paid in full when you commission.
             </p>
             <a href="#commission" className="btn">Begin a commission</a>
           </div>
@@ -201,7 +200,7 @@ export default function BespokePage() {
         <div className="wrap">
           <div className="center-head" style={{ marginBottom: 64 }}>
             <h2 className="h2">Your palette.</h2>
-            <p className="body" style={{ marginTop: 24 }}>Choose from the materials we trust. <span className="pending-inline">{P.ownFabric}</span></p>
+            <p className="body" style={{ marginTop: 24 }}>Choose from the materials and vetted natural fabrics we trust, or bring your own natural-fiber fabric.</p>
           </div>
           <div className="bsp-palette">
             {PALETTE.map(([name, photo]) => (
@@ -225,11 +224,11 @@ export default function BespokePage() {
             <div className="eyebrow">Commissioned</div>
             <h2 className="h2">Begin a commission.</h2>
             <p className="body" style={{ marginTop: 24 }}>
-              Tell us what you&apos;re imagining. A member of our team will be in touch {P.reply} to arrange your consultation.
+              Tell us what you&apos;re imagining. A member of our team will be in touch {BESPOKE_REPLY} to arrange your consultation.
             </p>
             <div className="trade-contact">
-              <div className="eyebrow">Timing and investment</div>
-              <p>Usually {P.leadTime} from approval. From {P.startingPrice}.</p>
+              <div className="eyebrow">Timing and payment</div>
+              <p>Lead time depends on the project. Paid in full upon commission.</p>
             </div>
           </div>
           <BespokeForm />
@@ -254,12 +253,12 @@ export default function BespokePage() {
           <Accordion
             items={[
               ["Is there anything you can't make?", <p className="body small" key="1">If it can be made well from natural materials, we&apos;ll try. Some ideas need adjusting so they&apos;re comfortable and built to last; we&apos;ll tell you honestly during your consultation.</p>],
-              ["How much does a commission cost?", <p className="body small" key="2">It depends on size, materials and complexity. Bespoke pieces begin at {P.startingPrice}, and you&apos;ll receive a full quote before anything is made.</p>],
-              ["How long does it take?", <p className="body small" key="3">Usually {P.leadTime} from approval to delivery.</p>],
-              ["Can I use my own fabric?", <p className="body small" key="4">{P.ownFabricAnswer}</p>],
-              ["Can you match a piece I already own?", <p className="body small" key="5">Yes. Send photos and measurements and we&apos;ll design to them. {P.matchPiece}</p>],
+              ["How much does a commission cost?", <p className="body small" key="2">It depends on size, materials and complexity. You&apos;ll receive a full quote before anything is made, and commissions are paid in full when you commission.</p>],
+              ["How long does it take?", <p className="body small" key="3">It depends on the project. You&apos;ll have a timeline with your quote, and we send photos from the workshop as your piece is made.</p>],
+              ["Can I use my own fabric?", <p className="body small" key="4">Yes, as long as it&apos;s a natural fiber. You can also choose from our own vetted natural fabrics.</p>],
+              ["Can you match a piece I already own?", <p className="body small" key="5">Yes. Send photos and measurements and we&apos;ll design to them.</p>],
               ["Do you work with interior designers?", <p className="body small" key="6">Yes, through our Trade program, with trade pricing and a dedicated contact. <Link href="/pages/trade" className="inl">Trade</Link></p>],
-              ["Are bespoke pieces covered by the warranty?", <p className="body small" key="7">Yes. Every Ashwick piece is covered by our lifetime limited warranty. {P.warranty}</p>],
+              ["Are bespoke pieces covered by the warranty?", <p className="body small" key="7">Yes. Every Ashwick piece, bespoke included, is covered by our lifetime limited warranty.</p>],
             ]}
           />
         </div>

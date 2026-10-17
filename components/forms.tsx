@@ -4,7 +4,7 @@
 // error with the studio's address rather than a thank-you.
 import { useRef, useState } from "react";
 
-import { BESPOKE_PENDING } from "@/lib/bespoke";
+import { BESPOKE_REPLY } from "@/lib/bespoke";
 import { STUDIO_EMAIL } from "@/lib/site";
 
 export { STUDIO_EMAIL };
@@ -86,10 +86,9 @@ export function Newsletter() {
   );
 }
 
-// Bespoke commission form (Ashwick Bespoke handoff 3.9). Items in [square brackets] are pending confirmation.
+// Bespoke commission form (Ashwick Bespoke handoff 3.9).
 const BESPOKE_PIECES = ["Sofa", "Sectional", "Chair", "Mattress", "Bed or headboard", "Bench or ottoman", "Daybed", "Window seat or banquette", "Something else"];
-const BESPOKE_MATERIALS = ["Solid hardwood", "Linen", "Organic cotton", "Wool bouclé", "Living Wool", "Cashmere", "Leather [if kept]", "Not sure yet"];
-const BESPOKE_BUDGETS = ["Under $5,000", "$5,000–$10,000", "$10,000–$20,000", "$20,000+"];
+const BESPOKE_MATERIALS = ["Solid hardwood", "Linen", "Organic cotton", "Wool bouclé", "Living Wool", "Cashmere", "Not sure yet"];
 const BESPOKE_TIMING = ["As soon as possible", "In the next 3 months", "Later this year", "Just exploring"];
 
 /** Pill buttons that toggle values; the choice is sent as one hidden field. */
@@ -113,7 +112,7 @@ export function BespokeForm() {
   const { sent, sending, error, onSubmit } = useFormSend("bespoke");
   const [trade, setTrade] = useState(false);
   if (sent) {
-    return <ThankYou>We&apos;ve received your idea, and we&apos;re already imagining it. We&apos;ll be in touch {BESPOKE_PENDING.reply} to arrange your consultation.</ThankYou>;
+    return <ThankYou>We&apos;ve received your idea, and we&apos;re already imagining it. We&apos;ll be in touch {BESPOKE_REPLY} to arrange your consultation.</ThankYou>;
   }
   return (
     <form className="tform" onSubmit={onSubmit}>
@@ -133,13 +132,6 @@ export function BespokeForm() {
       <PillChoice name="materials" label="Materials you're drawn to" options={BESPOKE_MATERIALS} multi />
       <label className="full"><span className="eyebrow">Describe your piece</span><textarea name="description" rows={5} placeholder="Tell us what you see: the shape, the feeling, how you'll use it."></textarea></label>
       <label className="full file"><span className="eyebrow">Sketches or inspiration photos</span><input name="files" type="file" multiple accept="image/*,.pdf" /></label>
-      <label>
-        <span className="eyebrow">Budget [ranges to confirm]</span>
-        <select name="budget" defaultValue="">
-          <option value="" disabled>Select</option>
-          {BESPOKE_BUDGETS.map((o) => <option key={o}>{o}</option>)}
-        </select>
-      </label>
       <label>
         <span className="eyebrow">Timing</span>
         <select name="timing" defaultValue="">
