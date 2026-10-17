@@ -6,11 +6,12 @@ import type { PhotoKey } from "@/lib/photos";
 const HALF = "(max-width: 960px) 100vw, 50vw";
 
 /** Full-width image band with an eyebrow and heading over it. */
-export function Band({ photo, alt, eyebrow, title, center }: { photo?: PhotoKey; alt: string; eyebrow?: string; title: string; center?: boolean }) {
+/** `ink`: dark text and no scrim, for a pale photo. */
+export function Band({ photo, alt, eyebrow, title, center, ink }: { photo?: PhotoKey; alt: string; eyebrow?: string; title: string; center?: boolean; ink?: boolean }) {
   return (
-    <section className={"band" + (center ? " band-c" : "")}>
+    <section className={"band" + (center ? " band-c" : "") + (ink ? " band-ink" : "")}>
       <Photo src={photo} label={alt} fill sizes="100vw" />
-      {photo && <div className="hero-scrim"></div>}
+      {photo && !ink && <div className="hero-scrim"></div>}
       <div className="band-txt">
         {eyebrow && <div className="eyebrow">{eyebrow}</div>}
         <h2 className="h2">{title}</h2>

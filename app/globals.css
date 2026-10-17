@@ -171,7 +171,8 @@ button.chip{cursor:pointer}
 .band:has(img) .band-txt,.band:has(img) .band-txt .eyebrow{color:var(--alabaster)}
 .band:has(img) .band-txt .h2{color:var(--alabaster)}
 .band-txt .h2{margin:0;font-style:italic}
-.band-c .band-txt{left:0;right:0;bottom:auto;top:50%;transform:translateY(-50%);align-items:center;text-align:center}
+.band-c .band-txt{left:var(--gut);right:var(--gut);bottom:auto;top:50%;transform:translateY(-50%);align-items:center;text-align:center}
+.band-ink:has(img) .band-txt,.band-ink:has(img) .band-txt .eyebrow,.band-ink:has(img) .band-txt .h2{color:var(--ink)}
 .mat-intro{gap:96px}
 .mat-intro .h2{margin:0}
 .mat-index{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 28px;margin-top:88px;padding-top:32px;border-top:1px solid rgba(42,37,31,.28);font:400 11px var(--sans);letter-spacing:.2em;text-transform:uppercase}

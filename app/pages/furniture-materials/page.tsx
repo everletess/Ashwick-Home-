@@ -19,8 +19,8 @@ export default function FurnitureMaterialsPage() {
   return (
     <main>
       <PageHero
-        photo="csofa-a"
-        alt="The Cotswold sofa in a living room"
+        photo="furniture-family"
+        alt="A mother playing with her baby on a wool rug beside a sofa, armchair and ottoman on fluted wood plinths, a golden retriever asleep nearby"
         eyebrow="Materials — Furniture"
         title="Built from the inside out."
         body="Solid hardwood frames, natural fills and woven fabrics, made to order by hand in the USA. These are the materials we work with. Not every piece uses every one: each product page lists exactly what's inside."
@@ -38,7 +38,7 @@ export default function FurnitureMaterialsPage() {
 
       <Groups groups={FURNITURE_GROUPS} whereLabel="How we use it" />
 
-      <Band alt="Wool and kapok together, soft focus" title="The right fiber, in the right place." center />
+      <Band photo="materials-band-furniture" alt="Curled cream wool and fine white natural fiber on linen, soft focus" title="The right fiber, in the right place." center ink />
 
       <section className="sec">
         <div className="wrap proc">
