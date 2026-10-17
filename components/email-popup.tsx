@@ -1,16 +1,40 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useCart } from "@/components/cart";
 
 const STORAGE_KEY = "aw-popup-dismissed";
-const DELAY_MS = 8000; // 8 seconds after page load
+const DELAY_MS = 8000; // 8 seconds after arriving
+const DISMISS_DAYS = 14; // "No thanks" hides it this long; subscribers never see it again
+// Pages where someone is mid-form; the popup waits until they move on.
+const QUIET_PATHS = ["/pages/bespoke", "/pages/trade", "/account"];
 // Public Klaviyo IDs (safe to expose). Set in Vercel env vars.
 const KLAVIYO_COMPANY_ID = process.env.NEXT_PUBLIC_KLAVIYO_COMPANY_ID ?? "";
 const KLAVIYO_LIST_ID = process.env.NEXT_PUBLIC_KLAVIYO_LIST_ID ?? "";
 const DISCOUNT_CODE = "ASHWICK15";
 
+// Storage can throw (private mode, blocked site data); treat that as "nothing stored".
+function seen() {
+  try {
+    const v = localStorage.getItem(STORAGE_KEY);
+    return v === "subscribed" || (!!v && Date.now() < Number(v));
+  } catch {
+    return false;
+  }
+}
+function remember(value: string) {
+  try {
+    localStorage.setItem(STORAGE_KEY, value);
+  } catch {}
+}
+
 export function EmailPopup() {
+  const pathname = usePathname();
+  const { open: cartOpen } = useCart();
+  const [due, setDue] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [emailed, setEmailed] = useState(false);
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "done" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
@@ -18,16 +42,29 @@ export function EmailPopup() {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    // Don't show if already dismissed / subscribed this session or previously
-    if (typeof window !== "undefined" && (sessionStorage.getItem(STORAGE_KEY) || localStorage.getItem(STORAGE_KEY))) return;
-    timerRef.current = setTimeout(() => setVisible(true), DELAY_MS);
+    if (seen()) return;
+    timerRef.current = setTimeout(() => setDue(true), DELAY_MS);
     return () => { if (timerRef.current) clearTimeout(timerRef.current); };
   }, []);
+
+  // Once the 8 seconds are up, open as soon as the visitor isn't in the cart or a form page.
+  const quiet = cartOpen || QUIET_PATHS.some((p) => pathname?.startsWith(p));
+  const show = due && !quiet;
+  const [shown, setShown] = useState(false);
+  if (show && !shown) {
+    setShown(true);
+    setVisible(true);
+  }
 
   // Focus input when popup opens
   useEffect(() => {
     if (visible) inputRef.current?.focus();
   }, [visible]);
+
+  const dismiss = useCallback(() => {
+    setVisible(false);
+    if (!seen()) remember(String(Date.now() + DISMISS_DAYS * 86400000));
+  }, []);
 
   // Escape key closes
   useEffect(() => {
@@ -35,12 +72,7 @@ export function EmailPopup() {
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") dismiss(); };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [visible]);
-
-  function dismiss() {
-    setVisible(false);
-    sessionStorage.setItem(STORAGE_KEY, "1");
-  }
+  }, [visible, dismiss]);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -81,8 +113,9 @@ export function EmailPopup() {
       if (!k && !s) throw new Error("We couldn't sign you up just now. Please try again.");
       const fbq = (window as unknown as { fbq?: (...args: unknown[]) => void }).fbq;
       if (typeof fbq === "function") fbq("track", "Lead", { content_name: "Email popup" });
+      setEmailed(k);
       setStatus("done");
-      localStorage.setItem(STORAGE_KEY, "subscribed");
+      remember("subscribed");
     } catch (err) {
       setErrorMsg(err instanceof Error ? err.message : "Please try again.");
       setStatus("error");
@@ -104,14 +137,13 @@ export function EmailPopup() {
         aria-labelledby="ep-title"
         aria-describedby="ep-desc"
       >
-        <button className="ep-x x" aria-label="Close" onClick={dismiss}>×</button>
-
         {status === "done" ? (
           <div className="ep-done">
+            <button className="ep-x x" aria-label="Close" onClick={dismiss}>×</button>
             <p className="ep-eyebrow eyebrow">Welcome</p>
             <p className="ep-h h3" id="ep-title">You&apos;re on the list.</p>
             <p className="ep-body body small" id="ep-desc">
-              Here&apos;s 15% off your first order. We&apos;ve sent it to your inbox too.
+              Here&apos;s 15% off your first order.{emailed && <> We&apos;ve sent it to your inbox too.</>}
             </p>
             <p className="ep-code">{DISCOUNT_CODE}</p>
             <p className="fine">Enter it at checkout. One use per customer.</p>
@@ -119,6 +151,7 @@ export function EmailPopup() {
           </div>
         ) : (
           <form className="ep-form" onSubmit={submit} noValidate>
+            <button type="button" className="ep-x x" aria-label="Close" onClick={dismiss}>×</button>
             <p className="ep-eyebrow eyebrow">For new arrivals &amp; the occasional edit</p>
             <p className="ep-h h3" id="ep-title">
               Built to be inherited.
