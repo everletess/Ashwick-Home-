@@ -20,6 +20,7 @@ import csofaHeroSquare from "@/assets/photos/csofa-hero-square.jpg";
 import csofaStudio from "@/assets/photos/csofa-studio.jpg";
 import csofaLifestyle from "@/assets/photos/csofa-lifestyle.jpg";
 import mattressMeadow from "@/assets/photos/mattress-meadow.jpg";
+import materialsPocketCoils from "@/assets/photos/materials-pocket-coils.jpg";
 import fiberWool from "@/assets/photos/fiber-wool.jpg";
 import fiberHorsehair from "@/assets/photos/fiber-horsehair.jpg";
 import fiberCotton from "@/assets/photos/fiber-cotton.jpg";
@@ -101,6 +102,7 @@ export const PHOTOS = {
   "csofa-studio": csofaStudio,
   "csofa-lifestyle": csofaLifestyle,
   "mattress-meadow": mattressMeadow,
+  "materials-pocket-coils": materialsPocketCoils,
   "fiber-wool": fiberWool,
   "fiber-horsehair": fiberHorsehair,
   "fiber-cotton": fiberCotton,
