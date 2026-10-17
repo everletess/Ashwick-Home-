@@ -36,6 +36,7 @@ import materialsSheep from "@/assets/photos/materials-sheep.jpg";
 import fiberAgave from "@/assets/photos/fiber-agave.jpg";
 import materialsOil from "@/assets/photos/materials-oil.jpg";
 import furnitureFamily from "@/assets/photos/furniture-family.jpg";
+import materialsBandFurniture from "@/assets/photos/materials-band-furniture.jpg";
 import marlowe1 from "@/assets/photos/marlowe-1.jpg";
 import marlowe2 from "@/assets/photos/marlowe-2.jpg";
 import marloweSofaWalnutLinen from "@/assets/photos/marlowe-sofa-walnut-linen.jpg";
@@ -125,6 +126,7 @@ export const PHOTOS = {
   "fiber-agave": fiberAgave,
   "materials-oil": materialsOil,
   "furniture-family": furnitureFamily,
+  "materials-band-furniture": materialsBandFurniture,
   "marlowe-1": marlowe1,
   "marlowe-2": marlowe2,
   "marlowe-sofa-walnut-linen": marloweSofaWalnutLinen,

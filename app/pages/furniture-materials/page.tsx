@@ -38,7 +38,7 @@ export default function FurnitureMaterialsPage() {
 
       <Groups groups={FURNITURE_GROUPS} whereLabel="How we use it" />
 
-      <Band alt="Wool and kapok together, soft focus" title="The right fiber, in the right place." center />
+      <Band photo="materials-band-furniture" alt="Curled cream wool and fine white natural fiber on linen, soft focus" title="The right fiber, in the right place." center ink />
 
       <section className="sec">
         <div className="wrap proc">
