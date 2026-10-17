@@ -62,7 +62,7 @@ export const MATTRESS = {
   /** false shows "Coming soon" in place of Add to cart. */
   available: true,
   leadTime: "Made to order. Ships in 1–2 weeks.",
-  shipping: "Free shipping.",
+  shipping: "Delivery included.",
   guarantee: "30-night money-back guarantee",
   guaranteeNights: 30,
   warranty: "Lifetime limited warranty",
@@ -82,12 +82,6 @@ export const MATTRESS_GALLERY: { photo: PhotoKey; alt: string }[] = [
 /** Values pending confirmation, shown as written until replaced. */
 export const MATTRESS_PENDING = {
   feelRatings: "[Confirm feel descriptions and firmness ratings with the manufacturer, e.g. Soft 4/10, Firm 7/10.]",
-  tolerance: '[confirm tolerance, e.g. within ½"]',
-  foundation: "[Recommended bases and maximum slat spacing — to confirm.]",
-  weight: "[Weight per size — to confirm.]",
-  delivery: "[Confirm delivery method: doorstep or white glove, and whether old-mattress removal is offered.]",
-  flammabilityReport: "[link test report when received]",
-  flammabilityReportShort: "[link report]",
   refundDays: "[X business days]",
   customSizesCovered: "[Confirm whether custom sizes are covered.]",
   returnedMattresses: "[donated / recycled — confirm]",

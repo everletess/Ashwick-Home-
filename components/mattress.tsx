@@ -1,7 +1,7 @@
 // Sections shared by the mattress page, the Living Wool page and the Guarantee & warranty page.
 // Copy is final (from the mattress handoff); values come from lib/mattress.ts.
 import { Photo } from "@/components/photo";
-import { MATTRESS, MATTRESS_PENDING } from "@/lib/mattress";
+import { MATTRESS } from "@/lib/mattress";
 
 const M = MATTRESS;
 
@@ -115,5 +115,5 @@ export function Columns({ items, numbered }: { items: [string, React.ReactNode][
 export const CERTIFICATIONS: [string, React.ReactNode][] = [
   ["GOTS", <>GOTS-certified organic wool and cotton, made by a GOTS-certified manufacturer ({M.gotsManufacturer}).</>],
   ["OEKO-TEX", "OEKO-TEX certified horsehair. OEKO-TEX Standard 100 certified cashmere."],
-  ["Flammability", <>Federal standards met without chemical flame retardants {MATTRESS_PENDING.flammabilityReportShort}.</>],
+  ["Flammability", <>Federal standards met without chemical flame retardants.</>],
 ];

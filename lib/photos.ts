@@ -32,6 +32,7 @@ import fiberKashmir from "@/assets/photos/fiber-kashmir.jpg";
 import frameFillCover from "@/assets/photos/frame-fill-cover.jpg";
 import hero from "@/assets/photos/hero.jpg";
 import heroFamily from "@/assets/photos/hero-family.jpg";
+import heroBedroom from "@/assets/photos/hero-bedroom.jpg";
 import materialsSheep from "@/assets/photos/materials-sheep.jpg";
 import fiberAgave from "@/assets/photos/fiber-agave.jpg";
 import fiberAgaveCard from "@/assets/photos/fiber-agave-card.jpg";
@@ -128,6 +129,7 @@ export const PHOTOS = {
   "frame-fill-cover": frameFillCover,
   "hero": hero,
   "hero-family": heroFamily,
+  "hero-bedroom": heroBedroom,
   "materials-sheep": materialsSheep,
   "fiber-agave": fiberAgave,
   "fiber-agave-card": fiberAgaveCard,

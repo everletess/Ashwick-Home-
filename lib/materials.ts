@@ -174,8 +174,6 @@ export const MATERIALS_PENDING = {
   furnitureGlue: "[Add \"No glue\" only if confirmed for furniture.]",
   furnitureFire: "[Confirm the furniture flammability standard met, e.g. California TB 117-2013, and how it's met without chemical flame retardants.]",
   furnitureCerts: "[Add any confirmed certifications for linen, wool upholstery or fill. If none, show only the fire-safety item.]",
-  fireReport: "[Link test report.]",
-  fireReportShort: "[Link report.]",
   furnitureFireAnswer: "[Answer once the furniture standard and method are confirmed.]",
   oilType: "[oil type]",
   swatchKit: "[If a swatch kit exists: Order a swatch kit and feel the linen, bouclé and brushed wool at home.]",

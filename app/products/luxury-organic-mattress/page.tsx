@@ -40,13 +40,22 @@ export default function MattressPage() {
           </tbody>
         </table>
         <p className="body small">
-          Mattress {M.mattressHeight}, topper {M.topperHeight}, combined {M.combinedHeight}. Deep-pocket sheets recommended: 15&quot;+ pocket depth with the topper, 12&quot;+ without. All dimensions approximate {P.tolerance}.
+          Mattress {M.mattressHeight}, topper {M.topperHeight}, combined {M.combinedHeight}. Deep-pocket sheets recommended: 15&quot;+ pocket depth with the topper, 12&quot;+ without.
         </p>
       </>,
     ],
-    ["Foundation", <p className="body small" key="f">{P.foundation}</p>],
-    ["Weight", <p className="body small" key="w">{P.weight}</p>],
-    ["Delivery", <p className="body small" key="d">Made to order and ships in 1–2 weeks. {M.shipping} {P.delivery}</p>],
+    [
+      "Foundation",
+      <p className="body small" key="f">
+        The Ashbury needs a firm, flat base that lets it breathe. Use a solid platform, or a slatted base with slats no more than 3&quot; apart. For Queen, King and Cal King, choose a base with a center support rail and legs. A rigid foundation (no springs) works too. It also works on an adjustable base. Avoid old box springs, which can sag and make the mattress uneven, and avoid placing it directly on the floor for long periods, since wool needs airflow underneath. A supportive base is a condition of the lifetime limited warranty.
+      </p>,
+    ],
+    [
+      "Delivery",
+      <p className="body small" key="d">
+        Made to order and ships in 1–2 weeks. Standard delivery is included in the price; white-glove delivery is available for an additional fee. Every mattress arrives wrapped in biodegradable paper.
+      </p>,
+    ],
     [
       "Care — mattress",
       <p className="body small" key="cm">
@@ -62,7 +71,7 @@ export default function MattressPage() {
     [
       "Certifications",
       <p className="body small" key="c">
-        GOTS-certified organic wool and cotton, made by a GOTS-certified manufacturer ({M.gotsManufacturer}). OEKO-TEX certified horsehair. OEKO-TEX Standard 100 certified cashmere. Meets US federal mattress flammability standards without chemical flame retardants {P.flammabilityReport}.
+        GOTS-certified organic wool and cotton, made by a GOTS-certified manufacturer ({M.gotsManufacturer}). OEKO-TEX certified horsehair. OEKO-TEX Standard 100 certified cashmere. Meets US federal mattress flammability standards without chemical flame retardants.
       </p>,
     ],
   ];
