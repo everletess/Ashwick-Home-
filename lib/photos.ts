@@ -45,6 +45,9 @@ import materialsBandFill from "@/assets/photos/materials-band-fill.jpg";
 import mattressFeelSoft from "@/assets/photos/mattress-feel-soft.jpg";
 import mattressFeelFirm from "@/assets/photos/mattress-feel-firm.jpg";
 import materialsBandStructure from "@/assets/photos/materials-band-structure.jpg";
+import bespokeShare from "@/assets/photos/bespoke-share.jpg";
+import bespokeConsult from "@/assets/photos/bespoke-consult.jpg";
+import bespokeDelivery from "@/assets/photos/bespoke-delivery.jpg";
 import mattressRoomDove from "@/assets/photos/mattress-room-dove.jpg";
 import mattressRoomSafari from "@/assets/photos/mattress-room-safari.jpg";
 import mattressRoomNatural from "@/assets/photos/mattress-room-natural.jpg";
@@ -150,6 +153,9 @@ export const PHOTOS = {
   "mattress-feel-soft": mattressFeelSoft,
   "mattress-feel-firm": mattressFeelFirm,
   "materials-band-structure": materialsBandStructure,
+  "bespoke-share": bespokeShare,
+  "bespoke-consult": bespokeConsult,
+  "bespoke-delivery": bespokeDelivery,
   "mattress-room-dove": mattressRoomDove,
   "mattress-room-safari": mattressRoomSafari,
   "mattress-room-natural": mattressRoomNatural,

@@ -32,12 +32,12 @@ const IMAGINE: [string, string][] = [
 
 type Step = { t: string; d: string; img?: PhotoKey; alt?: string };
 const STEPS: Step[] = [
-  { t: "Share your idea.", d: "A sketch, a photo, a Pinterest board, the measurements of your room. As rough as you like." },
-  { t: "Talk it through.", d: `A design consultation by video or phone, ${BESPOKE_REPLY}. We'll talk about how you'll use it, the proportions and the materials.` },
+  { t: "Share your idea.", d: "A sketch, a photo, a Pinterest board, the measurements of your room. As rough as you like.", img: "bespoke-share", alt: "Two people comparing linen, bouclé and moss swatches and oak and walnut samples at a dining table" },
+  { t: "Talk it through.", d: `A design consultation by video or phone, ${BESPOKE_REPLY}. We'll talk about how you'll use it, the proportions and the materials.`, img: "bespoke-consult", alt: "A designer on the phone sketching a sofa beside fabric swatches" },
   { t: "See it drawn.", d: "We send a scaled drawing, a material proposal and a quote. Our drawing and design service is available for every commission.", img: "bespoke-drawing", alt: "A pencil sketch of a sofa beside linen, bouclé and twill swatches and oiled oak and walnut samples" },
   { t: "Choose your materials.", d: "We send swatches of the wool, linen, cotton and wood finishes so you can touch them at home.", img: "bespoke-swatches", alt: "Swatches of linen, cream bouclé, oat and moss weaves and clay twill on an old oak table" },
   { t: "Made by hand.", d: "Your piece is built in our USA workshop, one at a time, and we send you photos from the workshop as it comes together.", img: "bespoke-stitching", alt: "Hands stitching the piped edge of a linen cushion on a workshop bench" },
-  { t: "Delivered to your home.", d: "Every commission arrives by white-glove delivery." },
+  { t: "Delivered to your home.", d: "Every commission arrives by white-glove delivery.", img: "bespoke-delivery", alt: "Two delivery specialists unwrapping a linen sofa and placing its bolsters in a sunlit living room" },
 ];
 
 const PALETTE: [string, PhotoKey][] = [
