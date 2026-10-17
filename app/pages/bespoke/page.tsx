@@ -20,14 +20,14 @@ const HALF = "(max-width: 960px) 100vw, 50vw";
 // Kapok is left out of the material lists for now (Tessa, Oct 16), as on the materials pages.
 const ONE_RULE = "solid hardwood, wool, cashmere, linen, cotton, horsehair, coir and agave";
 
-// Possibilities, not past commissions: there are no images yet (handoff shots B2–B7).
-const IMAGINE: [string, string][] = [
+// Possibilities, not past commissions. Cards without a photo show a placeholder.
+const IMAGINE: [string, string, PhotoKey?][] = [
   ["A curved sofa that follows the line of a bay window.", "Curved sofa in a bay window"],
   ["A deep daybed for a sunroom, upholstered in undyed linen.", "Daybed in a sunroom"],
   ["An Ashbury mattress cut to fit a hundred-year-old four-poster.", "Mattress in an antique four-poster"],
-  ["A long dining bench in solid oak with a horsehair-and-wool cushion.", "Oak dining bench"],
-  ["A pair of reading chairs scaled to the person who'll sit in them.", "Pair of reading chairs"],
-  ["A headboard wrapped in the same Sorrel cotton as the bed.", "Upholstered headboard"],
+  ["A long dining bench in solid oak with a horsehair-and-wool cushion.", "A long solid oak dining bench with a linen-covered cushion beside an oak table", "imagine-bench"],
+  ["A pair of reading chairs scaled to the person who'll sit in them.", "A pair of linen wingback reading chairs by a window, a walnut side table between them", "imagine-chairs"],
+  ["A headboard wrapped in the same Sorrel cotton as the bed.", "A Sorrel cotton headboard behind a matching tufted Ashbury on an oak bed frame", "imagine-headboard"],
 ];
 
 type Step = { t: string; d: string; img?: PhotoKey; alt?: string };
@@ -135,9 +135,9 @@ export default function BespokePage() {
             <p className="body" style={{ marginTop: 24 }}>A few of the things you could commission.</p>
           </div>
           <div className="grid3">
-            {IMAGINE.map(([line, ph]) => (
+            {IMAGINE.map(([line, alt, photo]) => (
               <figure className="bsp-imagine" key={line}>
-                <div className="tile-img"><Photo label={ph} /></div>
+                <div className="tile-img"><Photo src={photo} label={alt} sizes="(max-width: 620px) 100vw, (max-width: 1180px) 50vw, 460px" /></div>
                 <figcaption className="body">{line}</figcaption>
               </figure>
             ))}
