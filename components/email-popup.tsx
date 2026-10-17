@@ -4,6 +4,10 @@ import { useEffect, useRef, useState } from "react";
 
 const STORAGE_KEY = "aw-popup-dismissed";
 const DELAY_MS = 8000; // 8 seconds after page load
+// Public Klaviyo IDs (safe to expose). Set in Vercel env vars.
+const KLAVIYO_COMPANY_ID = process.env.NEXT_PUBLIC_KLAVIYO_COMPANY_ID ?? "";
+const KLAVIYO_LIST_ID = process.env.NEXT_PUBLIC_KLAVIYO_LIST_ID ?? "";
+const DISCOUNT_CODE = "ASHWICK15";
 
 export function EmailPopup() {
   const [visible, setVisible] = useState(false);
@@ -15,7 +19,7 @@ export function EmailPopup() {
 
   useEffect(() => {
     // Don't show if already dismissed / subscribed this session or previously
-    if (typeof window !== "undefined" && sessionStorage.getItem(STORAGE_KEY)) return;
+    if (typeof window !== "undefined" && (sessionStorage.getItem(STORAGE_KEY) || localStorage.getItem(STORAGE_KEY))) return;
     timerRef.current = setTimeout(() => setVisible(true), DELAY_MS);
     return () => { if (timerRef.current) clearTimeout(timerRef.current); };
   }, []);
@@ -44,17 +48,41 @@ export function EmailPopup() {
     setStatus("loading");
     setErrorMsg("");
     try {
-      const fd = new FormData();
-      fd.append("form", "newsletter");
-      fd.append("email", email.trim());
-      // Honeypot
-      fd.append("_gotcha", "");
-      const res = await fetch("/api/forms", { method: "POST", body: fd });
-      const data = await res.json();
-      if (!res.ok || !data.ok) throw new Error(data.error ?? "Something went wrong.");
+      const value = email.trim();
+      // 1) Klaviyo: adds them to the list, which triggers the welcome flow (sends ASHWICK15).
+      //    Uses Klaviyo's public client API — only the public site ID, no secret key.
+      const klaviyo = (async () => {
+        if (!KLAVIYO_COMPANY_ID || !KLAVIYO_LIST_ID) return false;
+        const r = await fetch(`https://a.klaviyo.com/client/subscriptions/?company_id=${KLAVIYO_COMPANY_ID}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/vnd.api+json", revision: "2024-10-15" },
+          body: JSON.stringify({
+            data: {
+              type: "subscription",
+              attributes: {
+                custom_source: "Ashwick website popup",
+                profile: { data: { type: "profile", attributes: { email: value } } },
+              },
+              relationships: { list: { data: { type: "list", id: KLAVIYO_LIST_ID } } },
+            },
+          }),
+        });
+        return r.ok; // 202 Accepted
+      })().catch(() => false);
+      // 2) Studio notification via the existing forms route (best effort).
+      const studio = (async () => {
+        const fd = new FormData();
+        fd.append("form", "newsletter");
+        fd.append("email", value);
+        const r = await fetch("/api/forms", { method: "POST", body: fd });
+        return r.ok;
+      })().catch(() => false);
+      const [k, s] = await Promise.all([klaviyo, studio]);
+      if (!k && !s) throw new Error("We couldn't sign you up just now. Please try again.");
+      const fbq = (window as unknown as { fbq?: (...args: unknown[]) => void }).fbq;
+      if (typeof fbq === "function") fbq("track", "Lead", { content_name: "Email popup" });
       setStatus("done");
-      // Close after short celebration
-      setTimeout(dismiss, 3200);
+      localStorage.setItem(STORAGE_KEY, "subscribed");
     } catch (err) {
       setErrorMsg(err instanceof Error ? err.message : "Please try again.");
       setStatus("error");
@@ -83,8 +111,11 @@ export function EmailPopup() {
             <p className="ep-eyebrow eyebrow">Welcome</p>
             <p className="ep-h h3" id="ep-title">You&apos;re on the list.</p>
             <p className="ep-body body small" id="ep-desc">
-              Your 10% discount code is on its way to your inbox. Made slowly. Worth the wait.
+              Here&apos;s 15% off your first order. We&apos;ve sent it to your inbox too.
             </p>
+            <p className="ep-code">{DISCOUNT_CODE}</p>
+            <p className="fine">Enter it at checkout. One use per customer.</p>
+            <button type="button" className="btn full" onClick={dismiss}>Continue browsing</button>
           </div>
         ) : (
           <form className="ep-form" onSubmit={submit} noValidate>
@@ -93,7 +124,7 @@ export function EmailPopup() {
               Built to be inherited.
             </p>
             <p className="ep-body body small" id="ep-desc">
-              Join the list for early access to new pieces, material stories, and 10% off your first order.
+              Join the list for early access to new pieces, material stories, and 15% off your first order.
             </p>
 
             <div className="ep-field">
@@ -118,7 +149,7 @@ export function EmailPopup() {
               className="btn full"
               disabled={status === "loading"}
             >
-              {status === "loading" ? "One moment…" : "Get 10% off"}
+              {status === "loading" ? "One moment…" : "Get 15% off"}
             </button>
 
             <button type="button" className="ep-skip fine" onClick={dismiss}>

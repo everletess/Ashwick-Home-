@@ -657,3 +657,4 @@ button.chip{cursor:pointer}
 .ep-done{align-items:flex-start;gap:16px}
 @keyframes ep-fade-in{from{opacity:0}to{opacity:1}}
 @keyframes ep-slide-up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.ep-code{font:400 30px/1 var(--serif);letter-spacing:.3em;margin:4px 0 0;padding:18px 0;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);width:100%;text-align:center}
