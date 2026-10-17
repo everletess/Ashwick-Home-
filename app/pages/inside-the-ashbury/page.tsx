@@ -70,7 +70,7 @@ export default function InsideTheAshburyPage() {
       <section className="sec">
         <div className="wrap proc">
           <div className="proc-v">
-            <Photo src="mattress-cutaway" label="Cutaway of the Ashbury showing the topper, the tufted comfort layers and the pocket coils" sizes={HALF} />
+            <Photo src="mattress-layers" label="The Ashbury's layers stacked: the tufted topper folded back over wool and horsehair, then wool, pocket coils, wool and the cotton twill base" sizes={HALF} />
           </div>
           <div className="proc-t">
             <h2 className="proc-h">Eleven inches, layer by layer.</h2>

@@ -64,7 +64,7 @@ export function Construction() {
       <section className="sec">
         <div className="wrap proc">
           <div className="proc-v">
-            <Photo src="mattress-cutaway" label="Cutaway of the Ashbury showing the topper, the tufted comfort layers and the pocket coils" sizes="(max-width: 960px) 100vw, 50vw" />
+            <Photo src="mattress-layers" label="The Ashbury's layers stacked: the tufted topper folded back over wool and horsehair, then wool, pocket coils, wool and the cotton twill base" sizes="(max-width: 960px) 100vw, 50vw" />
           </div>
           <div className="proc-t">
             <div className="eyebrow">Construction</div>

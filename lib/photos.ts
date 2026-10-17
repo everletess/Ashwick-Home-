@@ -39,6 +39,7 @@ import bespokeHero from "@/assets/photos/bespoke-hero.jpg";
 import bespokeSwatches from "@/assets/photos/bespoke-swatches.jpg";
 import bespokeDrawing from "@/assets/photos/bespoke-drawing.jpg";
 import bespokeStitching from "@/assets/photos/bespoke-stitching.jpg";
+import mattressLayers from "@/assets/photos/mattress-layers.jpg";
 import materialsOil from "@/assets/photos/materials-oil.jpg";
 import furnitureFamily from "@/assets/photos/furniture-family.jpg";
 import materialsBandFurniture from "@/assets/photos/materials-band-furniture.jpg";
@@ -134,6 +135,7 @@ export const PHOTOS = {
   "bespoke-swatches": bespokeSwatches,
   "bespoke-drawing": bespokeDrawing,
   "bespoke-stitching": bespokeStitching,
+  "mattress-layers": mattressLayers,
   "materials-oil": materialsOil,
   "furniture-family": furnitureFamily,
   "materials-band-furniture": materialsBandFurniture,
