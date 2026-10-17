@@ -29,7 +29,7 @@ export type MaterialGroup = { id: string; eyebrow: string; title: string; photo?
 const LIVING_WOOL_BODY =
   "Our Living Wool comes from Lanas Trinidad in Uruguay, from sheep shorn as part of their natural seasonal cycle. Each fiber has a natural crimp that compresses under weight and springs back when you move. Wool holds warmth when the room is cool and releases heat when you run warm, and it draws moisture away from the body so the surface stays dry.";
 
-/** Furniture Materials. Kapok is left out for now (Tessa, Oct 16); restore its entry here to bring it back. */
+/** Furniture Materials. Kapok and leather are left out for now (Tessa, Oct 16–17); restore their entries here to bring them back. */
 export const FURNITURE_GROUPS: MaterialGroup[] = [
   {
     id: "frame", eyebrow: "The Frame", title: "What holds it up.", photo: "marlowe-sofa-walnut-linen", alt: "The hand-fluted solid walnut plinth of the Marlowe sofa",
@@ -98,13 +98,6 @@ export const FURNITURE_GROUPS: MaterialGroup[] = [
         origin: "[Confirm certification and origin]",
         photo: "materials-boucle",
         alt: "Close-up of cream wool bouclé loops",
-      },
-      {
-        id: "leather", short: "Leather", name: "Vegetable-tanned leather", descriptor: "Tanned with bark, not chemicals.",
-        body: "Vegetable tanning uses tannins from tree bark and plants instead of chromium salts. It's slower and more traditional, and it produces a full-grain leather that darkens and softens into a patina over years of use. No two pieces age the same way.",
-        where: "Upholstery and slings [confirm leather stays in the material library; if not, remove this entry and its index link].",
-        origin: "[Confirm chrome-free tanning and tannery origin]",
-        alt: "The cut edge of vegetable-tanned leather on oiled oak",
       },
     ],
   },
