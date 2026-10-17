@@ -15,7 +15,7 @@ export function MattressFeature() {
           <div className="m-feature-new"><span>New</span>Now introducing</div>
           <h2 className="h2">{MATTRESS.title}</h2>
           <p className="m-feature-coll">{MATTRESS.collection}</p>
-          <p className="m-feature-tag">Dare to sleep in color.</p>
+          <p className="m-feature-tag">Dare to dream in color.</p>
           <p className="body">
             An all-natural, organic mattress made from nature&apos;s finest materials: Living Wool, cashmere, Swedish horsehair and organic cotton, hand-tufted and made in five colors.
           </p>
