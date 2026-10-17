@@ -135,7 +135,7 @@ export const ASHBURY_GROUPS: MaterialGroup[] = [
     ],
   },
   {
-    id: "structure", eyebrow: "The Structure", title: "What holds it together.", alt: "Fabric-wrapped pocket coils, wide",
+    id: "structure", eyebrow: "The Structure", title: "What holds it together.", photo: "materials-band-structure", alt: "Rows of cotton-wrapped pocket coils on an oak workbench beside folded wool",
     materials: [
       {
         id: "organic-cotton", short: "Organic Cotton", name: "Organic cotton", descriptor: "Breathable at every layer.",
