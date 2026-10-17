@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
-import { Accordion, Construction, Recovery } from "@/components/mattress";
+import { Accordion, Construction, Feels, Recovery } from "@/components/mattress";
 import { MattressView, MattressViewFromURL } from "@/components/mattress-view";
 import { Photo } from "@/components/photo";
-import { GUARANTEE_PATH, MATTRESS, MATTRESS_PENDING as P } from "@/lib/mattress";
+import { GUARANTEE_PATH, MATTRESS } from "@/lib/mattress";
 import { ASHBURY_PATH } from "@/lib/materials";
 import { PHOTOS } from "@/lib/photos";
 import { fmt } from "@/lib/products";
@@ -107,15 +107,7 @@ export default function MattressPage() {
         </div>
       </section>
 
-      <section className="sec">
-        <div className="wrap center-head">
-          <h2 className="h2">Soft or firm.</h2>
-          <p className="body" style={{ marginTop: 24 }}>
-            Both feels share the same materials and construction. <strong>Soft</strong> has a deeper, more cushioned top for side sleepers and anyone who likes to sink in. <strong>Firm</strong> is more supportive and even, for back and stomach sleepers.
-          </p>
-          <p className="fine pending">{P.feelRatings}</p>
-        </div>
-      </section>
+      <Feels />
 
       <section className="sec linen">
         <div className="wrap">
