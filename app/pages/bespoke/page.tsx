@@ -20,17 +20,6 @@ const HALF = "(max-width: 960px) 100vw, 50vw";
 // Kapok is left out of the material lists for now (Tessa, Oct 16), as on the materials pages.
 const ONE_RULE = "solid hardwood, wool, cashmere, linen, cotton, horsehair, coir and agave";
 
-type Tile = { t: string; photo?: PhotoKey; alt: string; href?: string };
-const TILES: Tile[] = [
-  { t: "Sofas & sectionals", photo: "csofa-a", alt: "The Cotswold sofa in a living room" },
-  { t: "Chairs", photo: "cchair-studio", alt: "The Cotswold Chair" },
-  { t: "Mattresses", photo: "mattress-mocha-room", alt: "The Ashbury in Sorrel on a walnut platform", href: "#mattresses" },
-  { t: "Beds & headboards", alt: "Beds and headboards" },
-  { t: "Benches, ottomans & daybeds", photo: "marlowe-ottoman-card", alt: "The Marlowe Ottoman" },
-  { t: "Window seats & banquettes", alt: "Window seats and banquettes" },
-  { t: "Whole rooms & trade projects", photo: "furniture-family", alt: "A living room furnished with a sofa, armchair and ottoman", href: "/pages/trade" },
-];
-
 // Possibilities, not past commissions: there are no images yet (handoff shots B2–B7).
 const IMAGINE: [string, string][] = [
   ["A curved sofa that follows the line of a bay window.", "Curved sofa in a bay window"],
@@ -109,34 +98,35 @@ export default function BespokePage() {
         </div>
       </section>
 
-      <section className="sec linen">
-        <div className="wrap">
-          <div className="center-head" style={{ marginBottom: 72 }}>
-            <h2 className="h2">What we make.</h2>
-            <p className="body" style={{ marginTop: 24 }}>If it&apos;s meant to be lived on, slept on or sat in, we can make it.</p>
-          </div>
-          <div className="bsp-tiles">
-            {TILES.map((x) => {
-              const inner = (
-                <>
-                  <div className="tile-img"><Photo src={x.photo} label={x.alt} sizes="(max-width: 620px) 50vw, (max-width: 1180px) 33vw, 320px" /></div>
-                  <div className="tile-row"><span className="card-name">{x.t}</span></div>
-                </>
-              );
-              return x.href ? <Link href={x.href} className="tile" key={x.t}>{inner}</Link> : <div className="tile" key={x.t}>{inner}</div>;
-            })}
-          </div>
 
-          <div className="bsp-mattress" id="mattresses">
-            <h3 className="proc-h">The bespoke Ashbury.</h3>
+      <section className="sec linen" id="process">
+        <div className="wrap">
+          <div className="center-head" style={{ marginBottom: 88 }}>
+            <div className="eyebrow">The process</div>
+            <h2 className="h2">How a commission comes to life.</h2>
+            <p className="body" style={{ marginTop: 24 }}>If you can imagine it, we can make it. Here&apos;s what to expect, from your first idea to the day it arrives.</p>
+          </div>
+          <div className="process">
+            {STEPS.map((s, i) => (
+              <div className={"proc" + (s.img ? "" : " txt") + (i % 2 ? " rev" : "")} key={s.t}>
+                {s.img && <div className="proc-v"><Photo src={s.img} label={s.alt ?? s.t} sizes={HALF} /></div>}
+                <div className="proc-t">
+                  <div className="proc-n">{String(i + 1).padStart(2, "0")}</div>
+                  <h3 className="proc-h">{s.t}</h3>
+                  <p className="body">{s.d}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="bsp-timing">
+            <div className="eyebrow">Timing and payment</div>
             <p className="body">
-              Our all-natural, organic mattress, made to your measurements in any size or shape: extra long, extra wide, with cut corners for antique and four-poster beds, split for narrow staircases, or with a different feel on each side, in any of our five colors.
+              Lead time depends on the project, and you&apos;ll have a timeline with your quote. Commissions are paid in full when you commission.
             </p>
-            <Link href={ASHBURY_PATH} className="ulink">Inside the Ashbury →</Link>
+            <a href="#commission" className="btn">Begin a commission</a>
           </div>
         </div>
       </section>
-
       <section className="sec">
         <div className="wrap">
           <div className="center-head" style={{ marginBottom: 72 }}>
@@ -165,38 +155,18 @@ export default function BespokePage() {
             <p className="body">Every piece in the collection can be changed. Choose one to begin.</p>
           </div>
           <ProductGrid products={PRODUCTS} custom mattress />
+          <div className="bsp-mattress" id="mattresses">
+            <h3 className="proc-h">The bespoke Ashbury.</h3>
+            <p className="body">
+              Our all-natural, organic mattress, made to your measurements in any size or shape: extra long, extra wide, with cut corners for antique and four-poster beds, split for narrow staircases, or with a different feel on each side, in any of our five colors.
+            </p>
+            <Link href={ASHBURY_PATH} className="ulink">Inside the Ashbury →</Link>
+          </div>
         </div>
       </section>
+
 
       <section className="sec">
-        <div className="wrap">
-          <div className="center-head" style={{ marginBottom: 88 }}>
-            <div className="eyebrow">Commissioned</div>
-            <h2 className="h2">How a commission comes to life.</h2>
-          </div>
-          <div className="process">
-            {STEPS.map((s, i) => (
-              <div className={"proc" + (s.img ? "" : " txt") + (i % 2 ? " rev" : "")} key={s.t}>
-                {s.img && <div className="proc-v"><Photo src={s.img} label={s.alt ?? s.t} sizes={HALF} /></div>}
-                <div className="proc-t">
-                  <div className="proc-n">{String(i + 1).padStart(2, "0")}</div>
-                  <h3 className="proc-h">{s.t}</h3>
-                  <p className="body">{s.d}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="bsp-timing">
-            <div className="eyebrow">Timing and payment</div>
-            <p className="body">
-              Lead time depends on the project, and you&apos;ll have a timeline with your quote. Commissions are paid in full when you commission.
-            </p>
-            <a href="#commission" className="btn">Begin a commission</a>
-          </div>
-        </div>
-      </section>
-
-      <section className="sec linen">
         <div className="wrap">
           <div className="center-head" style={{ marginBottom: 64 }}>
             <h2 className="h2">Your palette.</h2>
@@ -218,7 +188,7 @@ export default function BespokePage() {
         </div>
       </section>
 
-      <section className="sec" id="commission">
+      <section className="sec linen" id="commission">
         <div className="wrap trade-apply">
           <div>
             <div className="eyebrow">Commissioned</div>
