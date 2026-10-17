@@ -144,8 +144,8 @@ export const ASHBURY_GROUPS: MaterialGroup[] = [
     materials: [
       {
         id: "organic-cotton", short: "Organic Cotton", name: "Organic cotton", descriptor: "Breathable at every layer.",
-        body: "Our cotton is GOTS-certified organic, grown without synthetic pesticides or fertilizers. Woven into a soft twill, it covers the entire mattress. Inside, it wraps the pocket coils on both sides, keeping the layers quiet and letting the whole mattress breathe.",
-        where: "The cover, in five colors, and around the coils. [Confirm how the cover is colored (undyed fiber, plant dye or GOTS-approved dye).]",
+        body: "Our cotton is GOTS-certified organic, grown without synthetic pesticides or fertilizers. Woven into a super soft 100% organic cotton twill and colored with GOTS-approved plant dyes, it covers the entire mattress. Inside, it wraps the pocket coils on both sides, keeping the layers quiet and letting the whole mattress breathe.",
+        where: "The cover, in five plant-dyed colors, and around the coils.",
         origin: "GOTS-certified organic",
         photo: "materials-cotton-rosette",
         alt: "Cream cotton twill with a hand-tied wool rosette",

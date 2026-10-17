@@ -61,7 +61,7 @@ export default function InsideTheAshburyPage() {
             <div className="eyebrow">Craft</div>
             <h2 className="proc-h">Held together by hand.</h2>
             <p className="body">
-              Natural materials can&apos;t be poured into a mold. Wool is layered evenly, horsehair opened and blended, and then every Ashbury topper is hand-tufted: the layers are drawn through with a needle and held with a rosette of wool, so they stay in place without glue. The rosettes on the surface are the mark of the work inside. Over it all goes a soft organic cotton twill cover, in five colors.
+              Natural materials can&apos;t be poured into a mold. Wool is layered evenly, horsehair opened and blended, and then every Ashbury topper is hand-tufted: the layers are drawn through with a needle and held with a rosette of wool, so they stay in place without glue. The rosettes on the surface are the mark of the work inside. Over it all goes a super soft 100% organic cotton twill cover, colored with GOTS-approved plant dyes.
             </p>
           </div>
         </div>

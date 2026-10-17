@@ -51,7 +51,7 @@ export function Layers() {
       </div>
       <div className="layers-cover">
         <h3 className="layers-h">Cover</h3>
-        <ul className="layers-l"><li>Soft organic cotton twill (GOTS) over the entire mattress, in five colors</li></ul>
+        <ul className="layers-l"><li>Super soft 100% organic cotton twill (GOTS) over the entire mattress, in five colors with GOTS-approved plant dyes</li></ul>
       </div>
     </div>
   );
