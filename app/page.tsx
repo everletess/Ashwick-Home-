@@ -19,7 +19,7 @@ function HomeHero() {
         <div className="eyebrow">Organic furniture · Handmade in the USA</div>
         <h1 className="h1">Made of nature. Built to last.</h1>
         <p className="hero-body">
-          Sofas and chairs made by hand, one at a time, from solid hardwood, organic wool, coconut coir and linen. Nothing synthetic.
+          Furniture made by hand and born in nature.
         </p>
         <div className="btns">
           <Link href="/collections/all" className="btn light">Shop the collection</Link>
