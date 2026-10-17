@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Band, Groups, MatIndex } from "@/components/materials";
-import { Accordion, Columns, Layers } from "@/components/mattress";
+import { Accordion, Columns, Feels, Layers } from "@/components/mattress";
 import { Photo } from "@/components/photo";
 import { PageHero } from "@/components/sections";
 import { GUARANTEE_PATH, MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
-import { ASHBURY_GROUPS, FURNITURE_MATERIALS_PATH, MATERIALS_PATH, MATERIALS_PENDING as P } from "@/lib/materials";
+import { ASHBURY_GROUPS, FURNITURE_MATERIALS_PATH, MATERIALS_PATH } from "@/lib/materials";
 
 const M = MATTRESS;
 
@@ -99,15 +99,7 @@ export default function InsideTheAshburyPage() {
         </div>
       </section>
 
-      <section className="sec">
-        <div className="wrap center-head">
-          <h2 className="h2">Soft or firm.</h2>
-          <p className="body" style={{ marginTop: 24 }}>
-            Both share the same materials and construction. <strong>Soft</strong> has a deeper, more cushioned top for side sleepers and anyone who likes to sink in. <strong>Firm</strong> is more supportive and even, for back and stomach sleepers.
-          </p>
-          <p className="fine pending">{P.feel}</p>
-        </div>
-      </section>
+      <Feels />
 
       <section className="statement mat-leave statement-sm">
         <p>What we leave out.</p>

@@ -171,5 +171,4 @@ export const MATERIALS_PENDING = {
   oilType: "[oil type]",
   swatchKit: "[If a swatch kit exists: Order a swatch kit and feel the linen, bouclé and brushed wool at home.]",
   consultation: "[Book a consultation]",
-  feel: "[Confirm feel descriptions and firmness ratings with the manufacturer.]",
 };

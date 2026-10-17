@@ -85,6 +85,36 @@ export function Construction() {
 }
 
 /** "Built for recovery" heading and paragraph. */
+/** Soft and Firm side by side, each with a hand pressing into the top. Used on the product page and Inside the Ashbury. */
+export function Feels() {
+  return (
+    <section className="sec">
+      <div className="wrap">
+        <div className="center-head">
+          <h2 className="h2">Soft or firm.</h2>
+          <p className="body" style={{ marginTop: 24 }}>Both feels share the same materials and construction.</p>
+        </div>
+        <div className="grid2 m-feels">
+          <figure className="m-feel">
+            <div className="m-feel-img"><Photo src="mattress-feel-soft" label="A hand sinking into the Soft Ashbury" sizes="(max-width: 960px) 100vw, 50vw" /></div>
+            <figcaption>
+              <h3 className="proc-h">Soft</h3>
+              <p className="body">A deeper, more cushioned top for side sleepers and anyone who likes to sink in.</p>
+            </figcaption>
+          </figure>
+          <figure className="m-feel">
+            <div className="m-feel-img"><Photo src="mattress-feel-firm" label="A hand resting on the Firm Ashbury" sizes="(max-width: 960px) 100vw, 50vw" /></div>
+            <figcaption>
+              <h3 className="proc-h">Firm</h3>
+              <p className="body">More supportive and even, for back and stomach sleepers.</p>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function Recovery({ eyebrow = true }: { eyebrow?: boolean }) {
   return (
     <div className="center-head">

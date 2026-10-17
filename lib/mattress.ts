@@ -81,7 +81,6 @@ export const MATTRESS_GALLERY: { photo: PhotoKey; alt: string }[] = [
 
 /** Values pending confirmation, shown as written until replaced. */
 export const MATTRESS_PENDING = {
-  feelRatings: "[Confirm feel descriptions and firmness ratings with the manufacturer, e.g. Soft 4/10, Firm 7/10.]",
   refundDays: "[X business days]",
   customSizesCovered: "[Confirm whether custom sizes are covered.]",
   returnedMattresses: "[donated / recycled — confirm]",
