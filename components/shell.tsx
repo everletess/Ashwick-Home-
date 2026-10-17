@@ -110,7 +110,7 @@ export function Header() {
           <Link href="/collections/sofas">Sofas</Link>
           <Link href="/collections/chairs">Chairs</Link>
           <Link href="/products/luxury-organic-mattress">Mattress</Link>
-          <Link href="/pages/design-your-own">Design your own</Link>
+          <Link href="/pages/bespoke">Bespoke</Link>
           <Link href="/pages/trade" className="nav-trade">Trade</Link>
         </nav>
         <button className="burger" aria-label="Menu" aria-expanded={menu} onClick={() => setMenu(true)}>
@@ -137,7 +137,7 @@ export function Header() {
             <Link href="/collections/sofas">Sofas</Link>
             <Link href="/collections/chairs">Chairs</Link>
             <Link href="/products/luxury-organic-mattress">Mattress</Link>
-            <Link href="/pages/design-your-own">Design your own</Link>
+            <Link href="/pages/bespoke">Bespoke</Link>
             <Link href="/pages/trade">Trade</Link>
           </nav>
           <nav className="mmenu-sub">

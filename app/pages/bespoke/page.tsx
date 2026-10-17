@@ -1,0 +1,269 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { AnchorAliases } from "@/components/anchor-aliases";
+import { BespokeForm } from "@/components/forms";
+import { Accordion } from "@/components/mattress";
+import { Photo } from "@/components/photo";
+import { PageHero, ProductGrid } from "@/components/sections";
+import { BESPOKE_PENDING as P } from "@/lib/bespoke";
+import { ASHBURY_PATH, FURNITURE_MATERIALS_PATH } from "@/lib/materials";
+import type { PhotoKey } from "@/lib/photos";
+import { PRODUCTS } from "@/lib/products";
+
+export const metadata: Metadata = {
+  title: { absolute: "Ashwick Bespoke — Natural furniture and mattresses, made to your imagination." },
+  description: "Commission a sofa, chair, mattress or bench made by hand from natural materials, or tailor a piece from the collection.",
+};
+
+const HALF = "(max-width: 960px) 100vw, 50vw";
+
+// Kapok is left out of the material lists for now (Tessa, Oct 16), as on the materials pages.
+const ONE_RULE = "solid hardwood, wool, cashmere, linen, cotton, horsehair, coir and agave";
+
+type Tile = { t: string; photo?: PhotoKey; alt: string; href?: string; id?: string; pending?: boolean };
+const TILES: Tile[] = [
+  { t: "Sofas & sectionals", photo: "csofa-a", alt: "The Cotswold sofa in a living room" },
+  { t: "Chairs", photo: "cchair-studio", alt: "The Cotswold Chair" },
+  { t: "Mattresses", photo: "mattress-mocha-room", alt: "The Ashbury in Sorrel on a walnut platform", href: "#mattresses" },
+  { t: "Beds & headboards", alt: "Beds and headboards", pending: true },
+  { t: "Benches, ottomans & daybeds", photo: "marlowe-ottoman-card", alt: "The Marlowe Ottoman" },
+  { t: "Window seats & banquettes", alt: "Window seats and banquettes", pending: true },
+  { t: "Whole rooms & trade projects", photo: "furniture-family", alt: "A living room furnished with a sofa, armchair and ottoman", href: "/pages/trade" },
+];
+
+// Possibilities, not past commissions: there are no images yet (handoff shots B2–B7).
+const IMAGINE: [string, string, boolean?][] = [
+  ["A curved sofa that follows the line of a bay window.", "Curved sofa in a bay window"],
+  ["A deep daybed for a sunroom, upholstered in undyed linen.", "Daybed in a sunroom"],
+  ["An Ashbury mattress cut to fit a hundred-year-old four-poster.", "Mattress in an antique four-poster", true],
+  ["A long dining bench in solid oak with a horsehair-and-wool cushion.", "Oak dining bench"],
+  ["A pair of reading chairs scaled to the person who'll sit in them.", "Pair of reading chairs"],
+  ["A headboard wrapped in the same Sorrel cotton as the bed.", "Upholstered headboard", true],
+];
+
+type Step = { t: string; d: React.ReactNode; img?: PhotoKey; alt?: string };
+const STEPS: Step[] = [
+  { t: "Share your idea.", d: "A sketch, a photo, a Pinterest board, the measurements of your room. As rough as you like." },
+  { t: "Talk it through.", d: <>A design consultation by video or phone, {P.reply}. We&apos;ll talk about how you&apos;ll use it, the proportions and the materials.</> },
+  { t: "See it drawn.", d: <>We send a scaled drawing, a material proposal and a quote. <span className="pending-inline">{P.drawings}</span></>, img: "bespoke-drawing", alt: "A pencil sketch of a sofa beside linen, bouclé and twill swatches and oiled oak and walnut samples" },
+  { t: "Choose your materials.", d: "We send swatches of the wool, linen, cotton and wood finishes so you can touch them at home.", img: "bespoke-swatches", alt: "Swatches of linen, cream bouclé, oat and moss weaves and clay twill on an old oak table" },
+  { t: "Made by hand.", d: <>Your piece is built in our USA workshop, one at a time. <span className="pending-inline">{P.progressPhotos}</span></>, img: "bespoke-stitching", alt: "Hands stitching the piped edge of a linen cushion on a workshop bench" },
+  { t: "Delivered to your home.", d: P.delivery },
+];
+
+const PALETTE: [string, PhotoKey][] = [
+  ["Solid hardwood", "fiber-wood"],
+  ["Natural oils", "materials-oil"],
+  ["Living Wool", "fiber-wool"],
+  ["Cashmere", "fiber-kashmir"],
+  ["Linen", "materials-linen"],
+  ["Organic cotton", "fiber-cotton"],
+  ["Wool bouclé", "materials-boucle"],
+  ["Swedish horsehair", "fiber-horsehair"],
+  ["Coconut coir", "fiber-coir"],
+  ["Organic agave", "fiber-agave-card"],
+];
+
+// Ashwick Bespoke handoff (Oct 16). Copy is final; bracketed values live in lib/bespoke.ts.
+export default function BespokePage() {
+  return (
+    <main>
+      <AnchorAliases map={{ choose: "tailored", bespoke: "commission" }} />
+      <PageHero
+        photo="bespoke-hero"
+        alt="A maker sketching a sofa at a worktable among linen and bouclé swatches, oak and walnut samples and a brass ruler"
+        tall
+        eyebrow="Ashwick Bespoke"
+        title="Whatever you can imagine, nature can make."
+        body="A sofa shaped to your bay window. A mattress cut for an antique bed. A chair that exists nowhere else. Tell us what you see, and we'll make it by hand from the earth's finest materials."
+      >
+        <div className="btns" style={{ justifyContent: "center" }}>
+          <a href="#commission" className="btn light">Begin a commission</a>
+          <a href="#tailored" className="btn outline-light">Tailor a piece</a>
+        </div>
+      </PageHero>
+
+      <section className="statement tall">
+        <p>There&apos;s only one rule.</p>
+        <span className="body statement-body bsp-rule">
+          Everything we make comes from the earth: {ONE_RULE}. No foam. No latex. No chemical flame retardants. Within that, the only limit is your imagination.
+        </span>
+      </section>
+
+      <section className="sec">
+        <div className="wrap grid2 bsp-ways">
+          <div className="panel">
+            <div className="panel-img"><Photo src="marlowe-2" label="The Marlowe" sizes={HALF} /></div>
+            <div className="eyebrow">Tailored</div>
+            <h2 className="proc-h">Make one of ours yours.</h2>
+            <p className="body">Start with a piece from the collection and change what matters to you: fabric, seat depth, length, wood finish or color.</p>
+            <a href="#tailored" className="ulink">Choose a piece</a>
+          </div>
+          <div className="panel">
+            <div className="panel-img"><Photo src="bespoke-drawing" label="A pencil sketch of a sofa beside fabric swatches and wood samples" sizes={HALF} /></div>
+            <div className="eyebrow">Commissioned</div>
+            <h2 className="proc-h">Make something that&apos;s never existed.</h2>
+            <p className="body">Bring us a sketch, a photograph, a measurement or a feeling. We&apos;ll design it with you, draw it, and make it once, by hand, for your home.</p>
+            <a href="#commission" className="ulink">Begin a commission</a>
+          </div>
+        </div>
+      </section>
+
+      <section className="sec linen">
+        <div className="wrap">
+          <div className="center-head" style={{ marginBottom: 72 }}>
+            <h2 className="h2">What we make.</h2>
+            <p className="body" style={{ marginTop: 24 }}>If it&apos;s meant to be lived on, slept on or sat in, we can make it.</p>
+          </div>
+          <div className="bsp-tiles">
+            {TILES.map((x) => {
+              const inner = (
+                <>
+                  <div className="tile-img"><Photo src={x.photo} label={x.alt} sizes="(max-width: 620px) 50vw, (max-width: 1180px) 33vw, 320px" /></div>
+                  <div className="tile-row"><span className="card-name">{x.t}</span></div>
+                  {x.pending && <p className="fine pending">{P.capability}</p>}
+                </>
+              );
+              return x.href ? <Link href={x.href} className="tile" key={x.t}>{inner}</Link> : <div className="tile" key={x.t}>{inner}</div>;
+            })}
+          </div>
+
+          <div className="bsp-mattress" id="mattresses">
+            <h3 className="proc-h">The bespoke Ashbury.</h3>
+            <p className="body">
+              Our all-natural, organic mattress, made to your measurements: extra long, extra wide, <span className="pending-inline">[cut-corner for antique and four-poster beds — confirm]</span>, <span className="pending-inline">[split for narrow staircases — confirm]</span>, <span className="pending-inline">[a different feel on each side — confirm]</span>, in any of our five colors.
+            </p>
+            <Link href={ASHBURY_PATH} className="ulink">Inside the Ashbury →</Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="sec">
+        <div className="wrap">
+          <div className="center-head" style={{ marginBottom: 72 }}>
+            <div className="eyebrow">Possibilities</div>
+            <h2 className="h2">Imagine.</h2>
+            <p className="body" style={{ marginTop: 24 }}>A few of the things you could commission.</p>
+          </div>
+          <div className="grid3">
+            {IMAGINE.map(([line, ph, pending]) => (
+              <figure className="bsp-imagine" key={line}>
+                <div className="tile-img"><Photo label={ph} /></div>
+                <figcaption className="body">{line}{pending && <> <span className="pending-inline">{P.capability}</span></>}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="sec linen" id="tailored">
+        <div className="wrap">
+          <div className="split-head">
+            <div>
+              <div className="eyebrow">Tailored</div>
+              <h2 className="h2">Tailor a piece.</h2>
+            </div>
+            <p className="body">Every piece in the collection can be changed. Choose one to begin.</p>
+          </div>
+          <ProductGrid products={PRODUCTS} custom mattress />
+        </div>
+      </section>
+
+      <section className="sec">
+        <div className="wrap">
+          <div className="center-head" style={{ marginBottom: 88 }}>
+            <div className="eyebrow">Commissioned</div>
+            <h2 className="h2">How a commission comes to life.</h2>
+          </div>
+          <div className="process">
+            {STEPS.map((s, i) => (
+              <div className={"proc" + (s.img ? "" : " txt") + (i % 2 ? " rev" : "")} key={s.t}>
+                {s.img && <div className="proc-v"><Photo src={s.img} label={s.alt ?? s.t} sizes={HALF} /></div>}
+                <div className="proc-t">
+                  <div className="proc-n">{String(i + 1).padStart(2, "0")}</div>
+                  <h3 className="proc-h">{s.t}</h3>
+                  <p className="body">{s.d}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="bsp-timing">
+            <div className="eyebrow">Timing and investment</div>
+            <p className="body">
+              Most commissions take {P.leadTime} from approval to delivery. Bespoke pieces begin at {P.startingPrice}. <span className="pending-inline">{P.payment}</span>
+            </p>
+            <a href="#commission" className="btn">Begin a commission</a>
+          </div>
+        </div>
+      </section>
+
+      <section className="sec linen">
+        <div className="wrap">
+          <div className="center-head" style={{ marginBottom: 64 }}>
+            <h2 className="h2">Your palette.</h2>
+            <p className="body" style={{ marginTop: 24 }}>Choose from the materials we trust. <span className="pending-inline">{P.ownFabric}</span></p>
+          </div>
+          <div className="bsp-palette">
+            {PALETTE.map(([name, photo]) => (
+              <figure key={name}>
+                <div className="bsp-palette-img"><Photo src={photo} label={name} sizes="160px" /></div>
+                <figcaption className="eyebrow">{name}</figcaption>
+              </figure>
+            ))}
+          </div>
+          <div className="bsp-palette-links">
+            <Link href={FURNITURE_MATERIALS_PATH} className="ulink">Furniture materials →</Link>
+            <Link href={ASHBURY_PATH} className="ulink">Inside the Ashbury →</Link>
+            <Link href="/pages/fabric-swatches" className="btn">Order fabric swatches</Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="sec" id="commission">
+        <div className="wrap trade-apply">
+          <div>
+            <div className="eyebrow">Commissioned</div>
+            <h2 className="h2">Begin a commission.</h2>
+            <p className="body" style={{ marginTop: 24 }}>
+              Tell us what you&apos;re imagining. A member of our team will be in touch {P.reply} to arrange your consultation.
+            </p>
+            <div className="trade-contact">
+              <div className="eyebrow">Timing and investment</div>
+              <p>Usually {P.leadTime} from approval. From {P.startingPrice}.</p>
+            </div>
+          </div>
+          <BespokeForm />
+        </div>
+      </section>
+
+      <section className="band band-c bsp-band">
+        <Photo src="workshop-sofa" label="An upholsterer laying wool over a solid hardwood sofa frame in the workshop" fill sizes="100vw" />
+        <div className="hero-scrim"></div>
+        <div className="band-txt">
+          <h2 className="h2">Imagined by you. Grown by the earth. Made by hand.</h2>
+          <a href="#commission" className="btn light">Begin a commission</a>
+        </div>
+      </section>
+
+      <section className="sec linen">
+        <div className="wrap specs">
+          <div>
+            <div className="eyebrow">FAQ</div>
+            <h2 className="h2">Questions</h2>
+          </div>
+          <Accordion
+            items={[
+              ["Is there anything you can't make?", <p className="body small" key="1">If it can be made well from natural materials, we&apos;ll try. Some ideas need adjusting so they&apos;re comfortable and built to last; we&apos;ll tell you honestly during your consultation.</p>],
+              ["How much does a commission cost?", <p className="body small" key="2">It depends on size, materials and complexity. Bespoke pieces begin at {P.startingPrice}, and you&apos;ll receive a full quote before anything is made.</p>],
+              ["How long does it take?", <p className="body small" key="3">Usually {P.leadTime} from approval to delivery.</p>],
+              ["Can I use my own fabric?", <p className="body small" key="4">{P.ownFabricAnswer}</p>],
+              ["Can you match a piece I already own?", <p className="body small" key="5">Yes. Send photos and measurements and we&apos;ll design to them. {P.matchPiece}</p>],
+              ["Do you work with interior designers?", <p className="body small" key="6">Yes, through our Trade program, with trade pricing and a dedicated contact. <Link href="/pages/trade" className="inl">Trade</Link></p>],
+              ["Are bespoke pieces covered by the warranty?", <p className="body small" key="7">Yes. Every Ashwick piece is covered by our lifetime limited warranty. {P.warranty}</p>],
+            ]}
+          />
+        </div>
+      </section>
+    </main>
+  );
+}

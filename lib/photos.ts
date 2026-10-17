@@ -35,6 +35,10 @@ import heroFamily from "@/assets/photos/hero-family.jpg";
 import materialsSheep from "@/assets/photos/materials-sheep.jpg";
 import fiberAgave from "@/assets/photos/fiber-agave.jpg";
 import fiberAgaveCard from "@/assets/photos/fiber-agave-card.jpg";
+import bespokeHero from "@/assets/photos/bespoke-hero.jpg";
+import bespokeSwatches from "@/assets/photos/bespoke-swatches.jpg";
+import bespokeDrawing from "@/assets/photos/bespoke-drawing.jpg";
+import bespokeStitching from "@/assets/photos/bespoke-stitching.jpg";
 import materialsOil from "@/assets/photos/materials-oil.jpg";
 import furnitureFamily from "@/assets/photos/furniture-family.jpg";
 import materialsBandFurniture from "@/assets/photos/materials-band-furniture.jpg";
@@ -126,6 +130,10 @@ export const PHOTOS = {
   "materials-sheep": materialsSheep,
   "fiber-agave": fiberAgave,
   "fiber-agave-card": fiberAgaveCard,
+  "bespoke-hero": bespokeHero,
+  "bespoke-swatches": bespokeSwatches,
+  "bespoke-drawing": bespokeDrawing,
+  "bespoke-stitching": bespokeStitching,
   "materials-oil": materialsOil,
   "furniture-family": furnitureFamily,
   "materials-band-furniture": materialsBandFurniture,

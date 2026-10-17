@@ -24,8 +24,8 @@ export function ProductCard({ p, custom }: { p: Product; custom?: boolean }) {
   );
 }
 
-/** The Ashbury, in the same card style as the furniture. */
-export function MattressCard() {
+/** The Ashbury, in the same card style as the furniture. `custom` is the Bespoke page's "Tailor a piece" version. */
+export function MattressCard({ custom }: { custom?: boolean }) {
   const M = MATTRESS;
   const from = Math.min(...M.sizes.map((z) => z.price));
   return (
@@ -33,13 +33,13 @@ export function MattressCard() {
       <div className="card-img">
         <Photo src="mattress-mocha-room" label={`${M.title} in Sorrel`} fill sizes={CARD_SIZES} />
         <Photo src="mattress-studio-mocha" label={`${M.title} in Sorrel`} className="alt" fill sizes={CARD_SIZES} />
-        <span className="card-cta">Shop now</span>
+        <span className="card-cta">{custom ? "Customize" : "Shop now"}</span>
       </div>
       <div className="card-row">
         <span className="card-name">{M.title}</span>
         <span className="card-price">From {fmt(from)}</span>
       </div>
-      <p className="card-line">An all-natural, organic mattress, hand-tufted and made in five colors.</p>
+      <p className="card-line">{custom ? "Choose size, feel and color. Custom sizes on request." : "An all-natural, organic mattress, hand-tufted and made in five colors."}</p>
       <div className="card-meta">{M.type} · Made to order · {M.topperHeight} topper included</div>
     </Link>
   );
@@ -49,7 +49,7 @@ export function ProductGrid({ products, custom, mattress }: { products: Product[
   return (
     <div className="grid3">
       {products.map((p) => <ProductCard key={p.id} p={p} custom={custom} />)}
-      {mattress && <MattressCard />}
+      {mattress && <MattressCard custom={custom} />}
     </div>
   );
 }
@@ -110,17 +110,19 @@ export function MadeByHand() {
   );
 }
 
-/** Short full-bleed photo header used by Design your own and Trade. */
-export function PageHero({ photo, alt, eyebrow, title, body, children }: {
+/** Short full-bleed photo header used by Bespoke, Trade and the materials pages. */
+export function PageHero({ photo, alt, eyebrow, title, body, children, tall }: {
   photo: Parameters<typeof Photo>[0]["src"];
   alt: string;
   eyebrow: string;
   title: string;
   body: string;
   children?: React.ReactNode;
+  /** Full-height, like the home hero. */
+  tall?: boolean;
 }) {
   return (
-    <section className="hero hero-sm">
+    <section className={tall ? "hero" : "hero hero-sm"}>
       <Photo src={photo} label={alt} fill preload />
       <div className="hero-scrim"></div>
       <div className="hero-txt">

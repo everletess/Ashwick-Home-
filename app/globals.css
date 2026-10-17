@@ -592,3 +592,30 @@ button.chip{cursor:pointer}
   .card-meta,.fcol-t,.ftr-bot,.crumb,.line-mode,.assure,.swt span,.rm{font-size:11px}
   .sw{gap:14px}.sw-i{width:calc(50% - 7px)}.sw-i .chip{width:100%!important;height:auto!important;aspect-ratio:1.4}
 }
+
+/* Ashwick Bespoke */
+.bsp-rule{max-width:60ch;margin-bottom:0}
+.bsp-ways .panel{gap:18px}
+.bsp-ways .proc-h{margin:0}
+.bsp-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:56px 24px}
+.bsp-tiles .tile-row{margin-top:16px}
+.bsp-tiles .pending{margin-top:6px}
+.bsp-mattress{margin:96px auto 0;max-width:720px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:20px;border-top:1px solid var(--hair);padding-top:56px}
+.bsp-mattress .proc-h{margin:0}
+.bsp-mattress .ulink{align-self:center}
+.bsp-imagine{margin:0;display:flex;flex-direction:column;gap:18px}
+.bsp-imagine .tile-img{aspect-ratio:4/3}
+.bsp-imagine figcaption{font:italic 300 clamp(20px,1.7vw,24px)/1.35 var(--serif);color:var(--ink)}
+.bsp-timing{margin:112px auto 0;max-width:640px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:20px;border-top:1px solid var(--hair);padding-top:56px}
+.bsp-timing .btn{margin-top:12px}
+.bsp-palette{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:16px}
+.bsp-palette figure{margin:0;display:flex;flex-direction:column;gap:12px}
+.bsp-palette-img{aspect-ratio:4/5;overflow:hidden;background:var(--linen)}
+.bsp-palette-img img{width:100%;height:100%;object-fit:cover}
+.bsp-palette-links{display:flex;flex-wrap:wrap;gap:20px 40px;align-items:center;justify-content:center;margin-top:56px}
+.bsp-palette-links .ulink{align-self:center}
+.bsp-band{aspect-ratio:21/8}
+.bsp-band .band-txt{gap:36px}
+.bsp-band .h2{max-width:22ch;text-wrap:balance}
+@media (max-width:1180px){.bsp-tiles{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:960px){.bsp-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.bsp-palette{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px}.bsp-palette figure{flex:0 0 132px;scroll-snap-align:start}.bsp-band{aspect-ratio:auto;min-height:440px}}

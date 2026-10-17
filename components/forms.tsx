@@ -4,6 +4,7 @@
 // error with the studio's address rather than a thank-you.
 import { useRef, useState } from "react";
 
+import { BESPOKE_PENDING } from "@/lib/bespoke";
 import { STUDIO_EMAIL } from "@/lib/site";
 
 export { STUDIO_EMAIL };
@@ -85,40 +86,77 @@ export function Newsletter() {
   );
 }
 
-const BESPOKE_MATERIALS = ["Solid hardwood", "Irish Linen", "Linen Blend", "Organic Cotton", "Italian Linen", "Cork"];
+// Bespoke commission form (Ashwick Bespoke handoff 3.9). Items in [square brackets] are pending confirmation.
+const BESPOKE_PIECES = ["Sofa", "Sectional", "Chair", "Mattress", "Bed or headboard", "Bench or ottoman", "Daybed", "Window seat or banquette", "Something else"];
+const BESPOKE_MATERIALS = ["Solid hardwood", "Linen", "Organic cotton", "Wool bouclé", "Living Wool", "Cashmere", "Leather [if kept]", "Not sure yet"];
+const BESPOKE_BUDGETS = ["Under $5,000", "$5,000–$10,000", "$10,000–$20,000", "$20,000+"];
+const BESPOKE_TIMING = ["As soon as possible", "In the next 3 months", "Later this year", "Just exploring"];
+
+/** Pill buttons that toggle values; the choice is sent as one hidden field. */
+function PillChoice({ name, label, options, multi }: { name: string; label: string; options: string[]; multi?: boolean }) {
+  const [on, setOn] = useState<string[]>([]);
+  const toggle = (o: string) => setOn((c) => (c.includes(o) ? c.filter((x) => x !== o) : multi ? [...c, o] : [o]));
+  return (
+    <div className="full mat-pick">
+      <span className="eyebrow">{label}</span>
+      <input type="hidden" name={name} value={on.join(", ")} />
+      <div className="opt-c">
+        {options.map((o) => (
+          <button type="button" key={o} className={"pill" + (on.includes(o) ? " on" : "")} aria-pressed={on.includes(o)} onClick={() => toggle(o)}>{o}</button>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export function BespokeForm() {
   const { sent, sending, error, onSubmit } = useFormSend("bespoke");
-  const [mats, setMats] = useState<string[]>([]);
-  const toggle = (m: string) => setMats((c) => (c.includes(m) ? c.filter((x) => x !== m) : [...c, m]));
-  if (sent) return <ThankYou>We&apos;ve received your idea and will be in touch to talk it through.</ThankYou>;
+  const [trade, setTrade] = useState(false);
+  if (sent) {
+    return <ThankYou>We&apos;ve received your idea, and we&apos;re already imagining it. We&apos;ll be in touch {BESPOKE_PENDING.reply} to arrange your consultation.</ThankYou>;
+  }
   return (
     <form className="tform" onSubmit={onSubmit}>
       <Honeypot />
-      <input type="hidden" name="materials" value={mats.join(", ")} />
-      <label><span className="eyebrow">Name</span><input name="name" autoComplete="name" required /></label>
-      <label><span className="eyebrow">Email</span><input name="email" type="email" autoComplete="email" required /></label>
+      <label><span className="eyebrow">Name *</span><input name="name" autoComplete="name" required /></label>
+      <label><span className="eyebrow">Email *</span><input name="email" type="email" autoComplete="email" required /></label>
       <label><span className="eyebrow">Phone</span><input name="phone" type="tel" autoComplete="tel" /></label>
       <label>
-        <span className="eyebrow">What would you like made?</span>
-        <select name="piece" defaultValue="">
+        <span className="eyebrow">What would you like made? *</span>
+        <select name="piece" defaultValue="" required>
           <option value="" disabled>Select</option>
-          <option>Sofa</option><option>Chair</option><option>Sectional</option><option>Bench</option><option>Ottoman</option><option>Other</option>
+          {BESPOKE_PIECES.map((o) => <option key={o}>{o}</option>)}
         </select>
       </label>
-      <label className="full"><span className="eyebrow">Approximate size</span><input name="size" placeholder="Width × depth × height, or the space it needs to fit" /></label>
-      <div className="full mat-pick">
-        <span className="eyebrow">Materials you&apos;re drawn to</span>
-        <div className="opt-c">
-          {BESPOKE_MATERIALS.map((m) => (
-            <button type="button" key={m} className={"pill" + (mats.includes(m) ? " on" : "")} aria-pressed={mats.includes(m)} onClick={() => toggle(m)}>{m}</button>
-          ))}
-        </div>
-      </div>
-      <label className="full"><span className="eyebrow">Describe your piece</span><textarea name="description" rows={5} placeholder="How you'll use it, the room it's for, the feeling you want"></textarea></label>
+      <label><span className="eyebrow">Where will it live?</span><input name="room" placeholder="e.g. living room bay window" /></label>
+      <label><span className="eyebrow">Approximate size or room measurements</span><input name="size" placeholder="Width × depth × height, or the space it needs to fit" /></label>
+      <PillChoice name="materials" label="Materials you're drawn to" options={BESPOKE_MATERIALS} multi />
+      <label className="full"><span className="eyebrow">Describe your piece</span><textarea name="description" rows={5} placeholder="Tell us what you see: the shape, the feeling, how you'll use it."></textarea></label>
       <label className="full file"><span className="eyebrow">Sketches or inspiration photos</span><input name="files" type="file" multiple accept="image/*,.pdf" /></label>
+      <label>
+        <span className="eyebrow">Budget [ranges to confirm]</span>
+        <select name="budget" defaultValue="">
+          <option value="" disabled>Select</option>
+          {BESPOKE_BUDGETS.map((o) => <option key={o}>{o}</option>)}
+        </select>
+      </label>
+      <label>
+        <span className="eyebrow">Timing</span>
+        <select name="timing" defaultValue="">
+          <option value="" disabled>Select</option>
+          {BESPOKE_TIMING.map((o) => <option key={o}>{o}</option>)}
+        </select>
+      </label>
+      <PillChoice name="consultation" label="Preferred consultation" options={["Video", "Phone"]} />
+      <div className="full mat-pick">
+        <input type="hidden" name="trade" value={trade ? "Yes" : ""} />
+        <div className="opt-c">
+          <button type="button" className={"pill" + (trade ? " on" : "")} aria-pressed={trade} onClick={() => setTrade((v) => !v)}>I&apos;m a designer or trade professional</button>
+        </div>
+        {trade && <p className="body small">Our Trade program offers trade pricing and a dedicated contact. <a href="/pages/trade" className="inl">Learn about Trade</a></p>}
+      </div>
       <FormError message={error} />
-      <button className="btn full" type="submit" disabled={sending}>{sending ? "Sending…" : "Send your idea"}</button>
+      <button className="btn full" type="submit" disabled={sending}>{sending ? "Sending…" : "Begin my commission"}</button>
     </form>
   );
 }
