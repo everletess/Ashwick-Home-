@@ -10,7 +10,7 @@ import { PRODUCTS } from "@/lib/products";
 function HomeHero() {
   return (
     <section className="hero home-hero">
-      <Photo src="hero" label="The Cotswold sofa and chair in a sunlit living room by the fire" className="hero-img" fill preload />
+      <Photo src="hero-family" label="A mother and daughter reading on the Cotswold sofa beside the Cotswold chair, a spaniel asleep beside them, in a sunlit living room" className="hero-img" fill preload />
       <div className="hero-scrim home-scrim"></div>
       <div className="hero-txt">
         <div className="eyebrow">Organic furniture · Handmade in the USA</div>
