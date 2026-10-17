@@ -33,8 +33,8 @@ export default function InsideTheAshburyPage() {
   return (
     <main>
       <PageHero
-        photo="mattress-mocha-room"
-        alt="The Ashbury in Sorrel on a walnut platform in a warm plaster room"
+        photo="mattress-meadow"
+        alt="A cutaway of the Ashbury in Sorrel in a meadow, showing the wool, horsehair and pocket coils inside"
         eyebrow={`${M.title} · ${M.collection}`}
         title="Inside the Ashbury."
         body="An all-natural, organic mattress made from nature's finest materials: Living Wool, Swedish horsehair and organic cotton, hand-tufted and made in color."
