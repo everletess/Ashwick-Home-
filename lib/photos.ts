@@ -51,6 +51,9 @@ import bespokeDelivery from "@/assets/photos/bespoke-delivery.jpg";
 import imagineHeadboard from "@/assets/photos/imagine-headboard.jpg";
 import imagineBench from "@/assets/photos/imagine-bench.jpg";
 import imagineChairs from "@/assets/photos/imagine-chairs.jpg";
+import imagineFourPoster from "@/assets/photos/imagine-four-poster.jpg";
+import imagineBaySofa from "@/assets/photos/imagine-bay-sofa.jpg";
+import imagineDaybed from "@/assets/photos/imagine-daybed.jpg";
 import mattressRoomDove from "@/assets/photos/mattress-room-dove.jpg";
 import mattressRoomSafari from "@/assets/photos/mattress-room-safari.jpg";
 import mattressRoomNatural from "@/assets/photos/mattress-room-natural.jpg";
@@ -162,6 +165,9 @@ export const PHOTOS = {
   "imagine-headboard": imagineHeadboard,
   "imagine-bench": imagineBench,
   "imagine-chairs": imagineChairs,
+  "imagine-four-poster": imagineFourPoster,
+  "imagine-bay-sofa": imagineBaySofa,
+  "imagine-daybed": imagineDaybed,
   "mattress-room-dove": mattressRoomDove,
   "mattress-room-safari": mattressRoomSafari,
   "mattress-room-natural": mattressRoomNatural,

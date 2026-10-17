@@ -20,11 +20,11 @@ const HALF = "(max-width: 960px) 100vw, 50vw";
 // Kapok is left out of the material lists for now (Tessa, Oct 16), as on the materials pages.
 const ONE_RULE = "solid hardwood, wool, cashmere, linen, cotton, horsehair, coir and agave";
 
-// Possibilities, not past commissions. Cards without a photo show a placeholder.
-const IMAGINE: [string, string, PhotoKey?][] = [
-  ["A curved sofa that follows the line of a bay window.", "Curved sofa in a bay window"],
-  ["A deep daybed for a sunroom, upholstered in undyed linen.", "Daybed in a sunroom"],
-  ["An Ashbury mattress cut to fit a hundred-year-old four-poster.", "Mattress in an antique four-poster"],
+// Possibilities, not past commissions.
+const IMAGINE: [string, string, PhotoKey][] = [
+  ["A curved sofa that follows the line of a bay window.", "A curved cream sofa following the line of a bay window, a round oak table in front", "imagine-bay-sofa"],
+  ["A deep daybed for a sunroom, upholstered in undyed linen.", "A deep linen daybed on an oak frame in a garden room with tall oak windows", "imagine-daybed"],
+  ["An Ashbury mattress cut to fit a hundred-year-old four-poster.", "A cream tufted Ashbury fitted into an antique dark oak four-poster bed", "imagine-four-poster"],
   ["A long dining bench in solid oak with a horsehair-and-wool cushion.", "A long solid oak dining bench with a linen-covered cushion beside an oak table", "imagine-bench"],
   ["A pair of reading chairs scaled to the person who'll sit in them.", "A pair of linen wingback reading chairs by a window, a walnut side table between them", "imagine-chairs"],
   ["A headboard wrapped in the same Sorrel cotton as the bed.", "A Sorrel cotton headboard behind a matching tufted Ashbury on an oak bed frame", "imagine-headboard"],
