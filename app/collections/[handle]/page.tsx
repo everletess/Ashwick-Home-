@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ProductGrid } from "@/components/sections";
-import { COLLECTIONS, productsIn, type CollectionHandle } from "@/lib/products";
+import { COLLECTIONS, productsIn, showsMattress, type CollectionHandle } from "@/lib/products";
 
 type Props = { params: Promise<{ handle: string }> };
 
 const isHandle = (h: string): h is CollectionHandle => h in COLLECTIONS;
-const TABS: [string, CollectionHandle][] = [["All pieces", "all"], ["Sofas", "sofas"], ["Chairs", "chairs"]];
+const TABS: [string, CollectionHandle][] = [["All pieces", "all"], ["Sofas", "sofas"], ["Chairs", "chairs"], ["Mattress", "mattress"]];
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -39,7 +39,7 @@ export default async function CollectionPage({ params }: Props) {
         ))}
       </nav>
       <section className="wrap" style={{ paddingBottom: 140 }}>
-        <ProductGrid products={productsIn(handle)} />
+        <ProductGrid products={productsIn(handle)} mattress={showsMattress(handle)} />
       </section>
     </main>
   );

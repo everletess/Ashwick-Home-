@@ -4,7 +4,8 @@ import { TINTABLE, type PhotoKey } from "@/lib/photos";
 
 export type FabricId = "linen" | "boucle" | "wool" | "leather" | "italian" | "blend" | "cotton" | "irish" | "cork";
 export type Category = "sofas" | "chairs";
-export type CollectionHandle = "all" | Category;
+/** "mattress" lists the Ashbury, which lives in lib/mattress.ts rather than PRODUCTS. */
+export type CollectionHandle = "all" | Category | "mattress";
 
 export type FabricColor = { id: string; label: string; code?: string; swatch: string };
 export type Fabric = {
@@ -365,13 +366,16 @@ export const PRODUCTS = ALL_PRODUCTS.filter((p) => !p.hidden);
 export const getProduct = (id: string) => PRODUCTS.find((p) => p.id === id);
 
 export const COLLECTIONS: Record<CollectionHandle, { title: string; description: string }> = {
-  all: { title: "The collection", description: "Sofas, chairs and an ottoman. Order each as we designed it, or make it yours." },
+  all: { title: "The collection", description: "Sofas, chairs, an ottoman and the Ashbury mattress. Order each as we designed it, or make it yours." },
   sofas: { title: "Sofas", description: "Sofas and a loveseat, each made to order by hand." },
   chairs: { title: "Chairs", description: "Chairs and an ottoman, each made to order by hand." },
+  mattress: { title: "Mattress", description: "The Ashbury: an all-natural, organic mattress, hand-tufted and made in color." },
 };
 
 export const productsIn = (handle: CollectionHandle) =>
   handle === "all" ? PRODUCTS : PRODUCTS.filter((p) => p.category === handle);
+/** Whether the Ashbury card shows in this collection. */
+export const showsMattress = (handle: CollectionHandle) => handle === "all" || handle === "mattress";
 
 /** Three more pieces, same category first. */
 export const relatedTo = (p: Product) =>
