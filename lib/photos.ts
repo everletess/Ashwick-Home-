@@ -44,6 +44,16 @@ import mattressLayers from "@/assets/photos/mattress-layers.jpg";
 import materialsBandFill from "@/assets/photos/materials-band-fill.jpg";
 import mattressFeelSoft from "@/assets/photos/mattress-feel-soft.jpg";
 import mattressFeelFirm from "@/assets/photos/mattress-feel-firm.jpg";
+import materialsBandStructure from "@/assets/photos/materials-band-structure.jpg";
+import bespokeShare from "@/assets/photos/bespoke-share.jpg";
+import bespokeConsult from "@/assets/photos/bespoke-consult.jpg";
+import bespokeDelivery from "@/assets/photos/bespoke-delivery.jpg";
+import imagineHeadboard from "@/assets/photos/imagine-headboard.jpg";
+import imagineBench from "@/assets/photos/imagine-bench.jpg";
+import imagineChairs from "@/assets/photos/imagine-chairs.jpg";
+import imagineFourPoster from "@/assets/photos/imagine-four-poster.jpg";
+import imagineBaySofa from "@/assets/photos/imagine-bay-sofa.jpg";
+import imagineDaybed from "@/assets/photos/imagine-daybed.jpg";
 import mattressRoomDove from "@/assets/photos/mattress-room-dove.jpg";
 import mattressRoomSafari from "@/assets/photos/mattress-room-safari.jpg";
 import mattressRoomNatural from "@/assets/photos/mattress-room-natural.jpg";
@@ -148,6 +158,16 @@ export const PHOTOS = {
   "materials-band-fill": materialsBandFill,
   "mattress-feel-soft": mattressFeelSoft,
   "mattress-feel-firm": mattressFeelFirm,
+  "materials-band-structure": materialsBandStructure,
+  "bespoke-share": bespokeShare,
+  "bespoke-consult": bespokeConsult,
+  "bespoke-delivery": bespokeDelivery,
+  "imagine-headboard": imagineHeadboard,
+  "imagine-bench": imagineBench,
+  "imagine-chairs": imagineChairs,
+  "imagine-four-poster": imagineFourPoster,
+  "imagine-bay-sofa": imagineBaySofa,
+  "imagine-daybed": imagineDaybed,
   "mattress-room-dove": mattressRoomDove,
   "mattress-room-safari": mattressRoomSafari,
   "mattress-room-natural": mattressRoomNatural,

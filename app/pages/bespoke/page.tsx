@@ -20,24 +20,24 @@ const HALF = "(max-width: 960px) 100vw, 50vw";
 // Kapok is left out of the material lists for now (Tessa, Oct 16), as on the materials pages.
 const ONE_RULE = "solid hardwood, wool, cashmere, linen, cotton, horsehair, coir and agave";
 
-// Possibilities, not past commissions: there are no images yet (handoff shots B2–B7).
-const IMAGINE: [string, string][] = [
-  ["A curved sofa that follows the line of a bay window.", "Curved sofa in a bay window"],
-  ["A deep daybed for a sunroom, upholstered in undyed linen.", "Daybed in a sunroom"],
-  ["An Ashbury mattress cut to fit a hundred-year-old four-poster.", "Mattress in an antique four-poster"],
-  ["A long dining bench in solid oak with a horsehair-and-wool cushion.", "Oak dining bench"],
-  ["A pair of reading chairs scaled to the person who'll sit in them.", "Pair of reading chairs"],
-  ["A headboard wrapped in the same Sorrel cotton as the bed.", "Upholstered headboard"],
+// Possibilities, not past commissions.
+const IMAGINE: [string, string, PhotoKey][] = [
+  ["A curved sofa that follows the line of a bay window.", "A curved cream sofa following the line of a bay window, a round oak table in front", "imagine-bay-sofa"],
+  ["A deep daybed for a sunroom, upholstered in undyed linen.", "A deep linen daybed on an oak frame in a garden room with tall oak windows", "imagine-daybed"],
+  ["An Ashbury mattress cut to fit a hundred-year-old four-poster.", "A cream tufted Ashbury fitted into an antique dark oak four-poster bed", "imagine-four-poster"],
+  ["A long dining bench in solid oak with a horsehair-and-wool cushion.", "A long solid oak dining bench with a linen-covered cushion beside an oak table", "imagine-bench"],
+  ["A pair of reading chairs scaled to the person who'll sit in them.", "A pair of linen wingback reading chairs by a window, a walnut side table between them", "imagine-chairs"],
+  ["A headboard wrapped in the same Sorrel cotton as the bed.", "A Sorrel cotton headboard behind a matching tufted Ashbury on an oak bed frame", "imagine-headboard"],
 ];
 
 type Step = { t: string; d: string; img?: PhotoKey; alt?: string };
 const STEPS: Step[] = [
-  { t: "Share your idea.", d: "A sketch, a photo, a Pinterest board, the measurements of your room. As rough as you like." },
-  { t: "Talk it through.", d: `A design consultation by video or phone, ${BESPOKE_REPLY}. We'll talk about how you'll use it, the proportions and the materials.` },
+  { t: "Share your idea.", d: "A sketch, a photo, a Pinterest board, the measurements of your room. As rough as you like.", img: "bespoke-share", alt: "Two people comparing linen, bouclé and moss swatches and oak and walnut samples at a dining table" },
+  { t: "Talk it through.", d: `A design consultation by video or phone, ${BESPOKE_REPLY}. We'll talk about how you'll use it, the proportions and the materials.`, img: "bespoke-consult", alt: "A designer on the phone sketching a sofa beside fabric swatches" },
   { t: "See it drawn.", d: "We send a scaled drawing, a material proposal and a quote. Our drawing and design service is available for every commission.", img: "bespoke-drawing", alt: "A pencil sketch of a sofa beside linen, bouclé and twill swatches and oiled oak and walnut samples" },
   { t: "Choose your materials.", d: "We send swatches of the wool, linen, cotton and wood finishes so you can touch them at home.", img: "bespoke-swatches", alt: "Swatches of linen, cream bouclé, oat and moss weaves and clay twill on an old oak table" },
   { t: "Made by hand.", d: "Your piece is built in our USA workshop, one at a time, and we send you photos from the workshop as it comes together.", img: "bespoke-stitching", alt: "Hands stitching the piped edge of a linen cushion on a workshop bench" },
-  { t: "Delivered to your home.", d: "Every commission arrives by white-glove delivery." },
+  { t: "Delivered to your home.", d: "Every commission arrives by white-glove delivery.", img: "bespoke-delivery", alt: "Two delivery specialists unwrapping a linen sofa and placing its bolsters in a sunlit living room" },
 ];
 
 const PALETTE: [string, PhotoKey][] = [
@@ -135,9 +135,9 @@ export default function BespokePage() {
             <p className="body" style={{ marginTop: 24 }}>A few of the things you could commission.</p>
           </div>
           <div className="grid3">
-            {IMAGINE.map(([line, ph]) => (
+            {IMAGINE.map(([line, alt, photo]) => (
               <figure className="bsp-imagine" key={line}>
-                <div className="tile-img"><Photo label={ph} /></div>
+                <div className="tile-img"><Photo src={photo} label={alt} sizes="(max-width: 620px) 100vw, (max-width: 1180px) 50vw, 460px" /></div>
                 <figcaption className="body">{line}</figcaption>
               </figure>
             ))}
