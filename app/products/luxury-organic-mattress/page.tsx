@@ -53,7 +53,7 @@ export default function MattressPage() {
     [
       "Delivery",
       <p className="body small" key="d">
-        Made to order and ships in 1–2 weeks. {M.shipping} Choose standard or white-glove delivery. Every mattress arrives wrapped in biodegradable paper.
+        Made to order and ships in 1–2 weeks. Standard delivery is included in the price; white-glove delivery is available for an additional fee. Every mattress arrives wrapped in biodegradable paper.
       </p>,
     ],
     [
