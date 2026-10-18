@@ -81,18 +81,5 @@ export const MATTRESS_GALLERY: { photo: PhotoKey; alt: string }[] = [
   { photo: "mattress-cutaway", alt: "The Ashbury: the layers inside" },
 ];
 
-/** Values pending confirmation, shown as written until replaced. */
-export const MATTRESS_PENDING = {
-  refundDays: "[X business days]",
-  customSizesCovered: "[Confirm whether custom sizes are covered.]",
-  returnedMattresses: "[donated / recycled — confirm]",
-  indentationDepth: '[X"]',
-  warrantyRemedy: "[confirm: repair, replace, and who covers shipping]",
-  supportEmail: "hello@ashwickhome.com",
-  damageWindow: "[X days]",
-  topperTerms: "[Confirm terms for toppers bought separately.]",
-  orderingPage: "[Ordering & Delivery page]",
-};
-
 export const sizeById = (id: string) => MATTRESS.sizes.find((s) => s.id === id) ?? MATTRESS.sizes[0];
 export const colorById = (id: string) => MATTRESS.colors.find((c) => c.id === id) ?? MATTRESS.colors[0];
