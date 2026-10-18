@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { track } from "@/lib/pixel";
 import type { PhotoKey } from "@/lib/photos";
 
 export type CartLine = {
@@ -53,6 +54,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const add = useCallback((line: Omit<CartLine, "lineId">) => {
     setItems((c) => [...c, { ...line, lineId: Math.random().toString(36).slice(2, 9) }]);
+    track("AddToCart", {
+      content_ids: [line.id],
+      content_name: line.name,
+      content_type: "product",
+      contents: [{ id: line.id, quantity: line.qty, item_price: line.price ?? undefined }],
+      value: ((line.price ?? 0) + (line.delivery?.price ?? 0)) * line.qty,
+    });
     setOpen(true);
   }, []);
   const remove = useCallback((lineId: string) => setItems((c) => c.filter((i) => i.lineId !== lineId)), []);

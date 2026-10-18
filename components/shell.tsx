@@ -17,6 +17,7 @@ function useScrollLock(locked: boolean) {
   }, [locked]);
 }
 import { useCart } from "@/components/cart";
+import { trackThen } from "@/lib/pixel";
 import { ASHBURY_PATH, FURNITURE_MATERIALS_PATH, MATERIALS_PATH } from "@/lib/materials";
 
 const MATERIAL_LINKS: [string, string, string][] = [
@@ -176,18 +177,21 @@ export function CartDrawer() {
       const data = await res.json();
       if (!res.ok || !data.checkoutUrl) throw new Error(data.error ?? "Checkout failed");
 
-      // Meta Pixel — fire InitiateCheckout before redirect
-      if (typeof window !== "undefined" && typeof (window as any).fbq === "function") {
-        (window as any).fbq("track", "InitiateCheckout", {
+      // Meta Pixel: InitiateCheckout, then a short pause so the event is sent
+      // before the redirect to Shopify unloads the page.
+      trackThen(
+        "InitiateCheckout",
+        {
           value: cart.subtotal ?? 0,
-          currency: "USD",
           num_items: cart.items.reduce((s, i) => s + i.qty, 0),
           content_ids: cart.items.map((i) => i.id),
+          contents: cart.items.map((i) => ({ id: i.id, quantity: i.qty, item_price: i.price ?? undefined })),
           content_type: "product",
-        });
-      }
-
-      window.location.href = data.checkoutUrl;
+        },
+        () => {
+          window.location.href = data.checkoutUrl;
+        },
+      );
     } catch (err) {
       setCheckoutError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
       setChecking(false);

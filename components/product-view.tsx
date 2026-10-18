@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useCart } from "@/components/cart";
 import { FormError, Honeypot, useFormSend } from "@/components/forms";
 import { Photo, Swatch } from "@/components/photo";
 import { TintedPhoto } from "@/components/tinted-photo";
+import { track } from "@/lib/pixel";
 import { tintFor } from "@/lib/photos";
 import { FABRICS, LEAD_TIME, WOODS, fmt, getProduct, nearestPhoto, photoFor, priceFor, type FabricId, type Option, type PhotoTag } from "@/lib/products";
 
@@ -124,6 +125,13 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
   const selFabric = FABRICS[fabric];
   const selColor = selFabric.colors?.find((c) => c.id === color);
   const price = priceFor(p, fabric);
+  // Meta Pixel: one ViewContent per product page view (not per option change).
+  const viewed = useRef(false);
+  useEffect(() => {
+    if (viewed.current) return;
+    viewed.current = true;
+    track("ViewContent", { content_ids: [p.id], content_name: p.name, content_type: "product", value: price ?? undefined });
+  }, [p.id, p.name, price]);
   const fabricChoices = p.fabrics;
   const photo = p.photos[img];
   const shown = p.photoTags?.[photo];
