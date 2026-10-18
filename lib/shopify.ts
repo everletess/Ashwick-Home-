@@ -84,3 +84,25 @@ export async function fetchProductVariants(): Promise<ShopifyVariant[]> {
   }
   return results;
 }
+
+export type ShopPolicy = { title: string; body: string };
+export type PolicyKind = "privacyPolicy" | "termsOfService" | "refundPolicy" | "shippingPolicy";
+
+/** A store policy as written in Shopify admin (Settings → Policies), or null if it isn't set or Shopify can't be reached. */
+export async function fetchShopPolicy(kind: PolicyKind): Promise<ShopPolicy | null> {
+  if (!STORE || !TOKEN) return null;
+  try {
+    const res = await fetch(API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-Shopify-Storefront-Access-Token": TOKEN },
+      body: JSON.stringify({ query: `{ shop { ${kind} { title body } } }` }),
+      // Policy edits in Shopify show on the site within the hour.
+      next: { revalidate: 3600 },
+    });
+    if (!res.ok) return null;
+    const policy = (await res.json()).data?.shop?.[kind];
+    return policy?.body ? policy : null;
+  } catch {
+    return null;
+  }
+}
