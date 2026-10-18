@@ -28,7 +28,7 @@ export default function OrderingPage() {
       </Block>
       <Block title="Returns & cancellations">
         <p className="body">
-          In-stock pieces, as designed, can be returned within 14 days of delivery, minus return shipping and a 15% restocking fee. Made-to-order, customized and bespoke pieces are final sale. You can change or cancel any order within 12 hours of placing it.{" "}
+          Every piece is made to order. Pieces ordered as designed can be returned within 14 days of delivery, minus return shipping and a 15% restocking fee. Customized and bespoke pieces are final sale unless they arrive damaged. You can change or cancel any order within 12 hours of placing it.{" "}
           <Link href="/pages/terms#returns" className="inl">Full details →</Link>
         </p>
       </Block>

@@ -41,7 +41,7 @@ export function Footer() {
           <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">Instagram</a>
           <a href={PINTEREST_URL} target="_blank" rel="noopener noreferrer">Pinterest</a>
           <Link href="/pages/trade-terms">Trade terms</Link>
-          <Link href="/pages/warranty">Warranty</Link>
+          <Link href="/pages/warranty">Furniture warranty</Link>
           <Link href="/pages/privacy">Privacy</Link>
           <Link href="/pages/terms">Terms</Link>
         </div>

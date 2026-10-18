@@ -31,7 +31,7 @@ export default function TermsPage() {
         <P>To place an order you must be at least 18, or the age of majority where you live. Please give us accurate information and keep your account login secure. You&apos;re responsible for activity on your account.</P>
       </Block>
       <Block title="2. Our pieces">
-        <P>Every Ashwick piece is made by hand from natural materials such as wool, linen, cotton, horsehair and solid wood. Natural variation in grain, color, texture and weave is part of their character and isn&apos;t a defect. Colors can look different on screen than in person, so we recommend ordering <Link href="/pages/fabric-swatches" className="inl">fabric swatches</Link> before you choose. Dimensions are approximate and may vary slightly because each piece is handmade.</P>
+        <P>Every Ashwick piece is made by hand from natural materials such as wool, linen, cotton, horsehair and solid wood. Natural variation in grain, color, texture and weave is part of their character and isn&apos;t a defect. Colors can look different on screen than in person, so we recommend ordering <Link href="/pages/fabric-swatches" className="inl">fabric swatches</Link> before you choose.</P>
         <P>We may update, change or discontinue any piece, fabric or finish at any time.</P>
       </Block>
       <Block title="3. Orders" id="orders">
@@ -54,13 +54,13 @@ export default function TermsPage() {
       </Block>
       <Block title="6. Changes and cancellations" id="cancellations">
         <P>You can change or cancel an order for a full refund within <strong>12 hours</strong> of placing it. Email {email} with your order number.</P>
-        <P>After 12 hours, your piece is in production, and we can&apos;t accept changes or cancellations. This includes made-to-order and customized furniture, custom-size mattresses and bespoke commissions.</P>
+        <P>After 12 hours, your piece is in production, and we can&apos;t accept changes or cancellations. This includes furniture ordered as designed or customized, custom-size mattresses and bespoke commissions.</P>
       </Block>
       <Block title="7. Returns" id="returns">
         <P><strong>The Ashbury mattress:</strong> standard sizes are covered by our 100-night guarantee (Section 8).</P>
-        <P><strong>In-stock furniture:</strong> pieces that ship as designed, without customization, can be returned within <strong>14 days</strong> of delivery. They must be in their original, unused condition. Refunds are reduced by the return shipping cost and a <strong>15% restocking fee</strong>. Email us to arrange a return before sending anything back.</P>
-        <P><strong>Final sale, with no returns:</strong></P>
-        <List items={["Made-to-order and customized furniture", "Custom-size mattresses", "Bespoke commissions", "Fabric swatches"]} />
+        <P><strong>Furniture as designed:</strong> every piece is made to order. Pieces ordered as designed, without customization, can be returned within <strong>14 days</strong> of delivery. They must be in their original, unused condition. Refunds are reduced by the return shipping cost and a <strong>15% restocking fee</strong>. Email us to arrange a return before sending anything back.</P>
+        <P><strong>Final sale, with no returns unless they arrive damaged:</strong></P>
+        <List items={["Customized furniture", "Custom-size mattresses", "Bespoke commissions", "Fabric swatches"]} />
         <P>None of this affects your rights if a piece arrives damaged (Section 9) or has a defect covered by our warranty (Section 11).</P>
       </Block>
       <Block title="8. The Ashbury 100-night guarantee" id="ashbury-guarantee">
@@ -86,7 +86,7 @@ export default function TermsPage() {
         <P>The drawings, designs and proposals we create remain our property. We may photograph finished commissions for our portfolio, and we&apos;ll never share your name or address without your permission.</P>
       </Block>
       <Block title="11. Warranty" id="warranty">
-        <P>Every Ashwick piece, including the Ashbury, carries a lifetime limited warranty for the original purchaser. Coverage, exclusions and how to make a claim are set out in our <Link href="/pages/warranty" className="inl">Warranty</Link> and <Link href="/pages/guarantee-warranty" className="inl">Guarantee &amp; Warranty</Link> pages. Warranty repairs and replacements are free. You cover the cost of shipping the piece to and from our workshop. Following our <Link href="/pages/care" className="inl">Care guide</Link> helps keep your coverage. Damage from improper cleaning, direct sun, heat or excess moisture isn&apos;t covered.</P>
+        <P>Every Ashwick piece, including the Ashbury, carries a lifetime limited warranty for the original purchaser. Coverage, exclusions and how to make a claim are set out in our <Link href="/pages/warranty" className="inl">Furniture warranty</Link> and, for the Ashbury, <Link href="/pages/guarantee-warranty" className="inl">Guarantee &amp; Warranty</Link> pages. Warranty repairs and replacements are free. You cover the cost of shipping the piece to and from our workshop. Following our <Link href="/pages/care" className="inl">Care guide</Link> helps keep your coverage. Damage from improper cleaning, direct sun, heat or excess moisture isn&apos;t covered.</P>
         <P>Apart from that warranty and any warranties required by law, our site and products are provided &ldquo;as is,&rdquo; to the fullest extent the law allows.</P>
       </Block>
       <Block title="12. Our content and designs">

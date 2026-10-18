@@ -61,12 +61,12 @@ export function TradeTerms() {
       </Block>
       <Block title="Ordering and payment">
         <p className="body small">
-          In-stock pieces are paid in full at the time of order. Made-to-order and customized pieces require a {T.depositPercent}% deposit to begin production, with the balance due before shipment. Quotes are valid for {T.quoteDays} days.
+          Pieces as designed are paid in full at the time of order. Customized pieces require a {T.depositPercent}% deposit to begin production, with the balance due before shipment. Quotes are valid for {T.quoteDays} days.
         </p>
       </Block>
       <Block title="Lead times">
         <p className="body small">
-          Made-to-order pieces typically ship within {T.leadTime} of deposit. In-stock pieces, as designed, ship within 3–4 weeks. Lead times are estimates and will be confirmed at the time of order. We will notify you promptly of any change.
+          Customized pieces typically ship within {T.leadTime} of deposit. Pieces as designed ship within 3–4 weeks. Lead times are estimates and will be confirmed at the time of order. We will notify you promptly of any change.
         </p>
       </Block>
       <Block title="Shipping and delivery">
@@ -81,12 +81,12 @@ export function TradeTerms() {
       </Block>
       <Block title="Changes and cancellations">
         <p className="body small">
-          Made-to-order pieces may be changed or cancelled within {T.changeWindowHours} hours of deposit. After production begins, deposits are non-refundable.
+          Orders may be changed or cancelled within {T.changeWindowHours} hours of order or deposit. After production begins, deposits are non-refundable.
         </p>
       </Block>
       <Block title="Returns">
         <p className="body small">
-          Made-to-order and customized pieces are final sale. In-stock pieces may be returned within {T.returnDays} days of delivery in original condition, less return shipping and a {T.restockingPercent}% restocking fee.
+          Every piece is made to order. Customized pieces are final sale unless they arrive damaged. Pieces as designed may be returned within {T.returnDays} days of delivery in original condition, less return shipping and a {T.restockingPercent}% restocking fee.
         </p>
       </Block>
       <Block title="Damage and defects">

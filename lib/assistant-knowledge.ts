@@ -69,7 +69,7 @@ ${M.warranty}: defects in materials and workmanship for as long as the original 
 
 ORDERS, RETURNS AND DELIVERY (${SITE}/pages/terms)
 Changes and cancellations: any order can be changed or cancelled for a full refund within 12 hours of placing it, by emailing ${STUDIO_EMAIL} with the order number. After 12 hours it's in production and can't be changed or cancelled.
-Furniture returns: in-stock pieces that ship as designed, without customization, can be returned within 14 days of delivery in original, unused condition; the refund is reduced by return shipping and a 15% restocking fee. Email us to arrange it first. Final sale: made-to-order and customized furniture, custom-size mattresses, Bespoke commissions and fabric swatches.
+Furniture returns: every piece is made to order. Pieces ordered as designed, without customization, can be returned within 14 days of delivery in original, unused condition; the refund is reduced by return shipping and a 15% restocking fee. Email us to arrange it first. Final sale unless they arrive damaged: customized furniture, custom-size mattresses, Bespoke commissions and fabric swatches.
 Delivery: within the contiguous United States. If anything arrives damaged, email ${STUDIO_EMAIL} with photos within 5 business days of delivery and we repair or replace it at no cost. Warranty repairs and replacements are free; the customer covers shipping to and from the workshop.
 
 MATTRESS MATERIALS (${SITE}${ASHBURY_PATH})
