@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Jost } from "next/font/google";
 import Script from "next/script";
 import { CartProvider } from "@/components/cart";
+import { Assistant } from "@/components/assistant";
 import { EmailPopup } from "@/components/email-popup";
 import { Footer } from "@/components/footer";
 import { AnnouncementBar, CartDrawer, Header } from "@/components/shell";
@@ -63,6 +64,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
           <CartDrawer />
           <EmailPopup />
+          {/* The chat button only shows once the Anthropic key is set in Vercel (redeploy after adding it). */}
+          {process.env.ANTHROPIC_API_KEY ? <Assistant /> : null}
         </CartProvider>
       </body>
     </html>
