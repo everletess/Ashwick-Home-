@@ -5,7 +5,7 @@ import { Accordion } from "@/components/mattress";
 import { BESPOKE_PATH, BESPOKE_REPLY } from "@/lib/bespoke";
 import { GUARANTEE_PATH, MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
 import { LEAD_TIME } from "@/lib/products";
-import { STUDIO_EMAIL } from "@/lib/site";
+import { STUDIO_EMAIL, STUDIO_PHONE, STUDIO_PHONE_HREF } from "@/lib/site";
 import { TRADE_TERMS, WARRANTY_PATH } from "@/lib/trade-terms";
 
 export const metadata: Metadata = {
@@ -29,7 +29,7 @@ const FAQS: [string, React.ReactNode][] = [
   ["What warranty do you offer?", a(<>Furniture and the {M.shortName} are covered against defects in materials and workmanship for as long as the original purchaser owns them. <Link href={WARRANTY_PATH} className="inl">Lifetime warranty</Link></>)],
   ["How do I pay?", a(<>Pay in full at checkout. For the {M.shortName}, you can also pay over time with Affirm.</>)],
   ["Do you work with interior designers?", a(<>Yes. Designers and trade professionals can apply to the <Link href="/pages/trade" className="inl">Trade program</Link>; applications are reviewed within {TRADE_TERMS.reviewDays} business days.</>)],
-  ["How do I reach you?", a(<>Email <a href={`mailto:${STUDIO_EMAIL}`} className="inl">{STUDIO_EMAIL}</a>. The team usually replies within one business day.</>)],
+  ["How do I reach you?", a(<>Email <a href={`mailto:${STUDIO_EMAIL}`} className="inl">{STUDIO_EMAIL}</a> or call <a href={STUDIO_PHONE_HREF} className="inl">{STUDIO_PHONE}</a>. The team usually replies to email within one business day.</>)],
 ];
 
 export default function FaqsPage() {

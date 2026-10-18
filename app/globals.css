@@ -691,3 +691,4 @@ button.chip{cursor:pointer}
 .care-furniture{margin-top:64px;scroll-margin-top:96px}
 .care-furniture [id]{scroll-margin-top:96px}
 .care-furniture .proc-h{margin-bottom:14px}
+.ftr-contact{display:flex;flex-direction:column;gap:8px;margin:28px 0 0;font:300 15px var(--sans)}

@@ -8,7 +8,7 @@ import { BESPOKE_PATH, BESPOKE_REPLY } from "@/lib/bespoke";
 import { ASHBURY_GROUPS, ASHBURY_PATH, FURNITURE_GROUPS, FURNITURE_MATERIALS_PATH, type MaterialGroup } from "@/lib/materials";
 import { GUARANTEE_PATH, MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
 import { FABRICS, LEAD_TIME, PRODUCTS, cardPrice, fmt } from "@/lib/products";
-import { STUDIO_EMAIL } from "@/lib/site";
+import { STUDIO_EMAIL, STUDIO_PHONE } from "@/lib/site";
 import { TRADE_TERMS, WARRANTY_PATH } from "@/lib/trade-terms";
 
 const SITE = "https://ashwickhome.com";
@@ -44,7 +44,7 @@ const product = (p: (typeof PRODUCTS)[number]) => {
 
 export const ASSISTANT_KNOWLEDGE = `
 ABOUT
-Ashwick Home makes organic, natural furniture and the Ashbury mattress, made to order by hand in the USA. Nothing synthetic: no polyurethane foam, no latex, no chemical flame retardants. Contact: ${STUDIO_EMAIL}.
+Ashwick Home makes organic, natural furniture and the Ashbury mattress, made to order by hand in the USA. Nothing synthetic: no polyurethane foam, no latex, no chemical flame retardants. Contact: email ${STUDIO_EMAIL} or call ${STUDIO_PHONE}.
 
 EMAIL OFFER
 New email subscribers get ${WELCOME_OFFER.percent}% off their first order. They sign up through the email pop-up on the site, and the code arrives by email.

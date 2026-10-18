@@ -8,25 +8,26 @@ import { track } from "@/lib/pixel";
 type Msg = { role: "user" | "assistant"; content: string };
 
 const GREETING =
-  "Hi, I'm the Ashwick assistant (an AI). Ask me anything about our furniture, the Ashbury mattress, fabrics, delivery or Bespoke. If you'd like a person, the team is at hello@ashwickhome.com.";
+  "Hi, I'm the Ashwick assistant (an AI). Ask me anything about our furniture, the Ashbury mattress, fabrics, delivery or Bespoke. If you'd like a person, email hello@ashwickhome.com or call (773) 597-9629.";
 const SUGGESTIONS = ["Soft or firm, which is right for me?", "What fabrics can I choose for a sofa?", "How does the 100-night guarantee work?"];
 // Pages where a floating button would get in the way.
 const HIDDEN = ["/account"];
 
-// Emails and links in replies become clickable; tapping the studio email counts as a Meta "Contact".
-const LINKS = /([\w.+-]+@[\w-]+\.[\w.]+|https?:\/\/[^\s]+[^\s.,!?)])/g;
+// Emails, phone numbers and links in replies become clickable; tapping an email or phone number counts as a Meta "Contact".
+const LINKS = /([\w.+-]+@[\w-]+\.[\w.]+|https?:\/\/[^\s]+[^\s.,!?)]|\(?\b\d{3}\)?[\s.-]?\d{3}[\s.-]\d{4}\b)/g;
 function Linked({ text }: { text: string }) {
   return (
     <>
       {text.split(LINKS).map((part, i) => {
         if (i % 2 === 0) return part;
         const email = part.includes("@") && !part.startsWith("http");
+        const phone = !email && !part.startsWith("http");
         return (
           <a
             key={i}
-            href={email ? `mailto:${part}` : part}
+            href={email ? `mailto:${part}` : phone ? `tel:+1${part.replace(/\D/g, "")}` : part}
             className="inl"
-            onClick={email ? () => track("Contact", { content_name: "Assistant email link" }) : undefined}
+            onClick={email || phone ? () => track("Contact", { content_name: `Assistant ${email ? "email" : "phone"} link` }) : undefined}
           >
             {part}
           </a>
