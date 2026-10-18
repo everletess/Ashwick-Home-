@@ -66,7 +66,7 @@ export function TradeTerms() {
       </Block>
       <Block title="Lead times">
         <p className="body small">
-          Made-to-order pieces typically ship within {T.leadTime} of deposit. Lead times are estimates and will be confirmed at the time of order. We will notify you promptly of any change.
+          Made-to-order pieces typically ship within {T.leadTime} of deposit. In-stock pieces, as designed, ship within 3–4 weeks. Lead times are estimates and will be confirmed at the time of order. We will notify you promptly of any change.
         </p>
       </Block>
       <Block title="Shipping and delivery">

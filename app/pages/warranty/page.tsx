@@ -28,6 +28,7 @@ export default function WarrantyPage() {
             <p className="body">
               The warranty applies to the entire piece: frame, joinery, suspension, cushion fill and fabric. If a defect in materials or workmanship appears under normal residential use, we will repair or replace the piece at our discretion. If the original piece or fabric is no longer available, we will offer a comparable replacement or a credit toward a new piece.
             </p>
+            <p className="body">Repairs and replacements are free. You cover the cost of shipping the piece to and from our workshop.</p>
           </div>
           <div className="terms-block">
             <h2 className="eyebrow terms-h">What is not covered</h2>

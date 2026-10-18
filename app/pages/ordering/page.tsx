@@ -26,6 +26,12 @@ export default function OrderingPage() {
           <Link href="/pages/fabric-swatches" className="inl">Order swatches</Link>
         </p>
       </Block>
+      <Block title="Returns & cancellations">
+        <p className="body">
+          In-stock pieces, as designed, can be returned within 14 days of delivery, minus return shipping and a 15% restocking fee. Made-to-order, customized and bespoke pieces are final sale. You can change or cancel any order within 12 hours of placing it.{" "}
+          <Link href="/pages/terms#returns" className="inl">Full details →</Link>
+        </p>
+      </Block>
       <Block title="Payment">
         <p className="body">Pay in full at checkout. For the {MATTRESS.shortName} mattress, you can also pay over time with Affirm at checkout.</p>
       </Block>

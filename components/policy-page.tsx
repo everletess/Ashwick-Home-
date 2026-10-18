@@ -2,7 +2,7 @@ import { InfoPage } from "@/components/info-page";
 import { fetchShopPolicy, type PolicyKind } from "@/lib/shopify";
 import { STUDIO_EMAIL } from "@/lib/site";
 
-// Privacy, Terms and the like are written in Shopify admin (Settings → Policies) and shown here as written.
+// Privacy (and any other store policy) is written in Shopify admin (Settings → Policies) and shown here as written.
 export async function PolicyPage({ kind, title }: { kind: PolicyKind; title: string }) {
   const policy = await fetchShopPolicy(kind);
   return (

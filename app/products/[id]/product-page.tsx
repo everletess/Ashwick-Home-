@@ -5,7 +5,7 @@ import { ProductView } from "@/components/product-view";
 import { ProductGrid } from "@/components/sections";
 import { FURNITURE_MATERIALS_PATH } from "@/lib/materials";
 import { PHOTOS } from "@/lib/photos";
-import { LEAD_TIME, PRODUCTS, constructionFor, getProduct, relatedTo } from "@/lib/products";
+import { LEAD_TIMES, PRODUCTS, constructionFor, getProduct, relatedTo } from "@/lib/products";
 
 // Shared by /products/:id ("As designed") and /products/:id/customize ("Customize").
 export type ProductParams = { params: Promise<{ id: string }> };
@@ -56,7 +56,7 @@ export async function ProductPage({ params, mode }: ProductParams & { mode: "des
               </div>
             )}
             <div className="spec"><div className="eyebrow">Made</div><p>To order, by hand, in our American workshop.</p></div>
-            <div className="spec"><div className="eyebrow">Lead time</div><p>{p.leadTime ?? LEAD_TIME}</p></div>
+            <div className="spec"><div className="eyebrow">Lead time</div><p>{p.leadTime ?? LEAD_TIMES}</p></div>
             <div className="spec"><div className="eyebrow">Payment</div><p>In full at checkout.</p></div>
           </div>
         </div>

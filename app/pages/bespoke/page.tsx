@@ -122,6 +122,10 @@ export default function BespokePage() {
             <p className="body">
               Lead time depends on the project, and you&apos;ll have a timeline with your quote. Commissions are paid in full when you commission.
             </p>
+            <p className="body">
+              Each commission is one of a kind, so it&apos;s final sale once production begins.{" "}
+              <Link href="/pages/terms#bespoke" className="inl">See our terms →</Link>
+            </p>
             <a href="#commission" className="btn">Begin a commission</a>
           </div>
         </div>

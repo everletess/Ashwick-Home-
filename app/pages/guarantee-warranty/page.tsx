@@ -134,7 +134,7 @@ export default function GuaranteePage() {
                   Wool and horsehair take a few weeks to settle to your body, and most people need that long to adjust from foam. After {M.guaranteeMinNights} nights you&apos;ll know how it really sleeps, and you can still return it any time up to night {M.guaranteeNights}.
                 </p>,
               ],
-              ["What if my mattress arrives damaged?", <p className="body small" key="2">Contact us as soon as possible after delivery with photos, and we&apos;ll replace it.</p>],
+              ["What if my mattress arrives damaged?", <p className="body small" key="2">Contact us within 5 business days of delivery, with photos, and we&apos;ll replace it.</p>],
               ["Can I choose between soft and firm?", <p className="body small" key="3">Yes. The {M.shortName} comes in soft and firm. If you&apos;re unsure, our team can help you choose before you order.</p>],
               [
                 "Do furniture pieces have the same guarantee?",
