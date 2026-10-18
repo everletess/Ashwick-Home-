@@ -212,6 +212,10 @@ button.chip{cursor:pointer}
 
 /* Mattress page, Living Wool and Guarantee & warranty */
 .mattress-chip{background-size:cover;background-position:center}
+.buy-promise{margin:20px 0 0;padding:18px 20px;border:1px solid var(--hair);background:var(--alabaster)}
+.buy-promise-h{margin:0;font:400 22px/1.2 var(--serif);color:var(--ink)}
+.buy-promise-b{margin:6px 0 0;font:300 14px/1.6 var(--sans);color:var(--walnut)}
+.buy-promise-b .ulink{white-space:nowrap}
 .buy-notes{list-style:none;padding:0;margin:18px 0 0;font:300 14px/1.9 var(--sans);color:var(--walnut)}
 .info>.ulink{margin:22px 28px 0 0}
 .linkbtn.ulink{border-width:0 0 1px;border-style:solid;border-color:currentColor;letter-spacing:.26em;text-transform:uppercase;font:500 11px var(--sans);padding-bottom:5px}

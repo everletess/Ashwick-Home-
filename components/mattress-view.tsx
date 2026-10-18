@@ -123,10 +123,17 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
           ) : (
             <button className="btn full" disabled aria-disabled="true">Coming soon</button>
           )}
+          <div className="buy-promise">
+            <p className="buy-promise-h">Sleep on it for {M.guaranteeNights} nights.</p>
+            <p className="buy-promise-b">
+              If it isn&apos;t right, we collect it for free and refund you in full.{" "}
+              <Link href={GUARANTEE_PATH} className="ulink">How it works</Link>
+            </p>
+          </div>
           <ul className="buy-notes">
-            <li>{M.leadTime}</li>
-            <li>{M.shipping} {M.guarantee}.</li>
+            <li>{M.leadTime} {M.shipping}</li>
             <li>{M.warranty}.</li>
+            <li>Pay over time with Affirm at checkout.</li>
           </ul>
         </div>
 
