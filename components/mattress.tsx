@@ -25,7 +25,7 @@ export function Accordion({ items }: { items: [string, React.ReactNode][] }) {
 // The topper holds the hand-tufted comfort layers; the cotton twill cover wraps the whole mattress.
 const TOPPER = [
   "Cashmere (OEKO-TEX Standard 100)",
-  "Living Wool (GOTS)",
+  "Living Wool (GOTS, OEKO-TEX)",
   "Swedish horsehair (OEKO-TEX)",
   "Hand-tufted with wool rosettes",
 ];
@@ -144,6 +144,6 @@ export function Columns({ items, numbered }: { items: [string, React.ReactNode][
 
 export const CERTIFICATIONS: [string, React.ReactNode][] = [
   ["GOTS", <>GOTS-certified organic wool and cotton, made by a GOTS-certified manufacturer ({M.gotsManufacturer}).</>],
-  ["OEKO-TEX", "OEKO-TEX certified horsehair. OEKO-TEX Standard 100 certified cashmere."],
+  ["OEKO-TEX", "Every textile and fill is OEKO-TEX Standard 100 certified: the cashmere, horsehair, wool and organic cotton."],
   ["Flammability", <>Federal standards met without chemical flame retardants.</>],
 ];
