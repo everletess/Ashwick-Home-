@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Wordmark } from "@/components/shell";
 
-// "#" links point at pages that are not designed yet (see docs/design-handoff/README.md).
 function FootCol({ title, links }: { title: string; links: [string, string][] }) {
   return (
     <div className="fcol">
@@ -27,19 +26,17 @@ export function Footer() {
           />
           <FootCol
             title="Ashwick"
-            links={[["Our story", "/pages/our-story"], ["Materials", "/pages/materials"], ["Furniture materials", "/pages/furniture-materials"], ["Inside the Ashbury", "/pages/inside-the-ashbury"], ["Care", "#"], ["Trade", "/pages/trade"]]}
+            links={[["Our story", "/pages/our-story"], ["Materials", "/pages/materials"], ["Furniture materials", "/pages/furniture-materials"], ["Inside the Ashbury", "/pages/inside-the-ashbury"], ["Care", "/pages/care"], ["Trade", "/pages/trade"]]}
           />
-          <FootCol title="Help" links={[["Guarantee & Warranty", "/pages/guarantee-warranty"], ["Delivery", "#"], ["Ordering", "#"], ["FAQs", "#"], ["Contact", "mailto:hello@ashwickhome.com"]]} />
+          <FootCol title="Help" links={[["Guarantee & Warranty", "/pages/guarantee-warranty"], ["Delivery", "/pages/delivery"], ["Ordering", "/pages/ordering"], ["FAQs", "/pages/faqs"], ["Contact", "mailto:hello@ashwickhome.com"]]} />
         </div>
         <div className="ftr-bot">
           <span>© 2026 Ashwick Home, LLC</span>
           <span>Handmade in the USA</span>
-          <a href="#">Instagram</a>
-          <a href="#">Pinterest</a>
           <Link href="/pages/trade-terms">Trade terms</Link>
           <Link href="/pages/warranty">Warranty</Link>
-          <a href="#">Privacy</a>
-          <a href="#">Terms</a>
+          <Link href="/pages/privacy">Privacy</Link>
+          <Link href="/pages/terms">Terms</Link>
         </div>
       </div>
     </footer>

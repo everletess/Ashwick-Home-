@@ -20,6 +20,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/pages/guarantee-warranty`, priority: 0.6 },
     { url: `${BASE}/pages/fabric-swatches`, priority: 0.5 },
     { url: `${BASE}/pages/trade`, priority: 0.4 },
+    { url: `${BASE}/pages/faqs`, priority: 0.5 },
+    { url: `${BASE}/pages/delivery`, priority: 0.4 },
+    { url: `${BASE}/pages/ordering`, priority: 0.4 },
+    { url: `${BASE}/pages/care`, priority: 0.4 },
+    { url: `${BASE}/pages/privacy`, priority: 0.2 },
+    { url: `${BASE}/pages/terms`, priority: 0.2 },
   ].map((p) => ({ ...p, lastModified: now, changeFrequency: "monthly" as const }));
 
   const productPages = PRODUCTS.map((p) => ({
