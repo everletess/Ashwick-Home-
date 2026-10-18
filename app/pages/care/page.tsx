@@ -81,12 +81,12 @@ export default function CarePage() {
         <Block title="Wool upholstery" id="wool-upholstery" level={3}>
           <p className="body">Wool naturally resists dirt and repels moisture for a moment before it soaks in, which gives you time to blot.</p>
           <List items={[
-            "Vacuum gently with a soft brush. Bouclé has looped yarns, so avoid stiff brushes and beater bars.",
+            "Vacuum gently with a soft brush. Avoid stiff brushes and beater bars.",
             "Blot spills right away with a dry, white cloth, working from the outside of the spill inward.",
             "For marks, dab with cool water and a small amount of wool-safe detergent, then blot dry. Never use hot water, which can shrink or felt wool.",
             "Pilling is normal in the first months as loose fibers work free. Remove pills gently with a fabric comb or fabric shaver.",
             "Snagged loop? Don't pull it. Ease it back in, or trim it level with sharp scissors.",
-            "Pets: claws can catch on looped fabrics like bouclé. A throw on a favorite spot helps.",
+            "Pets: claws can catch on textured weaves. A throw on a favorite spot helps.",
             "For deep cleaning, use a professional upholstery cleaner experienced with wool.",
           ]} />
         </Block>

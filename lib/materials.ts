@@ -81,7 +81,7 @@ export const FURNITURE_GROUPS: MaterialGroup[] = [
     ],
   },
   {
-    id: "fabrics", eyebrow: "The Fabrics", title: "What you touch.", photo: "materials-band-fabrics", alt: "A stack of folded linen, bouclé and Sorrel cotton twill on an oak table",
+    id: "fabrics", eyebrow: "The Fabrics", title: "What you touch.", photo: "materials-band-fabrics", alt: "A stack of folded linen, textured cream weave and Sorrel cotton twill on an oak table",
     materials: [
       {
         id: "linen", short: "Linen", name: "Organic linen", descriptor: "Softer every year.",
@@ -93,11 +93,11 @@ export const FURNITURE_GROUPS: MaterialGroup[] = [
       },
       {
         id: "wool-upholstery", short: "Wool Upholstery", name: "Wool upholstery", descriptor: "Texture you can feel from across the room.",
-        body: "We upholster in wool because it's resilient and slow to show wear. Bouclé's looped yarn catches the light and softens the shape of a piece; brushed wool has a dense, velvety hand. Both keep their look through years of everyday use.",
-        where: "Upholstery, in bouclé and brushed wool.",
+        body: "We upholster in wool because it's resilient and slow to show wear, and it keeps its look through years of everyday use.",
+        where: "Upholstery, in our Italian Linen: a washed blend of 51% linen and 49% wool.",
         origin: "OEKO-TEX Standard 100",
-        photo: "materials-boucle",
-        alt: "Close-up of cream wool bouclé loops",
+        photo: "materials-wool",
+        alt: "Close-up of crimped cream wool",
       },
     ],
   },
