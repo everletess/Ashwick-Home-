@@ -9,7 +9,7 @@ function fbq(): Fbq | null {
   return typeof f === "function" ? f : null;
 }
 
-export type PixelEvent = "ViewContent" | "AddToCart" | "InitiateCheckout" | "Lead";
+export type PixelEvent = "ViewContent" | "AddToCart" | "InitiateCheckout" | "Lead" | "Contact";
 
 export function track(event: PixelEvent, params: Record<string, unknown> = {}) {
   try {
