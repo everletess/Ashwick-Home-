@@ -14,10 +14,11 @@ export function InfoPage({ eyebrow, title, intro, children }: { eyebrow: string;
   );
 }
 
-export function Block({ title, id, children }: { title: string; id?: string; children: React.ReactNode }) {
+export function Block({ title, id, level = 2, children }: { title: string; id?: string; level?: 2 | 3; children: React.ReactNode }) {
+  const H = level === 3 ? "h3" : "h2";
   return (
     <div className="terms-block" id={id}>
-      <h2 className="eyebrow terms-h">{title}</h2>
+      <H className="eyebrow terms-h">{title}</H>
       {children}
     </div>
   );

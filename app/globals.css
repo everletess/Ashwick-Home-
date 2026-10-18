@@ -688,3 +688,7 @@ button.chip{cursor:pointer}
 .policy p,.policy ul,.policy ol{margin:0 0 14px}
 .policy ul,.policy ol{padding-left:1.2em}
 .policy a{text-decoration:underline}
+.care-furniture{margin-top:64px;scroll-margin-top:96px}
+.care-furniture [id]{scroll-margin-top:96px}
+.care-furniture .proc-h{margin-bottom:14px}
+.ftr-contact{display:flex;flex-direction:column;gap:8px;margin:28px 0 0;font:300 15px var(--sans)}
