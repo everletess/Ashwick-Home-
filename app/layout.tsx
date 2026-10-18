@@ -64,7 +64,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
           <CartDrawer />
           <EmailPopup />
-          <Assistant />
+          {/* The chat button only shows once the Anthropic key is set in Vercel (redeploy after adding it). */}
+          {process.env.ANTHROPIC_API_KEY ? <Assistant /> : null}
         </CartProvider>
       </body>
     </html>

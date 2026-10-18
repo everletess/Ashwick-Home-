@@ -13,6 +13,8 @@ const QUIET_PATHS = ["/pages/bespoke", "/pages/trade", "/account"];
 const KLAVIYO_COMPANY_ID = process.env.NEXT_PUBLIC_KLAVIYO_COMPANY_ID ?? "";
 const KLAVIYO_LIST_ID = process.env.NEXT_PUBLIC_KLAVIYO_LIST_ID ?? "";
 const DISCOUNT_CODE = "ASHWICK15";
+/** Dispatch on window to open the sign-up form on request (the site assistant does this). */
+export const SHOW_SIGNUP_EVENT = "ashwick:show-signup";
 
 // Storage can throw (private mode, blocked site data); treat that as "nothing stored".
 function seen() {
@@ -55,6 +57,16 @@ export function EmailPopup() {
     setShown(true);
     setVisible(true);
   }
+
+  // Opened on request, e.g. by the assistant when someone asks about discounts.
+  useEffect(() => {
+    const open = () => {
+      setStatus("idle");
+      setVisible(true);
+    };
+    window.addEventListener(SHOW_SIGNUP_EVENT, open);
+    return () => window.removeEventListener(SHOW_SIGNUP_EVENT, open);
+  }, []);
 
   // Focus input when popup opens
   useEffect(() => {

@@ -1,27 +1,35 @@
-// "Ask us" site assistant: answers questions about the Ashbury from the site's own copy and hands anything else
-// (or anyone ready to talk) to the team by email via Resend. Needs ANTHROPIC_API_KEY; RESEND_API_KEY for hand-offs.
-import { ASSISTANT_KNOWLEDGE } from "@/lib/assistant-knowledge";
+// "Ask us" site assistant: answers questions about Ashwick Home from the site's own data (lib/assistant-knowledge.ts)
+// and hands anything else (or anyone ready to talk) to the team by email via Resend. Needs ANTHROPIC_API_KEY;
+// RESEND_API_KEY for hand-offs.
+import Anthropic from "@anthropic-ai/sdk";
+import { ASSISTANT_KNOWLEDGE, WELCOME_OFFER } from "@/lib/assistant-knowledge";
+import { MATTRESS } from "@/lib/mattress";
 import { STUDIO_EMAIL } from "@/lib/site";
 
-const MODEL = process.env.ASSISTANT_MODEL ?? "claude-sonnet-4-5";
+const MODEL = process.env.ASSISTANT_MODEL ?? "claude-sonnet-5-5";
 const MAX_TURNS = 24;
 const MAX_CHARS = 1200;
+// One hand-off and one sign-up prompt at most, plus the reply after them.
+const MAX_TOOL_ROUNDS = 3;
 
-const SYSTEM = `You are the Ashwick Home assistant on ashwickhome.com, an AI that helps visitors with questions about The Ashbury mattress and Ashwick Home. Be warm, calm and concise (2-4 short sentences unless asked for detail). Plain text only, no markdown headings or bullet symbols. Use American spelling for the site but keep the brand names exactly as written (Living Wool, Fleece, Flint, Moss, Hazel, Sorrel).
+const M = MATTRESS;
+
+const SYSTEM = `You are the Ashwick Home assistant on ashwickhome.com, an AI that helps visitors with questions about Ashwick Home's furniture, the Ashbury mattress, Bespoke commissions and the Trade program. Be warm, calm and concise (2-4 short sentences unless asked for detail). Plain text only. Use American spelling, but keep brand and product names exactly as written (Living Wool, Fleece, Flint, Moss, Hazel, Sorrel, Irish Linen, Linen Blend).
 
 RULES
-- Only state facts found in the KNOWLEDGE below. If something isn't covered (e.g. shipping to a specific country, exact delivery dates, custom-size pricing, trade pricing, medical or allergy outcomes, comparisons with named competitors' specs), say you don't want to guess and offer to pass the question to the team.
-- Never make medical or health claims, and don't infer benefits the knowledge doesn't state (no spine alignment, pressure relief, pain, allergy or posture claims). For soft vs firm, use only the page's guidance (Soft: side sleepers and anyone who likes to sink in. Firm: back and stomach sleepers) and point to the 100 nights. No discounts or promo codes: prices are as listed.
+- Only state facts found in the KNOWLEDGE below. If something isn't covered (e.g. shipping to a specific country, exact delivery dates, custom-size or bespoke pricing, trade pricing thresholds, medical or allergy outcomes, comparisons with named competitors' specs), say you don't want to guess and offer to pass the question to the team.
+- Never make medical or health claims, and don't infer benefits the knowledge doesn't state (no spine alignment, pressure relief, pain, allergy or posture claims). For soft vs firm, use only the knowledge's guidance and point to the ${M.guaranteeNights}-night guarantee.
+- Discounts: the only offer is ${WELCOME_OFFER.percent}% off a first order for new email subscribers. If someone asks about discounts or codes, tell them about it and call show_email_signup so the sign-up form opens for them; the code is sent to their inbox. Don't invent other discounts or sales. Trade pricing is only for approved trade members.
 - If asked about "Kashmir wool", explain the topper uses cashmere (plus Living Wool and Swedish horsehair). Don't repeat the phrase "Kashmir wool" otherwise.
-- Never use markdown: no asterisks, bold, headings or bullet symbols.
+- Never use markdown: no asterisks, bold, headings or bullet symbols. Share a page link when it helps.
 - You are an AI. If asked, say so plainly.
-- Be genuinely helpful, not pushy. When it fits naturally, point to the next step: choosing size/feel/color on the page, the 100-night guarantee (30-night minimum), delivery included, Affirm at checkout.
-- HAND-OFF: if the visitor wants to talk to a person, asks something you can't answer, is an interior designer/trade buyer, or is ready to buy but has a question, ask for their name and email (and optionally phone), then call the handoff tool. Never invent contact details. After the tool succeeds, tell them the team will reply by email, usually within one business day. If it fails, give them ${STUDIO_EMAIL}.
+- Be genuinely helpful, not pushy. When it fits naturally, point to the next step: the product page, the ${M.guaranteeNights}-night guarantee (${M.guaranteeMinNights}-night minimum), delivery, Affirm at checkout, fabric swatches, or Bespoke.
+- HAND-OFF: if the visitor wants to talk to a person, asks something you can't answer, is an interior designer or trade buyer, or is ready to buy but has a question, ask for their name and email (and optionally phone), then call the handoff tool. Never invent contact details. After the tool succeeds, tell them the team will reply by email, usually within one business day. If it fails, give them ${STUDIO_EMAIL}.
 
 KNOWLEDGE
 ${ASSISTANT_KNOWLEDGE}`;
 
-const TOOLS = [
+const TOOLS: Anthropic.Beta.BetaTool[] = [
   {
     name: "handoff",
     description: "Send this visitor's details and question to the Ashwick team so a person follows up by email.",
@@ -36,32 +44,42 @@ const TOOLS = [
       required: ["name", "email", "topic"],
     },
   },
+  {
+    name: "show_email_signup",
+    description: `Open the site's email sign-up form for the visitor, which gives new subscribers ${WELCOME_OFFER.percent}% off their first order by email.`,
+    input_schema: { type: "object", properties: {} },
+  },
 ];
 
 type Msg = { role: "user" | "assistant"; content: string };
-type Block = { type: string; text?: string; id?: string; name?: string; input?: Record<string, string> };
+
+const client = new Anthropic();
 
 const hits = new Map<string, number[]>();
 function limited(ip: string) {
   const now = Date.now();
+  if (hits.size > 5000) hits.clear();
   const recent = (hits.get(ip) ?? []).filter((t) => now - t < 10 * 60_000);
   recent.push(now);
   hits.set(ip, recent);
   return recent.length > 40;
 }
 
-async function claude(messages: unknown[]) {
-  const res = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "x-api-key": process.env.ANTHROPIC_API_KEY ?? "",
-      "anthropic-version": "2023-06-01",
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({ model: MODEL, max_tokens: 600, system: SYSTEM, tools: TOOLS, messages }),
+function ask(messages: Anthropic.Beta.BetaMessageParam[]) {
+  return client.beta.messages.create({
+    model: MODEL,
+    max_tokens: 2000,
+    // Short chat answers: thinking stays on (it can't be turned off), at low effort.
+    output_config: { effort: "low" },
+    // The instructions and knowledge are the same on every request, so they're cached: repeat messages read them at
+    // a fraction of the price.
+    system: [{ type: "text", text: SYSTEM, cache_control: { type: "ephemeral" } }],
+    tools: TOOLS,
+    messages,
+    // If a safety check declines a request, Anthropic retries it on its recommended fallback model.
+    betas: ["server-side-fallback-2026-07-01"],
+    fallbacks: "default",
   });
-  if (!res.ok) throw new Error(`Anthropic ${res.status}: ${(await res.text()).slice(0, 200)}`);
-  return (await res.json()) as { content: Block[]; stop_reason: string };
 }
 
 async function sendHandoff(input: Record<string, string>, transcript: Msg[]) {
@@ -71,12 +89,12 @@ async function sendHandoff(input: Record<string, string>, transcript: Msg[]) {
   const body = [
     `Name: ${input.name ?? ""}`,
     `Email: ${input.email}`,
-    input.phone ? `Phone: ${input.phone}` : "",
+    ...(input.phone ? [`Phone: ${input.phone}`] : []),
     `Topic: ${input.topic ?? ""}`,
     "",
     "Conversation:",
     ...transcript.map((m) => `${m.role === "user" ? "Visitor" : "Assistant"}: ${m.content}`),
-  ].filter((l) => l !== null).join("\n");
+  ].join("\n");
   const res = await fetch(process.env.RESEND_API_URL ?? "https://api.resend.com/emails", {
     method: "POST",
     headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
@@ -112,27 +130,41 @@ export async function POST(req: Request) {
   if (!messages.length || messages[messages.length - 1].role !== "user") return Response.json({ error: "Bad request" }, { status: 400 });
 
   try {
-    const convo: unknown[] = [...messages];
-    let out = await claude(convo);
+    const convo: Anthropic.Beta.BetaMessageParam[] = [...messages];
+    let out = await ask(convo);
     let handedOff = false;
-    for (let i = 0; i < 2 && out.stop_reason === "tool_use"; i++) {
-      const results = [];
-      for (const b of out.content.filter((b) => b.type === "tool_use")) {
-        const ok = b.name === "handoff" ? await sendHandoff(b.input ?? {}, messages) : false;
-        handedOff ||= ok;
-        results.push({ type: "tool_result", tool_use_id: b.id, content: ok ? "Sent to the team." : "Sending failed." });
+    let showSignup = false;
+    for (let i = 0; i < MAX_TOOL_ROUNDS && out.stop_reason === "tool_use"; i++) {
+      const results: Anthropic.Beta.BetaToolResultBlockParam[] = [];
+      for (const b of out.content) {
+        if (b.type !== "tool_use") continue;
+        let ok = false;
+        if (b.name === "handoff") {
+          ok = await sendHandoff((b.input ?? {}) as Record<string, string>, messages);
+          handedOff ||= ok;
+        } else if (b.name === "show_email_signup") {
+          ok = showSignup = true;
+        }
+        results.push({
+          type: "tool_result",
+          tool_use_id: b.id,
+          content: ok ? (b.name === "handoff" ? "Sent to the team." : "The sign-up form is open on their screen.") : "That didn't work.",
+          is_error: !ok,
+        });
       }
       convo.push({ role: "assistant", content: out.content }, { role: "user", content: results });
-      out = await claude(convo);
+      out = await ask(convo);
+    }
+    if (out.stop_reason === "refusal") {
+      return Response.json({ reply: `That's one for the team. Email ${STUDIO_EMAIL} and they'll help.`, handedOff, showSignup });
     }
     const reply = out.content
-      .filter((b) => b.type === "text")
-      .map((b) => b.text)
+      .flatMap((b) => (b.type === "text" ? [b.text] : []))
       .join("\n")
       .replace(/\*\*?([^*]+)\*\*?/g, "$1")
       .replace(/^#+\s*/gm, "")
       .trim();
-    return Response.json({ reply: reply || `Sorry, I didn't catch that. You can always email ${STUDIO_EMAIL}.`, handedOff });
+    return Response.json({ reply: reply || `Sorry, I didn't catch that. You can always email ${STUDIO_EMAIL}.`, handedOff, showSignup });
   } catch (e) {
     console.error("assistant", e);
     return Response.json({ reply: `Sorry, I'm having trouble right now. Email ${STUDIO_EMAIL} and the team will help.` });

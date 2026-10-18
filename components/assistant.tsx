@@ -2,13 +2,14 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { SHOW_SIGNUP_EVENT } from "@/components/email-popup";
 import { track } from "@/lib/pixel";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
 const GREETING =
-  "Hi, I'm the Ashwick assistant (an AI). Ask me anything about the Ashbury: materials, sizes, feel, delivery or the 100-night guarantee. If you'd like a person, I can pass you to the team.";
-const SUGGESTIONS = ["Soft or firm, which is right for me?", "How does the 100-night guarantee work?", "What's inside the mattress?"];
+  "Hi, I'm the Ashwick assistant (an AI). Ask me anything about our furniture, the Ashbury mattress, fabrics, delivery or Bespoke. If you'd like a person, I can pass you to the team.";
+const SUGGESTIONS = ["Soft or firm, which is right for me?", "What fabrics can I choose for a sofa?", "How does the 100-night guarantee work?"];
 // Pages where a floating button would get in the way.
 const HIDDEN = ["/account"];
 
@@ -39,6 +40,7 @@ export function Assistant() {
       const data = await res.json();
       setMsgs([...next, { role: "assistant", content: data.reply ?? "Sorry, something went wrong. Email hello@ashwickhome.com." }]);
       if (data.handedOff) track("Contact", { content_name: "Assistant hand-off" });
+      if (data.showSignup) window.dispatchEvent(new Event(SHOW_SIGNUP_EVENT));
     } catch {
       setMsgs([...next, { role: "assistant", content: "Sorry, something went wrong. Email hello@ashwickhome.com." }]);
     } finally {
@@ -59,7 +61,7 @@ export function Assistant() {
             <span>Ask Ashwick <em>AI assistant</em></span>
             <button className="linkbtn" onClick={() => setOpen(false)} aria-label="Close">✕</button>
           </div>
-          <div className="asst-body">
+          <div className="asst-body" aria-live="polite">
             {msgs.map((m, i) => (
               <p key={i} className={`asst-msg ${m.role}`}>{m.content}</p>
             ))}
