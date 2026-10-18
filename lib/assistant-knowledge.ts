@@ -2,7 +2,7 @@
  * What the site assistant knows. Prices, sizes, colors, guarantee terms, products, fabrics and materials are read from
  * the same data the pages use (lib/mattress.ts, lib/products.ts, lib/materials.ts, lib/trade-terms.ts), so they stay in
  * sync when those change. The short passages written out below (care, foundation, Bespoke) repeat page copy that lives
- * in the page files; if that copy changes, update it here too. Anything not in here, the assistant hands to the team.
+ * in the page files; if that copy changes, update it here too. Anything not in here, the assistant sends to the studio email.
  */
 import { BESPOKE_PATH, BESPOKE_REPLY } from "@/lib/bespoke";
 import { ASHBURY_GROUPS, ASHBURY_PATH, FURNITURE_GROUPS, FURNITURE_MATERIALS_PATH, type MaterialGroup } from "@/lib/materials";
