@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Wordmark } from "@/components/shell";
+import { INSTAGRAM_URL, PINTEREST_URL } from "@/lib/site";
 
 function FootCol({ title, links }: { title: string; links: [string, string][] }) {
   return (
@@ -33,6 +34,8 @@ export function Footer() {
         <div className="ftr-bot">
           <span>© 2026 Ashwick Home, LLC</span>
           <span>Handmade in the USA</span>
+          <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a href={PINTEREST_URL} target="_blank" rel="noopener noreferrer">Pinterest</a>
           <Link href="/pages/trade-terms">Trade terms</Link>
           <Link href="/pages/warranty">Warranty</Link>
           <Link href="/pages/privacy">Privacy</Link>
