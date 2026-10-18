@@ -55,10 +55,10 @@ export const FURNITURE_GROUPS: MaterialGroup[] = [
     id: "fill", eyebrow: "The Fill", title: "What you sink into.", photo: "materials-band-fill", alt: "Soft natural fiber and curled cream wool spilling across linen beside an open seed pod",
     materials: [
       {
-        id: "wool", short: "Wool", name: "Wool", descriptor: "Shape that springs back.",
+        id: "wool", short: "Wool", name: "Organic wool", descriptor: "Shape that springs back.",
         body: "Wool gives a cushion its body. Each fiber has a natural crimp that compresses when you sit and springs back when you stand, and wool lets air and moisture move, so a cushion stays fresh and even.",
         where: "Cushion fill and wrap.",
-        origin: "[Confirm source — Lanas Trinidad or other — and whether it is GOTS-certified organic. Only then may this line say \"organic.\"]",
+        origin: "Lanas Trinidad, Uruguay · GOTS-certified organic",
         photo: "materials-wool",
         alt: "Close-up of crimped cream wool",
       },
