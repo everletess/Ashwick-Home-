@@ -27,6 +27,11 @@ const label = (field: string) => {
 const isFormName = (v: unknown): v is FormName => typeof v === "string" && v in FORMS;
 const fail = (status: number, error: string) => Response.json({ ok: false, error }, { status });
 
+/** Setup check: open /api/forms in a browser to see whether email is configured (no secrets are shown). */
+export function GET() {
+  return Response.json({ emailConfigured: !!process.env.RESEND_API_KEY, from: FROM, to: TO });
+}
+
 export async function POST(req: Request) {
   const key = process.env.RESEND_API_KEY;
   if (!key) return fail(503, "Email is not set up yet.");

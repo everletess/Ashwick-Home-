@@ -1,6 +1,5 @@
 // "Ask us" site assistant: answers questions about Ashwick Home from the site's own data (lib/assistant-knowledge.ts)
-// and hands anything else (or anyone ready to talk) to the team by email via Resend. Needs ANTHROPIC_API_KEY;
-// RESEND_API_KEY for hand-offs.
+// and sends anyone who wants a person, or asks something it can't answer, to the studio's email. Needs ANTHROPIC_API_KEY.
 import Anthropic from "@anthropic-ai/sdk";
 import { ASSISTANT_KNOWLEDGE, WELCOME_OFFER } from "@/lib/assistant-knowledge";
 import { MATTRESS } from "@/lib/mattress";
@@ -9,41 +8,27 @@ import { STUDIO_EMAIL } from "@/lib/site";
 const MODEL = process.env.ASSISTANT_MODEL ?? "claude-sonnet-5-5";
 const MAX_TURNS = 24;
 const MAX_CHARS = 1200;
-// One hand-off and one sign-up prompt at most, plus the reply after them.
-const MAX_TOOL_ROUNDS = 3;
+// The sign-up prompt, plus the reply after it.
+const MAX_TOOL_ROUNDS = 2;
 
 const M = MATTRESS;
 
 const SYSTEM = `You are the Ashwick Home assistant on ashwickhome.com, an AI that helps visitors with questions about Ashwick Home's furniture, the Ashbury mattress, Bespoke commissions and the Trade program. Be warm, calm and concise (2-4 short sentences unless asked for detail). Plain text only. Use American spelling, but keep brand and product names exactly as written (Living Wool, Fleece, Flint, Moss, Hazel, Sorrel, Irish Linen, Linen Blend).
 
 RULES
-- Only state facts found in the KNOWLEDGE below. If something isn't covered (e.g. shipping to a specific country, exact delivery dates, custom-size or bespoke pricing, trade pricing thresholds, medical or allergy outcomes, comparisons with named competitors' specs), say you don't want to guess and offer to pass the question to the team.
+- Only state facts found in the KNOWLEDGE below. If something isn't covered (e.g. shipping to a specific country, exact delivery dates, custom-size or bespoke pricing, trade pricing thresholds, medical or allergy outcomes, comparisons with named competitors' specs), say you don't want to guess and point them to the team's email (see A REAL PERSON).
 - Never make medical or health claims, and don't infer benefits the knowledge doesn't state (no spine alignment, pressure relief, pain, allergy or posture claims). For soft vs firm, use only the knowledge's guidance and point to the ${M.guaranteeNights}-night guarantee.
 - Discounts: the only offer is ${WELCOME_OFFER.percent}% off a first order for new email subscribers. If someone asks about discounts or codes, tell them about it and call show_email_signup so the sign-up form opens for them; the code is sent to their inbox. Don't invent other discounts or sales. Trade pricing is only for approved trade members.
 - If asked about "Kashmir wool", explain the topper uses cashmere (plus Living Wool and Swedish horsehair). Don't repeat the phrase "Kashmir wool" otherwise.
 - Never use markdown: no asterisks, bold, headings or bullet symbols. Share a page link when it helps.
 - You are an AI. If asked, say so plainly.
 - Be genuinely helpful, not pushy. When it fits naturally, point to the next step: the product page, the ${M.guaranteeNights}-night guarantee (${M.guaranteeMinNights}-night minimum), delivery, Affirm at checkout, fabric swatches, or Bespoke.
-- HAND-OFF: if the visitor wants to talk to a person, asks something you can't answer, is an interior designer or trade buyer, or is ready to buy but has a question, ask for their name and email (and optionally phone), then call the handoff tool. Never invent contact details. After the tool succeeds, tell them the team will reply by email, usually within one business day. If it fails, give them ${STUDIO_EMAIL}.
+- A REAL PERSON: if the visitor wants to talk to a person, asks something you can't answer, is an interior designer or trade buyer, or is ready to buy but has a question, tell them to email the team at ${STUDIO_EMAIL} and that the team usually replies within one business day. Don't ask for their name, email or phone, and don't say you've passed anything on: you can't contact the team yourself. Never invent other contact details.
 
 KNOWLEDGE
 ${ASSISTANT_KNOWLEDGE}`;
 
 const TOOLS: Anthropic.Beta.BetaTool[] = [
-  {
-    name: "handoff",
-    description: "Send this visitor's details and question to the Ashwick team so a person follows up by email.",
-    input_schema: {
-      type: "object",
-      properties: {
-        name: { type: "string" },
-        email: { type: "string" },
-        phone: { type: "string" },
-        topic: { type: "string", description: "One line: what they want help with." },
-      },
-      required: ["name", "email", "topic"],
-    },
-  },
   {
     name: "show_email_signup",
     description: `Open the site's email sign-up form for the visitor, which gives new subscribers ${WELCOME_OFFER.percent}% off their first order by email.`,
@@ -82,33 +67,6 @@ function ask(messages: Anthropic.Beta.BetaMessageParam[]) {
   });
 }
 
-async function sendHandoff(input: Record<string, string>, transcript: Msg[]) {
-  const key = process.env.RESEND_API_KEY;
-  if (!key) return false;
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.email ?? "")) return false;
-  const body = [
-    `Name: ${input.name ?? ""}`,
-    `Email: ${input.email}`,
-    ...(input.phone ? [`Phone: ${input.phone}`] : []),
-    `Topic: ${input.topic ?? ""}`,
-    "",
-    "Conversation:",
-    ...transcript.map((m) => `${m.role === "user" ? "Visitor" : "Assistant"}: ${m.content}`),
-  ].join("\n");
-  const res = await fetch(process.env.RESEND_API_URL ?? "https://api.resend.com/emails", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-    body: JSON.stringify({
-      from: process.env.FORMS_FROM ?? "Ashwick Home <forms@ashwickhome.com>",
-      to: [process.env.FORMS_TO ?? STUDIO_EMAIL],
-      reply_to: input.email,
-      subject: `Site chat: ${input.name ?? "visitor"} — ${input.topic ?? "question"}`,
-      text: body,
-    }),
-  });
-  return res.ok;
-}
-
 export async function POST(req: Request) {
   if (!process.env.ANTHROPIC_API_KEY) {
     return Response.json({ reply: `Our assistant is offline right now. Email ${STUDIO_EMAIL} and the team will help.` });
@@ -132,23 +90,17 @@ export async function POST(req: Request) {
   try {
     const convo: Anthropic.Beta.BetaMessageParam[] = [...messages];
     let out = await ask(convo);
-    let handedOff = false;
     let showSignup = false;
     for (let i = 0; i < MAX_TOOL_ROUNDS && out.stop_reason === "tool_use"; i++) {
       const results: Anthropic.Beta.BetaToolResultBlockParam[] = [];
       for (const b of out.content) {
         if (b.type !== "tool_use") continue;
-        let ok = false;
-        if (b.name === "handoff") {
-          ok = await sendHandoff((b.input ?? {}) as Record<string, string>, messages);
-          handedOff ||= ok;
-        } else if (b.name === "show_email_signup") {
-          ok = showSignup = true;
-        }
+        const ok = b.name === "show_email_signup";
+        showSignup ||= ok;
         results.push({
           type: "tool_result",
           tool_use_id: b.id,
-          content: ok ? (b.name === "handoff" ? "Sent to the team." : "The sign-up form is open on their screen.") : "That didn't work.",
+          content: ok ? "The sign-up form is open on their screen." : "Unknown tool.",
           is_error: !ok,
         });
       }
@@ -156,7 +108,7 @@ export async function POST(req: Request) {
       out = await ask(convo);
     }
     if (out.stop_reason === "refusal") {
-      return Response.json({ reply: `That's one for the team. Email ${STUDIO_EMAIL} and they'll help.`, handedOff, showSignup });
+      return Response.json({ reply: `That's one for the team. Email ${STUDIO_EMAIL} and they'll help.`, showSignup });
     }
     const reply = out.content
       .flatMap((b) => (b.type === "text" ? [b.text] : []))
@@ -164,7 +116,7 @@ export async function POST(req: Request) {
       .replace(/\*\*?([^*]+)\*\*?/g, "$1")
       .replace(/^#+\s*/gm, "")
       .trim();
-    return Response.json({ reply: reply || `Sorry, I didn't catch that. You can always email ${STUDIO_EMAIL}.`, handedOff, showSignup });
+    return Response.json({ reply: reply || `Sorry, I didn't catch that. You can always email ${STUDIO_EMAIL}.`, showSignup });
   } catch (e) {
     console.error("assistant", e);
     return Response.json({ reply: `Sorry, I'm having trouble right now. Email ${STUDIO_EMAIL} and the team will help.` });

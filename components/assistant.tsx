@@ -8,10 +8,33 @@ import { track } from "@/lib/pixel";
 type Msg = { role: "user" | "assistant"; content: string };
 
 const GREETING =
-  "Hi, I'm the Ashwick assistant (an AI). Ask me anything about our furniture, the Ashbury mattress, fabrics, delivery or Bespoke. If you'd like a person, I can pass you to the team.";
+  "Hi, I'm the Ashwick assistant (an AI). Ask me anything about our furniture, the Ashbury mattress, fabrics, delivery or Bespoke. If you'd like a person, the team is at hello@ashwickhome.com.";
 const SUGGESTIONS = ["Soft or firm, which is right for me?", "What fabrics can I choose for a sofa?", "How does the 100-night guarantee work?"];
 // Pages where a floating button would get in the way.
 const HIDDEN = ["/account"];
+
+// Emails and links in replies become clickable; tapping the studio email counts as a Meta "Contact".
+const LINKS = /([\w.+-]+@[\w-]+\.[\w.]+|https?:\/\/[^\s]+[^\s.,!?)])/g;
+function Linked({ text }: { text: string }) {
+  return (
+    <>
+      {text.split(LINKS).map((part, i) => {
+        if (i % 2 === 0) return part;
+        const email = part.includes("@") && !part.startsWith("http");
+        return (
+          <a
+            key={i}
+            href={email ? `mailto:${part}` : part}
+            className="inl"
+            onClick={email ? () => track("Contact", { content_name: "Assistant email link" }) : undefined}
+          >
+            {part}
+          </a>
+        );
+      })}
+    </>
+  );
+}
 
 export function Assistant() {
   const pathname = usePathname();
@@ -39,7 +62,6 @@ export function Assistant() {
       });
       const data = await res.json();
       setMsgs([...next, { role: "assistant", content: data.reply ?? "Sorry, something went wrong. Email hello@ashwickhome.com." }]);
-      if (data.handedOff) track("Contact", { content_name: "Assistant hand-off" });
       if (data.showSignup) window.dispatchEvent(new Event(SHOW_SIGNUP_EVENT));
     } catch {
       setMsgs([...next, { role: "assistant", content: "Sorry, something went wrong. Email hello@ashwickhome.com." }]);
@@ -63,7 +85,7 @@ export function Assistant() {
           </div>
           <div className="asst-body" aria-live="polite">
             {msgs.map((m, i) => (
-              <p key={i} className={`asst-msg ${m.role}`}>{m.content}</p>
+              <p key={i} className={`asst-msg ${m.role}`}>{m.role === "assistant" ? <Linked text={m.content} /> : m.content}</p>
             ))}
             {msgs.length === 1 && (
               <div className="asst-sugs">

@@ -29,7 +29,7 @@ export function Footer() {
             title="Ashwick"
             links={[["Our story", "/pages/our-story"], ["Materials", "/pages/materials"], ["Furniture materials", "/pages/furniture-materials"], ["Inside the Ashbury", "/pages/inside-the-ashbury"], ["Care", "#"], ["Trade", "/pages/trade"]]}
           />
-          <FootCol title="Help" links={[["Guarantee & Warranty", "/pages/guarantee-warranty"], ["Delivery", "#"], ["Ordering", "#"], ["FAQs", "#"], ["Contact", "#"]]} />
+          <FootCol title="Help" links={[["Guarantee & Warranty", "/pages/guarantee-warranty"], ["Delivery", "#"], ["Ordering", "#"], ["FAQs", "#"], ["Contact", "mailto:hello@ashwickhome.com"]]} />
         </div>
         <div className="ftr-bot">
           <span>© 2026 Ashwick Home, LLC</span>
