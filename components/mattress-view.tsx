@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useCart } from "@/components/cart";
 import { Photo } from "@/components/photo";
 import { OptGroup, Pills } from "@/components/product-view";
 import { GUARANTEE_PATH, MATTRESS, MATTRESS_GALLERY, colorById, sizeById } from "@/lib/mattress";
 import { PHOTOS, type PhotoKey } from "@/lib/photos";
 import { fmt } from "@/lib/products";
+import { track } from "@/lib/pixel";
 
 const M = MATTRESS;
 
@@ -46,6 +47,14 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
     setColorState(c);
     setImg(0);
   };
+
+  // Meta Pixel: one ViewContent per product page view (not per option change).
+  const viewed = useRef(false);
+  useEffect(() => {
+    if (viewed.current) return;
+    viewed.current = true;
+    track("ViewContent", { content_ids: [M.id], content_name: M.title, content_type: "product", value: sz.price });
+  }, [sz.price]);
 
   const feelLabel = M.feels.find((f) => f.id === feel)!.label;
   const add = () =>
