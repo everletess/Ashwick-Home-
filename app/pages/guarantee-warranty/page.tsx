@@ -128,6 +128,12 @@ export default function GuaranteePage() {
           <Accordion
             items={[
               ["Does the guarantee cover the topper?", <p className="body small" key="1">The mattress and topper are sold as one system, and the guarantee covers the set. {P.topperTerms}</p>],
+              [
+                `Why is there a ${M.guaranteeMinNights}-night minimum?`,
+                <p className="body small" key="min">
+                  Wool and horsehair take a few weeks to settle to your body, and most people need that long to adjust from foam. After {M.guaranteeMinNights} nights you&apos;ll know how it really sleeps, and you can still return it any time up to night {M.guaranteeNights}.
+                </p>,
+              ],
               ["What if my mattress arrives damaged?", <p className="body small" key="2">Contact us within {P.damageWindow} of delivery with photos, and we&apos;ll replace it.</p>],
               ["Can I choose between soft and firm?", <p className="body small" key="3">Yes. The {M.shortName} comes in soft and firm. If you&apos;re unsure, our team can help you choose before you order.</p>],
               [
