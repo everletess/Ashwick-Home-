@@ -8,7 +8,7 @@ const M = MATTRESS;
 
 export const metadata: Metadata = {
   title: "Guarantee & warranty",
-  description: "Thirty nights to be sure. A lifetime to keep it. The Ashbury guarantee and warranty.",
+  description: "A hundred nights to be sure. A lifetime to keep it. The Ashbury guarantee and warranty.",
 };
 
 function Terms({ rows }: { rows: [string, React.ReactNode][] }) {
@@ -37,7 +37,7 @@ export default function GuaranteePage() {
       <section className="page-head wrap">
         <div className="eyebrow">{M.title}</div>
         <h1 className="h1">Sleep on it.</h1>
-        <p className="body">Thirty nights to be sure. A lifetime to keep it.</p>
+        <p className="body">A hundred nights to be sure. A lifetime to keep it.</p>
       </section>
 
       <section className="sec linen">
@@ -45,7 +45,7 @@ export default function GuaranteePage() {
           <div className="panel">
             <div className="eyebrow">{M.guaranteeNights} nights</div>
             <h2 className="proc-h">Sleep on it at home.</h2>
-            <p className="body">If it isn&apos;t right within {M.guaranteeNights} nights of delivery, we&apos;ll collect it at no cost to you and refund you in full.</p>
+            <p className="body">Sleep on it for at least {M.guaranteeMinNights} nights. If it isn&apos;t right within {M.guaranteeNights} nights of delivery, we&apos;ll collect it at no cost to you and refund you in full.</p>
           </div>
           <div className="panel">
             <div className="eyebrow">For life</div>
@@ -64,7 +64,8 @@ export default function GuaranteePage() {
           <div>
             <Terms
               rows={[
-                ["Your 30 nights", "Begin the day your mattress is delivered."],
+                [`Your ${M.guaranteeNights} nights`, "Begin the day your mattress is delivered."],
+                ["Minimum", `Please sleep on it for at least ${M.guaranteeMinNights} nights before requesting a return. Returns can be requested from night ${M.guaranteeMinNights} to night ${M.guaranteeNights}.`],
                 ["Returns", "Free. We arrange collection from your home and cover the return freight."],
                 ["Your refund", <>The full purchase price, returned to your original payment method within {P.refundDays} of collection.</>],
                 ["Condition", "The mattress should be clean and free of stains or damage. We recommend a breathable mattress protector from the first night."],
@@ -73,7 +74,7 @@ export default function GuaranteePage() {
               ]}
             />
             <Note title="Give it a few nights.">
-              A natural mattress feels different from foam. Wool and horsehair settle gently to your body over the first weeks, so we suggest sleeping on it for at least two weeks before deciding.
+              A natural mattress feels different from foam. Wool and horsehair settle gently to your body over the first weeks, which is why we ask you to sleep on it for at least {M.guaranteeMinNights} nights before deciding.
             </Note>
           </div>
         </div>
@@ -132,7 +133,7 @@ export default function GuaranteePage() {
               [
                 "Do furniture pieces have the same guarantee?",
                 <p className="body small" key="4">
-                  The 30-night guarantee applies to the {M.shortName}. Our made-to-order furniture is covered by the <Link href={WARRANTY_PATH} className="inl">lifetime warranty</Link>; see {P.orderingPage} for its terms.
+                  The {M.guaranteeNights}-night guarantee applies to the {M.shortName}. Our made-to-order furniture is covered by the <Link href={WARRANTY_PATH} className="inl">lifetime warranty</Link>; see {P.orderingPage} for its terms.
                 </p>,
               ],
             ]}

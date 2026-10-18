@@ -125,7 +125,7 @@ export default function InsideTheAshburyPage() {
 
       <section className="statement">
         <p>Sleep on it.</p>
-        <span className="body statement-body">30 nights to be sure, with free return pickup and a full refund. A lifetime limited warranty to keep it.</span>
+        <span className="body statement-body">{M.guaranteeNights} nights to be sure, with free return pickup and a full refund. A lifetime limited warranty to keep it.</span>
         <div className="btns" style={{ justifyContent: "center", marginTop: 0 }}>
           <Link href={MATTRESS_PATH} className="btn light">Shop the Ashbury</Link>
           <Link href={GUARANTEE_PATH} className="btn outline-light">Guarantee &amp; warranty</Link>
