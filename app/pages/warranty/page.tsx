@@ -1,26 +1,32 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { GUARANTEE_PATH } from "@/lib/mattress";
 import { STUDIO_EMAIL } from "@/lib/site";
 import { TRADE_TERMS } from "@/lib/trade-terms";
 
 export const metadata: Metadata = {
-  title: "Lifetime warranty",
-  description: "Every Ashwick piece is warranted against defects in materials and workmanship for as long as the original purchaser owns it.",
+  title: "Furniture warranty",
+  description: "Every piece of Ashwick furniture is warranted against defects in materials and workmanship for as long as the original purchaser owns it.",
 };
 
-// Wording is deliberate: don't reword.
+// Wording is deliberate: don't reword. Furniture only; the Ashbury's guarantee and warranty are on /pages/guarantee-warranty.
 export default function WarrantyPage() {
   return (
     <main>
       <section className="page-head wrap">
         <div className="eyebrow">Policies</div>
-        <h1 className="h1">Lifetime warranty</h1>
+        <h1 className="h1">Furniture warranty</h1>
       </section>
       <section className="sec terms-sec">
         <div className="wrap terms terms-page">
           <div className="terms-block">
             <h2 className="eyebrow terms-h">Our promise</h2>
             <p className="body">
-              Every Ashwick piece is made to be lived with for years. We warrant each piece against defects in materials and workmanship for as long as the original purchaser owns it.
+              Every piece of Ashwick furniture is made to be lived with for years. We warrant each piece against defects in materials and workmanship for as long as the original purchaser owns it.
+            </p>
+            <p className="body">
+              This page covers our furniture. For the Ashbury mattress, see{" "}
+              <Link href={GUARANTEE_PATH} className="inl">Guarantee &amp; Warranty</Link>.
             </p>
           </div>
           <div className="terms-block">
@@ -28,6 +34,7 @@ export default function WarrantyPage() {
             <p className="body">
               The warranty applies to the entire piece: frame, joinery, suspension, cushion fill and fabric. If a defect in materials or workmanship appears under normal residential use, we will repair or replace the piece at our discretion. If the original piece or fabric is no longer available, we will offer a comparable replacement or a credit toward a new piece.
             </p>
+            <p className="body">Repairs and replacements are free. You cover the cost of shipping the piece to and from our workshop.</p>
           </div>
           <div className="terms-block">
             <h2 className="eyebrow terms-h">What is not covered</h2>

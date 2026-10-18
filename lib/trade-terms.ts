@@ -16,7 +16,7 @@ export const TRADE_TERMS = {
   quoteDays: 30,
   leadTime: "8–12 weeks",
   whiteGloveArea: "the contiguous United States",
-  changeWindowHours: 48,
+  changeWindowHours: 12,
   returnDays: 14,
   restockingPercent: 15,
   damageReportDays: 5,

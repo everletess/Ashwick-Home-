@@ -8,7 +8,7 @@ import { Photo, Swatch } from "@/components/photo";
 import { TintedPhoto } from "@/components/tinted-photo";
 import { track } from "@/lib/pixel";
 import { tintFor } from "@/lib/photos";
-import { FABRICS, LEAD_TIME, WOODS, fmt, getProduct, nearestPhoto, photoFor, priceFor, type FabricId, type Option, type PhotoTag } from "@/lib/products";
+import { CUSTOM_LEAD_TIME, FABRICS, LEAD_TIME, WOODS, fmt, getProduct, nearestPhoto, photoFor, priceFor, type FabricId, type Option, type PhotoTag } from "@/lib/products";
 
 type Mode = "designed" | "custom";
 
@@ -253,6 +253,7 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
           </div>
         ) : (
           <div className="custom" role="tabpanel">
+            {!p.leadTime && <p className="lead-time">{CUSTOM_LEAD_TIME}</p>}
             <CustomRequest about={[p.name, ...summary.map(([, v]) => v)].join(" · ")} />
           </div>
         )}

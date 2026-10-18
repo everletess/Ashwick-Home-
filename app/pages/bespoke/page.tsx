@@ -32,10 +32,10 @@ const IMAGINE: [string, string, PhotoKey][] = [
 
 type Step = { t: string; d: string; img?: PhotoKey; alt?: string };
 const STEPS: Step[] = [
-  { t: "Share your idea.", d: "A sketch, a photo, a Pinterest board, the measurements of your room. As rough as you like.", img: "bespoke-share", alt: "Two people comparing linen, bouclé and moss swatches and oak and walnut samples at a dining table" },
+  { t: "Share your idea.", d: "A sketch, a photo, a Pinterest board, the measurements of your room. As rough as you like.", img: "bespoke-share", alt: "Two people comparing linen, textured cream and moss swatches and oak and walnut samples at a dining table" },
   { t: "Talk it through.", d: `A design consultation by video or phone, ${BESPOKE_REPLY}. We'll talk about how you'll use it, the proportions and the materials.`, img: "bespoke-consult", alt: "A designer on the phone sketching a sofa beside fabric swatches" },
   { t: "See it drawn.", d: "We send a scaled drawing, a material proposal and a quote. Our drawing and design service is available for every commission.", img: "bespoke-sketch", alt: "Hands sketching a sofa and room plan in a notebook beside a reference photo, a moss swatch and a tape measure" },
-  { t: "Choose your materials.", d: "We send swatches of the wool, linen, cotton and wood finishes so you can touch them at home.", img: "bespoke-swatches", alt: "Swatches of linen, cream bouclé, oat and moss weaves and clay twill on an old oak table" },
+  { t: "Choose your materials.", d: "We send swatches of the wool, linen, cotton and wood finishes so you can touch them at home.", img: "bespoke-swatches", alt: "Swatches of linen, textured cream, oat and moss weaves and clay twill on an old oak table" },
   { t: "Made by hand.", d: "Your piece is built in our USA workshop, one at a time, and we send you photos from the workshop as it comes together.", img: "bespoke-stitching", alt: "Hands stitching the piped edge of a linen cushion on a workshop bench" },
   { t: "Delivered to your home.", d: "Every commission arrives by white-glove delivery.", img: "bespoke-delivery", alt: "Two delivery specialists unwrapping a linen sofa and placing its bolsters in a sunlit living room" },
 ];
@@ -47,7 +47,6 @@ const PALETTE: [string, PhotoKey][] = [
   ["Cashmere", "fiber-kashmir"],
   ["Linen", "materials-linen"],
   ["Organic cotton", "fiber-cotton"],
-  ["Wool bouclé", "materials-boucle"],
   ["Swedish horsehair", "fiber-horsehair"],
   ["Coconut coir", "fiber-coir"],
   ["Organic agave", "fiber-agave-card"],
@@ -60,7 +59,7 @@ export default function BespokePage() {
       <AnchorAliases map={{ choose: "tailored", bespoke: "commission" }} />
       <PageHero
         photo="bespoke-hero"
-        alt="A maker sketching a sofa at a worktable among linen and bouclé swatches, oak and walnut samples and a brass ruler"
+        alt="A maker sketching a sofa at a worktable among linen and textured wool swatches, oak and walnut samples and a brass ruler"
         tall
         eyebrow="Ashwick Bespoke"
         title="Whatever you can imagine, nature can make."
@@ -122,6 +121,10 @@ export default function BespokePage() {
             <div className="eyebrow">Timing and payment</div>
             <p className="body">
               Lead time depends on the project, and you&apos;ll have a timeline with your quote. Commissions are paid in full when you commission.
+            </p>
+            <p className="body">
+              Each commission is one of a kind, so it&apos;s final sale once production begins.{" "}
+              <Link href="/pages/terms#bespoke" className="inl">See our terms →</Link>
             </p>
             <a href="#commission" className="btn">Begin a commission</a>
           </div>

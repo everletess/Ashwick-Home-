@@ -88,7 +88,7 @@ export function Newsletter() {
 
 // Bespoke commission form (Ashwick Bespoke handoff 3.9).
 const BESPOKE_PIECES = ["Sofa", "Sectional", "Chair", "Mattress", "Bed or headboard", "Bench or ottoman", "Daybed", "Window seat or banquette", "Something else"];
-const BESPOKE_MATERIALS = ["Solid hardwood", "Linen", "Organic cotton", "Wool bouclé", "Living Wool", "Cashmere", "Not sure yet"];
+const BESPOKE_MATERIALS = ["Solid hardwood", "Linen", "Organic cotton", "Living Wool", "Cashmere", "Not sure yet"];
 const BESPOKE_TIMING = ["As soon as possible", "In the next 3 months", "Later this year", "Just exploring"];
 
 /** Pill buttons that toggle values; the choice is sent as one hidden field. */

@@ -42,7 +42,7 @@ export default function FurnitureMaterialsPage() {
 
       <section className="sec">
         <div className="wrap proc">
-          <div className="proc-v mat-portrait"><Photo src="csofa-lifestyle" label="The Cotswold sectional in cream bouclé in a sunlit living room" sizes={HALF} /></div>
+          <div className="proc-v mat-portrait"><Photo src="csofa-lifestyle" label="The Cotswold sectional in a textured cream fabric in a sunlit living room" sizes={HALF} /></div>
           <div className="proc-t">
             <h2 className="proc-h">Every piece, built for its purpose.</h2>
             <p className="body">A deep lounge sofa and an upright chair shouldn&apos;t be built the same way. We combine these materials differently for each piece, and every product page lists exactly what&apos;s inside it.</p>

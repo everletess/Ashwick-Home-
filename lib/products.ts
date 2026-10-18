@@ -200,8 +200,10 @@ export function constructionFor(p: Product): Construction {
 /** Price of one fabric swatch. */
 export const SWATCH_PRICE = 2;
 
-/** Every piece is made by hand to order. */
-export const LEAD_TIME = "Available to ship within 4 weeks from the date of order.";
+/** Every piece is made by hand to order. As designed, and when customized (see /pages/terms#orders). */
+export const LEAD_TIME = "Ships within 3–4 weeks as designed.";
+export const CUSTOM_LEAD_TIME = "Ships within 8–12 weeks when customized.";
+export const LEAD_TIMES = "Ships within 3–4 weeks as designed, or 8–12 weeks when customized.";
 
 const ALL_PRODUCTS: Product[] = [
   {

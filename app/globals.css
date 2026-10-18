@@ -629,7 +629,7 @@ button.chip{cursor:pointer}
 .bsp-imagine figcaption{font:italic 300 clamp(20px,1.7vw,24px)/1.35 var(--serif);color:var(--ink)}
 .bsp-timing{margin:112px auto 0;max-width:640px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:20px;border-top:1px solid var(--hair);padding-top:56px}
 .bsp-timing .btn{margin-top:12px}
-.bsp-palette{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:16px}
+.bsp-palette{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:16px}
 .bsp-palette figure{margin:0;display:flex;flex-direction:column;gap:12px}
 .bsp-palette-img{aspect-ratio:4/5;overflow:hidden;background:var(--linen)}
 .bsp-palette-img img{width:100%;height:100%;object-fit:cover}
@@ -692,3 +692,4 @@ button.chip{cursor:pointer}
 .care-furniture [id]{scroll-margin-top:96px}
 .care-furniture .proc-h{margin-bottom:14px}
 .ftr-contact{display:flex;flex-direction:column;gap:8px;margin:28px 0 0;font:300 15px var(--sans)}
+.terms-block[id]{scroll-margin-top:96px}

@@ -7,7 +7,7 @@
 import { BESPOKE_PATH, BESPOKE_REPLY } from "@/lib/bespoke";
 import { ASHBURY_GROUPS, ASHBURY_PATH, FURNITURE_GROUPS, FURNITURE_MATERIALS_PATH, type MaterialGroup } from "@/lib/materials";
 import { GUARANTEE_PATH, MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
-import { FABRICS, LEAD_TIME, PRODUCTS, cardPrice, fmt } from "@/lib/products";
+import { FABRICS, LEAD_TIMES, PRODUCTS, cardPrice, fmt } from "@/lib/products";
 import { STUDIO_EMAIL, STUDIO_PHONE } from "@/lib/site";
 import { TRADE_TERMS, WARRANTY_PATH } from "@/lib/trade-terms";
 
@@ -37,7 +37,7 @@ const product = (p: (typeof PRODUCTS)[number]) => {
     `  Fabrics: ${p.fabrics.map(fabric).join("; ")}.${p.wood ? " Plinth in walnut or oak." : ""}`,
     p.dimensions ? `  Size: ${p.dimensions.overall}.` : "",
     p.delivery ? `  ${p.delivery.label}: ${fmt(p.delivery.price)} per piece.` : "",
-    p.preorder ? "  Available to pre-order; we confirm the order and estimated ship date by email." : `  ${p.leadTime ?? LEAD_TIME}`,
+    p.preorder ? "  Available to pre-order; we confirm the order and estimated ship date by email." : `  ${p.leadTime ?? LEAD_TIMES}`,
     `  Page: ${SITE}/products/${p.id}`,
   ].filter(Boolean).join("\n");
 };
@@ -66,6 +66,11 @@ Care: rotate 180° every 3–6 months; no flipping. Air it occasionally. Spot cl
 GUARANTEE AND WARRANTY (${SITE}${GUARANTEE_PATH})
 ${M.guarantee}. The ${M.guaranteeNights} nights begin on delivery. Sleep on it for at least ${M.guaranteeMinNights} nights; returns can be requested from night ${M.guaranteeMinNights} to night ${M.guaranteeNights}. Returns are free: we collect it from the home and refund the full purchase price to the original payment method after collection. The mattress should be clean and free of stains or damage. Custom sizes are not covered by the guarantee. Returned mattresses are donated, never resold. The guarantee covers the mattress and topper as a set and applies only to the ${M.shortName}.
 ${M.warranty}: defects in materials and workmanship for as long as the original purchaser owns it, on a suitable foundation. Furniture has a lifetime warranty against defects in materials and workmanship for the original purchaser (${SITE}${WARRANTY_PATH}). Claims: email ${STUDIO_EMAIL} with the order number and photos.
+
+ORDERS, RETURNS AND DELIVERY (${SITE}/pages/terms)
+Changes and cancellations: any order can be changed or cancelled for a full refund within 12 hours of placing it, by emailing ${STUDIO_EMAIL} with the order number. After 12 hours it's in production and can't be changed or cancelled.
+Furniture returns: every piece is made to order. Pieces ordered as designed, without customization, can be returned within 14 days of delivery in original, unused condition; the refund is reduced by return shipping and a 15% restocking fee. Email us to arrange it first. Final sale unless they arrive damaged: customized furniture, custom-size mattresses, Bespoke commissions and fabric swatches.
+Delivery: within the contiguous United States. If anything arrives damaged, email ${STUDIO_EMAIL} with photos within 5 business days of delivery and we repair or replace it at no cost. Warranty repairs and replacements are free; the customer covers shipping to and from the workshop.
 
 MATTRESS MATERIALS (${SITE}${ASHBURY_PATH})
 ${materials(ASHBURY_GROUPS)}
