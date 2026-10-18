@@ -36,15 +36,15 @@ export const FURNITURE_GROUPS: MaterialGroup[] = [
     materials: [
       {
         id: "hardwood", short: "Hardwood", name: "Solid hardwood", descriptor: "Built to be inherited.",
-        body: "Every frame is built by hand in the USA from solid, kiln-dried [species: confirm, e.g. oak, ash, walnut]. No particleboard and no plastic parts. It's the part of a sofa you'll never see, and the part that decides whether it lasts a decade or a lifetime.",
-        where: "Frames, plinths and legs. [Confirm: any plywood or engineered wood? If so, adjust \"No particleboard.\"]",
+        body: "Every frame is built by hand in the USA from solid, kiln-dried hardwood. No plastic parts. It's the part of a sofa you'll never see, and the part that decides whether it lasts a decade or a lifetime.",
+        where: "Frames, plinths and legs.",
         origin: "Handmade in the USA",
         photo: "fiber-wood",
         alt: "Blocks of solid oak and walnut showing end grain",
       },
       {
         id: "natural-oils", short: "Natural Oils", name: "Natural oils", descriptor: "Finished to be touched.",
-        body: "Where the wood shows, we finish it with plant-based oils [confirm type, e.g. linseed or tung] that soak into the grain rather than sealing it under a plastic coating. The wood stays warm and tactile, and small marks can be refreshed with a new coat of oil.",
+        body: "Where the wood shows, we finish it with plant-based oils that soak into the grain rather than sealing it under a plastic coating. The wood stays warm and tactile, and small marks can be refreshed with a new coat of oil.",
         where: "On exposed wood surfaces.",
         photo: "materials-oil",
         alt: "A hand wiping natural oil into a live-edge oak slab with a cotton cloth",
@@ -66,7 +66,6 @@ export const FURNITURE_GROUPS: MaterialGroup[] = [
         id: "coir", short: "Coir", name: "Coconut coir", descriptor: "Strength from the husk.",
         body: "Coir is the fiber from the outer husk of the coconut. It's firm, springy and breathable, which makes it a natural foundation in place of foam.",
         where: "Seat foundations and firm support layers.",
-        origin: "[Origin and certification — confirm, or remove line]",
         photo: "fiber-coir",
         alt: "Coarse golden-brown coconut coir fiber",
       },
@@ -74,7 +73,6 @@ export const FURNITURE_GROUPS: MaterialGroup[] = [
         id: "agave", short: "Agave", name: "Organic agave", descriptor: "Strength from the desert.",
         body: "Agave is a hardy desert plant whose long leaves yield a strong natural fiber. It's tough, durable and breathable, and the plant grows with very little water. We're bringing organic agave fiber into our fills and foundations as another natural alternative to foam.",
         where: "Fills and foundations.",
-        origin: "[Origin and organic certification — confirm]",
         photo: "fiber-agave",
         alt: "Long, pale golden agave fiber on linen and travertine",
       },
@@ -84,10 +82,9 @@ export const FURNITURE_GROUPS: MaterialGroup[] = [
     id: "fabrics", eyebrow: "The Fabrics", title: "What you touch.", photo: "materials-band-fabrics", alt: "A stack of folded linen, bouclé and Sorrel cotton twill on an oak table",
     materials: [
       {
-        id: "linen", short: "Linen", name: "Organic linen", descriptor: "Softer every year.",
+        id: "linen", short: "Linen", name: "Linen", descriptor: "Softer every year.",
         body: "Linen is woven from flax, one of the oldest fibers people have made cloth from. It's strong, breathable and cool to the touch, and it softens with use rather than wearing thin. Its natural slub gives every slipcover a relaxed, lived-in texture from the first day.",
         where: "Upholstery and slipcovers.",
-        origin: "[Confirm organic certification and origin. If not certified, retitle \"Linen.\"]",
         photo: "materials-linen",
         alt: "Close-up of oat linen weave showing natural slubs",
       },
@@ -95,7 +92,6 @@ export const FURNITURE_GROUPS: MaterialGroup[] = [
         id: "wool-upholstery", short: "Wool Upholstery", name: "Wool upholstery", descriptor: "Texture you can feel from across the room.",
         body: "We upholster in wool because it's resilient and slow to show wear. Bouclé's looped yarn catches the light and softens the shape of a piece; brushed wool has a dense, velvety hand. Both keep their look through years of everyday use.",
         where: "Upholstery, in bouclé and brushed wool.",
-        origin: "[Confirm certification and origin]",
         photo: "materials-boucle",
         alt: "Close-up of cream wool bouclé loops",
       },
@@ -111,7 +107,7 @@ export const ASHBURY_GROUPS: MaterialGroup[] = [
       {
         id: "living-wool", short: "Living Wool", name: "Living Wool", descriptor: "Grown, not made.",
         body: LIVING_WOOL_BODY,
-        where: "The topper, hand-tufted with cashmere and Swedish horsehair. [Confirm whether the base wool layers are also Lanas Trinidad / Living Wool.]",
+        where: "The topper, hand-tufted with cashmere and Swedish horsehair.",
         origin: "Lanas Trinidad, Uruguay · GOTS-certified organic",
         photo: "materials-wool",
         alt: "Close-up of crimped cream organic wool",
@@ -128,7 +124,7 @@ export const ASHBURY_GROUPS: MaterialGroup[] = [
         id: "horsehair", short: "Horsehair", name: "Swedish horsehair", descriptor: "The spring inside the softness.",
         body: "Long, curled strands of horsehair act like thousands of small springs: they compress under weight, return to shape and leave space for air to move between them. Ours comes from tail clippings in Sweden, and no horse is harmed. Blended with Living Wool, it gives the topper its lift and breathability.",
         where: "The topper.",
-        origin: "Sweden · OEKO-TEX certified [Optional: confirm how the horsehair is cleaned and prepared.]",
+        origin: "Sweden · OEKO-TEX certified",
         photo: "materials-horsehair",
         alt: "Curled dark horsehair strands on a warm stone surface",
       },
@@ -162,13 +158,3 @@ export const MOVED_ANCHORS: Record<string, string> = Object.fromEntries([
   ...ASHBURY_GROUPS.flatMap((g) => g.materials.map((m) => [m.id, ASHBURY_PATH])),
   ["hand-tufting", ASHBURY_PATH],
 ]);
-
-export const MATERIALS_PENDING = {
-  furnitureGlue: "[Add \"No glue\" only if confirmed for furniture.]",
-  furnitureFire: "[Confirm the furniture flammability standard met, e.g. California TB 117-2013, and how it's met without chemical flame retardants.]",
-  furnitureCerts: "[Add any confirmed certifications for linen, wool upholstery or fill. If none, show only the fire-safety item.]",
-  furnitureFireAnswer: "[Answer once the furniture standard and method are confirmed.]",
-  oilType: "[oil type]",
-  swatchKit: "[If a swatch kit exists: Order a swatch kit and feel the linen, bouclé and brushed wool at home.]",
-  consultation: "[Book a consultation]",
-};
