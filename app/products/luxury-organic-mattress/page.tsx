@@ -4,10 +4,11 @@ import { Suspense } from "react";
 import { Accordion, Construction, Feels, Recovery } from "@/components/mattress";
 import { MattressView, MattressViewFromURL } from "@/components/mattress-view";
 import { Photo } from "@/components/photo";
-import { GUARANTEE_PATH, MATTRESS } from "@/lib/mattress";
+import { GUARANTEE_PATH, MATTRESS, MATTRESS_PATH as MATTRESS_PATH_ABS } from "@/lib/mattress";
 import { ASHBURY_PATH } from "@/lib/materials";
 import { PHOTOS } from "@/lib/photos";
 import { fmt } from "@/lib/products";
+import { MATTRESS_DESCRIPTION, MATTRESS_TITLE, abs, mattressItems } from "@/lib/mattress-feed";
 
 const M = MATTRESS;
 
@@ -34,6 +35,57 @@ const MATERIALS: [string, string][] = [
   ["Swedish horsehair", "OEKO-TEX certified. From tail clippings; no horse is harmed. Each curled strand acts like a small spring, letting air move through the layers."],
   ["Organic cotton", "GOTS-certified and OEKO-TEX Standard 100. A super soft 100% organic cotton twill, plant-dyed, covers the entire mattress, and inside it wraps the coils on both sides."],
 ];
+
+function productJsonLd() {
+  const items = mattressItems();
+  const prices = M.sizes.map((s) => s.price);
+  return {
+    "@context": "https://schema.org",
+    "@type": "ProductGroup",
+    name: MATTRESS_TITLE,
+    description: MATTRESS_DESCRIPTION,
+    brand: { "@type": "Brand", name: "Ashwick Home" },
+    url: abs(MATTRESS_PATH_ABS),
+    productGroupID: "ashbury",
+    variesBy: ["https://schema.org/size", "https://schema.org/color"],
+    material: "Living Wool (GOTS organic wool), Swedish horsehair, GOTS organic cotton, cashmere",
+    image: [...new Set(items.map((i) => i.image))],
+    offers: {
+      "@type": "AggregateOffer",
+      priceCurrency: "USD",
+      lowPrice: Math.min(...prices),
+      highPrice: Math.max(...prices),
+      offerCount: items.length,
+      availability: "https://schema.org/InStock",
+    },
+    hasVariant: items.map((i) => ({
+      "@type": "Product",
+      sku: i.id,
+      name: i.title,
+      size: i.size,
+      color: i.color,
+      image: i.image,
+      offers: {
+        "@type": "Offer",
+        url: i.link,
+        price: i.price,
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
+        itemCondition: "https://schema.org/NewCondition",
+        shippingDetails: {
+          "@type": "OfferShippingDetails",
+          shippingRate: { "@type": "MonetaryAmount", value: 0, currency: "USD" },
+          shippingDestination: { "@type": "DefinedRegion", addressCountry: "US" },
+          deliveryTime: {
+            "@type": "ShippingDeliveryTime",
+            handlingTime: { "@type": "QuantitativeValue", minValue: 7, maxValue: 14, unitCode: "DAY" },
+            transitTime: { "@type": "QuantitativeValue", minValue: 3, maxValue: 10, unitCode: "DAY" },
+          },
+        },
+      },
+    })),
+  };
+}
 
 export default function MattressPage() {
   const details: [string, React.ReactNode][] = [
@@ -91,6 +143,7 @@ export default function MattressPage() {
 
   return (
     <main>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd()).replace(/</g, "\\u003c") }} />
       <div className="crumb wrap">
         <Link href="/">Home</Link>
         <span>/</span>

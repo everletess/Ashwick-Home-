@@ -16,7 +16,7 @@ const cormorant = Cormorant_Garamond({
 const jost = Jost({ subsets: ["latin"], weight: ["300", "400", "500"], variable: "--font-jost" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://ashwickhome.com"),
   title: { default: "Ashwick Home — Made of nature. Built to last.", template: "%s — Ashwick Home" },
   description:
     "Organic furniture and natural mattresses, handmade to order in the USA. Solid hardwood, organic wool, horsehair and linen — nothing synthetic. The Ashbury organic mattress from $3,200.",
