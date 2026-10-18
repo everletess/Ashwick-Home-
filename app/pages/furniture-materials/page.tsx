@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Band, Groups, MatIndex } from "@/components/materials";
-import { Accordion, Columns } from "@/components/mattress";
+import { Accordion } from "@/components/mattress";
 import { Photo } from "@/components/photo";
 import { PageHero } from "@/components/sections";
-import { ASHBURY_PATH, FURNITURE_GROUPS, MATERIALS_PATH, MATERIALS_PENDING as P } from "@/lib/materials";
+import { ASHBURY_PATH, FURNITURE_GROUPS, MATERIALS_PATH } from "@/lib/materials";
 
 export const metadata: Metadata = {
   title: "Furniture Materials",
@@ -66,27 +66,16 @@ export default function FurnitureMaterialsPage() {
         <ul className="leave-list">
           {["No foam.", "No latex.", "No chemical flame retardants.", "No plastic."].map((x) => <li key={x}>{x}</li>)}
         </ul>
-        <span className="body statement-body pending-light">{P.furnitureGlue}</span>
-      </section>
-
-      <section className="sec linen">
-        <div className="wrap">
-          <div className="center-head" style={{ marginBottom: 64 }}>
-            <div className="eyebrow">Certifications and safety</div>
-          </div>
-          <Columns items={[["Fire safety", P.furnitureFire], ["Certifications", P.furnitureCerts]]} />
-        </div>
       </section>
 
       <section className="sec">
         <div className="wrap center-head">
           <h2 className="h2">Feel it for yourself.</h2>
           <p className="body" style={{ marginTop: 24 }}>
-            Photographs only go so far with materials like these. {P.swatchKit} Or book a design consultation, and we&apos;ll help you choose.
+            Photographs only go so far with materials like these. Order swatches and feel the fabrics at home.
           </p>
           <div className="btns" style={{ justifyContent: "center" }}>
             <Link href="/pages/fabric-swatches" className="btn">Order swatches</Link>
-            <span className="btn ghost" aria-disabled="true">{P.consultation}</span>
           </div>
         </div>
       </section>
@@ -101,8 +90,7 @@ export default function FurnitureMaterialsPage() {
             items={[
               ["Why don't you use foam or latex?", <p className="body small" key="1">Natural fills let air move and recover their shape when plumped. We&apos;d rather build furniture that settles in over years than cushions engineered to feel soft on day one.</p>],
               ["Will natural cushions flatten?", <p className="body small" key="2">They settle gently as they conform to you, which is normal. Plumping and turning cushions regularly keeps them full and even.</p>],
-              ["How do I care for oiled wood?", <p className="body small" key="3">Dust with a soft, dry cloth. If the wood looks dry or picks up a small mark, a fresh coat of {P.oilType} restores it.</p>],
-              ["How are your pieces fire-safe without chemical flame retardants?", <p className="body small" key="4">{P.furnitureFireAnswer}</p>],
+              ["How do I care for oiled wood?", <p className="body small" key="3">Dust with a soft, dry cloth. If the wood looks dry or picks up a small mark, a fresh coat of natural wood oil restores it.</p>],
             ]}
           />
         </div>

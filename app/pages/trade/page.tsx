@@ -79,7 +79,7 @@ export default function TradePage() {
             <div className="proc-t">
               <div className="eyebrow">Hospitality</div>
               <h2 className="proc-h">Rooms your guests will remember.</h2>
-              <p className="body">For hotels, inns, restaurants and private members&rsquo; clubs. Send us the property, the rooms and the pieces you need, and we&rsquo;ll talk it through with you. [HOSPITALITY DETAILS]</p>
+              <p className="body">For hotels, inns, restaurants and private members&rsquo; clubs. Send us the property, the rooms and the pieces you need, and we&rsquo;ll talk it through with you.</p>
               <ScrollLink to="hospitality-form" className="ulink">Send a hospitality request</ScrollLink>
             </div>
           </div>
@@ -124,7 +124,7 @@ export default function TradePage() {
         <div className="member">
           <div>
             <p>Not a member yet?</p>
-            <span className="body">Apply below. [APPROVAL DETAILS]</span>
+            <span className="body">Apply below.</span>
             <ScrollLink to="apply" className="btn light">Apply</ScrollLink>
           </div>
           <div>

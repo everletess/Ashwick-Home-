@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Accordion, Columns } from "@/components/mattress";
-import { MATTRESS, MATTRESS_PATH, MATTRESS_PENDING as P } from "@/lib/mattress";
+import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
 import { WARRANTY_PATH } from "@/lib/trade-terms";
 
 const M = MATTRESS;
@@ -67,10 +67,10 @@ export default function GuaranteePage() {
                 [`Your ${M.guaranteeNights} nights`, "Begin the day your mattress is delivered."],
                 ["Minimum", `Please sleep on it for at least ${M.guaranteeMinNights} nights before requesting a return. Returns can be requested from night ${M.guaranteeMinNights} to night ${M.guaranteeNights}.`],
                 ["Returns", "Free. We arrange collection from your home and cover the return freight."],
-                ["Your refund", <>The full purchase price, returned to your original payment method within {P.refundDays} of collection.</>],
+                ["Your refund", "The full purchase price, returned to your original payment method after collection."],
                 ["Condition", "The mattress should be clean and free of stains or damage. We recommend a breathable mattress protector from the first night."],
-                ["Custom sizes", P.customSizesCovered],
-                ["What happens next", <>Returned mattresses are {P.returnedMattresses}, never resold as new.</>],
+                ["Custom sizes", "Custom sizes are made just for you and aren't covered by the guarantee."],
+                ["What happens next", "Returned mattresses are donated, never resold as new."],
               ]}
             />
             <Note title="Give it a few nights.">
@@ -90,9 +90,9 @@ export default function GuaranteePage() {
             <Terms
               rows={[
                 ["Who", "The original purchaser, for as long as they own the mattress."],
-                ["Covered", <>Defects in materials and workmanship, including broken or loose coils, failed seams or tufting, and body impressions deeper than {P.indentationDepth} when the mattress is on a suitable foundation.</>],
+                ["Covered", <>Defects in materials and workmanship, including broken or loose coils, failed seams or tufting, and body impressions beyond normal settling when the mattress is on a suitable foundation.</>],
                 ["Not covered", "Normal wear, stains, misuse, and natural settling of the wool and horsehair layers within normal limits."],
-                ["Our remedy", <>We&apos;ll repair or replace the affected mattress {P.warrantyRemedy}.</>],
+                ["Our remedy", "We'll repair the affected mattress. Shipping to and from our workshop is paid by the customer."],
                 ["Care", "Rotate the mattress 180° every 3–6 months and keep it on a supportive base. This helps the natural layers wear evenly."],
               ]}
             />
@@ -111,7 +111,7 @@ export default function GuaranteePage() {
           <Columns
             numbered
             items={[
-              ["Get in touch.", <>Email {P.supportEmail} with your order number and, for warranty claims, a few photos.</>],
+              ["Get in touch.", <>Email <a href="mailto:hello@ashwickhome.com" className="inl">hello@ashwickhome.com</a> with your order number and, for warranty claims, a few photos.</>],
               ["We arrange it.", "We'll confirm the details and schedule a collection or repair at a time that suits you."],
               ["It's resolved.", "Refunds are issued after collection. Warranty repairs or replacements are made by hand, like the original."],
             ]}
@@ -127,19 +127,19 @@ export default function GuaranteePage() {
           </div>
           <Accordion
             items={[
-              ["Does the guarantee cover the topper?", <p className="body small" key="1">The mattress and topper are sold as one system, and the guarantee covers the set. {P.topperTerms}</p>],
+              ["Does the guarantee cover the topper?", <p className="body small" key="1">The mattress and topper are sold as one system, and the guarantee covers the set.</p>],
               [
                 `Why is there a ${M.guaranteeMinNights}-night minimum?`,
                 <p className="body small" key="min">
                   Wool and horsehair take a few weeks to settle to your body, and most people need that long to adjust from foam. After {M.guaranteeMinNights} nights you&apos;ll know how it really sleeps, and you can still return it any time up to night {M.guaranteeNights}.
                 </p>,
               ],
-              ["What if my mattress arrives damaged?", <p className="body small" key="2">Contact us within {P.damageWindow} of delivery with photos, and we&apos;ll replace it.</p>],
+              ["What if my mattress arrives damaged?", <p className="body small" key="2">Contact us as soon as possible after delivery with photos, and we&apos;ll replace it.</p>],
               ["Can I choose between soft and firm?", <p className="body small" key="3">Yes. The {M.shortName} comes in soft and firm. If you&apos;re unsure, our team can help you choose before you order.</p>],
               [
                 "Do furniture pieces have the same guarantee?",
                 <p className="body small" key="4">
-                  The {M.guaranteeNights}-night guarantee applies to the {M.shortName}. Our made-to-order furniture is covered by the <Link href={WARRANTY_PATH} className="inl">lifetime warranty</Link>; see {P.orderingPage} for its terms.
+                  The {M.guaranteeNights}-night guarantee applies to the {M.shortName}. Our made-to-order furniture is covered by the <Link href={WARRANTY_PATH} className="inl">lifetime warranty</Link>.
                 </p>,
               ],
             ]}

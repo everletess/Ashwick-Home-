@@ -172,7 +172,6 @@ export function constructionFor(p: Product): Construction {
       intro: `The ${short} is handcrafted using only organic and natural materials.`,
       rows: [
         ["Foundations", FOUNDATIONS],
-        ["Seat cushions", "[Build to be confirmed]"],
         ["Back and side cushions", "Organic wool."],
         ["Vegan models available", VEGAN],
       ],
@@ -184,7 +183,6 @@ export function constructionFor(p: Product): Construction {
       intro: `The ${short} is handcrafted using organic and natural materials.`,
       rows: [
         ["Foundations", FOUNDATIONS],
-        ["Cushion", "[Build to be confirmed]"],
         ["Vegan models available", VEGAN],
       ],
     };
@@ -194,7 +192,6 @@ export function constructionFor(p: Product): Construction {
     intro: `The ${short} is handcrafted using organic and natural materials.`,
     rows: [
       ["Foundations", FOUNDATIONS],
-      ["Seat and back support", "[Build to be confirmed]"],
       ["Vegan models available", VEGAN],
     ],
   };
