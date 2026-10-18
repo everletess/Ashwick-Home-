@@ -1,6 +1,8 @@
 // Emails every site form submission to the studio through Resend (https://resend.com).
 // Needs RESEND_API_KEY and a verified sending domain; see README "Forms".
 
+import { STUDIO_EMAIL } from "@/lib/site";
+
 const FORMS = {
   newsletter: "Newsletter sign-up",
   bespoke: "Bespoke enquiry",
@@ -11,8 +13,8 @@ const FORMS = {
 } as const;
 type FormName = keyof typeof FORMS;
 
-const TO = process.env.FORMS_TO ?? "hello@ashwickhome.com";
-const FROM = process.env.FORMS_FROM ?? "Ashwick Home <forms@ashwickhome.com>";
+const TO = process.env.FORMS_TO ?? STUDIO_EMAIL;
+const FROM = process.env.FORMS_FROM ?? `Ashwick Home <${STUDIO_EMAIL}>`;
 const RESEND_URL = process.env.RESEND_API_URL ?? "https://api.resend.com/emails";
 // Vercel caps request bodies at 4.5 MB, so attachments must fit under that.
 const MAX_ATTACHMENT_BYTES = 4 * 1024 * 1024;

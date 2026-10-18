@@ -47,7 +47,7 @@ Setup, once:
 2. Create an API key in Resend.
 3. In Vercel → Project → Settings → Environment Variables, add `RESEND_API_KEY`, then redeploy.
 
-Optional variables: `FORMS_TO` (default `hello@ashwickhome.com`) and `FORMS_FROM` (default `Ashwick Home <forms@ashwickhome.com>`; must be on the verified domain).
+Optional variables: `FORMS_TO` (default `hello@ashwickhome.com`) and `FORMS_FROM` (default `Ashwick Home <hello@ashwickhome.com>`; must be on the verified domain).
 
 ## Not wired up yet
 
