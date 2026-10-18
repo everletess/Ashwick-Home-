@@ -126,7 +126,7 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
           <div className="buy-promise">
             <p className="buy-promise-h">Sleep on it for {M.guaranteeNights} nights.</p>
             <p className="buy-promise-b">
-              If it isn&apos;t right after {M.guaranteeMinNights} nights, we collect it for free and refund you in full.{" "}
+              Give it at least {M.guaranteeMinNights} nights. If it isn&apos;t right by night {M.guaranteeNights}, we collect it for free and refund you in full.{" "}
               <Link href={GUARANTEE_PATH} className="ulink">How it works</Link>
             </p>
           </div>
