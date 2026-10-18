@@ -82,7 +82,7 @@ export const FURNITURE_GROUPS: MaterialGroup[] = [
     id: "fabrics", eyebrow: "The Fabrics", title: "What you touch.", photo: "materials-band-fabrics", alt: "A stack of folded linen, bouclé and Sorrel cotton twill on an oak table",
     materials: [
       {
-        id: "linen", short: "Linen", name: "Linen", descriptor: "Softer every year.",
+        id: "linen", short: "Linen", name: "Organic linen", descriptor: "Softer every year.",
         body: "Linen is woven from flax, one of the oldest fibers people have made cloth from. It's strong, breathable and cool to the touch, and it softens with use rather than wearing thin. Its natural slub gives every slipcover a relaxed, lived-in texture from the first day.",
         where: "Upholstery and slipcovers.",
         photo: "materials-linen",
