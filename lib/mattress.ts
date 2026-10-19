@@ -49,12 +49,12 @@ export const MATTRESS = {
    * change); labels are the current names. File names still use the old names (mocha, safari, dove, khaki, natural).
    */
   colors: [
-    { id: "natural", label: "Fleece", swatch: "mattress-swatch-natural", photos: ["mattress-room-natural", "mattress-studio-natural"], alt: "The Ashbury in Fleece" },
+    { id: "natural", label: "Fleece", swatch: "mattress-swatch-natural", photos: ["mattress-room-fleece", "mattress-studio-natural"], alt: "The Ashbury in Fleece" },
     { id: "dove", label: "Flint", swatch: "mattress-swatch-dove", photos: ["mattress-room-dove", "mattress-studio-dove"], alt: "The Ashbury in Flint" },
-    { id: "khaki", label: "Moss", swatch: "mattress-swatch-khaki", photos: ["mattress-room-khaki", "mattress-studio-khaki"], alt: "The Ashbury in Moss" },
+    { id: "khaki", label: "Moss", swatch: "mattress-swatch-khaki", photos: ["mattress-room-moss", "mattress-studio-khaki"], alt: "The Ashbury in Moss" },
     // The new Hazel render replaces the old Safari studio shot in the gallery (the old file is kept, unused).
-    { id: "safari", label: "Hazel", swatch: "mattress-swatch-hazel", photos: ["mattress-room-safari", "mattress-studio-hazel", "mattress-safari-room"], alt: "The Ashbury in Hazel" },
-    { id: "mocha", label: "Sorrel", swatch: "mattress-swatch-mocha", photos: ["mattress-mocha-bedroom", "mattress-studio-mocha", "mattress-mocha-room"], alt: "The Ashbury in Sorrel" },
+    { id: "safari", label: "Hazel", swatch: "mattress-swatch-hazel", photos: ["mattress-room-hazel", "mattress-studio-hazel", "mattress-safari-room"], alt: "The Ashbury in Hazel" },
+    { id: "mocha", label: "Sorrel", swatch: "mattress-swatch-mocha", photos: ["mattress-room-sorrel", "mattress-studio-mocha", "mattress-mocha-room"], alt: "The Ashbury in Sorrel" },
   ] satisfies MattressColor[],
   /** Color selected when the page opens (its first photo leads the gallery and the social preview). */
   defaultColor: "mocha",
