@@ -50,7 +50,7 @@ export const MATTRESS = {
    */
   colors: [
     { id: "natural", label: "Fleece", swatch: "mattress-swatch-natural", photos: ["mattress-room-fleece", "mattress-studio-natural"], alt: "The Ashbury in Fleece" },
-    { id: "dove", label: "Flint", swatch: "mattress-swatch-dove", photos: ["mattress-room-dove", "mattress-studio-dove"], alt: "The Ashbury in Flint" },
+    { id: "dove", label: "Flint", swatch: "mattress-swatch-dove", photos: ["mattress-room-flint", "mattress-studio-dove"], alt: "The Ashbury in Flint" },
     { id: "khaki", label: "Moss", swatch: "mattress-swatch-khaki", photos: ["mattress-room-moss", "mattress-studio-khaki"], alt: "The Ashbury in Moss" },
     // The new Hazel render replaces the old Safari studio shot in the gallery (the old file is kept, unused).
     { id: "safari", label: "Hazel", swatch: "mattress-swatch-hazel", photos: ["mattress-room-hazel", "mattress-studio-hazel", "mattress-safari-room"], alt: "The Ashbury in Hazel" },
