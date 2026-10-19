@@ -27,7 +27,7 @@ export const FABRICS: Record<FabricId, Fabric> = {
   leather: { id: "leather", label: "Vegetable-tanned leather", swatch: "#A36A40", tex: "leather" },
   italian: {
     id: "italian", label: "Italian Linen", swatch: "#B9AD94", tex: "linen",
-    detail: "Washed wool and linen blend: 51% linen, 49% wool.",
+    detail: "Organic linen and cotton blend: 55% linen, 45% cotton.",
     colors: [
       { id: "coco", label: "Coco", code: "FAQ559 0007", swatch: "#B5A88D" },
       { id: "moss", label: "Moss", code: "FAQ559 0001", swatch: "#5F6752" },
