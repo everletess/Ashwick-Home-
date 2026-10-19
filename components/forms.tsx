@@ -6,6 +6,7 @@ import { useRef, useState } from "react";
 
 import { BESPOKE_REPLY } from "@/lib/bespoke";
 import { STUDIO_EMAIL } from "@/lib/site";
+import { subscribeEmail } from "@/lib/subscribe";
 
 export { STUDIO_EMAIL };
 const MAX_UPLOAD_BYTES = 4 * 1024 * 1024; // matches the limit in app/api/forms/route.ts
@@ -63,14 +64,33 @@ function ThankYou({ children }: { children: React.ReactNode }) {
 }
 
 export function Newsletter() {
-  const { sent, sending, error, onSubmit } = useFormSend("newsletter");
+  const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    if (data.get("_gotcha")) return;
+    const email = String(data.get("email") ?? "").trim();
+    if (!email) return;
+    setSending(true);
+    setError("");
+    try {
+      await subscribeEmail(email, "Ashwick website homepage");
+      setSent(true);
+    } catch (err) {
+      setError(`${err instanceof Error ? err.message + " " : ""}Or email us at ${STUDIO_EMAIL}.`);
+    } finally {
+      setSending(false);
+    }
+  };
   return (
     <section className="sec nl">
       <div className="wrap center-head">
-        <h2 className="h2">New pieces, when they&apos;re ready.</h2>
-        <p className="body" style={{ marginTop: 20 }}>A short letter when something new leaves the workshop. Nothing more.</p>
+        <h2 className="h2">The Ashwick Letter.</h2>
+        <p className="body" style={{ marginTop: 20 }}>Our organic design newsletter: material stories, natural interiors, and first access to new pieces. Plus 15% off your first order.</p>
         {sent ? (
-          <p className="nl-done" role="status">Thank you. You&apos;re on the list.</p>
+          <p className="nl-done" role="status">Thank you. You&apos;re on the list. Your 15% code, ASHWICK15, is on its way.</p>
         ) : (
           <>
             <form className="nl-form" onSubmit={onSubmit}>

@@ -662,6 +662,27 @@ button.chip{cursor:pointer}
 @keyframes ep-fade-in{from{opacity:0}to{opacity:1}}
 @keyframes ep-slide-up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 .ep-code{font:400 30px/1 var(--serif);letter-spacing:.3em;margin:4px 0 0;padding:18px 0;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);width:100%;text-align:center}
+/* Phones: a sheet that slides up from the bottom and leaves the page visible above it (Google penalises full-screen pop-ups on mobile) */
+@media(max-width:640px){
+  .ep-scrim{display:none}
+  .ep{inset:auto 0 0 0;align-items:flex-end}
+  .ep-form,.ep-done{width:100%;max-height:72vh;overflow:auto;padding:30px 22px 22px;gap:12px;box-shadow:0 -10px 40px rgba(42,37,31,.22);border-top:1px solid var(--hair);animation:ep-sheet-up .35s cubic-bezier(.2,.8,.2,1) both}
+  .ep-h{font-size:26px}
+  .ep-code{font-size:24px;padding:12px 0}
+}
+@keyframes ep-sheet-up{from{transform:translateY(100%)}to{transform:none}}
+/* Small "15% off" tab after "No thanks" (bottom left; the Ask us button is bottom right) */
+.ep-tab{position:fixed;left:20px;bottom:20px;z-index:59;display:flex;align-items:stretch;background:var(--ink);color:var(--alabaster);box-shadow:0 6px 24px rgba(42,37,31,.18);animation:ep-fade-in .3s ease both}
+.ep-tab-open{background:none;border:0;color:inherit;font:500 11px var(--sans);letter-spacing:.2em;text-transform:uppercase;padding:14px 16px 14px 20px;cursor:pointer}
+.ep-tab-x{background:none;border:0;border-left:1px solid rgba(246,242,236,.25);color:inherit;font:300 18px/1 var(--sans);padding:0 14px;cursor:pointer}
+@media(max-width:640px){.ep-tab{left:12px;bottom:12px}.ep-tab-open{padding:12px 12px 12px 14px;font-size:10px;letter-spacing:.14em}}
+/* Footer sign-up */
+.ftr-nl{margin-top:32px;max-width:360px}
+.ftr-nl-copy{font:300 14px/1.6 var(--sans);color:var(--walnut);margin:10px 0 0}
+.ftr-nl-form{margin:12px 0 0;max-width:none}
+.ftr-nl-form input{padding:12px 0;font-size:15px}
+.ftr-nl-form button{min-height:44px}
+.ftr-nl-done{font:300 14px/1.6 var(--sans);margin:10px 0 0}
 
 /* Ask us assistant */
 .asst-fab{position:fixed;right:20px;bottom:20px;z-index:60;background:var(--ink);color:var(--alabaster);border:0;padding:14px 20px;font:500 11px var(--sans);letter-spacing:.2em;text-transform:uppercase;cursor:pointer;box-shadow:0 6px 24px rgba(42,37,31,.18)}

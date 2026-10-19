@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Wordmark } from "@/components/shell";
+import { FooterSignup } from "@/components/email-popup";
 import { INSTAGRAM_URL, PINTEREST_URL, STUDIO_EMAIL, STUDIO_PHONE, STUDIO_PHONE_HREF } from "@/lib/site";
 
 function FootCol({ title, links }: { title: string; links: [string, string][] }) {
@@ -24,6 +25,7 @@ export function Footer() {
               <a href={`mailto:${STUDIO_EMAIL}`}>{STUDIO_EMAIL}</a>
               <a href={STUDIO_PHONE_HREF}>{STUDIO_PHONE}</a>
             </p>
+            <FooterSignup />
           </div>
           <FootCol
             title="Shop"
