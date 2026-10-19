@@ -1,10 +1,13 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useCart } from "@/components/cart";
 
 const STORAGE_KEY = "aw-popup-dismissed";
 const DELAY_MS = 5000; // 5 seconds after arriving
+// Pages where someone is mid-form; the popup waits until they move on.
+const QUIET_PATHS = ["/pages/bespoke", "/pages/trade", "/account"];
 const DISMISS_DAYS = 14; // "No thanks" hides it this long; subscribers never see it again
 // Public Klaviyo IDs (safe to expose). Set in Vercel env vars.
 const KLAVIYO_COMPANY_ID = process.env.NEXT_PUBLIC_KLAVIYO_COMPANY_ID ?? "";
@@ -29,6 +32,7 @@ function remember(value: string) {
 }
 
 export function EmailPopup() {
+  const pathname = usePathname();
   const { open: cartOpen } = useCart();
   const [due, setDue] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -46,8 +50,8 @@ export function EmailPopup() {
   }, []);
 
   // Once the 8 seconds are up, open as soon as the visitor isn't in the cart or a form page.
-  // Shows on every page, cart or no cart. If the cart drawer happens to be open at that moment, it waits until it closes.
-  const quiet = cartOpen;
+  // Shows on every page, even with items in the cart. Waits while the cart drawer is open or the visitor is on a form page (Bespoke, Trade, Account).
+  const quiet = cartOpen || QUIET_PATHS.some((p) => pathname?.startsWith(p));
   const show = due && !quiet;
   const [shown, setShown] = useState(false);
   if (show && !shown) {
