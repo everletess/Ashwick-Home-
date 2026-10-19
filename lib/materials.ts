@@ -94,7 +94,7 @@ export const FURNITURE_GROUPS: MaterialGroup[] = [
       {
         id: "wool-upholstery", short: "Wool Upholstery", name: "Wool upholstery", descriptor: "Texture you can feel from across the room.",
         body: "We upholster in wool because it's resilient and slow to show wear, and it keeps its look through years of everyday use.",
-        where: "Upholstery, in our Italian Linen: a washed blend of 51% linen and 49% wool.",
+        where: "Upholstery, on request.",
         origin: "OEKO-TEX Standard 100",
         photo: "materials-wool",
         alt: "Close-up of crimped cream wool",
