@@ -5,6 +5,8 @@
 const KLAVIYO_COMPANY_ID = process.env.NEXT_PUBLIC_KLAVIYO_COMPANY_ID ?? "";
 const KLAVIYO_LIST_ID = process.env.NEXT_PUBLIC_KLAVIYO_LIST_ID ?? "";
 export const SUBSCRIBED_KEY = "aw-popup-dismissed";
+/** Fired on window after any successful sign-up, so the pop-up and the 15% tab hide everywhere. */
+export const SUBSCRIBED_EVENT = "ashwick:subscribed";
 
 export type SubscribeResult = { klaviyo: boolean };
 
@@ -42,5 +44,6 @@ export async function subscribeEmail(email: string, source: string): Promise<Sub
   try {
     localStorage.setItem(SUBSCRIBED_KEY, "subscribed"); // subscribers never see the pop-up or tab again
   } catch {}
+  window.dispatchEvent(new Event(SUBSCRIBED_EVENT));
   return { klaviyo: k };
 }

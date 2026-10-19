@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useCart } from "@/components/cart";
-import { SUBSCRIBED_KEY, subscribeEmail } from "@/lib/subscribe";
+import { SUBSCRIBED_EVENT, SUBSCRIBED_KEY, subscribeEmail } from "@/lib/subscribe";
 
 const STORAGE_KEY = SUBSCRIBED_KEY;
 const DELAY_MS = 5000; // 5 seconds after arriving
@@ -85,6 +85,13 @@ export function EmailPopup() {
     setStatus("idle");
     setErrorMsg("");
     setVisible(true);
+  }, []);
+
+  // Signed up anywhere (footer, homepage): hide the tab and stop the pop-up from opening.
+  useEffect(() => {
+    const done = () => { setTab(false); setDue(false); };
+    window.addEventListener(SUBSCRIBED_EVENT, done);
+    return () => window.removeEventListener(SUBSCRIBED_EVENT, done);
   }, []);
 
   // Opened on request, e.g. by the assistant when someone asks about discounts.
