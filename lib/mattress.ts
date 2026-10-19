@@ -83,3 +83,9 @@ export const MATTRESS_GALLERY: { photo: PhotoKey; alt: string }[] = [
 
 export const sizeById = (id: string) => MATTRESS.sizes.find((s) => s.id === id) ?? MATTRESS.sizes[0];
 export const colorById = (id: string) => MATTRESS.colors.find((c) => c.id === id) ?? MATTRESS.colors[0];
+
+/** Link to the mattress page with a color selected, by its current name (?color=sorrel). */
+export const mattressColorHref = (id: string) => `${MATTRESS_PATH}?color=${colorById(id).label.toLowerCase()}`;
+/** The color id for a ?color= value: its current name, or the original id that older links and the feed used. */
+export const colorFromParam = (v: string | null) =>
+  v ? MATTRESS.colors.find((c) => c.label.toLowerCase() === v.toLowerCase() || c.id === v)?.id : undefined;

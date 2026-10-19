@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { useCart } from "@/components/cart";
 import { Photo } from "@/components/photo";
 import { OptGroup, Pills } from "@/components/product-view";
-import { GUARANTEE_PATH, MATTRESS, MATTRESS_GALLERY, colorById, sizeById } from "@/lib/mattress";
+import { GUARANTEE_PATH, MATTRESS, MATTRESS_GALLERY, colorById, colorFromParam, sizeById } from "@/lib/mattress";
 import { PHOTOS, type PhotoKey } from "@/lib/photos";
 import { fmt } from "@/lib/products";
 import { track } from "@/lib/pixel";
@@ -14,10 +14,9 @@ import { track } from "@/lib/pixel";
 const M = MATTRESS;
 
 /** Gallery + buy box for the mattress. The gallery follows the Color selection. */
-/** The buy box in the color named by ?color=<id> (from the home page feature). Render inside <Suspense>. */
+/** The buy box in the color named by ?color=<name> (from the home page feature). Render inside <Suspense>. */
 export function MattressViewFromURL() {
-  const c = useSearchParams().get("color");
-  return <MattressView initialColor={c && M.colors.some((x) => x.id === c) ? c : undefined} />;
+  return <MattressView initialColor={colorFromParam(useSearchParams().get("color"))} />;
 }
 
 export function MattressView({ initialColor }: { initialColor?: string }) {

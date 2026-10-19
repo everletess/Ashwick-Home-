@@ -1,4 +1,4 @@
-import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
+import { MATTRESS, mattressColorHref } from "@/lib/mattress";
 import { PHOTOS, type PhotoKey } from "@/lib/photos";
 
 /** Public site origin, used for absolute URLs in structured data and the Google Merchant feed. */
@@ -23,7 +23,7 @@ export function mattressItems() {
         size: s.label,
         color: c.label,
         price: s.price,
-        link: abs(`${MATTRESS_PATH}?color=${c.id}`),
+        link: abs(mattressColorHref(c.id)),
         image: photoUrl(photos[0]),
         extraImages: [...photos.slice(1), c.swatch as PhotoKey].map(photoUrl),
       };
