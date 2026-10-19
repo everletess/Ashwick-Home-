@@ -59,6 +59,8 @@ import mattressRoomDove from "@/assets/photos/mattress-room-dove.jpg";
 import mattressRoomSafari from "@/assets/photos/mattress-room-safari.jpg";
 import mattressRoomNatural from "@/assets/photos/mattress-room-natural.jpg";
 import mattressRoomKhaki from "@/assets/photos/mattress-room-khaki.jpg";
+import mattressRoomMoss from "@/assets/photos/mattress-room-moss.jpg";
+import mattressRoomHazel from "@/assets/photos/mattress-room-hazel.jpg";
 import materialsOil from "@/assets/photos/materials-oil.jpg";
 import furnitureFamily from "@/assets/photos/furniture-family.jpg";
 import materialsBandFurniture from "@/assets/photos/materials-band-furniture.jpg";
@@ -174,6 +176,8 @@ export const PHOTOS = {
   "mattress-room-safari": mattressRoomSafari,
   "mattress-room-natural": mattressRoomNatural,
   "mattress-room-khaki": mattressRoomKhaki,
+  "mattress-room-moss": mattressRoomMoss,
+  "mattress-room-hazel": mattressRoomHazel,
   "materials-oil": materialsOil,
   "furniture-family": furnitureFamily,
   "materials-band-furniture": materialsBandFurniture,
