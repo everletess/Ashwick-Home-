@@ -112,9 +112,9 @@ import pembrokeBlendCoco from "@/assets/photos/pembroke-blend-coco.jpg";
 import pembrokeCottonCream from "@/assets/photos/pembroke-cotton-cream.jpg";
 import pembrokeCottonKhaki from "@/assets/photos/pembroke-cotton-khaki.jpg";
 import pembrokeCottonNatural from "@/assets/photos/pembroke-cotton-natural.jpg";
-import pembrokeItalianCoco from "@/assets/photos/pembroke-italian-coco.jpg";
-import pembrokeItalianIvory from "@/assets/photos/pembroke-italian-ivory.jpg";
-import pembrokeItalianMoss from "@/assets/photos/pembroke-italian-moss.jpg";
+import pembrokeBelgianCoco from "@/assets/photos/pembroke-belgian-coco.jpg";
+import pembrokeBelgianIvory from "@/assets/photos/pembroke-belgian-ivory.jpg";
+import pembrokeBelgianMoss from "@/assets/photos/pembroke-belgian-moss.jpg";
 
 export const PHOTOS = {
   "burford-1": burford1,
@@ -227,9 +227,9 @@ export const PHOTOS = {
   "pembroke-cotton-cream": pembrokeCottonCream,
   "pembroke-cotton-khaki": pembrokeCottonKhaki,
   "pembroke-cotton-natural": pembrokeCottonNatural,
-  "pembroke-italian-coco": pembrokeItalianCoco,
-  "pembroke-italian-ivory": pembrokeItalianIvory,
-  "pembroke-italian-moss": pembrokeItalianMoss,
+  "pembroke-belgian-coco": pembrokeBelgianCoco,
+  "pembroke-belgian-ivory": pembrokeBelgianIvory,
+  "pembroke-belgian-moss": pembrokeBelgianMoss,
 } satisfies Record<string, StaticImageData>;
 
 export type PhotoKey = keyof typeof PHOTOS;

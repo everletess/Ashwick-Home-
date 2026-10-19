@@ -19,7 +19,8 @@ export function SwatchOrder({ fabrics }: { fabrics: FabricId[] }) {
       : [{ key: f, fabric: f, label: F.label, color: F.swatch, tex: F.tex }];
   });
   // ?fabric=irish&color=flax preselects the swatch the customer was looking at.
-  const pre = [params.get("fabric"), params.get("color")].filter(Boolean).join(":");
+  // "italian" was the Belgian linen's old id; older links still use it.
+  const pre = [params.get("fabric")?.replace(/^italian$/, "belgian"), params.get("color")].filter(Boolean).join(":");
   const [picked, setPicked] = useState<string[]>(() => all.filter((s) => s.key === pre || s.key === params.get("fabric")).map((s) => s.key).slice(0, 1));
   const [limitHit, setLimitHit] = useState(false);
   const [needOne, setNeedOne] = useState(false);

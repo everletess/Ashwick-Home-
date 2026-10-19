@@ -40,8 +40,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
+      // Carts saved before the fabric was renamed say "Italian Linen"; it's Belgian Linen.
       // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time hydration from storage
-      if (saved) setItems(JSON.parse(saved));
+      if (saved) setItems(JSON.parse(saved.replaceAll("Italian Linen", "Belgian Linen")));
     } catch {}
     setLoaded(true);
   }, []);
