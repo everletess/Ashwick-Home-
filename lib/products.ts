@@ -28,7 +28,7 @@ export const FABRICS: Record<FabricId, Fabric> = {
   // Id kept as "italian" (photo names and links use it); the fabric is Belgian linen.
   italian: {
     id: "italian", label: "Belgian Linen", swatch: "#B9AD94", tex: "linen",
-    detail: "100% organic Belgian linen by Libeco.",
+    detail: "100% organic Belgian linen.",
     colors: [
       { id: "coco", label: "Coco", code: "FAQ559 0007", swatch: "#B5A88D" },
       { id: "moss", label: "Moss", code: "FAQ559 0001", swatch: "#5F6752" },

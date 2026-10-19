@@ -91,6 +91,14 @@ export const FURNITURE_GROUPS: MaterialGroup[] = [
         photo: "materials-linen",
         alt: "Close-up of oat linen weave showing natural slubs",
       },
+      {
+        id: "wool-upholstery", short: "Wool Upholstery", name: "Wool upholstery", descriptor: "Texture you can feel from across the room.",
+        body: "We upholster in wool because it's resilient and slow to show wear, and it keeps its look through years of everyday use.",
+        where: "Upholstery, on request.",
+        origin: "OEKO-TEX Standard 100",
+        photo: "materials-wool",
+        alt: "Close-up of crimped cream wool",
+      },
     ],
   },
 ];
