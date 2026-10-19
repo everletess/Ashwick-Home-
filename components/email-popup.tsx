@@ -155,7 +155,7 @@ export function EmailPopup() {
             <p className="ep-eyebrow eyebrow">Welcome</p>
             <p className="ep-h h3" id="ep-title">You&apos;re on the list.</p>
             <p className="ep-body body small" id="ep-desc">
-              Here&apos;s 15% off your first order.{emailed && <> We&apos;ve sent it to your inbox too.</>}
+              Here&apos;s 15% off your first order.{emailed && <> We&apos;ve sent it to your inbox too.</>} The first Ashwick Letter will land in your inbox soon.
             </p>
             <p className="ep-code">{DISCOUNT_CODE}</p>
             <p className="fine">Enter it at checkout. One use per customer.</p>
@@ -164,12 +164,12 @@ export function EmailPopup() {
         ) : (
           <form className="ep-form" onSubmit={submit} noValidate>
             <button type="button" className="ep-x x" aria-label="Close" onClick={dismiss}>×</button>
-            <p className="ep-eyebrow eyebrow">For new arrivals &amp; the occasional edit</p>
+            <p className="ep-eyebrow eyebrow">The Ashwick Letter</p>
             <p className="ep-h h3" id="ep-title">
               Built to be inherited.
             </p>
             <p className="ep-body body small" id="ep-desc">
-              Join the list for early access to new pieces, material stories, and 15% off your first order.
+              Join our exclusive organic design newsletter: material stories, natural interiors, and first access to new pieces. Plus 15% off your first order.
             </p>
 
             <div className="ep-field">
@@ -194,7 +194,7 @@ export function EmailPopup() {
               className="btn full"
               disabled={status === "loading"}
             >
-              {status === "loading" ? "One moment…" : "Get 15% off"}
+              {status === "loading" ? "One moment…" : "Get 15% off + the newsletter"}
             </button>
 
             <button type="button" className="ep-skip fine" onClick={dismiss}>
