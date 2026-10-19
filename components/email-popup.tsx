@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useCart } from "@/components/cart";
 
 const STORAGE_KEY = "aw-popup-dismissed";
-const DELAY_MS = 8000; // 8 seconds after arriving
+const DELAY_MS = 5000; // 5 seconds after arriving
 const DISMISS_DAYS = 14; // "No thanks" hides it this long; subscribers never see it again
 // Pages where someone is mid-form; the popup waits until they move on.
 const QUIET_PATHS = ["/pages/bespoke", "/pages/trade", "/account"];
@@ -33,7 +33,7 @@ function remember(value: string) {
 
 export function EmailPopup() {
   const pathname = usePathname();
-  const { open: cartOpen } = useCart();
+  const { open: cartOpen, count: cartCount } = useCart();
   const [due, setDue] = useState(false);
   const [visible, setVisible] = useState(false);
   const [emailed, setEmailed] = useState(false);
@@ -50,7 +50,8 @@ export function EmailPopup() {
   }, []);
 
   // Once the 8 seconds are up, open as soon as the visitor isn't in the cart or a form page.
-  const quiet = cartOpen || QUIET_PATHS.some((p) => pathname?.startsWith(p));
+  // Never interrupt someone who has already added something to the cart.
+  const quiet = cartOpen || cartCount > 0 || QUIET_PATHS.some((p) => pathname?.startsWith(p));
   const show = due && !quiet;
   const [shown, setShown] = useState(false);
   if (show && !shown) {
