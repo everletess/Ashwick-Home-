@@ -25,9 +25,10 @@ export const FABRICS: Record<FabricId, Fabric> = {
   boucle: { id: "boucle", label: "Organic wool bouclé", swatch: "#ECE5D8", tex: "boucle" },
   wool: { id: "wool", label: "Brushed organic wool", swatch: "#B8AB96", tex: "wool" },
   leather: { id: "leather", label: "Vegetable-tanned leather", swatch: "#A36A40", tex: "leather" },
+  // Id kept as "italian" (photo names and links use it); the fabric is Belgian linen.
   italian: {
-    id: "italian", label: "Italian Linen", swatch: "#B9AD94", tex: "linen",
-    detail: "Organic linen and cotton blend: 55% linen, 45% cotton.",
+    id: "italian", label: "Belgian Linen", swatch: "#B9AD94", tex: "linen",
+    detail: "100% organic Belgian linen by Libeco.",
     colors: [
       { id: "coco", label: "Coco", code: "FAQ559 0007", swatch: "#B5A88D" },
       { id: "moss", label: "Moss", code: "FAQ559 0001", swatch: "#5F6752" },
@@ -250,37 +251,37 @@ const ALL_PRODUCTS: Product[] = [
   {
     id: "chatsworth", name: "The Chatsworth", type: "Sofa", category: "sofas", price: 10500,
     preorder: true,
-    line: "A sculptural curved sofa, in Linen Blend, Organic Cotton, Italian Linen or Irish Linen.",
+    line: "A sculptural curved sofa, in Linen Blend, Organic Cotton, Belgian Linen or Irish Linen.",
     photos: ["chatsworth-s1"],
     photoTags: { "chatsworth-s1": { fabric: "blend", color: "ivory" } },
     fabrics: ["blend", "cotton", "italian", "irish"], designedFabric: "blend",
-    materials: "Solid hardwood frame · Linen Blend, Organic Cotton, Italian Linen or Irish Linen upholstery",
+    materials: "Solid hardwood frame · Linen Blend, Organic Cotton, Belgian Linen or Irish Linen upholstery",
     delivery: WHITE_GLOVE,
   },
   {
     id: "cotswold", name: "The Cotswold", type: "Sofa", category: "sofas", price: 8500, priceFrom: true,
     preorder: true,
-    line: "A deep, curved modular sofa with a chaise, in Linen Blend, Organic Cotton, Italian Linen or Irish Linen.",
+    line: "A deep, curved modular sofa with a chaise, in Linen Blend, Organic Cotton, Belgian Linen or Irish Linen.",
     photos: ["csofa-hero", "csofa-studio", "csofa-b", "csofa-c", "csofa-a", "cchair-c", "csofa-d"], cardSingle: true,
     cardPhoto: "csofa-hero-square",
     photoTags: { "csofa-hero": { fabric: "blend", color: "ivory" }, "csofa-studio": { fabric: "blend", color: "ivory" } },
     fabrics: ["blend", "cotton", "italian", "irish"], designedFabric: "blend",
-    materials: "Solid hardwood frame · Modular sections with chaise · Linen Blend, Organic Cotton, Italian Linen or Irish Linen upholstery",
+    materials: "Solid hardwood frame · Modular sections with chaise · Linen Blend, Organic Cotton, Belgian Linen or Irish Linen upholstery",
     delivery: WHITE_GLOVE,
   },
   {
     id: "burford", name: "The Burford", type: "Sofa", category: "sofas", price: 6500, priceFrom: true,
     preorder: true,
-    line: "A deep, slipcovered sofa with a tailored skirt, in Irish Linen, Linen Blend, Organic Cotton or Italian Linen.",
+    line: "A deep, slipcovered sofa with a tailored skirt, in Irish Linen, Linen Blend, Organic Cotton or Belgian Linen.",
     photos: ["burford-hero", "burford-1", "burford-2", "burford-3"],
     photoTags: { "burford-1": { fabric: "irish", color: "white" } },
     fabrics: ["irish", "blend", "cotton", "italian"], designedFabric: "irish",
-    materials: "Solid hardwood frame · Removable slipcover in Irish Linen, Linen Blend, Organic Cotton or Italian Linen",
+    materials: "Solid hardwood frame · Removable slipcover in Irish Linen, Linen Blend, Organic Cotton or Belgian Linen",
     delivery: WHITE_GLOVE,
   },
   {
     id: "pembroke", name: "The Pembroke", type: "Chair", category: "chairs", price: 5000,
-    line: "A sculptural wingback lounge chair on a swivel base, in Linen Blend, Organic Cotton or Italian Linen.",
+    line: "A sculptural wingback lounge chair on a swivel base, in Linen Blend, Organic Cotton or Belgian Linen.",
     photos: [
       "pembroke-blend-ivory", "pembroke-blend-sand", "pembroke-blend-coco", "pembroke-blend-dove",
       "pembroke-cotton-cream", "pembroke-cotton-natural", "pembroke-cotton-khaki",
@@ -304,7 +305,7 @@ const ALL_PRODUCTS: Product[] = [
     fabrics: ["blend", "cotton", "italian"], designedFabric: "blend",
     fabricPrices: { cotton: 5200, italian: 5700 },
     delivery: WHITE_GLOVE,
-    materials: "Solid hardwood frame · Swivel base · Linen Blend, Organic Cotton or Italian Linen upholstery",
+    materials: "Solid hardwood frame · Swivel base · Linen Blend, Organic Cotton or Belgian Linen upholstery",
     dimensions: {
       overall: "36″ W × 36.5″ D × 39″ H",
       rows: [
@@ -320,11 +321,11 @@ const ALL_PRODUCTS: Product[] = [
   {
     id: "cotswold-chair", name: "The Cotswold Chair", type: "Chair", category: "chairs", price: 4000,
     preorder: true,
-    line: "A deep, rounded lounge chair made to sit beside the Cotswold sofa, in Linen Blend, Organic Cotton, Italian Linen or Irish Linen.",
+    line: "A deep, rounded lounge chair made to sit beside the Cotswold sofa, in Linen Blend, Organic Cotton, Belgian Linen or Irish Linen.",
     photos: ["cchair-studio", "cchair-c"], cardSingle: true,
     photoTags: { "cchair-studio": { fabric: "blend", color: "ivory" } },
     fabrics: ["blend", "cotton", "italian", "irish"], designedFabric: "blend",
-    materials: "Solid hardwood frame · Linen Blend, Organic Cotton, Italian Linen or Irish Linen upholstery",
+    materials: "Solid hardwood frame · Linen Blend, Organic Cotton, Belgian Linen or Irish Linen upholstery",
     delivery: WHITE_GLOVE,
   },
   {
