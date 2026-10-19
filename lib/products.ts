@@ -389,6 +389,6 @@ export const MATERIALS: [string, string][] = [
   ["Wool", "Natural loft and resilience in every cushion."],
   ["Linen", "Breathable, and softer with every year."],
   ["Coconut coir", "Firm, springy fiber from the coconut husk, in place of foam."],
-  ["Organic agave", "A strong natural fiber from the agave plant, grown with little water."],
+  ["Agave", "A strong natural fiber from the agave plant, grown with little water."],
   ["Natural oils", "Plant-based finishes for the wood."],
 ]

@@ -5,13 +5,13 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Photo } from "@/components/photo";
-import { MATTRESS, MATTRESS_PATH, colorById } from "@/lib/mattress";
+import { MATTRESS, colorById, mattressColorHref } from "@/lib/mattress";
 import { ASHBURY_PATH } from "@/lib/materials";
 
 export function MattressFeature() {
   const [color, setColor] = useState(MATTRESS.defaultColor);
   const sel = colorById(color);
-  const href = `${MATTRESS_PATH}?color=${color}`;
+  const href = mattressColorHref(color);
   return (
     <section className="sec linen m-feature">
       <div className="wrap m-feature-in">

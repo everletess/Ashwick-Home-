@@ -71,8 +71,8 @@ export const FURNITURE_GROUPS: MaterialGroup[] = [
         alt: "Coarse golden-brown coconut coir fiber",
       },
       {
-        id: "agave", short: "Agave", name: "Organic agave", descriptor: "Strength from the desert.",
-        body: "Agave is a hardy desert plant whose long leaves yield a strong natural fiber. It's tough, durable and breathable, and the plant grows with very little water. We're bringing organic agave fiber into our fills and foundations as another natural alternative to foam.",
+        id: "agave", short: "Agave", name: "Agave", descriptor: "Strength from the desert.",
+        body: "Agave is a hardy desert plant whose long leaves yield a strong natural fiber. It's tough, durable and breathable, and the plant grows with very little water. We're bringing agave fiber into our fills and foundations as another natural alternative to foam.",
         where: "Fills and foundations.",
         origin: "OEKO-TEX Standard 100",
         photo: "fiber-agave",

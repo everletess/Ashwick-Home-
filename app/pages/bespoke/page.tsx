@@ -49,7 +49,7 @@ const PALETTE: [string, PhotoKey][] = [
   ["Organic cotton", "fiber-cotton"],
   ["Swedish horsehair", "fiber-horsehair"],
   ["Coconut coir", "fiber-coir"],
-  ["Organic agave", "fiber-agave-card"],
+  ["Agave", "fiber-agave-card"],
 ];
 
 // Ashwick Bespoke handoff (Oct 16), with Tessa's answers to its open questions (Oct 17).

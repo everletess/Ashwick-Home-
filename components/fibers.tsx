@@ -12,7 +12,7 @@ const FIBERS: Fiber[] = [
   { name: "Cashmere", group: "The Ashbury", href: `${ASHBURY_PATH}#cashmere`, photo: "fiber-kashmir", alt: "Long, silky cashmere fiber", line: "Naturally fine and exceptionally soft. OEKO-TEX Standard 100 certified." },
   { name: "Swedish horsehair", group: "The Ashbury", href: `${ASHBURY_PATH}#horsehair`, photo: "fiber-horsehair", alt: "Curled dark horsehair", line: "Curled strands that act like small springs and let air move through." },
   { name: "Organic cotton", group: "The Ashbury", href: `${ASHBURY_PATH}#organic-cotton`, photo: "fiber-cotton", alt: "Soft white organic cotton fiber", line: "GOTS-certified, breathable at every layer." },
-  { name: "Organic agave", group: "Furniture", href: `${FURNITURE_MATERIALS_PATH}#agave`, photo: "fiber-agave-card", alt: "A twisted skein of pale organic agave fiber", line: "A strong natural fiber from the agave plant, grown with little water." },
+  { name: "Agave", group: "Furniture", href: `${FURNITURE_MATERIALS_PATH}#agave`, photo: "fiber-agave-card", alt: "A twisted skein of pale agave fiber", line: "A strong natural fiber from the agave plant, grown with little water." },
   { name: "Sustainably sourced wood", group: "Furniture", href: `${FURNITURE_MATERIALS_PATH}#hardwood`, photo: "fiber-wood", alt: "Blocks of solid oak and walnut", line: "Solid hardwood frames, built by hand to be inherited." },
   { name: "Coconut coir", group: "Furniture", href: `${FURNITURE_MATERIALS_PATH}#coir`, photo: "fiber-coir", alt: "Coarse golden-brown coconut coir fiber", line: "Springy fiber from coconut husks, used in our foundations in place of foam." },
 ];
