@@ -56,6 +56,13 @@ export function EmailPopup() {
   // First visit: open after 5 seconds. Someone who said "No thanks" gets the small tab instead.
   useEffect(() => {
     if (isSubscribed()) return;
+    // Ad links with ?offer=15 open the 15% sign-up straight away, even for people who said "No thanks" before.
+    try {
+      if (new URLSearchParams(window.location.search).get("offer") === "15") {
+        setDue(true);
+        return;
+      }
+    } catch {}
     if (seen()) {
       if (!tabHidden()) setTab(true);
       return;
