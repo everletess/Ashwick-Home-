@@ -47,3 +47,46 @@ export async function subscribeEmail(email: string, source: string): Promise<Sub
   window.dispatchEvent(new Event(SUBSCRIBED_EVENT));
   return { klaviyo: k };
 }
+
+export type SavedCartLine = { productId: string; name: string; qty: number; price: number | null; options: [string, string][] };
+
+/**
+ * "Email me my cart": subscribes the address (so the welcome series and ASHWICK15 follow), then records a
+ * "Saved Cart" event in Klaviyo carrying the items, a one-click checkout link and the total, which triggers
+ * the saved-cart email. Uses only Klaviyo's public client API, like subscribeEmail above.
+ */
+export async function saveCart(email: string, lines: SavedCartLine[], total: number | null): Promise<void> {
+  const value = email.trim();
+  await subscribeEmail(value, "Ashwick saved cart");
+  let checkoutUrl = "https://ashwickhome.com/products/luxury-organic-mattress";
+  try {
+    const r = await fetch("/api/checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ lines: lines.map((l) => ({ productId: l.productId, qty: l.qty, options: l.options })) }),
+    });
+    const d = await r.json();
+    if (r.ok && d.checkoutUrl) checkoutUrl = d.checkoutUrl;
+  } catch {}
+  if (!KLAVIYO_COMPANY_ID) return;
+  await fetch(`https://a.klaviyo.com/client/events/?company_id=${KLAVIYO_COMPANY_ID}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/vnd.api+json", revision: "2024-10-15" },
+    body: JSON.stringify({
+      data: {
+        type: "event",
+        attributes: {
+          metric: { data: { type: "metric", attributes: { name: "Saved Cart" } } },
+          profile: { data: { type: "profile", attributes: { email: value } } },
+          value: total ?? 0,
+          properties: {
+            CheckoutURL: checkoutUrl,
+            ItemNames: lines.map((l) => l.name),
+            Items: lines.map((l) => ({ name: l.name, qty: l.qty, price: l.price, options: l.options.map(([k, v]) => `${k}: ${v}`).join(" · ") })),
+            Total: total,
+          },
+        },
+      },
+    }),
+  }).catch(() => {});
+}

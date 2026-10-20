@@ -18,6 +18,7 @@ function useScrollLock(locked: boolean) {
 }
 import { useCart } from "@/components/cart";
 import { trackThen } from "@/lib/pixel";
+import { saveCart } from "@/lib/subscribe";
 import { ASHBURY_PATH, FURNITURE_MATERIALS_PATH, MATERIALS_PATH } from "@/lib/materials";
 
 const MATERIAL_LINKS: [string, string, string][] = [
@@ -158,6 +159,24 @@ export function CartDrawer() {
   const close = () => cart.setOpen(false);
   const [checking, setChecking] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const [saveEmail, setSaveEmail] = useState("");
+  const [saveState, setSaveState] = useState<"idle" | "sending" | "done" | "error">("idle");
+
+  const save = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!saveEmail.trim()) return;
+    setSaveState("sending");
+    try {
+      await saveCart(
+        saveEmail,
+        cart.items.map((i) => ({ productId: i.id, name: i.name, qty: i.qty, price: i.price, options: i.options })),
+        cart.subtotal,
+      );
+      setSaveState("done");
+    } catch {
+      setSaveState("error");
+    }
+  };
 
   const checkout = async () => {
     setChecking(true);
@@ -263,6 +282,19 @@ export function CartDrawer() {
             <button className="btn full" onClick={checkout} disabled={checking}>
               {checking ? "Redirecting…" : "Check out"}
             </button>
+            {saveState === "done" ? (
+              <p className="fine">Saved. We&rsquo;ve emailed your cart, with 15% off your first order from The Ashwick Letter.</p>
+            ) : (
+              <form onSubmit={save} className="save-cart">
+                <label className="fine" htmlFor="save-cart-email">Not ready? Email me my cart, plus 15% off.</label>
+                <div className="save-cart-row">
+                  <input id="save-cart-email" type="email" required placeholder="Your email" value={saveEmail} onChange={(e) => setSaveEmail(e.target.value)} />
+                  <button type="submit" className="btn" disabled={saveState === "sending"}>{saveState === "sending" ? "Sending…" : "Send"}</button>
+                </div>
+                {saveState === "error" && <p className="fine" style={{ color: "var(--err, #b00)" }}>That didn&rsquo;t go through. Please try again.</p>}
+                <p className="fine" style={{ fontSize: 11 }}>By sending, you join The Ashwick Letter. Unsubscribe any time.</p>
+              </form>
+            )}
           </div>
         )}
       </aside>

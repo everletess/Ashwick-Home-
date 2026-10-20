@@ -714,3 +714,8 @@ button.chip{cursor:pointer}
 .care-furniture .proc-h{margin-bottom:14px}
 .ftr-contact{display:flex;flex-direction:column;gap:8px;margin:28px 0 0;font:300 15px var(--sans)}
 .terms-block[id]{scroll-margin-top:96px}
+
+.save-cart{display:flex;flex-direction:column;gap:8px;margin-top:6px;padding-top:14px;border-top:1px solid var(--hair)}
+.save-cart-row{display:flex;gap:8px}
+.save-cart-row input{flex:1;min-width:0;font:300 14px var(--sans);padding:12px 14px;border:1px solid var(--hair);background:#fff;color:#2a251f}
+.save-cart-row .btn{padding:12px 18px}
