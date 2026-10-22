@@ -36,7 +36,7 @@ export const MATTRESS = {
     { id: "cal-king", label: "Cal King", dims: '72" × 84"', price: 5800 },
   ] satisfies MattressSize[],
   /** Size selected when the page opens. */
-  defaultSize: "queen",
+  defaultSize: "twin",
 
   /** Same price for both feels. */
   feels: [
