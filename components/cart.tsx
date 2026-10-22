@@ -2,6 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { track } from "@/lib/pixel";
+import { trackAddedToCart } from "@/lib/subscribe";
 import type { PhotoKey } from "@/lib/photos";
 
 export type CartLine = {
@@ -62,6 +63,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       contents: [{ id: line.id, quantity: line.qty, item_price: line.price ?? undefined }],
       value: ((line.price ?? 0) + (line.delivery?.price ?? 0)) * line.qty,
     });
+    // Tell Klaviyo (known subscribers only) so the abandoned-cart flow can follow up.
+    void trackAddedToCart(
+      [{ productId: line.id, name: line.name, qty: line.qty, price: line.price, options: line.options }],
+      line.price == null ? null : ((line.price ?? 0) + (line.delivery?.price ?? 0)) * line.qty,
+    );
     setOpen(true);
   }, []);
   const remove = useCallback((lineId: string) => setItems((c) => c.filter((i) => i.lineId !== lineId)), []);

@@ -5,6 +5,8 @@
 const KLAVIYO_COMPANY_ID = process.env.NEXT_PUBLIC_KLAVIYO_COMPANY_ID ?? "";
 const KLAVIYO_LIST_ID = process.env.NEXT_PUBLIC_KLAVIYO_LIST_ID ?? "";
 export const SUBSCRIBED_KEY = "aw-popup-dismissed";
+/** The subscriber's email, kept on this device so add-to-cart can be matched to them in Klaviyo. */
+export const SUBSCRIBER_EMAIL_KEY = "aw-subscriber-email";
 /** Fired on window after any successful sign-up, so the pop-up and the 15% tab hide everywhere. */
 export const SUBSCRIBED_EVENT = "ashwick:subscribed";
 
@@ -43,6 +45,7 @@ export async function subscribeEmail(email: string, source: string): Promise<Sub
   if (typeof fbq === "function") fbq("track", "Lead", { content_name: source });
   try {
     localStorage.setItem(SUBSCRIBED_KEY, "subscribed"); // subscribers never see the pop-up or tab again
+    localStorage.setItem(SUBSCRIBER_EMAIL_KEY, value);
   } catch {}
   window.dispatchEvent(new Event(SUBSCRIBED_EVENT));
   return { klaviyo: k };
@@ -89,4 +92,50 @@ export async function saveCart(email: string, lines: SavedCartLine[], total: num
       },
     }),
   }).catch(() => {});
+}
+
+/**
+ * "Added to Cart": when a known subscriber (signed up via the pop-up, footer, homepage form or cart box) adds
+ * something to their cart, record an "Added to Cart" event in Klaviyo with the items and a one-click checkout
+ * link, so the abandoned-cart flow can follow up. Anonymous visitors are skipped (no email, nothing to match).
+ * Public client API only; never blocks or breaks the add-to-cart.
+ */
+export async function trackAddedToCart(lines: SavedCartLine[], total: number | null): Promise<void> {
+  try {
+    if (!KLAVIYO_COMPANY_ID || lines.length === 0) return;
+    const email = localStorage.getItem(SUBSCRIBER_EMAIL_KEY);
+    if (!email) return;
+    let checkoutUrl = "https://ashwickhome.com/products/luxury-organic-mattress";
+    try {
+      const r = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ lines: lines.map((l) => ({ productId: l.productId, qty: l.qty, options: l.options })) }),
+      });
+      const d = await r.json();
+      if (r.ok && d.checkoutUrl) checkoutUrl = d.checkoutUrl;
+    } catch {}
+    await fetch(`https://a.klaviyo.com/client/events/?company_id=${KLAVIYO_COMPANY_ID}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/vnd.api+json", revision: "2024-10-15" },
+      body: JSON.stringify({
+        data: {
+          type: "event",
+          attributes: {
+            metric: { data: { type: "metric", attributes: { name: "Added to Cart" } } },
+            profile: { data: { type: "profile", attributes: { email } } },
+            value: total ?? 0,
+            properties: {
+              CheckoutURL: checkoutUrl,
+              ItemNames: lines.map((l) => l.name),
+              Items: lines.map((l) => ({ name: l.name, qty: l.qty, price: l.price, options: l.options.map(([k, v]) => `${k}: ${v}`).join(" · ") })),
+              Total: total,
+            },
+          },
+        },
+      }),
+    });
+  } catch {
+    // Never let tracking break the site.
+  }
 }
