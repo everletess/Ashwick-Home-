@@ -19,6 +19,7 @@ function useScrollLock(locked: boolean) {
 import { useCart } from "@/components/cart";
 import { trackThen } from "@/lib/pixel";
 import { saveCart } from "@/lib/subscribe";
+import { MATTRESS } from "@/lib/mattress";
 import { ASHBURY_PATH, FURNITURE_MATERIALS_PATH, MATERIALS_PATH } from "@/lib/materials";
 
 const MATERIAL_LINKS: [string, string, string][] = [
@@ -276,8 +277,13 @@ export function CartDrawer() {
             <p className="fine">
               {cart.items.every((i) => i.delivery)
                 ? "Paid in full at checkout. Includes delivery shown above. Taxes calculated at checkout."
-                : "Paid in full at checkout. Taxes and shipping calculated at checkout."}
+                : cart.items.every((i) => i.id === MATTRESS.id)
+                  ? "Delivery included in the price. Paid in full at checkout, taxes calculated there."
+                  : "Paid in full at checkout. Taxes and shipping calculated at checkout."}
             </p>
+            {cart.items.some((i) => i.id === MATTRESS.id) && (
+              <p className="fine">The mattress comes with a 100-night trial (30-night minimum). Made to order in about 3 days.</p>
+            )}
             {checkoutError && <p className="fine" style={{ color: "var(--err, #b00)" }}>{checkoutError}</p>}
             <button className="btn full" onClick={checkout} disabled={checking}>
               {checking ? "Redirecting…" : "Check out"}
