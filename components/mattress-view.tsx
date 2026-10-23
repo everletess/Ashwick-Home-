@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { useCart } from "@/components/cart";
 import { Photo } from "@/components/photo";
 import { OptGroup, Pills } from "@/components/product-view";
-import { GUARANTEE_PATH, MATTRESS, MATTRESS_GALLERY, colorById, colorFromParam, sizeById } from "@/lib/mattress";
+import { GUARANTEE_PATH, MATTRESS, colorById, colorFromParam, sizeById } from "@/lib/mattress";
 import { PHOTOS, type PhotoKey } from "@/lib/photos";
 import { fmt } from "@/lib/products";
 import { track } from "@/lib/pixel";
@@ -29,7 +29,10 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
   const sel = colorById(color);
   const sz = sizeById(size);
   // The color's own shots, then the five-color lineup and the construction.
-  const gallery: { photo: PhotoKey; alt: string }[] = [...sel.photos.map((photo) => ({ photo, alt: sel.alt })), ...MATTRESS_GALLERY];
+  const gallery: { photo: PhotoKey; alt: string }[] = [
+    ...sel.photos.map((photo) => ({ photo, alt: sel.alt })),
+    { photo: sel.cutaway, alt: `${sel.alt}: the layers inside` },
+  ];
   // Horizontal swipe on the main image steps through the gallery on touch screens.
   const swipeX = useRef<number | null>(null);
   const onPointerDown = (e: React.PointerEvent) => {

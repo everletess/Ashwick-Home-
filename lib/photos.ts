@@ -94,6 +94,10 @@ import marloweOttomanCard from "@/assets/photos/marlowe-ottoman-card.jpg";
 import mattressMochaRoom from "@/assets/photos/mattress-mocha-room.jpg";
 import mattressSafariRoom from "@/assets/photos/mattress-safari-room.jpg";
 import mattressCutaway from "@/assets/photos/mattress-cutaway.jpg";
+import mattressCutawayFleece from "@/assets/photos/mattress-cutaway-fleece.jpg";
+import mattressCutawayFlint from "@/assets/photos/mattress-cutaway-flint.jpg";
+import mattressCutawayHazel from "@/assets/photos/mattress-cutaway-hazel.jpg";
+import mattressCutawayMoss from "@/assets/photos/mattress-cutaway-moss.jpg";
 import mattressSwatchMocha from "@/assets/photos/mattress-swatch-mocha.jpg";
 import mattressSwatchSafari from "@/assets/photos/mattress-swatch-safari.jpg";
 import mattressSwatchDove from "@/assets/photos/mattress-swatch-dove.jpg";
@@ -214,6 +218,10 @@ export const PHOTOS = {
   "mattress-mocha-room": mattressMochaRoom,
   "mattress-safari-room": mattressSafariRoom,
   "mattress-cutaway": mattressCutaway,
+  "mattress-cutaway-fleece": mattressCutawayFleece,
+  "mattress-cutaway-flint": mattressCutawayFlint,
+  "mattress-cutaway-hazel": mattressCutawayHazel,
+  "mattress-cutaway-moss": mattressCutawayMoss,
   "mattress-swatch-mocha": mattressSwatchMocha,
   "mattress-swatch-safari": mattressSwatchSafari,
   "mattress-swatch-dove": mattressSwatchDove,
