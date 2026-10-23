@@ -52,8 +52,8 @@ export const MATTRESS = {
     { id: "natural", label: "Fleece", swatch: "mattress-swatch-natural", photos: ["mattress-room-fleece", "mattress-studio-natural"], cutaway: "mattress-cutaway-fleece", alt: "The Ashbury in Fleece" },
     { id: "dove", label: "Flint", swatch: "mattress-swatch-dove", photos: ["mattress-room-flint", "mattress-studio-dove"], cutaway: "mattress-cutaway-flint", alt: "The Ashbury in Flint" },
     { id: "khaki", label: "Moss", swatch: "mattress-swatch-khaki", photos: ["mattress-room-moss", "mattress-studio-khaki"], cutaway: "mattress-cutaway-moss", alt: "The Ashbury in Moss" },
-    // The new Hazel render replaces the old Safari studio shot in the gallery (the old file is kept, unused).
-    { id: "safari", label: "Hazel", swatch: "mattress-swatch-hazel", photos: ["mattress-room-hazel", "mattress-studio-hazel", "mattress-safari-room"], cutaway: "mattress-cutaway-hazel", alt: "The Ashbury in Hazel" },
+    // Was "Hazel" (and before that "Safari"); the brown Hazel photos are kept, unused.
+    { id: "safari", label: "Flax", swatch: "mattress-swatch-safari", photos: ["mattress-room-flax", "mattress-studio-safari", "mattress-safari-room"], cutaway: "mattress-cutaway-flax", alt: "The Ashbury in Flax" },
     { id: "mocha", label: "Sorrel", swatch: "mattress-swatch-mocha", photos: ["mattress-room-sorrel", "mattress-studio-mocha", "mattress-mocha-room"], cutaway: "mattress-cutaway", alt: "The Ashbury in Sorrel" },
   ] satisfies MattressColor[],
   /** Color selected when the page opens (its first photo leads the gallery and the social preview). */
@@ -80,6 +80,10 @@ export const colorById = (id: string) => MATTRESS.colors.find((c) => c.id === id
 
 /** Link to the mattress page with a color selected, by its current name (?color=sorrel). */
 export const mattressColorHref = (id: string) => `${MATTRESS_PATH}?color=${colorById(id).label.toLowerCase()}`;
-/** The color id for a ?color= value: its current name, or the original id that older links and the feed used. */
-export const colorFromParam = (v: string | null) =>
-  v ? MATTRESS.colors.find((c) => c.label.toLowerCase() === v.toLowerCase() || c.id === v)?.id : undefined;
+/** Earlier names of a color, so older links still find it. */
+const FORMER_NAMES: Record<string, string[]> = { safari: ["hazel"] };
+/** The color id for a ?color= value: its current name, a former name, or the original id that older links and the feed used. */
+export const colorFromParam = (v: string | null) => {
+  const q = v?.toLowerCase();
+  return q ? MATTRESS.colors.find((c) => c.label.toLowerCase() === q || c.id === q || FORMER_NAMES[c.id]?.includes(q))?.id : undefined;
+};

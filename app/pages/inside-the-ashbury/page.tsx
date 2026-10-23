@@ -56,7 +56,7 @@ export default function InsideTheAshburyPage() {
 
       <section className="sec linen" id="hand-tufting">
         <div className="wrap proc">
-          <div className="proc-v mat-portrait"><Photo src="materials-rosettes" label="Hand-tied wool rosettes on the Ashbury topper in Hazel" sizes={HALF} /></div>
+          <div className="proc-v mat-portrait"><Photo src="materials-rosettes" label="Hand-tied wool rosettes on the Ashbury topper" sizes={HALF} /></div>
           <div className="proc-t">
             <div className="eyebrow">Craft</div>
             <h2 className="proc-h">Held together by hand.</h2>
