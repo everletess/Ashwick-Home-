@@ -45,7 +45,7 @@ const ALIASES: Record<string, string[]> = {
   natural: ["Natural"],
   dove: ["Morning Dove", "Dove"],
   khaki: ["Khaki"],
-  safari: ["Safari"],
+  safari: ["Hazel", "Safari"],
   mocha: ["Mocha Mousse", "Mocha"],
 };
 

@@ -61,6 +61,7 @@ import mattressRoomNatural from "@/assets/photos/mattress-room-natural.jpg";
 import mattressRoomKhaki from "@/assets/photos/mattress-room-khaki.jpg";
 import mattressRoomMoss from "@/assets/photos/mattress-room-moss.jpg";
 import mattressRoomHazel from "@/assets/photos/mattress-room-hazel.jpg";
+import mattressRoomFlax from "@/assets/photos/mattress-room-flax.jpg";
 import mattressRoomSorrel from "@/assets/photos/mattress-room-sorrel.jpg";
 import mattressRoomFleece from "@/assets/photos/mattress-room-fleece.jpg";
 import mattressRoomFlint from "@/assets/photos/mattress-room-flint.jpg";
@@ -94,6 +95,10 @@ import marloweOttomanCard from "@/assets/photos/marlowe-ottoman-card.jpg";
 import mattressMochaRoom from "@/assets/photos/mattress-mocha-room.jpg";
 import mattressSafariRoom from "@/assets/photos/mattress-safari-room.jpg";
 import mattressCutaway from "@/assets/photos/mattress-cutaway.jpg";
+import mattressCutawayFleece from "@/assets/photos/mattress-cutaway-fleece.jpg";
+import mattressCutawayFlint from "@/assets/photos/mattress-cutaway-flint.jpg";
+import mattressCutawayFlax from "@/assets/photos/mattress-cutaway-flax.jpg";
+import mattressCutawayMoss from "@/assets/photos/mattress-cutaway-moss.jpg";
 import mattressSwatchMocha from "@/assets/photos/mattress-swatch-mocha.jpg";
 import mattressSwatchSafari from "@/assets/photos/mattress-swatch-safari.jpg";
 import mattressSwatchDove from "@/assets/photos/mattress-swatch-dove.jpg";
@@ -181,6 +186,7 @@ export const PHOTOS = {
   "mattress-room-khaki": mattressRoomKhaki,
   "mattress-room-moss": mattressRoomMoss,
   "mattress-room-hazel": mattressRoomHazel,
+  "mattress-room-flax": mattressRoomFlax,
   "mattress-room-sorrel": mattressRoomSorrel,
   "mattress-room-fleece": mattressRoomFleece,
   "mattress-room-flint": mattressRoomFlint,
@@ -214,6 +220,10 @@ export const PHOTOS = {
   "mattress-mocha-room": mattressMochaRoom,
   "mattress-safari-room": mattressSafariRoom,
   "mattress-cutaway": mattressCutaway,
+  "mattress-cutaway-fleece": mattressCutawayFleece,
+  "mattress-cutaway-flint": mattressCutawayFlint,
+  "mattress-cutaway-flax": mattressCutawayFlax,
+  "mattress-cutaway-moss": mattressCutawayMoss,
   "mattress-swatch-mocha": mattressSwatchMocha,
   "mattress-swatch-safari": mattressSwatchSafari,
   "mattress-swatch-dove": mattressSwatchDove,
