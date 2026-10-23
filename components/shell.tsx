@@ -17,6 +17,8 @@ function useScrollLock(locked: boolean) {
   }, [locked]);
 }
 import { useCart } from "@/components/cart";
+import { SHOW_SIGNUP_EVENT } from "@/components/email-popup";
+import { SUBSCRIBED_EVENT, SUBSCRIBED_KEY } from "@/lib/subscribe";
 import { trackThen } from "@/lib/pixel";
 import { saveCart } from "@/lib/subscribe";
 import { MATTRESS } from "@/lib/mattress";
@@ -80,8 +82,51 @@ export function Wordmark({ tagline = true }: { tagline?: boolean }) {
   );
 }
 
+const ANNOUNCE_MS = 5000;
+
+/**
+ * Alternates "Handmade to order…" with the 15% offer, which opens the email sign-up. Subscribers only see the
+ * first line. Pauses while hovered or focused.
+ */
 export function AnnouncementBar() {
-  return <div className="announce">Handmade to order in the USA · Nothing synthetic</div>;
+  const [offer, setOffer] = useState(false);
+  const [showOffer, setShowOffer] = useState(false);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    let subscribed = false;
+    try {
+      subscribed = localStorage.getItem(SUBSCRIBED_KEY) === "subscribed";
+    } catch {}
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- read once from storage after mount
+    setOffer(!subscribed);
+    const done = () => { setOffer(false); setShowOffer(false); };
+    window.addEventListener(SUBSCRIBED_EVENT, done);
+    return () => window.removeEventListener(SUBSCRIBED_EVENT, done);
+  }, []);
+
+  useEffect(() => {
+    if (!offer || paused) return;
+    const t = setInterval(() => setShowOffer((v) => !v), ANNOUNCE_MS);
+    return () => clearInterval(t);
+  }, [offer, paused]);
+
+  return (
+    <div className="announce" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocus={() => setPaused(true)} onBlur={() => setPaused(false)}>
+      <span className={showOffer ? "announce-msg" : "announce-msg on"} aria-hidden={showOffer}>Handmade to order in the USA · Nothing synthetic</span>
+      {offer && (
+        <button
+          type="button"
+          className={showOffer ? "announce-msg announce-offer on" : "announce-msg announce-offer"}
+          tabIndex={showOffer ? 0 : -1}
+          aria-hidden={!showOffer}
+          onClick={() => window.dispatchEvent(new Event(SHOW_SIGNUP_EVENT))}
+        >
+          Click for 15% off your first order
+        </button>
+      )}
+    </div>
+  );
 }
 
 export function Header() {
