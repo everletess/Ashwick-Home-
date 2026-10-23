@@ -282,7 +282,7 @@ export function CartDrawer() {
                   : "Paid in full at checkout. Taxes and shipping calculated at checkout."}
             </p>
             {cart.items.some((i) => i.id === MATTRESS.id) && (
-              <p className="fine">The mattress comes with a 100-night trial (30-night minimum). Made to order in about 3 days.</p>
+              <p className="fine">The mattress comes with a 100-night trial (30-night minimum). Made to order. Ships in 1–2 weeks.</p>
             )}
             {checkoutError && <p className="fine" style={{ color: "var(--err, #b00)" }}>{checkoutError}</p>}
             <button className="btn full" onClick={checkout} disabled={checking}>
