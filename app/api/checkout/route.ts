@@ -13,6 +13,7 @@
 import { NextResponse } from "next/server";
 import { createCheckout, fetchProductVariants, type ShopifyVariant } from "@/lib/shopify";
 import { MATTRESS } from "@/lib/mattress";
+import { DOG_BED_ID } from "@/lib/dog-bed";
 
 export type CheckoutRequestLine = {
   productId: string;
@@ -82,6 +83,15 @@ function mattressVariant(variants: ShopifyVariant[], options: [string, string][]
   return match.v;
 }
 
+/** The dog bed has a Shopify variant per size and color, titled "Medium (30" × 20") / Flax". */
+function dogBedVariant(variants: ShopifyVariant[], options: [string, string][]) {
+  const opt = (k: string) => norm(options.find(([key]) => key === k)?.[1] ?? "");
+  const wanted = `${opt("Size")} / ${opt("Color")}`;
+  const match = variants.find((v) => v.productHandle === "ashbury-dog-bed" && norm(v.title) === wanted);
+  if (!match) throw new Error(`No Shopify option for the dog bed in ${options.map(([, v]) => v).join(" / ")}`);
+  return match;
+}
+
 export async function POST(req: Request) {
   try {
     const { lines } = (await req.json()) as { lines: CheckoutRequestLine[] };
@@ -95,6 +105,13 @@ export async function POST(req: Request) {
       if (line.productId === MATTRESS.id) {
         return {
           variantId: mattressVariant(variants, line.options).variantId,
+          quantity: line.qty,
+          customAttributes: line.options.map(([key, value]) => ({ key, value })),
+        };
+      }
+      if (line.productId === DOG_BED_ID) {
+        return {
+          variantId: dogBedVariant(variants, line.options).variantId,
           quantity: line.qty,
           customAttributes: line.options.map(([key, value]) => ({ key, value })),
         };
