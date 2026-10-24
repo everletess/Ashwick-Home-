@@ -22,6 +22,7 @@ import { SUBSCRIBED_EVENT, SUBSCRIBED_KEY } from "@/lib/subscribe";
 import { trackThen } from "@/lib/pixel";
 import { saveCart } from "@/lib/subscribe";
 import { MATTRESS } from "@/lib/mattress";
+import { DOG_BED_ID } from "@/lib/dog-bed";
 import { ASHBURY_PATH, FURNITURE_MATERIALS_PATH, MATERIALS_PATH } from "@/lib/materials";
 
 const MATERIAL_LINKS: [string, string, string][] = [
@@ -322,12 +323,30 @@ export function CartDrawer() {
             <p className="fine">
               {cart.items.every((i) => i.delivery)
                 ? "Paid in full at checkout. Includes delivery shown above. Taxes calculated at checkout."
-                : cart.items.every((i) => i.id === MATTRESS.id)
-                  ? "Delivery included in the price. Paid in full at checkout, taxes calculated there."
+                : cart.items.every((i) => i.id === MATTRESS.id || i.id === DOG_BED_ID)
+                  ? "Free delivery. Ships within 3–4 days. Paid in full at checkout, taxes calculated there."
                   : "Paid in full at checkout. Taxes and shipping calculated at checkout."}
             </p>
-            {cart.items.some((i) => i.id === MATTRESS.id) && (
-              <p className="fine">The mattress comes with a 100-night trial (30-night minimum). Made to order. Ships within 3–4 days.</p>
+            {cart.items.some((i) => i.id === MATTRESS.id || i.id === DOG_BED_ID) && (
+              <div className="promise">
+                <div className="eyebrow">Our promise</div>
+                <ul>
+                  {cart.items.some((i) => i.id === MATTRESS.id) ? (
+                    <>
+                      <li>100-night trial, with a 30-night minimum</li>
+                      <li>Lifetime limited warranty</li>
+                    </>
+                  ) : (
+                    <>
+                      <li>30-day return window</li>
+                      <li>1-year warranty</li>
+                    </>
+                  )}
+                  <li>GOTS and OEKO-TEX certified materials</li>
+                  <li>Handmade to order in the USA</li>
+                  <li>Free delivery. Ships within 3–4 days</li>
+                </ul>
+              </div>
             )}
             {checkoutError && <p className="fine" style={{ color: "var(--err, #b00)" }}>{checkoutError}</p>}
             <button className="btn full" onClick={checkout} disabled={checking}>

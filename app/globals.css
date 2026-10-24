@@ -510,6 +510,7 @@ button.chip{cursor:pointer}
 .qty button{width:36px;height:36px;background:none;border:0;cursor:pointer;font-size:15px}
 .qty span{width:28px;text-align:center;font:300 16px var(--serif)}
 .rm{background:none;border:0;font:400 10px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--walnut);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.promise{border:1px solid var(--oat);background:var(--alabaster);padding:14px 16px}.promise ul{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:4px;font:300 13px/1.5 var(--sans);color:var(--walnut)}.promise li:before{content:"\2713";margin-right:8px}
 .drawer-f{padding:22px 28px 28px;border-top:1px solid var(--hair);background:var(--linen);display:flex;flex-direction:column;gap:14px}
 .sub{display:flex;justify-content:space-between;align-items:baseline}
 .sub-v{font:300 30px var(--serif)}
