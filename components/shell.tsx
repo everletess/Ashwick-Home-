@@ -20,7 +20,7 @@ import { useCart } from "@/components/cart";
 import { SHOW_SIGNUP_EVENT } from "@/components/email-popup";
 import { SUBSCRIBED_EVENT, SUBSCRIBED_KEY } from "@/lib/subscribe";
 import { trackThen } from "@/lib/pixel";
-import { saveCart } from "@/lib/subscribe";
+import { saveCart, normalizePhone } from "@/lib/subscribe";
 import { MATTRESS } from "@/lib/mattress";
 import { DOG_BED_ID } from "@/lib/dog-bed";
 import { ASHBURY_PATH, FURNITURE_MATERIALS_PATH, MATERIALS_PATH } from "@/lib/materials";
@@ -207,17 +207,24 @@ export function CartDrawer() {
   const [checking, setChecking] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [saveEmail, setSaveEmail] = useState("");
-  const [saveState, setSaveState] = useState<"idle" | "sending" | "done" | "error">("idle");
+  const [savePhone, setSavePhone] = useState("");
+  const [saveState, setSaveState] = useState<"idle" | "sending" | "done" | "error" | "badphone">("idle");
 
   const save = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!saveEmail.trim()) return;
+    const phone = savePhone.trim() ? normalizePhone(savePhone) : null;
+    if (savePhone.trim() && !phone) {
+      setSaveState("badphone");
+      return;
+    }
     setSaveState("sending");
     try {
       await saveCart(
         saveEmail,
         cart.items.map((i) => ({ productId: i.id, name: i.name, qty: i.qty, price: i.price, options: i.options })),
         cart.subtotal,
+        phone,
       );
       setSaveState("done");
     } catch {
@@ -341,6 +348,11 @@ export function CartDrawer() {
                   <button type="submit" className="btn" disabled={saveState === "sending"}>{saveState === "sending" ? "Sending…" : "Send"}</button>
                 </div>
                 {saveState === "error" && <p className="fine" style={{ color: "var(--err, #b00)" }}>That didn&rsquo;t go through. Please try again.</p>}
+                <div className="save-cart-row">
+                  <input id="save-cart-phone" type="tel" autoComplete="tel" inputMode="tel" placeholder="Phone (optional)" aria-label="Phone number, optional" value={savePhone} onChange={(e) => setSavePhone(e.target.value)} />
+                </div>
+                <p className="fine" style={{ fontSize: 11 }}>Prefer a text or a call? Add your number and we&rsquo;ll reach out about your cart. We&rsquo;ll only contact you about your order or cart.</p>
+                {saveState === "badphone" && <p className="fine" style={{ color: "var(--err, #b00)" }}>Please enter a 10-digit US phone number, or leave it blank.</p>}
                 <p className="fine" style={{ fontSize: 11 }}>By sending, you join The Ashwick Letter. Unsubscribe any time.</p>
               </form>
             )}

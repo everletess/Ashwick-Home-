@@ -58,9 +58,31 @@ export type SavedCartLine = { productId: string; name: string; qty: number; pric
  * "Saved Cart" event in Klaviyo carrying the items, a one-click checkout link and the total, which triggers
  * the saved-cart email. Uses only Klaviyo's public client API, like subscribeEmail above.
  */
-export async function saveCart(email: string, lines: SavedCartLine[], total: number | null): Promise<void> {
+/** US numbers only: returns +1XXXXXXXXXX, or null if it doesn't look like a valid number. */
+export function normalizePhone(raw: string): string | null {
+  const d = raw.replace(/\D/g, "");
+  if (d.length === 10) return `+1${d}`;
+  if (d.length === 11 && d.startsWith("1")) return `+${d}`;
+  return null;
+}
+
+/**
+ * Stores an optional phone number on the Klaviyo profile. This is a profile attribute only: it does not opt the
+ * number in to SMS marketing. Used for a personal call or text about the customer's cart.
+ */
+async function saveProfilePhone(email: string, phone: string): Promise<void> {
+  if (!KLAVIYO_COMPANY_ID) return;
+  await fetch(`https://a.klaviyo.com/client/profiles/?company_id=${KLAVIYO_COMPANY_ID}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/vnd.api+json", revision: "2024-10-15" },
+    body: JSON.stringify({ data: { type: "profile", attributes: { email, phone_number: phone } } }),
+  }).catch(() => {});
+}
+
+export async function saveCart(email: string, lines: SavedCartLine[], total: number | null, phone?: string | null): Promise<void> {
   const value = email.trim();
   await subscribeEmail(value, "Ashwick saved cart");
+  if (phone) await saveProfilePhone(value, phone);
   let checkoutUrl = "https://ashwickhome.com/products/luxury-organic-mattress";
   try {
     const r = await fetch("/api/checkout", {
