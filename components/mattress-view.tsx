@@ -133,7 +133,7 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
                 name={M.title}
                 summary={`${feelLabel} · ${sz.label} · ${sel.label}`}
                 price={sz.price}
-                note="Pay over time with Affirm"
+                note="Pay over time with Shop Pay Installments"
                 cta="Add to cart"
                 onAdd={add}
               />
@@ -151,7 +151,7 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
           <ul className="buy-notes">
             <li>{M.leadTime} {M.shipping}</li>
             <li>{M.warranty}.</li>
-            <li>Pay over time with Affirm at checkout.</li>
+            <li>Pay over time with Shop Pay Installments at checkout, subject to approval.</li>
           </ul>
         </div>
 
