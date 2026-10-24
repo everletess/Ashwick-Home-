@@ -15,11 +15,11 @@ export const DOG_BED = {
   comingSoon: true,
   /** Ids and swatches are the Ashbury's (lib/mattress.ts), so a dog bed matches its mattress. */
   colors: [
-    { id: "natural", label: "Fleece", swatch: "mattress-swatch-natural", photos: ["dog-bed-fleece"] },
-    { id: "dove", label: "Flint", swatch: "mattress-swatch-dove", photos: ["dog-bed-flint"] },
-    { id: "khaki", label: "Moss", swatch: "mattress-swatch-khaki", photos: ["dog-bed-moss"] },
-    { id: "safari", label: "Flax", swatch: "mattress-swatch-safari", photos: ["dog-bed-flax"] },
-    { id: "mocha", label: "Sorrel", swatch: "mattress-swatch-mocha", photos: ["dog-bed-sorrel", "dog-bed-sorrel-front", "dog-bed-sorrel-detail"] },
+    { id: "natural", label: "Fleece", swatch: "mattress-swatch-natural", photos: ["dog-bed-fleece", "dog-bed-fleece-room"] },
+    { id: "dove", label: "Flint", swatch: "mattress-swatch-dove", photos: ["dog-bed-flint", "dog-bed-flint-room"] },
+    { id: "khaki", label: "Moss", swatch: "mattress-swatch-khaki", photos: ["dog-bed-moss", "dog-bed-moss-room"] },
+    { id: "safari", label: "Flax", swatch: "mattress-swatch-safari", photos: ["dog-bed-flax", "dog-bed-flax-room"] },
+    { id: "mocha", label: "Sorrel", swatch: "mattress-swatch-mocha", photos: ["dog-bed-sorrel", "dog-bed-sorrel-room-golden", "dog-bed-sorrel-front", "dog-bed-sorrel-detail"] },
   ] satisfies DogBedColor[],
   defaultColor: "mocha",
   /** Editorial shots for the home page feature (they fade between each other) and the mattress page teaser. */
