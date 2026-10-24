@@ -1,6 +1,5 @@
 /**
- * The organic dog bed collection, launching soon. Colors match the Ashbury's; each one appears on the page once it
- * has photos. Price, sizes and buying come at launch.
+ * The organic dog bed collection, launching soon. Colors match the Ashbury's. Price, sizes and buying come at launch.
  */
 import type { PhotoKey } from "@/lib/photos";
 
@@ -16,8 +15,11 @@ export const DOG_BED = {
   comingSoon: true,
   /** Ids and swatches are the Ashbury's (lib/mattress.ts), so a dog bed matches its mattress. */
   colors: [
-    { id: "mocha", label: "Sorrel", swatch: "mattress-swatch-mocha", photos: ["dog-bed-sorrel", "dog-bed-sorrel-front", "dog-bed-sorrel-detail"] },
+    { id: "natural", label: "Fleece", swatch: "mattress-swatch-natural", photos: ["dog-bed-fleece"] },
     { id: "dove", label: "Flint", swatch: "mattress-swatch-dove", photos: ["dog-bed-flint"] },
+    { id: "khaki", label: "Moss", swatch: "mattress-swatch-khaki", photos: ["dog-bed-moss"] },
+    { id: "safari", label: "Flax", swatch: "mattress-swatch-safari", photos: ["dog-bed-flax"] },
+    { id: "mocha", label: "Sorrel", swatch: "mattress-swatch-mocha", photos: ["dog-bed-sorrel", "dog-bed-sorrel-front", "dog-bed-sorrel-detail"] },
   ] satisfies DogBedColor[],
   defaultColor: "mocha",
   /** Home page feature photo. */

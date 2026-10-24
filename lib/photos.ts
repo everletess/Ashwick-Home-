@@ -48,6 +48,9 @@ import dogBedSorrel from "@/assets/photos/dog-bed-sorrel.jpg";
 import dogBedSorrelFront from "@/assets/photos/dog-bed-sorrel-front.jpg";
 import dogBedSorrelDetail from "@/assets/photos/dog-bed-sorrel-detail.jpg";
 import dogBedFlint from "@/assets/photos/dog-bed-flint.jpg";
+import dogBedFlax from "@/assets/photos/dog-bed-flax.jpg";
+import dogBedMoss from "@/assets/photos/dog-bed-moss.jpg";
+import dogBedFleece from "@/assets/photos/dog-bed-fleece.jpg";
 import materialsBandStructure from "@/assets/photos/materials-band-structure.jpg";
 import bespokeShare from "@/assets/photos/bespoke-share.jpg";
 import bespokeConsult from "@/assets/photos/bespoke-consult.jpg";
@@ -177,6 +180,9 @@ export const PHOTOS = {
   "dog-bed-sorrel-front": dogBedSorrelFront,
   "dog-bed-sorrel-detail": dogBedSorrelDetail,
   "dog-bed-flint": dogBedFlint,
+  "dog-bed-flax": dogBedFlax,
+  "dog-bed-moss": dogBedMoss,
+  "dog-bed-fleece": dogBedFleece,
   "materials-band-structure": materialsBandStructure,
   "bespoke-share": bespokeShare,
   "bespoke-consult": bespokeConsult,
