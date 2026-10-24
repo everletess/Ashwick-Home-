@@ -36,11 +36,11 @@ export const DOG_BED = {
   returns: "30-day return window. Returned beds are donated.",
   warranty: "1-year warranty.",
   colors: [
-    { id: "natural", label: "Fleece", swatch: "mattress-swatch-natural", photos: ["dog-bed-fleece", "dog-bed-fleece-room"] },
-    { id: "dove", label: "Flint", swatch: "mattress-swatch-dove", photos: ["dog-bed-flint", "dog-bed-flint-room"] },
-    { id: "khaki", label: "Moss", swatch: "mattress-swatch-khaki", photos: ["dog-bed-moss", "dog-bed-moss-room"] },
-    { id: "safari", label: "Flax", swatch: "mattress-swatch-safari", photos: ["dog-bed-flax", "dog-bed-flax-room"] },
-    { id: "mocha", label: "Sorrel", swatch: "mattress-swatch-mocha", photos: ["dog-bed-sorrel", "dog-bed-sorrel-room-golden", "dog-bed-sorrel-front", "dog-bed-sorrel-detail"] },
+    { id: "natural", label: "Fleece", swatch: "mattress-swatch-natural", photos: ["dog-bed-fleece", "dog-bed-fleece-room", "dog-bed-fleece-room-2"] },
+    { id: "dove", label: "Flint", swatch: "mattress-swatch-dove", photos: ["dog-bed-flint", "dog-bed-flint-room", "dog-bed-flint-room-2"] },
+    { id: "khaki", label: "Moss", swatch: "mattress-swatch-khaki", photos: ["dog-bed-moss", "dog-bed-moss-room", "dog-bed-moss-room-2"] },
+    { id: "safari", label: "Flax", swatch: "mattress-swatch-safari", photos: ["dog-bed-flax", "dog-bed-flax-room", "dog-bed-flax-room-2"] },
+    { id: "mocha", label: "Sorrel", swatch: "mattress-swatch-mocha", photos: ["dog-bed-sorrel", "dog-bed-sorrel-room-golden", "dog-bed-sorrel-room-2", "dog-bed-sorrel-front", "dog-bed-sorrel-detail"] },
   ] satisfies DogBedColor[],
   defaultColor: "mocha",
   /** Editorial shots for the home page feature (they fade between each other) and the mattress page teaser. */

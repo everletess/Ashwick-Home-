@@ -57,6 +57,11 @@ import dogBedSorrelRoomGolden from "@/assets/photos/dog-bed-sorrel-room-golden.j
 import dogBedFleeceRoom from "@/assets/photos/dog-bed-fleece-room.jpg";
 import dogBedFlintRoom from "@/assets/photos/dog-bed-flint-room.jpg";
 import dogBedFlaxRoom from "@/assets/photos/dog-bed-flax-room.jpg";
+import dogBedFleeceRoom2 from "@/assets/photos/dog-bed-fleece-room-2.jpg";
+import dogBedFlintRoom2 from "@/assets/photos/dog-bed-flint-room-2.jpg";
+import dogBedMossRoom2 from "@/assets/photos/dog-bed-moss-room-2.jpg";
+import dogBedFlaxRoom2 from "@/assets/photos/dog-bed-flax-room-2.jpg";
+import dogBedSorrelRoom2 from "@/assets/photos/dog-bed-sorrel-room-2.jpg";
 import materialsBandStructure from "@/assets/photos/materials-band-structure.jpg";
 import bespokeShare from "@/assets/photos/bespoke-share.jpg";
 import bespokeConsult from "@/assets/photos/bespoke-consult.jpg";
@@ -195,6 +200,11 @@ export const PHOTOS = {
   "dog-bed-fleece-room": dogBedFleeceRoom,
   "dog-bed-flint-room": dogBedFlintRoom,
   "dog-bed-flax-room": dogBedFlaxRoom,
+  "dog-bed-fleece-room-2": dogBedFleeceRoom2,
+  "dog-bed-flint-room-2": dogBedFlintRoom2,
+  "dog-bed-moss-room-2": dogBedMossRoom2,
+  "dog-bed-flax-room-2": dogBedFlaxRoom2,
+  "dog-bed-sorrel-room-2": dogBedSorrelRoom2,
   "materials-band-structure": materialsBandStructure,
   "bespoke-share": bespokeShare,
   "bespoke-consult": bespokeConsult,
