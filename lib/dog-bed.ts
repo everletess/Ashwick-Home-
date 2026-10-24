@@ -22,8 +22,9 @@ export const DOG_BED = {
     { id: "mocha", label: "Sorrel", swatch: "mattress-swatch-mocha", photos: ["dog-bed-sorrel", "dog-bed-sorrel-front", "dog-bed-sorrel-detail"] },
   ] satisfies DogBedColor[],
   defaultColor: "mocha",
-  /** Home page feature photo. */
-  hero: "dog-bed-sorrel" as PhotoKey,
-  /** The two shown in the teaser on the mattress page. */
-  teaser: ["dog-bed-sorrel", "dog-bed-flint"] as PhotoKey[],
+  /** Editorial shots for the home page feature (they fade between each other) and the mattress page teaser. */
+  editorial: [
+    { photo: "dog-bed-sorrel-room", alt: "A chocolate doodle curled up on the Organic Dog Bed in Sorrel beside a bed" },
+    { photo: "dog-bed-moss-room", alt: "A small terrier on the Organic Dog Bed in Moss in a sunlit living room" },
+  ] as { photo: PhotoKey; alt: string }[],
 };

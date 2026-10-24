@@ -51,6 +51,8 @@ import dogBedFlint from "@/assets/photos/dog-bed-flint.jpg";
 import dogBedFlax from "@/assets/photos/dog-bed-flax.jpg";
 import dogBedMoss from "@/assets/photos/dog-bed-moss.jpg";
 import dogBedFleece from "@/assets/photos/dog-bed-fleece.jpg";
+import dogBedMossRoom from "@/assets/photos/dog-bed-moss-room.jpg";
+import dogBedSorrelRoom from "@/assets/photos/dog-bed-sorrel-room.jpg";
 import materialsBandStructure from "@/assets/photos/materials-band-structure.jpg";
 import bespokeShare from "@/assets/photos/bespoke-share.jpg";
 import bespokeConsult from "@/assets/photos/bespoke-consult.jpg";
@@ -183,6 +185,8 @@ export const PHOTOS = {
   "dog-bed-flax": dogBedFlax,
   "dog-bed-moss": dogBedMoss,
   "dog-bed-fleece": dogBedFleece,
+  "dog-bed-moss-room": dogBedMossRoom,
+  "dog-bed-sorrel-room": dogBedSorrelRoom,
   "materials-band-structure": materialsBandStructure,
   "bespoke-share": bespokeShare,
   "bespoke-consult": bespokeConsult,

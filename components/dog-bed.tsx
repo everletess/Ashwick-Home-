@@ -18,8 +18,11 @@ export function DogBedFeature() {
             <Link href={DOG_BED_PATH} className="btn">Shop the dog beds</Link>
           </div>
         </div>
-        <Link href={DOG_BED_PATH} className="m-feature-img dog-feature-img" aria-label={D.collection}>
-          <Photo src={D.hero} label="The Organic Dog Bed in Sorrel" sizes="(max-width: 960px) 100vw, 50vw" />
+        <Link href={DOG_BED_PATH} className="dog-feature-img" aria-label={D.collection}>
+          {/* The second fades in over the first and back (CSS only); with reduced motion only the first shows. */}
+          {D.editorial.map(({ photo, alt }, i) => (
+            <Photo key={photo} src={photo} label={alt} className={i ? "dog-fade" : undefined} sizes="(max-width: 960px) 100vw, 50vw" />
+          ))}
         </Link>
       </div>
     </section>
@@ -30,16 +33,16 @@ export function DogBedFeature() {
 export function DogBedTeaser() {
   return (
     <Link href={DOG_BED_PATH} className="dog-teaser">
+      <div className="dog-teaser-imgs">
+        {D.editorial.map(({ photo, alt }) => (
+          <div className="dog-teaser-img" key={photo}><Photo src={photo} label={alt} sizes="(max-width: 640px) 50vw, 300px" /></div>
+        ))}
+      </div>
       <div className="dog-teaser-t">
         <div className="eyebrow">New · For the whole family</div>
         <p className="dog-teaser-h">{D.tagline}</p>
         <p className="body small">Matching organic dog beds, made to sit beside the Ashbury.</p>
         <span className="ulink">Meet the dog beds</span>
-      </div>
-      <div className="dog-teaser-imgs">
-        {D.teaser.map((src) => (
-          <div className="dog-teaser-img" key={src}><Photo src={src} label="An Organic Dog Bed" sizes="160px" /></div>
-        ))}
       </div>
     </Link>
   );
