@@ -6,6 +6,7 @@
  */
 import { BESPOKE_PATH, BESPOKE_REPLY } from "@/lib/bespoke";
 import { ASHBURY_GROUPS, ASHBURY_PATH, FURNITURE_GROUPS, FURNITURE_MATERIALS_PATH, type MaterialGroup } from "@/lib/materials";
+import { DOG_BED } from "@/lib/dog-bed";
 import { GUARANTEE_PATH, MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
 import { FABRICS, LEAD_TIMES, PRODUCTS, cardPrice, fmt } from "@/lib/products";
 import { STUDIO_EMAIL, STUDIO_PHONE } from "@/lib/site";
@@ -73,7 +74,7 @@ Furniture returns: every piece is made to order. Pieces ordered as designed, wit
 Delivery: within the contiguous United States. If anything arrives damaged, email ${STUDIO_EMAIL} with photos within 5 business days of delivery and we repair or replace it at no cost. Warranty repairs and replacements are free; the customer covers shipping to and from the workshop.
 
 THE ASHBURY DOG BED (${SITE}/products/organic-dog-bed)
-Handmade to order in the USA from GOTS and OEKO-TEX certified materials: organic cotton, Living Wool and cashmere, in a 100% organic cotton twill cover. Sizes and prices: Medium 30" x 20" $249; Large 36" x 24" $299; XL 44" x 35" $329. Colors, same price: Fleece, Flint, Moss, Flax and Sorrel, matching the Ashbury. Ships within 3–4 days. 30-day return window; returned dog beds are donated. 1-year warranty against defects in materials and workmanship. It is not covered by the 100-night mattress guarantee or the lifetime furniture warranty. The 15% welcome code ASHWICK15 applies.
+Handmade to order in the USA from GOTS and OEKO-TEX certified materials: organic cotton, Living Wool and cashmere, in a 100% organic cotton twill cover. Sizes and prices: ${DOG_BED.sizes.map((z) => `${z.label} ${z.dims} ${fmt(z.price)}`).join("; ")}. Colors, same price: Fleece, Flint, Moss, Flax and Sorrel, matching the Ashbury. Ships within 3–4 days. 30-day return window; returned dog beds are donated. 1-year warranty against defects in materials and workmanship. It is not covered by the 100-night mattress guarantee or the lifetime furniture warranty. The 15% welcome code ASHWICK15 applies.
 
 MATTRESS MATERIALS (${SITE}${ASHBURY_PATH})
 ${materials(ASHBURY_GROUPS)}

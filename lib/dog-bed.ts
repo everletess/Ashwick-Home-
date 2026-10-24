@@ -18,9 +18,9 @@ export const DOG_BED = {
   /** Ids and swatches are the Ashbury's (lib/mattress.ts), so a dog bed matches its mattress. */
   /** Same price for every color. */
   sizes: [
-    { id: "medium", label: "Medium", dims: '30" × 20"', price: 249 },
-    { id: "large", label: "Large", dims: '36" × 24"', price: 299 },
-    { id: "xl", label: "XL", dims: '44" × 35"', price: 329 },
+    { id: "small", label: "Small", dims: '20" × 26"', price: 249 },
+    { id: "medium", label: "Medium", dims: '34" × 26"', price: 299 },
+    { id: "large", label: "Large", dims: '44" × 34"', price: 329 },
   ],
   /** Marketing copy for the buy page. Facts only: materials, certifications, sizes, colors, how it is made. */
   headline: "Organic doesn't have to be beige.",
