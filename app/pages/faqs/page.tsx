@@ -27,7 +27,7 @@ const FAQS: [string, React.ReactNode][] = [
   ["Soft or firm?", a(<>Soft has a deeper, more cushioned top, for side sleepers and anyone who likes to sink in. Firm is more supportive and even, for back and stomach sleepers. Same price and materials. <Link href={MATTRESS_PATH} className="inl">The {M.shortName}</Link></>)],
   ["Do you make custom mattress sizes?", a(M.customSize)],
   ["What warranty do you offer?", a(<>Furniture and the {M.shortName} are covered against defects in materials and workmanship for as long as the original purchaser owns them. <Link href={WARRANTY_PATH} className="inl">Furniture warranty</Link> · <Link href={GUARANTEE_PATH} className="inl">Ashbury guarantee &amp; warranty</Link></>)],
-  ["How do I pay?", a(<>Pay in full at checkout. For the {M.shortName}, you can also pay over time with Affirm.</>)],
+  ["How do I pay?", a(<>Pay in full at checkout. For the {M.shortName}, you can also pay over time with Shop Pay Installments, subject to approval.</>)],
   ["Do you work with interior designers?", a(<>Yes. Designers and trade professionals can apply to the <Link href="/pages/trade" className="inl">Trade program</Link>; applications are reviewed within {TRADE_TERMS.reviewDays} business days.</>)],
   ["How do I reach you?", a(<>Email <a href={`mailto:${STUDIO_EMAIL}`} className="inl">{STUDIO_EMAIL}</a> or call <a href={STUDIO_PHONE_HREF} className="inl">{STUDIO_PHONE}</a>. The team usually replies to email within one business day.</>)],
 ];

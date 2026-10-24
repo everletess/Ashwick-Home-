@@ -33,7 +33,7 @@ export default function OrderingPage() {
         </p>
       </Block>
       <Block title="Payment">
-        <p className="body">Pay in full at checkout. For the {MATTRESS.shortName} mattress, you can also pay over time with Affirm at checkout.</p>
+        <p className="body">Pay in full at checkout. For the {MATTRESS.shortName} mattress, you can also pay over time with Shop Pay Installments at checkout, subject to approval.</p>
       </Block>
       <Block title={`The ${MATTRESS.shortName} mattress`}>
         <p className="body">
