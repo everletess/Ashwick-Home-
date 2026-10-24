@@ -35,8 +35,8 @@ ${i.extraImages.map((u) => `      <g:additional_image_link>${esc(u)}</g:addition
         <g:service>Standard</g:service>
         <g:price>0.00 USD</g:price>
       </g:shipping>
-      <g:min_handling_time>7</g:min_handling_time>
-      <g:max_handling_time>14</g:max_handling_time>
+      <g:min_handling_time>3</g:min_handling_time>
+      <g:max_handling_time>4</g:max_handling_time>
       <g:custom_label_0>ashbury</g:custom_label_0>
       <g:custom_label_1>${esc(i.size)}</g:custom_label_1>
     </item>`,

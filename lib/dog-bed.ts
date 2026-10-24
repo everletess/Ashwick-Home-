@@ -32,7 +32,7 @@ export const DOG_BED = {
     { name: "Organic cotton twill cover", note: "100% organic cotton, the same twill as the Ashbury." },
   ],
   matchNote: "Fleece, Flint, Moss, Flax and Sorrel: the Ashbury's five colors, so it can sit beside the bed it matches.",
-  leadTime: "Handmade to order in the USA. Ships in 1–2 weeks.",
+  leadTime: "Handmade to order in the USA. Ships within 3–4 days.",
   returns: "30-day return window. Returned beds are donated.",
   warranty: "1-year warranty.",
   colors: [

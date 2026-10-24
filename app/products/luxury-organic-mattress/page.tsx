@@ -78,7 +78,7 @@ function productJsonLd() {
           shippingDestination: { "@type": "DefinedRegion", addressCountry: "US" },
           deliveryTime: {
             "@type": "ShippingDeliveryTime",
-            handlingTime: { "@type": "QuantitativeValue", minValue: 7, maxValue: 14, unitCode: "DAY" },
+            handlingTime: { "@type": "QuantitativeValue", minValue: 3, maxValue: 4, unitCode: "DAY" },
             transitTime: { "@type": "QuantitativeValue", minValue: 3, maxValue: 10, unitCode: "DAY" },
           },
         },
@@ -118,7 +118,7 @@ export default function MattressPage() {
     [
       "Delivery",
       <p className="body small" key="d">
-        Made to order and ships in 1–2 weeks. Standard delivery is included in the price; white-glove delivery is available for an additional fee. Every mattress arrives wrapped in biodegradable paper.
+        Made to order and ships within 3–4 days. Standard delivery is included in the price; white-glove delivery is available for an additional fee. Every mattress arrives wrapped in biodegradable paper.
       </p>,
     ],
     [
