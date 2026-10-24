@@ -3,8 +3,9 @@
 import { useState } from "react";
 import { DogBedNotify } from "@/components/dog-bed-notify";
 import { Photo } from "@/components/photo";
-import { OptGroup } from "@/components/product-view";
-import { DOG_BED } from "@/lib/dog-bed";
+import { OptGroup, Pills } from "@/components/product-view";
+import { useCart } from "@/components/cart";
+import { DOG_BED, DOG_BED_ID } from "@/lib/dog-bed";
 import { PHOTOS } from "@/lib/photos";
 
 const D = DOG_BED;
@@ -13,12 +14,26 @@ const D = DOG_BED;
 export function DogBedView({ children }: { children?: React.ReactNode }) {
   const [color, setColorState] = useState(D.defaultColor);
   const [img, setImg] = useState(0);
+  const [size, setSize] = useState(D.sizes[0].id);
+  const cart = useCart();
+  const sz = D.sizes.find((z) => z.id === size) ?? D.sizes[0];
   const sel = D.colors.find((c) => c.id === color) ?? D.colors[0];
   const alt = `${D.title} in ${sel.label}`;
   const setColor = (c: string) => {
     setColorState(c);
     setImg(0);
   };
+
+  const add = () =>
+    cart.add({
+      id: DOG_BED_ID,
+      name: D.title,
+      photo: sel.photos[0] ?? sel.swatch,
+      price: sz.price,
+      qty: 1,
+      mode: "As designed",
+      options: [["Size", `${sz.label} (${sz.dims})`], ["Color", sel.label]],
+    });
 
   return (
     <section className="pdp wrap">
@@ -40,11 +55,21 @@ export function DogBedView({ children }: { children?: React.ReactNode }) {
       <div className="info">
         <div className="eyebrow">{D.comingSoon ? "Coming soon" : "Dog bed · Made to order"}</div>
         <h1 className="pdp-name">{D.title}</h1>
-        <div className="pdp-collection">{D.collection}</div>
+        {D.collection !== D.title && <div className="pdp-collection">{D.collection}</div>}
         <p className="m-feature-tag dog-tag">{D.tagline}</p>
-        <p className="body">A bed for the newest member of the family, made to match the Ashbury.</p>
+        {!D.comingSoon && <div className="pdp-price">${sz.price}</div>}
+        <p className="body">
+          {D.comingSoon
+            ? "A bed for the newest member of the family, made to match the Ashbury."
+            : D.lede}
+        </p>
 
         <div className="choices">
+          {!D.comingSoon && (
+            <OptGroup label="Size" value={`${sz.label} · ${sz.dims}`}>
+              <Pills options={D.sizes} value={size} onChange={setSize} />
+            </OptGroup>
+          )}
           <OptGroup label="Color" value={sel.label}>
             {D.colors.map((c) => (
               <button
@@ -61,10 +86,33 @@ export function DogBedView({ children }: { children?: React.ReactNode }) {
           </OptGroup>
         </div>
 
+        {!D.comingSoon && (
+          <div className="designed">
+            <button className="btn full" onClick={add}>Add to cart · ${sz.price}</button>
+            <ul className="buy-notes">
+              <li>{D.leadTime}</li>
+              <li>{D.returns}</li>
+              <li>{D.warranty}</li>
+            </ul>
+          </div>
+        )}
         {D.comingSoon && (
           <div className="dog-soon">
             <p className="body small">Launching soon. Sign up and we&apos;ll let you know the day it&apos;s here, with 15% off your first order.</p>
             <DogBedNotify />
+          </div>
+        )}
+        {!D.comingSoon && (
+          <div className="dog-story">
+            <p className="eyebrow">{D.headline}</p>
+            <p className="body small">{D.matchNote}</p>
+            <p className="eyebrow">What it&apos;s made of</p>
+            <ul className="buy-notes">
+              {D.materials.map((m) => (
+                <li key={m.name}><strong>{m.name}.</strong> {m.note}</li>
+              ))}
+            </ul>
+            <p className="body small">Sizes: {D.sizes.map((z) => `${z.label} ${z.dims}`).join(", ")}. Each size is one price in all five colors.</p>
           </div>
         )}
         {children}
