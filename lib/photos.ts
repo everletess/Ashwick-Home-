@@ -44,6 +44,10 @@ import mattressLayers from "@/assets/photos/mattress-layers.jpg";
 import materialsBandFill from "@/assets/photos/materials-band-fill.jpg";
 import mattressFeelSoft from "@/assets/photos/mattress-feel-soft-2.jpg";
 import mattressFeelFirm from "@/assets/photos/mattress-feel-firm-2.jpg";
+import dogBedSorrel from "@/assets/photos/dog-bed-sorrel.jpg";
+import dogBedSorrelFront from "@/assets/photos/dog-bed-sorrel-front.jpg";
+import dogBedSorrelDetail from "@/assets/photos/dog-bed-sorrel-detail.jpg";
+import dogBedFlint from "@/assets/photos/dog-bed-flint.jpg";
 import materialsBandStructure from "@/assets/photos/materials-band-structure.jpg";
 import bespokeShare from "@/assets/photos/bespoke-share.jpg";
 import bespokeConsult from "@/assets/photos/bespoke-consult.jpg";
@@ -169,6 +173,10 @@ export const PHOTOS = {
   "materials-band-fill": materialsBandFill,
   "mattress-feel-soft": mattressFeelSoft,
   "mattress-feel-firm": mattressFeelFirm,
+  "dog-bed-sorrel": dogBedSorrel,
+  "dog-bed-sorrel-front": dogBedSorrelFront,
+  "dog-bed-sorrel-detail": dogBedSorrelDetail,
+  "dog-bed-flint": dogBedFlint,
   "materials-band-structure": materialsBandStructure,
   "bespoke-share": bespokeShare,
   "bespoke-consult": bespokeConsult,

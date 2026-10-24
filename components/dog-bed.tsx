@@ -19,7 +19,7 @@ export function DogBedFeature() {
           </div>
         </div>
         <Link href={DOG_BED_PATH} className="m-feature-img dog-feature-img" aria-label={D.collection}>
-          <Photo src={D.photos.hero} label="Dog bed" sizes="(max-width: 960px) 100vw, 50vw" />
+          <Photo src={D.hero} label="The Organic Dog Bed in Sorrel" sizes="(max-width: 960px) 100vw, 50vw" />
         </Link>
       </div>
     </section>
@@ -37,8 +37,8 @@ export function DogBedTeaser() {
         <span className="ulink">Meet the dog beds</span>
       </div>
       <div className="dog-teaser-imgs">
-        {D.photos.teaser.map((src, i) => (
-          <div className="dog-teaser-img" key={i}><Photo src={src} label="Dog bed" sizes="160px" /></div>
+        {D.teaser.map((src) => (
+          <div className="dog-teaser-img" key={src}><Photo src={src} label="An Organic Dog Bed" sizes="160px" /></div>
         ))}
       </div>
     </Link>
