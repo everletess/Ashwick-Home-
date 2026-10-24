@@ -83,11 +83,19 @@ function mattressVariant(variants: ShopifyVariant[], options: [string, string][]
   return match.v;
 }
 
-/** The dog bed has a Shopify variant per size and color, titled "Medium (30" × 20") / Flax". */
+/**
+ * The dog bed has a Shopify variant per size and color, titled e.g. "Small (20" × 26") / Flax". Matched on the size
+ * name and color only, so the measurements in brackets can be written either way in Shopify (or left out).
+ */
 function dogBedVariant(variants: ShopifyVariant[], options: [string, string][]) {
-  const opt = (k: string) => norm(options.find(([key]) => key === k)?.[1] ?? "");
-  const wanted = `${opt("Size")} / ${opt("Color")}`;
-  const match = variants.find((v) => v.productHandle === "ashbury-dog-bed" && norm(v.title) === wanted);
+  const sizeName = (s: string) => norm(s.replace(/\(.*?\)/g, ""));
+  const opt = (k: string) => options.find(([key]) => key === k)?.[1] ?? "";
+  const wanted = `${sizeName(opt("Size"))} / ${norm(opt("Color"))}`;
+  const match = variants.find((v) => {
+    if (v.productHandle !== "ashbury-dog-bed") return false;
+    const [size = "", color = ""] = v.title.split(" / ");
+    return `${sizeName(size)} / ${norm(color)}` === wanted;
+  });
   if (!match) throw new Error(`No Shopify option for the dog bed in ${options.map(([, v]) => v).join(" / ")}`);
   return match;
 }
