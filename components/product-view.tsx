@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useCart } from "@/components/cart";
 import { FormError, Honeypot, useFormSend } from "@/components/forms";
+import { BUY_OPTIONS_ID, StickyBuy } from "@/components/sticky-buy";
 import { Photo, Swatch } from "@/components/photo";
 import { TintedPhoto } from "@/components/tinted-photo";
 import { track } from "@/lib/pixel";
@@ -75,6 +76,7 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
   const p = getProduct(id)!;
   const cart = useCart();
   const [mode, setModeState] = useState<Mode>(initialMode);
+  const buyRef = useRef<HTMLButtonElement>(null);
   const [img, setImg] = useState(0);
   const firstColor = (f: FabricId) => FABRICS[f].colors?.[0].id;
   const [fabric, setFabricState] = useState<FabricId>(p.designedFabric);
@@ -210,7 +212,7 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
         {p.delivery && <p className="fine delivery">+ {fmt(p.delivery.price)} {p.delivery.label.toLowerCase()}</p>}
         <p className="body">{p.line}</p>
 
-        <div className="choices">
+        <div className="choices" id={BUY_OPTIONS_ID}>
           {fabricChoices.length > 1 && (
             <OptGroup label="Fabric" value={selFabric.label + (fabricChoices.some((f) => priceFor(p, f) !== priceFor(p, fabricChoices[0])) ? " · " + fmt(price) : "")}>
               {fabricChoices.map((f) => <Swatch key={f} f={f} size={52} on={fabric === f} onClick={() => setFabric(f)} />)}
@@ -244,9 +246,19 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
         {mode === "designed" ? (
           <div className="designed" role="tabpanel">
             <p className="lead-time">{p.leadTime ?? LEAD_TIME}</p>
-            <button className="btn full" onClick={add}>
+            <button ref={buyRef} className="btn full" onClick={add}>
               {p.preorder ? "Pre-order" : "Add to cart"} · {fmt(price)}
             </button>
+            <StickyBuy
+              watch={buyRef}
+              photo={photoFor(p, current) ?? p.cardPhoto ?? p.photos[0]}
+              name={p.name}
+              summary={summary.map(([, v]) => v).join(" · ")}
+              price={price}
+              note={p.delivery ? `+ ${fmt(p.delivery.price)} ${p.delivery.label.toLowerCase()}` : undefined}
+              cta={p.preorder ? "Pre-order" : "Add to cart"}
+              onAdd={add}
+            />
             {p.preorder && (
               <p className="fine">This piece is available to pre-order. We&apos;ll confirm your order and estimated ship date by email.</p>
             )}

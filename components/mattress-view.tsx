@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useCart } from "@/components/cart";
 import { DogBedTeaser } from "@/components/dog-bed";
+import { BUY_OPTIONS_ID, StickyBuy } from "@/components/sticky-buy";
 import { Photo } from "@/components/photo";
 import { OptGroup, Pills } from "@/components/product-view";
 import { GUARANTEE_PATH, MATTRESS, colorById, colorFromParam, sizeById } from "@/lib/mattress";
@@ -26,6 +27,7 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
   const [feel, setFeel] = useState(M.feels[0].id);
   const [color, setColorState] = useState(initialColor ?? M.defaultColor);
   const [img, setImg] = useState(0);
+  const buyRef = useRef<HTMLButtonElement>(null);
 
   const sel = colorById(color);
   const sz = sizeById(size);
@@ -98,7 +100,7 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
           An all-natural, organic mattress made from nature&apos;s finest materials: organic Living Wool, organic cotton and Swedish horsehair, hand-tufted and made in color. An {M.mattressHeight} mattress with a {M.topperHeight} topper included: {M.combinedHeight} of natural fiber, with no foam, no latex and no chemical flame retardants.
         </p>
 
-        <div className="choices">
+        <div className="choices" id={BUY_OPTIONS_ID}>
           <OptGroup label="Size" value={`${sz.label} · ${sz.dims}`}>
             <Pills options={M.sizes} value={size} onChange={setSize} />
           </OptGroup>
@@ -123,7 +125,19 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
 
         <div className="designed">
           {M.available ? (
-            <button className="btn full" onClick={add}>Add to cart · {fmt(sz.price)}</button>
+            <>
+              <button ref={buyRef} className="btn full" onClick={add}>Add to cart · {fmt(sz.price)}</button>
+              <StickyBuy
+                watch={buyRef}
+                photo={sel.photos[0]}
+                name={M.title}
+                summary={`${feelLabel} · ${sz.label} · ${sel.label}`}
+                price={sz.price}
+                note="Pay over time with Affirm"
+                cta="Add to cart"
+                onAdd={add}
+              />
+            </>
           ) : (
             <button className="btn full" disabled aria-disabled="true">Coming soon</button>
           )}
