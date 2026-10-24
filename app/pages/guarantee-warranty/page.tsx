@@ -136,6 +136,7 @@ export default function GuaranteePage() {
               ],
               ["What if my mattress arrives damaged?", <p className="body small" key="2">Contact us within 5 business days of delivery, with photos, and we&apos;ll replace it.</p>],
               ["Can I choose between soft and firm?", <p className="body small" key="3">Yes. The {M.shortName} comes in soft and firm. If you&apos;re unsure, our team can help you choose before you order.</p>],
+              ["What about the Ashbury Dog Bed?", <p className="body small" key="dog">The Ashbury Dog Bed has a 30-day return window and a 1-year warranty against defects in materials and workmanship. It is not covered by the 100-night mattress guarantee or the lifetime warranty. Returned dog beds are donated, never resold as new. Email hello@ashwickhome.com with your order number to start a return or claim.</p>],
               [
                 "Do furniture pieces have the same guarantee?",
                 <p className="body small" key="4">
