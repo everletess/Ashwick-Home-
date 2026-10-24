@@ -61,7 +61,7 @@ export const MATTRESS = {
 
   /** false shows "Coming soon" in place of Add to cart. */
   available: true,
-  leadTime: "Made to order. Ships in 1–2 weeks.",
+  leadTime: "Made to order. Ships within 3–4 days.",
   shipping: "Delivery included.",
   guarantee: "100-night money-back guarantee",
   guaranteeNights: 100,

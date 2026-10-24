@@ -47,7 +47,7 @@ export default function TermsPage() {
         <List items={[
           <><strong>Furniture as designed:</strong> ships within 3–4 weeks of your order.</>,
           <><strong>Customized furniture:</strong> ships within 8–12 weeks of your order.</>,
-          <><strong>The Ashbury mattress:</strong> ships within 1–2 weeks.</>,
+          <><strong>The Ashbury mattress and dog bed:</strong> ship within 3–4 days of your order.</>,
           <><strong>Bespoke commissions:</strong> timeline confirmed with your quote.</>,
         ]} />
         <P>These are estimates. We&apos;ll keep you updated if anything changes.</P>
