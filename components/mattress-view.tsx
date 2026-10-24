@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useCart } from "@/components/cart";
+import { DogBedTeaser } from "@/components/dog-bed";
 import { Photo } from "@/components/photo";
 import { OptGroup, Pills } from "@/components/product-view";
 import { GUARANTEE_PATH, MATTRESS, colorById, colorFromParam, sizeById } from "@/lib/mattress";
@@ -85,6 +86,7 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
             </button>
           ))}
         </div>
+        <DogBedTeaser />
       </div>
 
       <div className="info">

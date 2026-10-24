@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BrandStory } from "@/components/brand-story";
+import { DogBedFeature } from "@/components/dog-bed";
 import { Newsletter } from "@/components/forms";
 import { Fibers } from "@/components/fibers";
 import { MattressFeature } from "@/components/mattress-feature";
@@ -138,6 +139,7 @@ export default function HomePage() {
       <HomeHero />
       <ValueStrip />
       <MattressFeature />
+      <DogBedFeature />
       <Fibers />
       <BrandStory />
       <HomeCollection />

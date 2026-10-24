@@ -44,6 +44,19 @@ import mattressLayers from "@/assets/photos/mattress-layers.jpg";
 import materialsBandFill from "@/assets/photos/materials-band-fill.jpg";
 import mattressFeelSoft from "@/assets/photos/mattress-feel-soft-2.jpg";
 import mattressFeelFirm from "@/assets/photos/mattress-feel-firm-2.jpg";
+import dogBedSorrel from "@/assets/photos/dog-bed-sorrel.jpg";
+import dogBedSorrelFront from "@/assets/photos/dog-bed-sorrel-front.jpg";
+import dogBedSorrelDetail from "@/assets/photos/dog-bed-sorrel-detail.jpg";
+import dogBedFlint from "@/assets/photos/dog-bed-flint.jpg";
+import dogBedFlax from "@/assets/photos/dog-bed-flax.jpg";
+import dogBedMoss from "@/assets/photos/dog-bed-moss.jpg";
+import dogBedFleece from "@/assets/photos/dog-bed-fleece.jpg";
+import dogBedMossRoom from "@/assets/photos/dog-bed-moss-room.jpg";
+import dogBedSorrelRoom from "@/assets/photos/dog-bed-sorrel-room.jpg";
+import dogBedSorrelRoomGolden from "@/assets/photos/dog-bed-sorrel-room-golden.jpg";
+import dogBedFleeceRoom from "@/assets/photos/dog-bed-fleece-room.jpg";
+import dogBedFlintRoom from "@/assets/photos/dog-bed-flint-room.jpg";
+import dogBedFlaxRoom from "@/assets/photos/dog-bed-flax-room.jpg";
 import materialsBandStructure from "@/assets/photos/materials-band-structure.jpg";
 import bespokeShare from "@/assets/photos/bespoke-share.jpg";
 import bespokeConsult from "@/assets/photos/bespoke-consult.jpg";
@@ -169,6 +182,19 @@ export const PHOTOS = {
   "materials-band-fill": materialsBandFill,
   "mattress-feel-soft": mattressFeelSoft,
   "mattress-feel-firm": mattressFeelFirm,
+  "dog-bed-sorrel": dogBedSorrel,
+  "dog-bed-sorrel-front": dogBedSorrelFront,
+  "dog-bed-sorrel-detail": dogBedSorrelDetail,
+  "dog-bed-flint": dogBedFlint,
+  "dog-bed-flax": dogBedFlax,
+  "dog-bed-moss": dogBedMoss,
+  "dog-bed-fleece": dogBedFleece,
+  "dog-bed-moss-room": dogBedMossRoom,
+  "dog-bed-sorrel-room": dogBedSorrelRoom,
+  "dog-bed-sorrel-room-golden": dogBedSorrelRoomGolden,
+  "dog-bed-fleece-room": dogBedFleeceRoom,
+  "dog-bed-flint-room": dogBedFlintRoom,
+  "dog-bed-flax-room": dogBedFlaxRoom,
   "materials-band-structure": materialsBandStructure,
   "bespoke-share": bespokeShare,
   "bespoke-consult": bespokeConsult,
