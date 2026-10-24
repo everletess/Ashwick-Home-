@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { DogBedNotify } from "@/components/dog-bed-notify";
 import { Photo } from "@/components/photo";
 import { OptGroup, Pills } from "@/components/product-view";
 import { useCart } from "@/components/cart";
+import { BUY_OPTIONS_ID, StickyBuy } from "@/components/sticky-buy";
 import { DOG_BED, DOG_BED_ID } from "@/lib/dog-bed";
 import { PHOTOS } from "@/lib/photos";
 
@@ -16,6 +17,7 @@ export function DogBedView({ children }: { children?: React.ReactNode }) {
   const [img, setImg] = useState(0);
   const [size, setSize] = useState(D.sizes[0].id);
   const cart = useCart();
+  const buyRef = useRef<HTMLButtonElement>(null);
   const sz = D.sizes.find((z) => z.id === size) ?? D.sizes[0];
   const sel = D.colors.find((c) => c.id === color) ?? D.colors[0];
   const alt = `${D.title} in ${sel.label}`;
@@ -64,7 +66,7 @@ export function DogBedView({ children }: { children?: React.ReactNode }) {
             : D.lede}
         </p>
 
-        <div className="choices">
+        <div className="choices" id={BUY_OPTIONS_ID}>
           {!D.comingSoon && (
             <OptGroup label="Size" value={`${sz.label} · ${sz.dims}`}>
               <Pills options={D.sizes} value={size} onChange={setSize} />
@@ -88,7 +90,16 @@ export function DogBedView({ children }: { children?: React.ReactNode }) {
 
         {!D.comingSoon && (
           <div className="designed">
-            <button className="btn full" onClick={add}>Add to cart · ${sz.price}</button>
+            <button ref={buyRef} className="btn full" onClick={add}>Add to cart · ${sz.price}</button>
+            <StickyBuy
+              watch={buyRef}
+              photo={sel.photos[0]}
+              name={D.title}
+              summary={`${sz.label} · ${sel.label}`}
+              price={sz.price}
+              cta="Add to cart"
+              onAdd={add}
+            />
             <ul className="buy-notes">
               <li>{D.leadTime}</li>
               <li>{D.returns}</li>
