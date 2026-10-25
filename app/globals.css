@@ -818,3 +818,8 @@ button.chip{cursor:pointer}
 .dog-pair-name{font:400 clamp(24px,2.2vw,32px)/1.15 var(--serif);margin:12px 0 0;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
 .dog-pair-soon{font:500 10px var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--clay)}
 @media (max-width:640px){.dog-pair{grid-template-columns:minmax(0,1fr);gap:40px}.dog-feature-head{margin-bottom:32px}}
+.dog-specs{width:100%;border-collapse:collapse;margin:8px 0 28px;font:300 14px/1.5 var(--sans);color:var(--walnut)}
+.dog-specs th,.dog-specs td{padding:12px 0;border-top:1px solid var(--hair);text-align:right;font-weight:300}
+.dog-specs th:first-child{text-align:left}
+.dog-specs thead th{font:500 10.5px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--ink);border-top:0}
+.dog-specs td{color:var(--ink);white-space:nowrap;padding-left:16px}

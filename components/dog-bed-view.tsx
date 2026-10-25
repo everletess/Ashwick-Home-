@@ -69,13 +69,13 @@ export function DogBedView({ bed: D = DOG_BED, children }: { bed?: DogBed; child
         <h1 className="pdp-name">{D.title}</h1>
         {D.collection !== D.title && <div className="pdp-collection">{D.collection}</div>}
         <p className="m-feature-tag dog-tag">{D.tagline}</p>
-        {!D.comingSoon && <div className="pdp-price">${sz.price}</div>}
+        {sz.price > 0 && <div className="pdp-price">${sz.price}</div>}
         <p className="body">
           {D.comingSoon ? D.soonLede : D.lede}
         </p>
 
         <div className="choices" id={BUY_OPTIONS_ID}>
-          {!D.comingSoon && (
+          {sz.price > 0 && (
             <OptGroup label="Size" value={`${sz.label} · ${sz.dims}`}>
               <Pills options={D.sizes} value={size} onChange={pickSize} />
             </OptGroup>
@@ -121,6 +121,16 @@ export function DogBedView({ bed: D = DOG_BED, children }: { bed?: DogBed; child
             <p className="body small">Launching soon. Sign up and we&apos;ll let you know the day it&apos;s here, with 15% off your first order.</p>
             <DogBedNotify />
           </div>
+        )}
+        {D.specs.length > 0 && (
+          <table className="dog-specs">
+            <thead><tr><th scope="col">Dimensions</th>{D.sizes.map((z) => <th scope="col" key={z.id}>{z.label}</th>)}</tr></thead>
+            <tbody>
+              {D.specs.map((r) => (
+                <tr key={r.label}><th scope="row">{r.label}</th>{r.values.map((v, i) => <td key={i}>{v}</td>)}</tr>
+              ))}
+            </tbody>
+          </table>
         )}
         {!D.comingSoon && (
           <div className="dog-story">
