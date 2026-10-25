@@ -48,9 +48,43 @@ function forCatalog(params: Record<string, unknown>) {
   return out;
 }
 
+// Meta event -> Google Analytics 4 recommended ecommerce event.
+const GA_EVENTS: Record<PixelEvent, string> = {
+  ViewContent: "view_item",
+  AddToCart: "add_to_cart",
+  InitiateCheckout: "begin_checkout",
+  Lead: "generate_lead",
+  Contact: "contact",
+};
+
+function gtagEvent(event: PixelEvent, params: Record<string, unknown>) {
+  if (typeof window === "undefined") return;
+  const g = (window as unknown as { gtag?: (...a: unknown[]) => void }).gtag;
+  if (typeof g !== "function") return;
+  const items = Array.isArray(params.contents)
+    ? (params.contents as { id: unknown; quantity?: number; item_price?: number }[]).map((c) => ({
+        item_id: String(c.id),
+        quantity: c.quantity ?? 1,
+        price: c.item_price,
+      }))
+    : Array.isArray(params.content_ids)
+      ? (params.content_ids as unknown[]).map((id) => ({ item_id: String(id) }))
+      : undefined;
+  g("event", GA_EVENTS[event], {
+    currency: "USD",
+    value: typeof params.value === "number" ? params.value : undefined,
+    items,
+  });
+}
+
 export function track(event: PixelEvent, params: Record<string, unknown> = {}) {
   try {
     fbq()?.("track", event, { currency: "USD", ...forCatalog(params) });
+  } catch {
+    // Never let tracking break the site.
+  }
+  try {
+    gtagEvent(event, params);
   } catch {
     // Never let tracking break the site.
   }
@@ -63,5 +97,5 @@ export function track(event: PixelEvent, params: Record<string, unknown> = {}) {
  */
 export function trackThen(event: PixelEvent, params: Record<string, unknown>, then: () => void, waitMs = 400) {
   track(event, params);
-  window.setTimeout(then, fbq() ? waitMs : 0);
+  window.setTimeout(then, fbq() || (window as unknown as { gtag?: unknown }).gtag ? waitMs : 0);
 }
