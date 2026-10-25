@@ -798,3 +798,12 @@ button.chip{cursor:pointer}
 .teaser-wide .dog-teaser{margin-top:40px}
 .teaser-narrow{display:none}
 @media (max-width:960px){.teaser-wide{display:none}.teaser-narrow{display:block}.teaser-narrow .dog-teaser{margin-top:8px}}
+
+.bb-email{margin:16px 0 4px;padding:16px 18px;border:1px solid var(--ink);text-align:center}
+.bb-email-h{font:400 15px var(--sans);color:var(--ink);margin:0}
+.bb-email-form{display:flex;margin:10px 0 0;border-bottom:1px solid var(--ink)}
+.bb-email-form input{flex:1;min-width:0;background:transparent;border:0;outline:0;font:300 16px var(--sans);color:var(--ink);padding:12px 0}
+.bb-email-form input::placeholder{color:var(--walnut)}
+.bb-email-form button{background:none;border:0;font:500 11px var(--sans);letter-spacing:.2em;text-transform:uppercase;cursor:pointer;padding:0 0 0 14px;min-height:44px}
+.bb-email-fine{font:300 11px var(--sans);color:var(--walnut);margin:8px 0 0}
+.bb-email-done{margin:16px 0 4px;padding:16px 18px;border:1px solid var(--ink);text-align:center;font:400 15px var(--sans)}

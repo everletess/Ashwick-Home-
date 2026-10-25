@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { useCart } from "@/components/cart";
 import { ShipsFast, TrustRow } from "@/components/buy-icons";
 import { DogBedTeaser } from "@/components/dog-bed";
+import { BuyBoxEmail } from "@/components/buy-box-email";
 import { BUY_OPTIONS_ID, StickyBuy } from "@/components/sticky-buy";
 import { Photo } from "@/components/photo";
 import { OptGroup, Pills } from "@/components/product-view";
@@ -130,6 +131,7 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
           {M.available ? (
             <>
               <button ref={buyRef} className="btn full" onClick={add}>Add to cart · {fmt(sz.price)}</button>
+              <BuyBoxEmail />
               <TrustRow items={[["hand", "Handmade to order"], ["truck", "Free delivery"], ["moon", `${M.guaranteeNights}-night trial`]]} />
               <StickyBuy
                 watch={buyRef}
