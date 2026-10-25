@@ -127,6 +127,7 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
           {M.available ? (
             <>
               <button ref={buyRef} className="btn full" onClick={add}>Add to cart · {fmt(sz.price)}</button>
+              <p className="trust-line">Handmade to order · Free delivery · {M.guaranteeNights}-night trial</p>
               <StickyBuy
                 watch={buyRef}
                 photo={sel.photos[0]}

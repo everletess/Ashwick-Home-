@@ -91,6 +91,7 @@ export function DogBedView({ children }: { children?: React.ReactNode }) {
         {!D.comingSoon && (
           <div className="designed">
             <button ref={buyRef} className="btn full" onClick={add}>Add to cart · ${sz.price}</button>
+            <p className="trust-line">Handmade to order · Free delivery · 30-day returns</p>
             <StickyBuy
               watch={buyRef}
               photo={sel.photos[0]}
