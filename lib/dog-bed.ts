@@ -11,6 +11,8 @@ export const DOG_BED_ID = "ashbury-dog-bed";
 export type DogBedColor = { id: string; label: string; swatch: PhotoKey; photos: PhotoKey[]; sizePhotos?: Record<string, PhotoKey> };
 
 export const DOG_BED = {
+  id: DOG_BED_ID,
+  path: DOG_BED_PATH,
   title: "The Ashbury Dog Bed",
   collection: "The Ashbury Dog Bed",
   tagline: "Chemical free for the whole family.",
@@ -45,9 +47,50 @@ export const DOG_BED = {
       sizePhotos: { small: "dog-bed-sorrel-small", medium: "dog-bed-sorrel-medium", large: "dog-bed-sorrel-large" } },
   ] as DogBedColor[],
   defaultColor: "mocha",
+  /** Colors are the Ashbury's, so the page shows the matching mattress. */
+  matchesMattress: true,
+  soonLede: "A bed for the newest member of the family, made to match the Ashbury.",
   /** Editorial shots for the home page feature (they fade between each other) and the mattress page teaser. */
   editorial: [
     { photo: "dog-bed-sorrel-room", alt: "A chocolate doodle curled up on the Ashbury Dog Bed in Sorrel beside a bed" },
     { photo: "dog-bed-moss-room", alt: "A small terrier on the Ashbury Dog Bed in Moss in a sunlit living room" },
   ] as { photo: PhotoKey; alt: string }[],
+};
+
+/** Everything a dog bed page needs (the Ashbury's shape). */
+export type DogBed = typeof DOG_BED;
+
+export const WREN_PATH = "/products/wren-dog-bed";
+
+/**
+ * The Wren: a curved, bolstered bed in a textured weave. Coming soon until sizes, prices and Shopify are set; color
+ * names are working names.
+ */
+export const WREN: DogBed = {
+  id: "wren-dog-bed",
+  path: WREN_PATH,
+  title: "The Wren Dog Bed",
+  collection: "The Wren Dog Bed",
+  tagline: "A curved bolster to curl up in.",
+  comingSoon: true,
+  sizes: [
+    { id: "medium", label: "Medium", dims: "", price: 0 },
+    { id: "large", label: "Large", dims: "", price: 0 },
+  ],
+  headline: "",
+  lede: "",
+  materials: [],
+  matchNote: "",
+  leadTime: DOG_BED.leadTime,
+  returns: DOG_BED.returns,
+  warranty: DOG_BED.warranty,
+  colors: [
+    { id: "olive", label: "Olive", swatch: "wren-swatch-olive", photos: ["wren-olive", "wren-olive-room", "wren-olive-sizes"] },
+    { id: "oat", label: "Oat", swatch: "wren-swatch-oat", photos: ["wren-oat"] },
+    { id: "toffee", label: "Toffee", swatch: "wren-swatch-toffee", photos: ["wren-toffee"] },
+  ],
+  defaultColor: "olive",
+  matchesMattress: false,
+  soonLede: "A deep, curved bolster bed in a soft textured weave, for the dog who likes to curl up. Made to order by hand in the USA.",
+  editorial: [{ photo: "wren-olive-room", alt: "A chocolate doodle curled up in the Wren Dog Bed in Olive by the fire" }],
 };

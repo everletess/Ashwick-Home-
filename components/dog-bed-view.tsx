@@ -8,13 +8,11 @@ import { ShipsFast, TrustRow } from "@/components/buy-icons";
 import { useCart } from "@/components/cart";
 import { MattressTeaser } from "@/components/mattress-teaser";
 import { BUY_OPTIONS_ID, StickyBuy } from "@/components/sticky-buy";
-import { DOG_BED, DOG_BED_ID } from "@/lib/dog-bed";
+import { DOG_BED, type DogBed } from "@/lib/dog-bed";
 import { PHOTOS } from "@/lib/photos";
 
-const D = DOG_BED;
-
-/** Gallery and color choice for the dog bed; the gallery follows the color. */
-export function DogBedView({ children }: { children?: React.ReactNode }) {
+/** Gallery and color choice for a dog bed (the Ashbury by default); the gallery follows the color. */
+export function DogBedView({ bed: D = DOG_BED, children }: { bed?: DogBed; children?: React.ReactNode }) {
   const [color, setColorState] = useState(D.defaultColor);
   const [img, setImg] = useState(0);
   const [size, setSize] = useState(D.sizes[0].id);
@@ -38,7 +36,7 @@ export function DogBedView({ children }: { children?: React.ReactNode }) {
 
   const add = () =>
     cart.add({
-      id: DOG_BED_ID,
+      id: D.id,
       name: D.title,
       photo: sel.photos[0] ?? sel.swatch,
       price: sz.price,
@@ -63,7 +61,7 @@ export function DogBedView({ children }: { children?: React.ReactNode }) {
           </div>
         )}
         {/* Beside the gallery on wide screens; below the buy box on phones (the second copy). */}
-        <div className="teaser-wide"><MattressTeaser color={sel.id} /></div>
+        {D.matchesMattress && <div className="teaser-wide"><MattressTeaser color={sel.id} /></div>}
       </div>
 
       <div className="info">
@@ -73,9 +71,7 @@ export function DogBedView({ children }: { children?: React.ReactNode }) {
         <p className="m-feature-tag dog-tag">{D.tagline}</p>
         {!D.comingSoon && <div className="pdp-price">${sz.price}</div>}
         <p className="body">
-          {D.comingSoon
-            ? "A bed for the newest member of the family, made to match the Ashbury."
-            : D.lede}
+          {D.comingSoon ? D.soonLede : D.lede}
         </p>
 
         <div className="choices" id={BUY_OPTIONS_ID}>
@@ -140,7 +136,7 @@ export function DogBedView({ children }: { children?: React.ReactNode }) {
           </div>
         )}
         {children}
-        <div className="teaser-narrow"><MattressTeaser color={sel.id} /></div>
+        {D.matchesMattress && <div className="teaser-narrow"><MattressTeaser color={sel.id} /></div>}
       </div>
     </section>
   );

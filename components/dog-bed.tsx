@@ -1,29 +1,33 @@
 import Link from "next/link";
 import { Photo } from "@/components/photo";
-import { DOG_BED, DOG_BED_PATH } from "@/lib/dog-bed";
+import { DOG_BED, DOG_BED_PATH, WREN } from "@/lib/dog-bed";
 
 const D = DOG_BED;
 
-/** Home page: "Now introducing" the dog bed collection, mirroring the Ashbury feature. */
+/** Home page: "Introducing dog beds", the Ashbury and the Wren side by side, each linking to its page. */
 export function DogBedFeature() {
+  const beds = [
+    { bed: D, photo: D.editorial[0], line: "Tufted, in the Ashbury's five colors." },
+    { bed: WREN, photo: WREN.editorial[0], line: "A curved bolster to curl up in." },
+  ];
   return (
     <section className="sec dog-feature">
-      <div className="wrap m-feature-in dog-feature-in">
-        <div className="m-feature-t">
-          <div className="m-feature-new"><span>New</span>Now introducing</div>
-          <h2 className="h2">{D.collection}</h2>
+      <div className="wrap">
+        <div className="m-feature-t dog-feature-head">
+          <div className="m-feature-new"><span>New</span>Introducing dog beds</div>
+          <h2 className="h2">The Ashbury and the Wren.</h2>
           <p className="m-feature-tag">{D.tagline}</p>
-          <p className="body">A bed for the newest member of the family, made to match the Ashbury.</p>
-          <div className="btns">
-            <Link href={DOG_BED_PATH} className="btn">Shop the dog beds</Link>
-          </div>
         </div>
-        <Link href={DOG_BED_PATH} className="dog-feature-img" aria-label={D.collection}>
-          {/* The second fades in over the first and back (CSS only); with reduced motion only the first shows. */}
-          {D.editorial.map(({ photo, alt }, i) => (
-            <Photo key={photo} src={photo} label={alt} className={i ? "dog-fade" : undefined} sizes="(max-width: 960px) 100vw, 50vw" />
+        <div className="dog-pair">
+          {beds.map(({ bed, photo, line }) => (
+            <Link key={bed.id} href={bed.path} className="dog-pair-card">
+              <div className="dog-pair-img"><Photo src={photo.photo} label={photo.alt} sizes="(max-width: 960px) 100vw, 50vw" /></div>
+              <p className="dog-pair-name">{bed.title}{bed.comingSoon && <span className="dog-pair-soon">Coming soon</span>}</p>
+              <p className="body small">{line}</p>
+              <span className="ulink">{bed.comingSoon ? "Take a look" : "Shop now"}</span>
+            </Link>
           ))}
-        </Link>
+        </div>
       </div>
     </section>
   );

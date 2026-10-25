@@ -57,6 +57,14 @@ import dogBedSorrelRoomGolden from "@/assets/photos/dog-bed-sorrel-room-golden.j
 import dogBedFleeceRoom from "@/assets/photos/dog-bed-fleece-room.jpg";
 import dogBedFlintRoom from "@/assets/photos/dog-bed-flint-room.jpg";
 import dogBedFlaxRoom from "@/assets/photos/dog-bed-flax-room.jpg";
+import wrenOliveRoom from "@/assets/photos/wren-olive-room.jpg";
+import wrenOliveSizes from "@/assets/photos/wren-olive-sizes.jpg";
+import wrenOat from "@/assets/photos/wren-oat.jpg";
+import wrenOlive from "@/assets/photos/wren-olive.jpg";
+import wrenToffee from "@/assets/photos/wren-toffee.jpg";
+import wrenSwatchOat from "@/assets/photos/wren-swatch-oat.jpg";
+import wrenSwatchOlive from "@/assets/photos/wren-swatch-olive.jpg";
+import wrenSwatchToffee from "@/assets/photos/wren-swatch-toffee.jpg";
 import dogBedSorrelSmall from "@/assets/photos/dog-bed-sorrel-small.jpg";
 import dogBedSorrelMedium from "@/assets/photos/dog-bed-sorrel-medium.jpg";
 import dogBedSorrelLarge from "@/assets/photos/dog-bed-sorrel-large.jpg";
@@ -203,6 +211,14 @@ export const PHOTOS = {
   "dog-bed-fleece-room": dogBedFleeceRoom,
   "dog-bed-flint-room": dogBedFlintRoom,
   "dog-bed-flax-room": dogBedFlaxRoom,
+  "wren-olive-room": wrenOliveRoom,
+  "wren-olive-sizes": wrenOliveSizes,
+  "wren-oat": wrenOat,
+  "wren-olive": wrenOlive,
+  "wren-toffee": wrenToffee,
+  "wren-swatch-oat": wrenSwatchOat,
+  "wren-swatch-olive": wrenSwatchOlive,
+  "wren-swatch-toffee": wrenSwatchToffee,
   "dog-bed-sorrel-small": dogBedSorrelSmall,
   "dog-bed-sorrel-medium": dogBedSorrelMedium,
   "dog-bed-sorrel-large": dogBedSorrelLarge,
