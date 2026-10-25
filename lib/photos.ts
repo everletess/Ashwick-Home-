@@ -57,6 +57,9 @@ import dogBedSorrelRoomGolden from "@/assets/photos/dog-bed-sorrel-room-golden.j
 import dogBedFleeceRoom from "@/assets/photos/dog-bed-fleece-room.jpg";
 import dogBedFlintRoom from "@/assets/photos/dog-bed-flint-room.jpg";
 import dogBedFlaxRoom from "@/assets/photos/dog-bed-flax-room.jpg";
+import dogBedSorrelSmall from "@/assets/photos/dog-bed-sorrel-small.jpg";
+import dogBedSorrelMedium from "@/assets/photos/dog-bed-sorrel-medium.jpg";
+import dogBedSorrelLarge from "@/assets/photos/dog-bed-sorrel-large.jpg";
 import dogBedFleeceRoom2 from "@/assets/photos/dog-bed-fleece-room-2.jpg";
 import dogBedFlintRoom2 from "@/assets/photos/dog-bed-flint-room-2.jpg";
 import dogBedMossRoom2 from "@/assets/photos/dog-bed-moss-room-2.jpg";
@@ -200,6 +203,9 @@ export const PHOTOS = {
   "dog-bed-fleece-room": dogBedFleeceRoom,
   "dog-bed-flint-room": dogBedFlintRoom,
   "dog-bed-flax-room": dogBedFlaxRoom,
+  "dog-bed-sorrel-small": dogBedSorrelSmall,
+  "dog-bed-sorrel-medium": dogBedSorrelMedium,
+  "dog-bed-sorrel-large": dogBedSorrelLarge,
   "dog-bed-fleece-room-2": dogBedFleeceRoom2,
   "dog-bed-flint-room-2": dogBedFlintRoom2,
   "dog-bed-moss-room-2": dogBedMossRoom2,

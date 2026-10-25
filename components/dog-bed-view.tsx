@@ -21,9 +21,17 @@ export function DogBedView({ children }: { children?: React.ReactNode }) {
   const sz = D.sizes.find((z) => z.id === size) ?? D.sizes[0];
   const sel = D.colors.find((c) => c.id === color) ?? D.colors[0];
   const alt = `${D.title} in ${sel.label}`;
+  // The chosen size's shot, where this color has one, comes second, right after the product shot.
+  const sizePhoto = sel.sizePhotos?.[size];
+  const gallery = sizePhoto ? [sel.photos[0], sizePhoto, ...sel.photos.slice(1)] : sel.photos;
   const setColor = (c: string) => {
     setColorState(c);
     setImg(0);
+  };
+  // Picking a size shows that size's shot.
+  const pickSize = (s: string) => {
+    setSize(s);
+    if (sel.sizePhotos?.[s]) setImg(1);
   };
 
   const add = () =>
@@ -41,11 +49,11 @@ export function DogBedView({ children }: { children?: React.ReactNode }) {
     <section className="pdp wrap">
       <div className="gal">
         <div className="gal-main">
-          <div className="gal-photo"><Photo src={sel.photos[img]} label={alt} sizes="(max-width: 960px) 100vw, 56vw" preload={img === 0} /></div>
+          <div className="gal-photo"><Photo src={gallery[img] ?? gallery[0]} label={img === 1 && sizePhoto ? `${alt}, ${sz.label}` : alt} sizes="(max-width: 960px) 100vw, 56vw" preload={img === 0} /></div>
         </div>
-        {sel.photos.length > 1 && (
+        {gallery.length > 1 && (
           <div className="gal-thumbs">
-            {sel.photos.map((ph, i) => (
+            {gallery.map((ph, i) => (
               <button key={ph} className={i === img ? "on" : ""} aria-label={"Image " + (i + 1)} aria-pressed={i === img} onClick={() => setImg(i)}>
                 <Photo src={ph} label="" sizes="84px" />
               </button>
@@ -69,7 +77,7 @@ export function DogBedView({ children }: { children?: React.ReactNode }) {
         <div className="choices" id={BUY_OPTIONS_ID}>
           {!D.comingSoon && (
             <OptGroup label="Size" value={`${sz.label} · ${sz.dims}`}>
-              <Pills options={D.sizes} value={size} onChange={setSize} />
+              <Pills options={D.sizes} value={size} onChange={pickSize} />
             </OptGroup>
           )}
           <OptGroup label="Color" value={sel.label}>
