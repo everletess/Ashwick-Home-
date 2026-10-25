@@ -132,17 +132,23 @@ export function DogBedView({ bed: D = DOG_BED, children }: { bed?: DogBed; child
             </tbody>
           </table>
         )}
-        {!D.comingSoon && (
+        {D.materials.length > 0 && (
           <div className="dog-story">
-            <p className="eyebrow">{D.headline}</p>
-            <p className="body small">{D.matchNote}</p>
+            {D.matchNote && (
+              <>
+                <p className="eyebrow">{D.headline}</p>
+                <p className="body small">{D.matchNote}</p>
+              </>
+            )}
             <p className="eyebrow">What it&apos;s made of</p>
             <ul className="buy-notes">
               {D.materials.map((m) => (
-                <li key={m.name}><strong>{m.name}.</strong> {m.note}</li>
+                <li key={m.name}><strong>{m.name}{m.note ? "." : ""}</strong> {m.note}</li>
               ))}
             </ul>
-            <p className="body small">Sizes: {D.sizes.map((z) => `${z.label} ${z.dims}`).join(", ")}. Each size is one price in all five colors.</p>
+            {!D.specs.length && (
+              <p className="body small">Sizes: {D.sizes.map((z) => `${z.label} ${z.dims}`).join(", ")}. Each size is one price in all {D.colors.length} colors.</p>
+            )}
           </div>
         )}
         {children}

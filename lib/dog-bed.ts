@@ -62,17 +62,17 @@ export const DOG_BED = {
 /** Everything a dog bed page needs (the Ashbury's shape). */
 export type DogBed = typeof DOG_BED;
 
-export const WREN_PATH = "/products/wren-dog-bed";
+export const NOOK_PATH = "/products/nook-dog-bed";
 
 /**
- * The Wren: a curved, bolstered bed in a textured weave. Coming soon (sizes and prices shown, no Add to cart) until it
+ * The Nook (first called the Wren): a curved, bolstered bed in a textured weave. Coming soon (sizes and prices shown, no Add to cart) until it
  * is set up in Shopify and in app/api/checkout/route.ts; color names are working names.
  */
-export const WREN: DogBed = {
-  id: "wren-dog-bed",
-  path: WREN_PATH,
-  title: "The Wren Dog Bed",
-  collection: "The Wren Dog Bed",
+export const NOOK: DogBed = {
+  id: "nook-dog-bed",
+  path: NOOK_PATH,
+  title: "The Nook Dog Bed",
+  collection: "The Nook Dog Bed",
   tagline: "A curved bolster to curl up in.",
   comingSoon: true,
   sizes: [
@@ -81,15 +81,20 @@ export const WREN: DogBed = {
   ],
   headline: "",
   lede: "",
-  materials: [],
+  materials: [
+    { name: "Organic cotton", note: "" },
+    { name: "Living Wool", note: "" },
+    { name: "Cashmere", note: "" },
+    { name: "Cover", note: "OEKO-TEX certified, 51% Belgian linen and 49% wool. Machine wash cold and hang dry." },
+  ],
   matchNote: "",
   leadTime: DOG_BED.leadTime,
   returns: DOG_BED.returns,
   warranty: DOG_BED.warranty,
   colors: [
-    { id: "olive", label: "Olive", swatch: "wren-swatch-olive", photos: ["wren-olive", "wren-olive-room", "wren-olive-sizes"] },
-    { id: "oat", label: "Oat", swatch: "wren-swatch-oat", photos: ["wren-oat"] },
-    { id: "toffee", label: "Toffee", swatch: "wren-swatch-toffee", photos: ["wren-toffee"] },
+    { id: "olive", label: "Olive", swatch: "nook-swatch-olive", photos: ["nook-olive", "nook-olive-room", "nook-olive-sizes"] },
+    { id: "oat", label: "Oat", swatch: "nook-swatch-oat", photos: ["nook-oat"] },
+    { id: "toffee", label: "Toffee", swatch: "nook-swatch-toffee", photos: ["nook-toffee"] },
   ],
   defaultColor: "olive",
   matchesMattress: false,
@@ -100,5 +105,5 @@ export const WREN: DogBed = {
     { label: "Rear bolster height", values: ['9"', '11"'] },
     { label: "Front entrance height", values: ['4"', '5"'] },
   ],
-  editorial: [{ photo: "wren-olive-room", alt: "A chocolate doodle curled up in the Wren Dog Bed in Olive by the fire" }],
+  editorial: [{ photo: "nook-olive-room", alt: "A chocolate doodle curled up in the Nook Dog Bed in Olive by the fire" }],
 };
