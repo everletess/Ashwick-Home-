@@ -50,6 +50,8 @@ export const DOG_BED = {
   /** Colors are the Ashbury's, so the page shows the matching mattress. */
   matchesMattress: true,
   soonLede: "A bed for the newest member of the family, made to match the Ashbury.",
+  /** Measurements by size (one value per size, in size order), shown as a table on the page. */
+  specs: [] as { label: string; values: string[] }[],
   /** Editorial shots for the home page feature (they fade between each other) and the mattress page teaser. */
   editorial: [
     { photo: "dog-bed-sorrel-room", alt: "A chocolate doodle curled up on the Ashbury Dog Bed in Sorrel beside a bed" },
@@ -63,8 +65,8 @@ export type DogBed = typeof DOG_BED;
 export const WREN_PATH = "/products/wren-dog-bed";
 
 /**
- * The Wren: a curved, bolstered bed in a textured weave. Coming soon until sizes, prices and Shopify are set; color
- * names are working names.
+ * The Wren: a curved, bolstered bed in a textured weave. Coming soon (sizes and prices shown, no Add to cart) until it
+ * is set up in Shopify and in app/api/checkout/route.ts; color names are working names.
  */
 export const WREN: DogBed = {
   id: "wren-dog-bed",
@@ -74,8 +76,8 @@ export const WREN: DogBed = {
   tagline: "A curved bolster to curl up in.",
   comingSoon: true,
   sizes: [
-    { id: "medium", label: "Medium", dims: "", price: 0 },
-    { id: "large", label: "Large", dims: "", price: 0 },
+    { id: "medium", label: "Medium", dims: '36" × 28"', price: 369 },
+    { id: "large", label: "Large", dims: '46" × 36"', price: 449 },
   ],
   headline: "",
   lede: "",
@@ -92,5 +94,11 @@ export const WREN: DogBed = {
   defaultColor: "olive",
   matchesMattress: false,
   soonLede: "A deep, curved bolster bed in a soft textured weave, for the dog who likes to curl up. Made to order by hand in the USA.",
+  specs: [
+    { label: "Overall width × depth", values: ['36" × 28"', '46" × 36"'] },
+    { label: "Sleeping area, approx.", values: ['26" × 19"', '36" × 26"'] },
+    { label: "Rear bolster height", values: ['9"', '11"'] },
+    { label: "Front entrance height", values: ['4"', '5"'] },
+  ],
   editorial: [{ photo: "wren-olive-room", alt: "A chocolate doodle curled up in the Wren Dog Bed in Olive by the fire" }],
 };
