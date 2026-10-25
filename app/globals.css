@@ -807,3 +807,14 @@ button.chip{cursor:pointer}
 .bb-email-form button{background:none;border:0;font:500 11px var(--sans);letter-spacing:.2em;text-transform:uppercase;cursor:pointer;padding:0 0 0 14px;min-height:44px}
 .bb-email-fine{font:300 11px var(--sans);color:var(--walnut);margin:8px 0 0}
 .bb-email-done{margin:16px 0 4px;padding:16px 18px;border:1px solid var(--ink);text-align:center;font:400 15px var(--sans)}
+/* Home page: "Introducing dog beds", two beds side by side */
+.dog-feature-head{text-align:center;align-items:center;margin-bottom:48px}
+.dog-feature-head .h2{max-width:none}
+.dog-pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px}
+.dog-pair-card{display:flex;flex-direction:column;gap:12px;color:inherit}
+.dog-pair-img{aspect-ratio:4/3;overflow:hidden;background:var(--linen)}
+.dog-pair-img img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.6,.2,1)}
+@media (hover:hover){.dog-pair-card:hover .dog-pair-img img{transform:scale(1.02)}}
+.dog-pair-name{font:400 clamp(24px,2.2vw,32px)/1.15 var(--serif);margin:12px 0 0;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.dog-pair-soon{font:500 10px var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--clay)}
+@media (max-width:640px){.dog-pair{grid-template-columns:minmax(0,1fr);gap:40px}.dog-feature-head{margin-bottom:32px}}
