@@ -823,3 +823,6 @@ button.chip{cursor:pointer}
 .dog-specs th:first-child{text-align:left}
 .dog-specs thead th{font:500 10.5px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--ink);border-top:0}
 .dog-specs td{color:var(--ink);white-space:nowrap;padding-left:16px}
+.dog-faqs{margin-top:56px}
+.dog-faqs .eyebrow{margin:0 0 8px}
+@media (max-width:960px){.dog-faqs{margin-top:16px}}

@@ -52,6 +52,8 @@ export const DOG_BED = {
   soonLede: "A bed for the newest member of the family, made to match the Ashbury.",
   /** Measurements by size (one value per size, in size order), shown as a table on the page. */
   specs: [] as { label: string; values: string[] }[],
+  /** Questions and answers shown as drop-downs under the gallery. Facts only. */
+  faqs: [] as { q: string; a: string }[],
   /** Editorial shots for the home page feature (they fade between each other) and the mattress page teaser. */
   editorial: [
     { photo: "dog-bed-sorrel-room", alt: "A chocolate doodle curled up on the Ashbury Dog Bed in Sorrel beside a bed" },
@@ -85,7 +87,8 @@ export const NOOK: DogBed = {
     { name: "Organic cotton", note: "" },
     { name: "Living Wool", note: "" },
     { name: "Cashmere", note: "" },
-    { name: "Cover", note: "OEKO-TEX certified, 51% Belgian linen and 49% wool. Machine wash cold and hang dry." },
+    { name: "Cover", note: "OEKO-TEX certified, 51% Belgian linen and 49% wool." },
+    { name: "Removable cushion cover", note: "The inner cushion's cover comes off. Machine wash cold and hang dry." },
   ],
   matchNote: "",
   leadTime: DOG_BED.leadTime,
@@ -104,6 +107,32 @@ export const NOOK: DogBed = {
     { label: "Sleeping area, approx.", values: ['26" × 19"', '36" × 26"'] },
     { label: "Rear bolster height", values: ['9"', '11"'] },
     { label: "Front entrance height", values: ['4"', '5"'] },
+  ],
+  faqs: [
+    {
+      q: "Which size should I choose?",
+      a: "Go by the sleeping area inside the bolster: about 26\" × 19\" in the Medium and 36\" × 26\" in the Large. Measure your dog lying curled up, nose to tail, and choose the size it fits comfortably. If they're in between, size up.",
+    },
+    {
+      q: "Can I wash it?",
+      a: "Yes. The inner cushion's cover is removable: take it off, machine wash cold and hang dry.",
+    },
+    {
+      q: "What's it made of?",
+      a: "Organic cotton, Living Wool and cashmere, under a cover of 51% Belgian linen and 49% wool that is OEKO-TEX certified.",
+    },
+    {
+      q: "How is it different from the Ashbury Dog Bed?",
+      a: "The Nook is a curved bed with a raised bolster to rest a head on and curl into, and a low front to step in. The Ashbury Dog Bed is a flat, tufted bed made to match the Ashbury mattress, in the mattress's five colors.",
+    },
+    {
+      q: "Where is it made?",
+      a: "Made to order by hand in the USA.",
+    },
+    {
+      q: "When can I order one?",
+      a: "Soon. Tap \"Be the first to know\" and we'll email you the day it launches, with 15% off your first order.",
+    },
   ],
   editorial: [{ photo: "nook-olive-room", alt: "A chocolate doodle curled up in the Nook Dog Bed in Olive by the fire" }],
 };
