@@ -122,6 +122,13 @@ export function DogBedView({ bed: D = DOG_BED, children }: { bed?: DogBed; child
             <DogBedNotify />
           </div>
         )}
+        {D.comingSoon && (
+          <ul className="buy-notes">
+            <li>{D.leadTime}</li>
+            <li>{D.returns}</li>
+            <li>{D.warranty}</li>
+          </ul>
+        )}
         {D.specs.length > 0 && (
           <table className="dog-specs">
             <thead><tr><th scope="col">Dimensions</th>{D.sizes.map((z) => <th scope="col" key={z.id}>{z.label}</th>)}</tr></thead>
