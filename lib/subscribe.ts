@@ -10,6 +10,43 @@ export const SUBSCRIBER_EMAIL_KEY = "aw-subscriber-email";
 /** Fired on window after any successful sign-up, so the pop-up and the 15% tab hide everywhere. */
 export const SUBSCRIBED_EVENT = "ashwick:subscribed";
 
+const ATTRIBUTION_KEY = "aw-attribution";
+const UTM_FIELDS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"] as const;
+
+/** Stores the UTM tags from the landing URL (first touch wins; only overwritten by a newer tagged visit). */
+export function captureAttribution(): void {
+  try {
+    const q = new URLSearchParams(window.location.search);
+    const found: Record<string, string> = {};
+    for (const k of UTM_FIELDS) {
+      const v = q.get(k);
+      if (v) found[k] = v.slice(0, 120);
+    }
+    if (Object.keys(found).length === 0) return;
+    found.landing_path = window.location.pathname;
+    localStorage.setItem(ATTRIBUTION_KEY, JSON.stringify(found));
+  } catch {}
+}
+
+/** Klaviyo profile properties describing the ad/link that brought this visitor ("Signup ..." fields). */
+function attributionProps(): Record<string, string> {
+  try {
+    const raw = localStorage.getItem(ATTRIBUTION_KEY);
+    const a: Record<string, string> = raw ? JSON.parse(raw) : {};
+    const out: Record<string, string> = {};
+    if (a.utm_source) out["Signup UTM Source"] = a.utm_source;
+    if (a.utm_medium) out["Signup UTM Medium"] = a.utm_medium;
+    if (a.utm_campaign) out["Signup UTM Campaign"] = a.utm_campaign;
+    if (a.utm_content) out["Signup UTM Content"] = a.utm_content;
+    if (a.utm_term) out["Signup UTM Term"] = a.utm_term;
+    if (a.landing_path) out["Signup Landing Page"] = a.landing_path;
+    out["Signup Page"] = window.location.pathname;
+    return out;
+  } catch {
+    return {};
+  }
+}
+
 export type SubscribeResult = { klaviyo: boolean };
 
 export async function subscribeEmail(email: string, source: string): Promise<SubscribeResult> {
@@ -24,7 +61,7 @@ export async function subscribeEmail(email: string, source: string): Promise<Sub
           type: "subscription",
           attributes: {
             custom_source: source,
-            profile: { data: { type: "profile", attributes: { email: value } } },
+            profile: { data: { type: "profile", attributes: { email: value, properties: attributionProps() } } },
           },
           relationships: { list: { data: { type: "list", id: KLAVIYO_LIST_ID } } },
         },

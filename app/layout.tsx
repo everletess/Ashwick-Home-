@@ -4,6 +4,7 @@ import Script from "next/script";
 import { CartProvider } from "@/components/cart";
 import { Assistant } from "@/components/assistant";
 import { EmailPopup } from "@/components/email-popup";
+import { UtmCapture } from "@/components/utm-capture";
 import { Footer } from "@/components/footer";
 import { AnnouncementBar, CartDrawer, Header } from "@/components/shell";
 import "./globals.css";
@@ -84,6 +85,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           />
         </noscript>
         <CartProvider>
+          <UtmCapture />
           <AnnouncementBar />
           <Header />
           {children}
