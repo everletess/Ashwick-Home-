@@ -787,3 +787,14 @@ button.chip{cursor:pointer}
   .has-sticky-buy .asst-fab,.has-sticky-buy .ep-tab{bottom:110px}
 }
 #buy-options{scroll-margin-top:120px}
+/* Buy box: ship time callout and the trust row with icons (components/buy-icons.tsx) */
+.ships-fast{display:flex;align-items:center;gap:14px;margin:0 0 16px;padding:16px 20px;background:var(--linen);border-left:3px solid var(--ink);color:var(--ink)}
+.ships-fast .icon{flex:none}
+.ships-fast-h{margin:0;font:400 22px/1.15 var(--serif)}
+.ships-fast-b{margin:4px 0 0;font:300 13px/1.4 var(--sans);color:var(--walnut)}
+.trust-row{list-style:none;padding:0;margin:16px 0 0;display:flex;justify-content:space-between;gap:10px;font:500 10.5px/1.3 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--walnut)}
+.trust-row li{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.trust-row .icon{color:var(--ink)}
+.teaser-wide .dog-teaser{margin-top:40px}
+.teaser-narrow{display:none}
+@media (max-width:960px){.teaser-wide{display:none}.teaser-narrow{display:block}.teaser-narrow .dog-teaser{margin-top:8px}}

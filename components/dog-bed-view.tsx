@@ -4,7 +4,9 @@ import { useRef, useState } from "react";
 import { DogBedNotify } from "@/components/dog-bed-notify";
 import { Photo } from "@/components/photo";
 import { OptGroup, Pills } from "@/components/product-view";
+import { ShipsFast, TrustRow } from "@/components/buy-icons";
 import { useCart } from "@/components/cart";
+import { MattressTeaser } from "@/components/mattress-teaser";
 import { BUY_OPTIONS_ID, StickyBuy } from "@/components/sticky-buy";
 import { DOG_BED, DOG_BED_ID } from "@/lib/dog-bed";
 import { PHOTOS } from "@/lib/photos";
@@ -60,6 +62,8 @@ export function DogBedView({ children }: { children?: React.ReactNode }) {
             ))}
           </div>
         )}
+        {/* Beside the gallery on wide screens; below the buy box on phones (the second copy). */}
+        <div className="teaser-wide"><MattressTeaser color={sel.id} /></div>
       </div>
 
       <div className="info">
@@ -98,8 +102,9 @@ export function DogBedView({ children }: { children?: React.ReactNode }) {
 
         {!D.comingSoon && (
           <div className="designed">
+            <ShipsFast when="3–4 days" note="Handmade to order in the USA. Free delivery." />
             <button ref={buyRef} className="btn full" onClick={add}>Add to cart · ${sz.price}</button>
-            <p className="trust-line">Handmade to order · Free delivery · 30-day returns</p>
+            <TrustRow items={[["hand", "Handmade to order"], ["truck", "Free delivery"], ["returns", "30-day returns"]]} />
             <StickyBuy
               watch={buyRef}
               photo={sel.photos[0]}
@@ -110,7 +115,6 @@ export function DogBedView({ children }: { children?: React.ReactNode }) {
               onAdd={add}
             />
             <ul className="buy-notes">
-              <li>{D.leadTime}</li>
               <li>{D.returns}</li>
               <li>{D.warranty}</li>
             </ul>
@@ -136,6 +140,7 @@ export function DogBedView({ children }: { children?: React.ReactNode }) {
           </div>
         )}
         {children}
+        <div className="teaser-narrow"><MattressTeaser color={sel.id} /></div>
       </div>
     </section>
   );

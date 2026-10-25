@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useCart } from "@/components/cart";
+import { ShipsFast, TrustRow } from "@/components/buy-icons";
 import { DogBedTeaser } from "@/components/dog-bed";
 import { BUY_OPTIONS_ID, StickyBuy } from "@/components/sticky-buy";
 import { Photo } from "@/components/photo";
@@ -88,7 +89,8 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
             </button>
           ))}
         </div>
-        <DogBedTeaser />
+        {/* Beside the gallery on wide screens; below the buy box on phones (the second copy). */}
+        <div className="teaser-wide"><DogBedTeaser /></div>
       </div>
 
       <div className="info">
@@ -124,10 +126,11 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
         </div>
 
         <div className="designed">
+          <ShipsFast when="3–4 days" note={`Handmade to order in the USA. ${M.shipping}`} />
           {M.available ? (
             <>
               <button ref={buyRef} className="btn full" onClick={add}>Add to cart · {fmt(sz.price)}</button>
-              <p className="trust-line">Handmade to order · Free delivery · {M.guaranteeNights}-night trial</p>
+              <TrustRow items={[["hand", "Handmade to order"], ["truck", "Free delivery"], ["moon", `${M.guaranteeNights}-night trial`]]} />
               <StickyBuy
                 watch={buyRef}
                 photo={sel.photos[0]}
@@ -150,7 +153,6 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
             </p>
           </div>
           <ul className="buy-notes">
-            <li>{M.leadTime} {M.shipping}</li>
             <li>{M.warranty}.</li>
             <li>Pay over time with Shop Pay Installments at checkout, subject to approval.</li>
           </ul>
@@ -158,6 +160,7 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
 
         <Link href="/pages/bespoke#mattresses" className="ulink">Request a custom size</Link>
         <Link href={GUARANTEE_PATH} className="ulink">Guarantee &amp; warranty</Link>
+        <div className="teaser-narrow"><DogBedTeaser /></div>
       </div>
     </section>
   );
