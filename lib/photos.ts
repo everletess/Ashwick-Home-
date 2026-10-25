@@ -57,14 +57,14 @@ import dogBedSorrelRoomGolden from "@/assets/photos/dog-bed-sorrel-room-golden.j
 import dogBedFleeceRoom from "@/assets/photos/dog-bed-fleece-room.jpg";
 import dogBedFlintRoom from "@/assets/photos/dog-bed-flint-room.jpg";
 import dogBedFlaxRoom from "@/assets/photos/dog-bed-flax-room.jpg";
-import wrenOliveRoom from "@/assets/photos/wren-olive-room.jpg";
-import wrenOliveSizes from "@/assets/photos/wren-olive-sizes.jpg";
-import wrenOat from "@/assets/photos/wren-oat.jpg";
-import wrenOlive from "@/assets/photos/wren-olive.jpg";
-import wrenToffee from "@/assets/photos/wren-toffee.jpg";
-import wrenSwatchOat from "@/assets/photos/wren-swatch-oat.jpg";
-import wrenSwatchOlive from "@/assets/photos/wren-swatch-olive.jpg";
-import wrenSwatchToffee from "@/assets/photos/wren-swatch-toffee.jpg";
+import nookOliveRoom from "@/assets/photos/nook-olive-room.jpg";
+import nookOliveSizes from "@/assets/photos/nook-olive-sizes.jpg";
+import nookOat from "@/assets/photos/nook-oat.jpg";
+import nookOlive from "@/assets/photos/nook-olive.jpg";
+import nookToffee from "@/assets/photos/nook-toffee.jpg";
+import nookSwatchOat from "@/assets/photos/nook-swatch-oat.jpg";
+import nookSwatchOlive from "@/assets/photos/nook-swatch-olive.jpg";
+import nookSwatchToffee from "@/assets/photos/nook-swatch-toffee.jpg";
 import dogBedSorrelSmall from "@/assets/photos/dog-bed-sorrel-small.jpg";
 import dogBedSorrelMedium from "@/assets/photos/dog-bed-sorrel-medium.jpg";
 import dogBedSorrelLarge from "@/assets/photos/dog-bed-sorrel-large.jpg";
@@ -211,14 +211,14 @@ export const PHOTOS = {
   "dog-bed-fleece-room": dogBedFleeceRoom,
   "dog-bed-flint-room": dogBedFlintRoom,
   "dog-bed-flax-room": dogBedFlaxRoom,
-  "wren-olive-room": wrenOliveRoom,
-  "wren-olive-sizes": wrenOliveSizes,
-  "wren-oat": wrenOat,
-  "wren-olive": wrenOlive,
-  "wren-toffee": wrenToffee,
-  "wren-swatch-oat": wrenSwatchOat,
-  "wren-swatch-olive": wrenSwatchOlive,
-  "wren-swatch-toffee": wrenSwatchToffee,
+  "nook-olive-room": nookOliveRoom,
+  "nook-olive-sizes": nookOliveSizes,
+  "nook-oat": nookOat,
+  "nook-olive": nookOlive,
+  "nook-toffee": nookToffee,
+  "nook-swatch-oat": nookSwatchOat,
+  "nook-swatch-olive": nookSwatchOlive,
+  "nook-swatch-toffee": nookSwatchToffee,
   "dog-bed-sorrel-small": dogBedSorrelSmall,
   "dog-bed-sorrel-medium": dogBedSorrelMedium,
   "dog-bed-sorrel-large": dogBedSorrelLarge,
