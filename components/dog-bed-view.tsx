@@ -6,6 +6,7 @@ import { Photo } from "@/components/photo";
 import { OptGroup, Pills } from "@/components/product-view";
 import { ShipsFast, TrustRow } from "@/components/buy-icons";
 import { useCart } from "@/components/cart";
+import { Accordion } from "@/components/mattress";
 import { MattressTeaser } from "@/components/mattress-teaser";
 import { BUY_OPTIONS_ID, StickyBuy } from "@/components/sticky-buy";
 import { DOG_BED, type DogBed } from "@/lib/dog-bed";
@@ -33,6 +34,14 @@ export function DogBedView({ bed: D = DOG_BED, children }: { bed?: DogBed; child
     setSize(s);
     if (sel.sizePhotos?.[s]) setImg(1);
   };
+
+  // Beside the gallery on wide screens, after the buy box on phones.
+  const faqs = D.faqs.length > 0 && (
+    <section className="dog-faqs" aria-labelledby="dog-faqs-h">
+      <h2 className="eyebrow" id="dog-faqs-h">Questions</h2>
+      <Accordion items={D.faqs.map((f) => [f.q, <p className="body small" key={f.q}>{f.a}</p>])} />
+    </section>
+  );
 
   const add = () =>
     cart.add({
@@ -62,6 +71,7 @@ export function DogBedView({ bed: D = DOG_BED, children }: { bed?: DogBed; child
         )}
         {/* Beside the gallery on wide screens; below the buy box on phones (the second copy). */}
         {D.matchesMattress && <div className="teaser-wide"><MattressTeaser color={sel.id} /></div>}
+        {faqs && <div className="teaser-wide">{faqs}</div>}
       </div>
 
       <div className="info">
@@ -160,6 +170,7 @@ export function DogBedView({ bed: D = DOG_BED, children }: { bed?: DogBed; child
         )}
         {children}
         {D.matchesMattress && <div className="teaser-narrow"><MattressTeaser color={sel.id} /></div>}
+        {faqs && <div className="teaser-narrow">{faqs}</div>}
       </div>
     </section>
   );
