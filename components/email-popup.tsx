@@ -192,12 +192,17 @@ export function EmailPopup() {
           <form className="ep-form" onSubmit={submit} noValidate>
             <button type="button" className="ep-x x" aria-label="Close" onClick={dismiss}>×</button>
             <p className="ep-eyebrow eyebrow">The Ashwick Letter</p>
+            {/* Phones get the short version (ep-short), a compact card that leaves the page visible. */}
             <p className="ep-h h3" id="ep-title">
-              Built to be inherited.
+              <span className="ep-long">Built to be inherited.</span>
+              <span className="ep-short">15% off your first order</span>
             </p>
             <p className="ep-body body small" id="ep-desc">
-              Join our exclusive organic design newsletter: material stories, natural interiors, and first access to new pieces. Plus 15% off your first order.
+              <span className="ep-long">Join our exclusive organic design newsletter: material stories, natural interiors, and first access to new pieces. Plus 15% off your first order.</span>
+              <span className="ep-short">Join the Ashwick Letter for material stories, new pieces and your code.</span>
             </p>
+
+            <div className="ep-row">
 
             <div className="ep-field">
               <label htmlFor="ep-email" className="ep-label eyebrow">Your email</label>
@@ -218,11 +223,17 @@ export function EmailPopup() {
 
             <button
               type="submit"
-              className="btn full"
+              className="btn full ep-submit"
               disabled={status === "loading"}
             >
-              {status === "loading" ? "One moment…" : "Get 15% off + the newsletter"}
+              {status === "loading" ? "One moment…" : (
+                <>
+                  <span className="ep-long">Get 15% off + the newsletter</span>
+                  <span className="ep-short">Submit</span>
+                </>
+              )}
             </button>
+            </div>
 
             <button type="button" className="ep-skip fine" onClick={dismiss}>
               No thanks
