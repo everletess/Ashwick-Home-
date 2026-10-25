@@ -13,7 +13,7 @@
 import { NextResponse } from "next/server";
 import { createCheckout, fetchProductVariants, type ShopifyVariant } from "@/lib/shopify";
 import { MATTRESS } from "@/lib/mattress";
-import { DOG_BED_ID } from "@/lib/dog-bed";
+import { DOG_BED_ID, NOOK } from "@/lib/dog-bed";
 
 export type CheckoutRequestLine = {
   productId: string;
@@ -87,16 +87,16 @@ function mattressVariant(variants: ShopifyVariant[], options: [string, string][]
  * The dog bed has a Shopify variant per size and color, titled e.g. "Small (20" × 26") / Flax". Matched on the size
  * name and color only, so the measurements in brackets can be written either way in Shopify (or left out).
  */
-function dogBedVariant(variants: ShopifyVariant[], options: [string, string][]) {
+function dogBedVariant(variants: ShopifyVariant[], options: [string, string][], handle = "ashbury-dog-bed") {
   const sizeName = (s: string) => norm(s.replace(/\(.*?\)/g, ""));
   const opt = (k: string) => options.find(([key]) => key === k)?.[1] ?? "";
   const wanted = `${sizeName(opt("Size"))} / ${norm(opt("Color"))}`;
   const match = variants.find((v) => {
-    if (v.productHandle !== "ashbury-dog-bed") return false;
+    if (v.productHandle !== handle) return false;
     const [size = "", color = ""] = v.title.split(" / ");
     return `${sizeName(size)} / ${norm(color)}` === wanted;
   });
-  if (!match) throw new Error(`No Shopify option for the dog bed in ${options.map(([, v]) => v).join(" / ")}`);
+  if (!match) throw new Error(`No Shopify option for the dog bed (${handle}) in ${options.map(([, v]) => v).join(" / ")}`);
   return match;
 }
 
@@ -113,6 +113,13 @@ export async function POST(req: Request) {
       if (line.productId === MATTRESS.id) {
         return {
           variantId: mattressVariant(variants, line.options).variantId,
+          quantity: line.qty,
+          customAttributes: line.options.map(([key, value]) => ({ key, value })),
+        };
+      }
+      if (line.productId === NOOK.id) {
+        return {
+          variantId: dogBedVariant(variants, line.options, "nook-dog-bed").variantId,
           quantity: line.qty,
           customAttributes: line.options.map(([key, value]) => ({ key, value })),
         };

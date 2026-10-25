@@ -65,8 +65,7 @@ export type DogBed = typeof DOG_BED;
 export const NOOK_PATH = "/products/nook-dog-bed";
 
 /**
- * The Nook (first called the Wren): a curved, bolstered bed in a textured weave. Coming soon (sizes and prices shown, no Add to cart) until it
- * is set up in Shopify and in app/api/checkout/route.ts; color names are working names.
+ * The Nook (first called the Wren): a curved, bolstered bed in a textured weave. Live: set up in Shopify (handle nook-dog-bed, Size x Color variants) and mapped in app/api/checkout/route.ts.
  */
 export const NOOK: DogBed = {
   id: "nook-dog-bed",
@@ -74,7 +73,7 @@ export const NOOK: DogBed = {
   title: "The Nook Dog Bed",
   collection: "The Nook Dog Bed",
   tagline: "A curved bolster to curl up in.",
-  comingSoon: true,
+  comingSoon: false,
   sizes: [
     { id: "medium", label: "Medium", dims: '36" × 28"', price: 369 },
     { id: "large", label: "Large", dims: '46" × 36"', price: 449 },
