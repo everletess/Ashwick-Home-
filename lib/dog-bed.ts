@@ -7,7 +7,8 @@ export const DOG_BED_PATH = "/products/organic-dog-bed";
 /** Cart / checkout product id, mapped to the Shopify product in app/api/checkout/route.ts. */
 export const DOG_BED_ID = "ashbury-dog-bed";
 
-export type DogBedColor = { id: string; label: string; swatch: PhotoKey; photos: PhotoKey[] };
+/** sizePhotos: a shot of each size (keyed by size id) in this color, shown when that size is picked. */
+export type DogBedColor = { id: string; label: string; swatch: PhotoKey; photos: PhotoKey[]; sizePhotos?: Record<string, PhotoKey> };
 
 export const DOG_BED = {
   title: "The Ashbury Dog Bed",
@@ -36,12 +37,13 @@ export const DOG_BED = {
   returns: "30-day return window. Returned beds are donated.",
   warranty: "1-year warranty.",
   colors: [
-    { id: "natural", label: "Fleece", swatch: "mattress-swatch-natural", photos: ["dog-bed-fleece", "dog-bed-fleece-room"] },
-    { id: "dove", label: "Flint", swatch: "mattress-swatch-dove", photos: ["dog-bed-flint", "dog-bed-flint-room"] },
-    { id: "khaki", label: "Moss", swatch: "mattress-swatch-khaki", photos: ["dog-bed-moss", "dog-bed-moss-room"] },
-    { id: "safari", label: "Flax", swatch: "mattress-swatch-safari", photos: ["dog-bed-flax", "dog-bed-flax-room"] },
-    { id: "mocha", label: "Sorrel", swatch: "mattress-swatch-mocha", photos: ["dog-bed-sorrel", "dog-bed-sorrel-room-golden", "dog-bed-sorrel-front", "dog-bed-sorrel-detail"] },
-  ] satisfies DogBedColor[],
+    { id: "natural", label: "Fleece", swatch: "mattress-swatch-natural", photos: ["dog-bed-fleece", "dog-bed-fleece-room", "dog-bed-fleece-room-2"] },
+    { id: "dove", label: "Flint", swatch: "mattress-swatch-dove", photos: ["dog-bed-flint", "dog-bed-flint-room", "dog-bed-flint-room-2"] },
+    { id: "khaki", label: "Moss", swatch: "mattress-swatch-khaki", photos: ["dog-bed-moss", "dog-bed-moss-room", "dog-bed-moss-room-2"] },
+    { id: "safari", label: "Flax", swatch: "mattress-swatch-safari", photos: ["dog-bed-flax", "dog-bed-flax-room", "dog-bed-flax-room-2"] },
+    { id: "mocha", label: "Sorrel", swatch: "mattress-swatch-mocha", photos: ["dog-bed-sorrel", "dog-bed-sorrel-room-golden", "dog-bed-sorrel-room-2", "dog-bed-sorrel-front", "dog-bed-sorrel-detail"],
+      sizePhotos: { small: "dog-bed-sorrel-small", medium: "dog-bed-sorrel-medium", large: "dog-bed-sorrel-large" } },
+  ] as DogBedColor[],
   defaultColor: "mocha",
   /** Editorial shots for the home page feature (they fade between each other) and the mattress page teaser. */
   editorial: [
