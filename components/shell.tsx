@@ -301,7 +301,7 @@ export function CartDrawer() {
           )}
           {cart.items.map((i) => (
             <div className="line" key={i.lineId}>
-              <Photo src={i.photo} label={i.name} className="line-img" sizes="96px" />
+              <Photo src={i.photo} label={i.name} className="line-img" sizes="96px" preload />
               <div>
                 <div className="line-top">
                   <span className="line-name">{i.name}</span>
