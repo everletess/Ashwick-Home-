@@ -80,11 +80,8 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
       <div className="gal">
         <div className="gal-main" onPointerDown={onPointerDown} onPointerUp={onPointerUp} onPointerCancel={() => (swipeX.current = null)}>
           <div className="gal-photo">
-            <Photo src={gallery[img].photo} label={gallery[img].alt} sizes="(max-width: 960px) 100vw, 56vw" preload={img === 0} />
-          </div>
-          {/* The other shots load in the background, so clicking a thumbnail (the layers picture especially) never shows a blank frame. */}
-          <div aria-hidden="true" style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", opacity: 0, pointerEvents: "none" }}>
-            {gallery.map((g, i) => (i === img ? null : <Photo key={g.photo} src={g.photo} label="" sizes="(max-width: 960px) 100vw, 56vw" />))}
+            {/* Keyed and eager: each picture loads the moment it is chosen (a lazy swap could stay blank until scrolled into view). */}
+            <Photo key={gallery[img].photo} src={gallery[img].photo} label={gallery[img].alt} sizes="(max-width: 960px) 100vw, 56vw" preload />
           </div>
         </div>
         <div className="gal-thumbs">
