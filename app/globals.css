@@ -843,3 +843,7 @@ button.chip{cursor:pointer}
 .dog-faqs{margin-top:56px}
 .dog-faqs .eyebrow{margin:0 0 8px}
 @media (max-width:960px){.dog-faqs{margin-top:16px}}
+
+.btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--ink);margin-top:12px}
+.btn-ghost:hover{background:var(--ink);color:var(--alabaster)}
+.buy-direct{text-align:center;margin-top:12px}
