@@ -21,7 +21,32 @@ export type Review = {
   purchase?: string;
 };
 
-export const REVIEWS: Review[] = [];
+export const REVIEWS: Review[] = [
+  {
+    product: "ashbury",
+    rating: 5,
+    body: "The Ashbury is not only gorgeous it\u2019s the most comfortable mattress I\u2019ve ever slept on. Knowing I\u2019m protecting my environment at the same time only makes it better. I don\u2019t know if it\u2019s their mix of materials or how they mix them, but run dont walk into this bed.",
+    author: "Shannon M.",
+    date: "2026-10-25",
+    verified: false,
+  },
+  {
+    product: "ashbury",
+    rating: 5,
+    body: "I didn\u2019t know what I didn\u2019t know when it came to organic and mattresses. As soon as I learned about the off gassing and chemicals used in mattress making I knew I needed to make a change. The Ashbury has been game changing in sleep, comfort, breathability and support. I love the way it looks, but I love the sleep more.",
+    author: "Connor S.",
+    date: "2026-10-25",
+    verified: false,
+  },
+  {
+    product: "ashbury",
+    rating: 5,
+    body: "This Ashbury mattress is so pretty!!! I never thought a mattress could be colorful before, what a treat. It\u2019s also so incredibly comfortable and I\u2019m so pleased to know I\u2019m finally sleeping toxin free!!",
+    author: "Christine W.",
+    date: "2026-10-25",
+    verified: false,
+  },
+];
 
 export function reviewsFor(product: ProductKey) {
   const items = REVIEWS.filter((r) => r.product === product).sort((a, b) => b.date.localeCompare(a.date));
