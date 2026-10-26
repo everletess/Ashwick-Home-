@@ -23,7 +23,7 @@ export default function DogBedsPage() {
       <section className="page-head wrap">
         <div className="eyebrow">Shop</div>
         <h1 className="h1">Dog Beds</h1>
-        <p className="body">Handmade to order in the USA from organic cotton, Living Wool and cashmere. Ships within 3\u20134 days.</p>
+        <p className="body">Handmade to order in the USA from organic cotton, Living Wool and cashmere. Ships within 3–4 days.</p>
       </section>
       <section className="wrap" style={{ paddingBottom: 140 }}>
         <div className="grid3 dogbeds-grid">
@@ -33,8 +33,8 @@ export default function DogBedsPage() {
               <div key={bed.id}>
                 <Link href={bed.path} className="card">
                   <div className="card-img">
-                    <Photo src={photo} label={bed.title} sizes="(max-width: 960px) 100vw, 33vw" />
-                    <Photo src={alt} label="" className="alt" sizes="(max-width: 960px) 100vw, 33vw" />
+                    <Photo src={photo} label={bed.title} sizes="(max-width: 960px) 100vw, 33vw" preload />
+                    <Photo src={alt} label="" className="alt" sizes="(max-width: 960px) 100vw, 33vw" preload />
                     <span className="card-cta">View</span>
                   </div>
                   <div className="card-row">
