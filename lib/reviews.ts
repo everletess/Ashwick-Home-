@@ -78,6 +78,30 @@ export const REVIEWS: Review[] = [
     date: "2026-10-15",
     verified: false,
   },
+  {
+    product: "ashbury-dog-bed",
+    rating: 5,
+    body: "Okay. A dog bed that looks like a tiny mattress! I couldn\u2019t help myself. And Henry my golden loves it. Let\u2019s see if organic makes a difference!",
+    author: "Juliet S.",
+    date: "2026-10-18",
+    verified: false,
+  },
+  {
+    product: "ashbury-dog-bed",
+    rating: 5,
+    body: "Poppy can\u2019t stop rolling around on this dog bed mattress. I think she likes it!",
+    author: "Jeffry T.",
+    date: "2026-10-10",
+    verified: false,
+  },
+  {
+    product: "ashbury-dog-bed",
+    rating: 5,
+    body: "Makes me think I should get the mattress as well, just so we can have a matching set. Love the materials and excited to be making my entrance into organic. Love that they are thinking and including the pets as well. Well made and recommend.",
+    author: "Sarah P.",
+    date: "2026-10-02",
+    verified: false,
+  },
 ];
 
 export function reviewsFor(product: ProductKey) {
