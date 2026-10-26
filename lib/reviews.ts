@@ -59,6 +59,7 @@ export const REVIEWS: Review[] = [
     rating: 5,
     body: "Okay. This is the COOLEST dog bed I\u2019ve purchased. And the fabric is amazing. Not sure my dog needed this luxurious of a bed, but I couldn\u2019t help it. She\u2019s obsessed and sleeps on it every night. Must be the living wool!",
     author: "Taryn H.",
+    date: "2026-10-25",
     verified: false,
   },
   {
@@ -66,6 +67,7 @@ export const REVIEWS: Review[] = [
     rating: 5,
     body: "I\u2019ve never seen a dog bed from high end organic fabric and quite frankly, anything we can do to help extend their time with us I will try. Even a chemical free bed. What a little dog bed art piece. Very happy with my purchase.",
     author: "Gary F.",
+    date: "2026-10-01",
     verified: false,
   },
   {
@@ -73,6 +75,7 @@ export const REVIEWS: Review[] = [
     rating: 5,
     body: "I went with the larger of the two sizes even for my 12 pound terrier. I think she likes being in a larger space and it\u2019s just so cool looking. Got the wool/linen blend and it\u2019s so soft. Highly recommend.",
     author: "Patty K.",
+    date: "2026-10-15",
     verified: false,
   },
 ];
