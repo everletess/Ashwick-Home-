@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Reviews } from "@/components/reviews";
 import { DogBedView } from "@/components/dog-bed-view";
 import { DOG_BED } from "@/lib/dog-bed";
 import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
@@ -20,6 +21,7 @@ export default function DogBedPage() {
       <DogBedView>
         <Link href={MATTRESS_PATH} className="ulink">Shop the {MATTRESS.shortName}</Link>
       </DogBedView>
+      <Reviews product="ashbury-dog-bed" name="Ashbury dog bed" />
     </main>
   );
 }
