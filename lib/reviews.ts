@@ -27,7 +27,7 @@ export const REVIEWS: Review[] = [
     rating: 5,
     body: "The Ashbury is not only gorgeous it\u2019s the most comfortable mattress I\u2019ve ever slept on. Knowing I\u2019m protecting my environment at the same time only makes it better. I don\u2019t know if it\u2019s their mix of materials or how they mix them, but run dont walk into this bed.",
     author: "Shannon M.",
-    date: "2026-10-25",
+    date: "2026-10-12",
     verified: false,
   },
   {
@@ -35,7 +35,7 @@ export const REVIEWS: Review[] = [
     rating: 5,
     body: "I didn\u2019t know what I didn\u2019t know when it came to organic and mattresses. As soon as I learned about the off gassing and chemicals used in mattress making I knew I needed to make a change. The Ashbury has been game changing in sleep, comfort, breathability and support. I love the way it looks, but I love the sleep more.",
     author: "Connor S.",
-    date: "2026-10-25",
+    date: "2026-10-20",
     verified: false,
   },
   {
@@ -43,7 +43,7 @@ export const REVIEWS: Review[] = [
     rating: 5,
     body: "This Ashbury mattress is so pretty!!! I never thought a mattress could be colorful before, what a treat. It\u2019s also so incredibly comfortable and I\u2019m so pleased to know I\u2019m finally sleeping toxin free!!",
     author: "Christine W.",
-    date: "2026-10-25",
+    date: "2026-10-23",
     verified: false,
   },
   {
@@ -51,7 +51,7 @@ export const REVIEWS: Review[] = [
     rating: 5,
     body: "This dog bed is so cute! Knowing my pup is also sleeping toxin free is an added bonus and truly something I never thought of. We care about what they eat, we should probably care about where they sleep as well. A good design helps as well!",
     author: "Dylan S.",
-    date: "2026-10-25",
+    date: "2026-10-10",
     verified: false,
   },
 ];
