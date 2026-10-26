@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Reviews } from "@/components/reviews";
 import { DogBedView } from "@/components/dog-bed-view";
 import { DOG_BED, NOOK } from "@/lib/dog-bed";
 
@@ -16,6 +17,7 @@ export default function NookPage() {
       <DogBedView bed={NOOK}>
         <Link href={DOG_BED.path} className="ulink">Shop {DOG_BED.title.replace(/^The /, "the ")}</Link>
       </DogBedView>
+      <Reviews product="nook" name="Nook" />
     </main>
   );
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
+import { Reviews } from "@/components/reviews";
 import { Accordion, Construction, Feels, Recovery } from "@/components/mattress";
 import { MattressView, MattressViewFromURL } from "@/components/mattress-view";
 import { Photo } from "@/components/photo";
@@ -8,6 +9,7 @@ import { GUARANTEE_PATH, MATTRESS, MATTRESS_PATH as MATTRESS_PATH_ABS } from "@/
 import { ASHBURY_PATH } from "@/lib/materials";
 import { PHOTOS } from "@/lib/photos";
 import { fmt } from "@/lib/products";
+import { reviewsFor } from "@/lib/reviews";
 import { MATTRESS_DESCRIPTION, MATTRESS_TITLE, abs, mattressItems } from "@/lib/mattress-feed";
 
 const M = MATTRESS;
@@ -58,6 +60,10 @@ function productJsonLd() {
       offerCount: items.length,
       availability: "https://schema.org/InStock",
     },
+    // Star rating markup only once there are real reviews; never invented.
+    ...(reviewsFor("ashbury").count
+      ? { aggregateRating: { "@type": "AggregateRating", ratingValue: reviewsFor("ashbury").average, reviewCount: reviewsFor("ashbury").count } }
+      : {}),
     hasVariant: items.map((i) => ({
       "@type": "Product",
       sku: i.id,
@@ -193,6 +199,8 @@ export default function MattressPage() {
       <section className="sec">
         <div className="wrap"><Recovery /></div>
       </section>
+
+      <Reviews product="ashbury" name="Ashbury" />
 
       <section className="sec linen">
         <div className="wrap specs">
