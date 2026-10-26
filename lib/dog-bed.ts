@@ -129,8 +129,12 @@ export const NOOK: DogBed = {
       a: "Made to order by hand in the USA.",
     },
     {
-      q: "When can I order one?",
-      a: "Soon. Tap \"Be the first to know\" and we'll email you the day it launches, with 15% off your first order.",
+      q: "How fast does it ship?",
+      a: "Each Nook is handmade to order in the USA and ships within 3–4 days.",
+    },
+    {
+      q: "Can I return it?",
+      a: "Yes, within 30 days. Returned beds are donated. It also comes with a 1-year warranty.",
     },
   ],
   editorial: [{ photo: "nook-olive-room", alt: "A chocolate doodle curled up in the Nook Dog Bed in Olive by the fire" }],
