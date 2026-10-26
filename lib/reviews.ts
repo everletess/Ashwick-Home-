@@ -46,6 +46,14 @@ export const REVIEWS: Review[] = [
     date: "2026-10-25",
     verified: false,
   },
+  {
+    product: "ashbury-dog-bed",
+    rating: 5,
+    body: "This dog bed is so cute! Knowing my pup is also sleeping toxin free is an added bonus and truly something I never thought of. We care about what they eat, we should probably care about where they sleep as well. A good design helps as well!",
+    author: "Dylan S.",
+    date: "2026-10-25",
+    verified: false,
+  },
 ];
 
 export function reviewsFor(product: ProductKey) {
