@@ -66,7 +66,7 @@ button.chip{cursor:pointer}
 .burger{background:none;border:0;padding:10px 0;cursor:pointer;flex-direction:column;gap:6px;width:44px;height:44px;justify-content:center}
 .burger span{display:block;width:22px;height:1px;background:var(--ink)}
 .mcart{font:400 11px var(--sans);letter-spacing:.2em;text-transform:uppercase;justify-self:end;min-height:44px;align-items:center}
-.mmenu{position:fixed;inset:0;background:var(--alabaster);z-index:70;padding:18px 20px;display:flex;flex-direction:column}
+.mmenu{position:fixed;inset:0;background:var(--alabaster);z-index:90;padding:18px 20px;display:flex;flex-direction:column;overflow-y:auto;overscroll-behavior:contain}
 .mmenu-top{display:flex;justify-content:space-between;align-items:center}
 .mmenu-links{display:flex;flex-direction:column;gap:8px;margin-top:56px}
 .mmenu-links a{font:300 38px/1.25 var(--serif)}
@@ -856,3 +856,6 @@ button.chip{cursor:pointer}
 .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--ink);margin-top:12px}
 .btn-ghost:hover{background:var(--ink);color:var(--alabaster)}
 .buy-direct{text-align:center;margin-top:12px}
+
+/* Mobile menu: each link fills its row, so a tap beside the word still counts */
+.mmenu-links a,.mmenu-sub a{display:block;width:100%}

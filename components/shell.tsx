@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 /** Stop the page behind an overlay from scrolling (mainly for touch devices). */
 function useScrollLock(locked: boolean) {
@@ -175,8 +176,16 @@ export function Header() {
         </nav>
         <button type="button" className="mcart linkbtn" onClick={openCart}>{cartLabel}</button>
       </div>
-      {menu && (
-        <div className="mmenu" role="dialog" aria-modal="true" aria-label="Menu">
+      {/* On <body>, above the add-to-cart bar, chat button and 15% tab (inside the sticky header it was capped below them).
+          Any link closes it, including one to the page you're already on. */}
+      {menu && createPortal(
+        <div
+          className="mmenu"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Menu"
+          onClick={(e) => (e.target as HTMLElement).closest("a") && setMenu(false)}
+        >
           <div className="mmenu-top">
             <Wordmark tagline={false} />
             <button className="x" aria-label="Close" onClick={() => setMenu(false)}>×</button>
@@ -195,7 +204,8 @@ export function Header() {
             {MATERIAL_LINKS.map(([t, , href]) => <Link key={href} href={href} className="mmenu-child">{t}</Link>)}
             <Link href="/account">Account</Link>
           </nav>
-        </div>
+        </div>,
+        document.body,
       )}
     </header>
   );
