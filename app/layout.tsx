@@ -63,7 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
         <Script
-          id="clarity"
+          id="ms-clarity-tag"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
