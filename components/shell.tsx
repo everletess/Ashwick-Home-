@@ -226,10 +226,11 @@ export function CartDrawer() {
   const [saveEmail, setSaveEmail] = useState("");
   const [savePhone, setSavePhone] = useState("");
   const [saveState, setSaveState] = useState<"idle" | "sending" | "done" | "error" | "badphone">("idle");
-  // On phones the email offer starts folded so the items and Check out keep the screen; on larger screens it starts open.
+  // The email offer is open whenever the cart opens, on phones too: most add-to-carts here are phone visitors
+  // who leave without buying, and this is the moment they're most interested.
   const [offerOpen, setOfferOpen] = useState(false);
   useEffect(() => {
-    if (cart.open && window.matchMedia("(min-width: 641px)").matches) setOfferOpen(true);
+    if (cart.open) setOfferOpen(true);
   }, [cart.open]);
 
   const save = async (e: React.FormEvent) => {
@@ -365,7 +366,7 @@ export function CartDrawer() {
             ) : (
               <form onSubmit={save} className="save-cart">
                 <button type="button" className="save-cart-toggle" aria-expanded={offerOpen} aria-controls="save-cart-body" onClick={() => setOfferOpen((o) => !o)}>
-                  <span>Not ready? Email me my cart, plus 15% off.</span>
+                  <span>Not ready? Email me this cart, plus 15% off.</span>
                   <span aria-hidden="true">{offerOpen ? "−" : "+"}</span>
                 </button>
                 {offerOpen && (
