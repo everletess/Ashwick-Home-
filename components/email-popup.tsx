@@ -6,7 +6,7 @@ import { useCart } from "@/components/cart";
 import { SUBSCRIBED_EVENT, SUBSCRIBED_KEY, subscribeEmail } from "@/lib/subscribe";
 
 const STORAGE_KEY = SUBSCRIBED_KEY;
-const DELAY_MS = 5000; // 5 seconds after arriving
+const SCROLL_PX = 120; // opens as soon as the visitor scrolls this far (they are reading, not bouncing)
 // Pages where someone is mid-form; the pop-up and the tab wait until they move on.
 const QUIET_PATHS = ["/pages/bespoke", "/pages/trade", "/account"];
 const DISMISS_DAYS = 14; // "No thanks" hides the pop-up this long (the small tab stays); subscribers never see either again
@@ -53,7 +53,7 @@ export function EmailPopup() {
   const [errorMsg, setErrorMsg] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // First visit: open after 5 seconds. Someone who said "No thanks" gets the small tab instead.
+  // First visit: open as soon as they scroll. Someone who said "No thanks" gets the small tab instead.
   useEffect(() => {
     if (isSubscribed()) return;
     // Ad links with ?offer=15 open the 15% sign-up straight away, even for people who said "No thanks" before.
@@ -67,14 +67,18 @@ export function EmailPopup() {
       if (!tabHidden()) setTab(true);
       return;
     }
-    const t = setTimeout(() => setDue(true), DELAY_MS);
-    // Exit intent (desktop): if they head for the tabs or address bar before the 5 seconds, open now.
+    const onScroll = () => {
+      if (window.scrollY >= SCROLL_PX) setDue(true);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    // Exit intent (desktop): if they head for the tabs or address bar before scrolling, open now.
     const onLeave = (e: MouseEvent) => {
       if (e.clientY <= 0 && !e.relatedTarget) setDue(true);
     };
     document.documentElement.addEventListener("mouseleave", onLeave);
     return () => {
-      clearTimeout(t);
+      window.removeEventListener("scroll", onScroll);
       document.documentElement.removeEventListener("mouseleave", onLeave);
     };
   }, []);
