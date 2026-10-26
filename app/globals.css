@@ -875,3 +875,7 @@ button.chip{cursor:pointer}
 #reviews{scroll-margin-top:90px}
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+.nav-dd-panel.left{right:auto;left:-20px}
+.dogbeds-grid{grid-template-columns:repeat(2,minmax(0,1fr));max-width:980px}
+@media (max-width:640px){.dogbeds-grid{grid-template-columns:minmax(0,1fr);gap:48px}}

@@ -40,7 +40,7 @@ export function Reviews({ product, name }: { product: ProductKey; name: string }
                   {r.author}
                   {r.verified && <span className="rv-ok"> · Verified buyer</span>}
                   {r.purchase && <span> · {r.purchase}</span>}
-                  <span> · {new Date(r.date + "T12:00:00").toLocaleDateString("en-US", { month: "long", year: "numeric" })}</span>
+                  {r.date && <span> · {new Date(r.date + "T12:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</span>}
                 </p>
               </li>
             ))}

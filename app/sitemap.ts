@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/collections/all`, priority: 0.8 },
     { url: `${BASE}/collections/sofas`, priority: 0.8 },
     { url: `${BASE}/collections/chairs`, priority: 0.8 },
+    { url: `${BASE}/collections/dog-beds`, priority: 0.8 },
     { url: `${BASE}/pages/our-story`, priority: 0.7 },
     { url: `${BASE}/pages/materials`, priority: 0.7 },
     { url: `${BASE}/pages/furniture-materials`, priority: 0.7 },

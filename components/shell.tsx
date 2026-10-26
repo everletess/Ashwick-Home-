@@ -31,8 +31,13 @@ const MATERIAL_LINKS: [string, string, string][] = [
   ["Furniture", "Frames, fills and fabrics", FURNITURE_MATERIALS_PATH],
 ];
 
-/** "Materials" in the header: opens on hover or click and lists the mattress and furniture materials pages. */
-function MaterialsMenu() {
+const MATTRESS_LINKS: [string, string, string][] = [
+  ["The Ashbury", "Organic mattress, made in color", "/products/luxury-organic-mattress"],
+  ["Dog Beds", "The Ashbury and The Nook", "/collections/dog-beds"],
+];
+
+/** A header link that opens a small menu on hover or click (Mattress, Materials). */
+function NavMenu({ label, id, links, all, align = "right" }: { label: string; id: string; links: [string, string, string][]; all?: [string, string]; align?: "left" | "right" }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
@@ -55,23 +60,24 @@ function MaterialsMenu() {
   const hover = (v: boolean) => (e: React.PointerEvent) => e.pointerType === "mouse" && setOpen(v);
   return (
     <div className="nav-dd" ref={ref} onPointerEnter={hover(true)} onPointerLeave={hover(false)}>
-      <button type="button" className="linkbtn nav-dd-btn" aria-expanded={open} aria-controls="materials-menu" onClick={() => setOpen((v) => !v)}>
-        Materials<span className="nav-dd-caret" aria-hidden="true" />
+      <button type="button" className="linkbtn nav-dd-btn" aria-expanded={open} aria-controls={id} onClick={() => setOpen((v) => !v)}>
+        {label}<span className="nav-dd-caret" aria-hidden="true" />
       </button>
       {open && (
-        <div className="nav-dd-panel" id="materials-menu">
-          {MATERIAL_LINKS.map(([t, d, href]) => (
+        <div className={"nav-dd-panel" + (align === "left" ? " left" : "")} id={id}>
+          {links.map(([t, d, href]) => (
             <Link key={href} href={href} className="nav-dd-item">
               <span className="nav-dd-t">{t}</span>
               <span className="nav-dd-d">{d}</span>
             </Link>
           ))}
-          <Link href={MATERIALS_PATH} className="nav-dd-all">All materials</Link>
+          {all && <Link href={all[1]} className="nav-dd-all">{all[0]}</Link>}
         </div>
       )}
     </div>
   );
 }
+
 import { Photo } from "@/components/photo";
 import { fmt } from "@/lib/products";
 
@@ -159,7 +165,7 @@ export function Header() {
           <Link href="/collections/all">Shop</Link>
           <Link href="/collections/sofas">Sofas</Link>
           <Link href="/collections/chairs">Chairs</Link>
-          <Link href="/products/luxury-organic-mattress">Mattress</Link>
+          <NavMenu label="Mattress" id="mattress-menu" links={MATTRESS_LINKS} align="left" />
           <Link href="/pages/bespoke">Bespoke</Link>
           <Link href="/pages/trade" className="nav-trade">Trade</Link>
         </nav>
@@ -170,7 +176,7 @@ export function Header() {
         <Wordmark />
         <nav className="nav r" aria-label="Ashwick">
           <Link href="/pages/our-story">Our story</Link>
-          <MaterialsMenu />
+          <NavMenu label="Materials" id="materials-menu" links={MATERIAL_LINKS} all={["All materials", MATERIALS_PATH]} />
           <Link href="/account">Account</Link>
           <button type="button" className="linkbtn" onClick={openCart}>{cartLabel}</button>
         </nav>
@@ -195,6 +201,7 @@ export function Header() {
             <Link href="/collections/sofas">Sofas</Link>
             <Link href="/collections/chairs">Chairs</Link>
             <Link href="/products/luxury-organic-mattress">Mattress</Link>
+            {MATTRESS_LINKS.map(([t, , href]) => <Link key={href} href={href} className="mmenu-child">{t}</Link>)}
             <Link href="/pages/bespoke">Bespoke</Link>
             <Link href="/pages/trade">Trade</Link>
           </nav>
