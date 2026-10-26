@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { DogBedNotify } from "@/components/dog-bed-notify";
 import { Photo } from "@/components/photo";
+import { RatingLink } from "@/components/reviews";
 import { OptGroup, Pills } from "@/components/product-view";
 import { ShipsFast, TrustRow } from "@/components/buy-icons";
 import { useCart } from "@/components/cart";
@@ -77,6 +78,7 @@ export function DogBedView({ bed: D = DOG_BED, children }: { bed?: DogBed; child
       <div className="info">
         <div className="eyebrow">{D.comingSoon ? "Coming soon" : "Dog bed · Made to order"}</div>
         <h1 className="pdp-name">{D.title}</h1>
+        <RatingLink product={D.id === "nook-dog-bed" ? "nook" : "ashbury-dog-bed"} />
         {D.collection !== D.title && <div className="pdp-collection">{D.collection}</div>}
         <p className="m-feature-tag dog-tag">{D.tagline}</p>
         {sz.price > 0 && <div className="pdp-price">${sz.price}</div>}
