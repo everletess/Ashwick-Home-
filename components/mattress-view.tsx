@@ -13,7 +13,8 @@ import { OptGroup, Pills } from "@/components/product-view";
 import { GUARANTEE_PATH, MATTRESS, colorById, colorFromParam, sizeById } from "@/lib/mattress";
 import { PHOTOS, type PhotoKey } from "@/lib/photos";
 import { fmt } from "@/lib/products";
-import { track } from "@/lib/pixel";
+import { track, trackThen } from "@/lib/pixel";
+import { trackAddedToCart } from "@/lib/subscribe";
 
 const M = MATTRESS;
 
@@ -75,6 +76,49 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
       options: [["Size", `${sz.label} (${sz.dims})`], ["Feel", feelLabel], ["Color", sel.label]],
     });
 
+  // Buy now: straight to Shopify checkout with this bed, skipping the cart. Fires the same AddToCart and
+  // InitiateCheckout events (Meta, GA4, Klaviyo for known subscribers) so ads and flows keep learning.
+  const [buying, setBuying] = useState(false);
+  const [buyError, setBuyError] = useState<string | null>(null);
+  const buyNow = async () => {
+    setBuying(true);
+    setBuyError(null);
+    const options: [string, string][] = [["Size", `${sz.label} (${sz.dims})`], ["Feel", feelLabel], ["Color", sel.label]];
+    track("AddToCart", {
+      content_ids: [M.id],
+      content_name: M.title,
+      content_type: "product",
+      contents: [{ id: M.id, quantity: 1, item_price: sz.price }],
+      value: sz.price,
+    });
+    void trackAddedToCart([{ productId: M.id, name: M.title, qty: 1, price: sz.price, options }], sz.price);
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ lines: [{ productId: M.id, qty: 1, options }] }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.checkoutUrl) throw new Error(data.error ?? "Checkout failed");
+      trackThen(
+        "InitiateCheckout",
+        {
+          value: sz.price,
+          num_items: 1,
+          content_ids: [M.id],
+          contents: [{ id: M.id, quantity: 1, item_price: sz.price }],
+          content_type: "product",
+        },
+        () => {
+          window.location.href = data.checkoutUrl;
+        },
+      );
+    } catch {
+      setBuyError("That didn\u2019t go through. Please try again, or add it to your cart.");
+      setBuying(false);
+    }
+  };
+
   return (
     <section className="pdp wrap">
       <div className="gal">
@@ -131,7 +175,10 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
           <ShipsFast when="3–4 days" note={`Handmade to order in the USA. ${M.shipping}`} />
           {M.available ? (
             <>
-              <button ref={buyRef} className="btn full" onClick={add}>Add to cart · {fmt(sz.price)}</button>
+              <button ref={buyRef} className="btn full" onClick={buyNow} disabled={buying}>{buying ? "Taking you to checkout\u2026" : `Buy now \u00b7 ${fmt(sz.price)}`}</button>
+              <button className="btn full btn-ghost" onClick={add} disabled={buying}>Add to cart</button>
+              {buyError && <p className="fine" role="alert" style={{ color: "var(--err, #b00)", textAlign: "center" }}>{buyError}</p>}
+              <p className="fine buy-direct">Goes straight to secure checkout. Free delivery, {M.guaranteeNights}-night trial.</p>
               <BuyBoxEmail />
               <TrustRow items={[["hand", "Handmade to order"], ["truck", "Free delivery"], ["moon", `${M.guaranteeNights}-night trial`]]} />
               <StickyBuy
@@ -141,8 +188,8 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
                 summary={`${feelLabel} · ${sz.label} · ${sel.label}`}
                 price={sz.price}
                 note="Pay over time with Shop Pay Installments"
-                cta="Add to cart"
-                onAdd={add}
+                cta="Buy now"
+                onAdd={buyNow}
               />
             </>
           ) : (

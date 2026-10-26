@@ -852,3 +852,7 @@ button.chip{cursor:pointer}
   .ep-tab{bottom:62px}
   .has-sticky-buy .ep-tab{bottom:160px}
 }
+
+.btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--ink);margin-top:12px}
+.btn-ghost:hover{background:var(--ink);color:var(--alabaster)}
+.buy-direct{text-align:center;margin-top:12px}
