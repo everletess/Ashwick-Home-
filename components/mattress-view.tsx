@@ -36,7 +36,7 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
   // The color's own shots, then the five-color lineup and the construction.
   const gallery: { photo: PhotoKey; alt: string }[] = [
     ...sel.photos.map((photo) => ({ photo, alt: sel.alt })),
-    { photo: sel.cutaway, alt: `${sel.alt}: the layers inside` },
+    { photo: sel.layers, alt: `${sel.alt}: the layers inside, numbered from the topper to the cover` },
   ];
   // Horizontal swipe on the main image steps through the gallery on touch screens.
   const swipeX = useRef<number | null>(null);
@@ -81,6 +81,10 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
         <div className="gal-main" onPointerDown={onPointerDown} onPointerUp={onPointerUp} onPointerCancel={() => (swipeX.current = null)}>
           <div className="gal-photo">
             <Photo src={gallery[img].photo} label={gallery[img].alt} sizes="(max-width: 960px) 100vw, 56vw" preload={img === 0} />
+          </div>
+          {/* The other shots load in the background, so clicking a thumbnail (the layers picture especially) never shows a blank frame. */}
+          <div aria-hidden="true" style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", opacity: 0, pointerEvents: "none" }}>
+            {gallery.map((g, i) => (i === img ? null : <Photo key={g.photo} src={g.photo} label="" sizes="(max-width: 960px) 100vw, 56vw" />))}
           </div>
         </div>
         <div className="gal-thumbs">

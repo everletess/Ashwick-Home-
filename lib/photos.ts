@@ -128,6 +128,11 @@ import mattressCutawayFleece from "@/assets/photos/mattress-cutaway-fleece.jpg";
 import mattressCutawayFlint from "@/assets/photos/mattress-cutaway-flint.jpg";
 import mattressCutawayFlax from "@/assets/photos/mattress-cutaway-flax.jpg";
 import mattressCutawayMoss from "@/assets/photos/mattress-cutaway-moss.jpg";
+import mattressLayersSorrel from "@/assets/photos/mattress-cutaway-labelled-sorrel.jpg";
+import mattressLayersFleece from "@/assets/photos/mattress-cutaway-labelled-fleece.jpg";
+import mattressLayersFlint from "@/assets/photos/mattress-cutaway-labelled-flint.jpg";
+import mattressLayersFlax from "@/assets/photos/mattress-cutaway-labelled-flax.jpg";
+import mattressLayersMoss from "@/assets/photos/mattress-cutaway-labelled-moss.jpg";
 import mattressSwatchMocha from "@/assets/photos/mattress-swatch-mocha.jpg";
 import mattressSwatchSafari from "@/assets/photos/mattress-swatch-safari.jpg";
 import mattressSwatchDove from "@/assets/photos/mattress-swatch-dove.jpg";
@@ -282,6 +287,11 @@ export const PHOTOS = {
   "mattress-cutaway-flint": mattressCutawayFlint,
   "mattress-cutaway-flax": mattressCutawayFlax,
   "mattress-cutaway-moss": mattressCutawayMoss,
+  "mattress-layers-sorrel": mattressLayersSorrel,
+  "mattress-layers-fleece": mattressLayersFleece,
+  "mattress-layers-flint": mattressLayersFlint,
+  "mattress-layers-flax": mattressLayersFlax,
+  "mattress-layers-moss": mattressLayersMoss,
   "mattress-swatch-mocha": mattressSwatchMocha,
   "mattress-swatch-safari": mattressSwatchSafari,
   "mattress-swatch-dove": mattressSwatchDove,

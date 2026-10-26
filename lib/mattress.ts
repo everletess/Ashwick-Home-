@@ -12,7 +12,7 @@ export const GUARANTEE_PATH = "/pages/guarantee-warranty";
 
 export type MattressSize = { id: string; label: string; dims: string; price: number };
 /** photos: this color's own shots, first one leading the gallery (and shown on the home page feature); then its cutaway. */
-export type MattressColor = { id: string; label: string; swatch: PhotoKey; photos: PhotoKey[]; cutaway: PhotoKey; alt: string };
+export type MattressColor = { id: string; label: string; swatch: PhotoKey; photos: PhotoKey[]; cutaway: PhotoKey; /** The cutaway with numbered layers and a legend, shown in the gallery. */ layers: PhotoKey; alt: string };
 
 export const MATTRESS = {
   id: "natural-mattress",
@@ -49,12 +49,12 @@ export const MATTRESS = {
    * change); labels are the current names. File names still use the old names (mocha, safari, dove, khaki, natural).
    */
   colors: [
-    { id: "natural", label: "Fleece", swatch: "mattress-swatch-natural", photos: ["mattress-room-fleece", "mattress-studio-natural"], cutaway: "mattress-cutaway-fleece", alt: "The Ashbury in Fleece" },
-    { id: "dove", label: "Flint", swatch: "mattress-swatch-dove", photos: ["mattress-room-flint", "mattress-studio-dove"], cutaway: "mattress-cutaway-flint", alt: "The Ashbury in Flint" },
-    { id: "khaki", label: "Moss", swatch: "mattress-swatch-khaki", photos: ["mattress-room-moss", "mattress-studio-khaki"], cutaway: "mattress-cutaway-moss", alt: "The Ashbury in Moss" },
+    { id: "natural", label: "Fleece", swatch: "mattress-swatch-natural", photos: ["mattress-room-fleece", "mattress-studio-natural"], cutaway: "mattress-cutaway-fleece", layers: "mattress-layers-fleece", alt: "The Ashbury in Fleece" },
+    { id: "dove", label: "Flint", swatch: "mattress-swatch-dove", photos: ["mattress-room-flint", "mattress-studio-dove"], cutaway: "mattress-cutaway-flint", layers: "mattress-layers-flint", alt: "The Ashbury in Flint" },
+    { id: "khaki", label: "Moss", swatch: "mattress-swatch-khaki", photos: ["mattress-room-moss", "mattress-studio-khaki"], cutaway: "mattress-cutaway-moss", layers: "mattress-layers-moss", alt: "The Ashbury in Moss" },
     // Was "Hazel" (and before that "Safari"); the brown Hazel photos are kept, unused.
-    { id: "safari", label: "Flax", swatch: "mattress-swatch-safari", photos: ["mattress-room-flax", "mattress-studio-safari", "mattress-safari-room"], cutaway: "mattress-cutaway-flax", alt: "The Ashbury in Flax" },
-    { id: "mocha", label: "Sorrel", swatch: "mattress-swatch-mocha", photos: ["mattress-room-sorrel", "mattress-studio-mocha", "mattress-mocha-room"], cutaway: "mattress-cutaway", alt: "The Ashbury in Sorrel" },
+    { id: "safari", label: "Flax", swatch: "mattress-swatch-safari", photos: ["mattress-room-flax", "mattress-studio-safari", "mattress-safari-room"], cutaway: "mattress-cutaway-flax", layers: "mattress-layers-flax", alt: "The Ashbury in Flax" },
+    { id: "mocha", label: "Sorrel", swatch: "mattress-swatch-mocha", photos: ["mattress-room-sorrel", "mattress-studio-mocha", "mattress-mocha-room"], cutaway: "mattress-cutaway", layers: "mattress-layers-sorrel", alt: "The Ashbury in Sorrel" },
   ] satisfies MattressColor[],
   /** Color selected when the page opens (its first photo leads the gallery and the social preview). */
   defaultColor: "mocha",
