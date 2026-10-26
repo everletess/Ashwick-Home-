@@ -58,7 +58,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', 'G-DF7TVX6FPJ');
+              // Only the live site is measured: Vercel preview builds and bots on other hosts are left out.
+              if (/(^|\\.)ashwickhome\\.com$/.test(location.hostname)) gtag('config', 'G-DF7TVX6FPJ');
             `,
           }}
         />
@@ -67,7 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
-              (function(c,l,a,r,i,t,y){
+              if (/(^|\\.)ashwickhome\\.com$/.test(location.hostname)) (function(c,l,a,r,i,t,y){
                 c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
                 t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
                 y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
