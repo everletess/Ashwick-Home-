@@ -128,7 +128,8 @@ import mattressCutawayFleece from "@/assets/photos/mattress-cutaway-fleece.jpg";
 import mattressCutawayFlint from "@/assets/photos/mattress-cutaway-flint.jpg";
 import mattressCutawayFlax from "@/assets/photos/mattress-cutaway-flax.jpg";
 import mattressCutawayMoss from "@/assets/photos/mattress-cutaway-moss.jpg";
-import mattressLayersSorrel from "@/assets/photos/mattress-cutaway-labelled-sorrel.jpg";
+// Sorrel's labelled cutaway was replaced with the "Naturally layered" version (the first one is kept, unused).
+import mattressLayersSorrel from "@/assets/photos/mattress-layers-sorrel-2.jpg";
 import mattressLayersFleece from "@/assets/photos/mattress-cutaway-labelled-fleece.jpg";
 import mattressLayersFlint from "@/assets/photos/mattress-cutaway-labelled-flint.jpg";
 import mattressLayersFlax from "@/assets/photos/mattress-cutaway-labelled-flax.jpg";
