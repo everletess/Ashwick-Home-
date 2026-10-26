@@ -128,11 +128,12 @@ import mattressCutawayFleece from "@/assets/photos/mattress-cutaway-fleece.jpg";
 import mattressCutawayFlint from "@/assets/photos/mattress-cutaway-flint.jpg";
 import mattressCutawayFlax from "@/assets/photos/mattress-cutaway-flax.jpg";
 import mattressCutawayMoss from "@/assets/photos/mattress-cutaway-moss.jpg";
-import mattressLayersSorrel from "@/assets/photos/mattress-cutaway-labelled-sorrel.jpg";
-import mattressLayersFleece from "@/assets/photos/mattress-cutaway-labelled-fleece.jpg";
-import mattressLayersFlint from "@/assets/photos/mattress-cutaway-labelled-flint.jpg";
-import mattressLayersFlax from "@/assets/photos/mattress-cutaway-labelled-flax.jpg";
-import mattressLayersMoss from "@/assets/photos/mattress-cutaway-labelled-moss.jpg";
+// "Naturally layered" labelled cutaways, one per color (the first numbered versions are kept, unused).
+import mattressLayersSorrel from "@/assets/photos/mattress-layers-sorrel-2.jpg";
+import mattressLayersFleece from "@/assets/photos/mattress-layers-fleece-2.jpg";
+import mattressLayersFlint from "@/assets/photos/mattress-layers-flint-2.jpg";
+import mattressLayersFlax from "@/assets/photos/mattress-layers-flax-2.jpg";
+import mattressLayersMoss from "@/assets/photos/mattress-layers-moss-2.jpg";
 import mattressSwatchMocha from "@/assets/photos/mattress-swatch-mocha.jpg";
 import mattressSwatchSafari from "@/assets/photos/mattress-swatch-safari.jpg";
 import mattressSwatchDove from "@/assets/photos/mattress-swatch-dove.jpg";
