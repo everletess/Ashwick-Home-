@@ -13,8 +13,8 @@ export type Review = {
   body: string;
   /** First name and last initial, e.g. "Maya R." */
   author: string;
-  /** ISO date, e.g. "2026-11-20". */
-  date: string;
+  /** ISO date, e.g. "2026-11-20". Left out when the real date is not known. */
+  date?: string;
   /** Only true when the reviewer is a matched order in Shopify. */
   verified: boolean;
   /** What they bought, e.g. "Queen, Firm, Moss". */
@@ -54,10 +54,31 @@ export const REVIEWS: Review[] = [
     date: "2026-10-10",
     verified: false,
   },
+  {
+    product: "nook",
+    rating: 5,
+    body: "Okay. This is the COOLEST dog bed I\u2019ve purchased. And the fabric is amazing. Not sure my dog needed this luxurious of a bed, but I couldn\u2019t help it. She\u2019s obsessed and sleeps on it every night. Must be the living wool!",
+    author: "Taryn H.",
+    verified: false,
+  },
+  {
+    product: "nook",
+    rating: 5,
+    body: "I\u2019ve never seen a dog bed from high end organic fabric and quite frankly, anything we can do to help extend their time with us I will try. Even a chemical free bed. What a little dog bed art piece. Very happy with my purchase.",
+    author: "Gary F.",
+    verified: false,
+  },
+  {
+    product: "nook",
+    rating: 5,
+    body: "I went with the larger of the two sizes even for my 12 pound terrier. I think she likes being in a larger space and it\u2019s just so cool looking. Got the wool/linen blend and it\u2019s so soft. Highly recommend.",
+    author: "Patty K.",
+    verified: false,
+  },
 ];
 
 export function reviewsFor(product: ProductKey) {
-  const items = REVIEWS.filter((r) => r.product === product).sort((a, b) => b.date.localeCompare(a.date));
+  const items = REVIEWS.filter((r) => r.product === product).sort((a, b) => (b.date ?? "").localeCompare(a.date ?? ""));
   const count = items.length;
   const average = count ? Math.round((items.reduce((s, r) => s + r.rating, 0) / count) * 10) / 10 : 0;
   return { items, count, average };
