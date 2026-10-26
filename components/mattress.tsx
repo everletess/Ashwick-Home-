@@ -1,6 +1,8 @@
 // Sections shared by the mattress page, the Living Wool page and the Guarantee & warranty page.
 // Copy is final (from the mattress handoff); values come from lib/mattress.ts.
+import Link from "next/link";
 import { Photo } from "@/components/photo";
+import { ASHBURY_PATH } from "@/lib/materials";
 import { MATTRESS } from "@/lib/mattress";
 
 const M = MATTRESS;
@@ -23,35 +25,43 @@ export function Accordion({ items }: { items: [string, React.ReactNode][] }) {
 }
 
 // The topper holds the hand-tufted comfort layers; the cotton twill cover wraps the whole mattress.
-const TOPPER = [
-  "Cashmere (OEKO-TEX Standard 100)",
-  "Living Wool (GOTS, OEKO-TEX)",
-  "Swedish horsehair (OEKO-TEX)",
-  "Hand-tufted with wool rosettes",
+// Each layer links to its entry on Inside the Ashbury (lib/materials.ts ASHBURY_GROUPS, ids are the anchors).
+// The core's organic wool has no entry of its own, so it goes to the wool entry, Living Wool.
+const TOPPER: [string, string][] = [
+  ["Cashmere (OEKO-TEX Standard 100)", "cashmere"],
+  ["Living Wool (GOTS, OEKO-TEX)", "living-wool"],
+  ["Swedish horsehair (OEKO-TEX)", "horsehair"],
+  ["Hand-tufted with wool rosettes", "hand-tufting"],
 ];
-const CORE = [
-  "Organic wool (GOTS)",
-  "Organic cotton (GOTS)",
-  "Double-tempered steel pocket coils",
-  "Organic cotton (GOTS)",
-  "Organic wool (GOTS)",
+const CORE: [string, string][] = [
+  ["Organic wool (GOTS)", "living-wool"],
+  ["Organic cotton (GOTS)", "organic-cotton"],
+  ["Double-tempered steel pocket coils", "pocket-coils"],
+  ["Organic cotton (GOTS)", "organic-cotton"],
+  ["Organic wool (GOTS)", "living-wool"],
 ];
 
-/** Topper and mattress layer lists, with the cover across both. */
+const LayerLink = ({ label, id }: { label: string; id: string }) => (
+  <li><Link href={`${ASHBURY_PATH}#${id}`} className="layer-link">{label}</Link></li>
+);
+
+/** Topper and mattress layer lists, with the cover across both. Each layer links to its material on Inside the Ashbury. */
 export function Layers() {
   return (
     <div className="layers">
       <div>
         <h3 className="layers-h">Topper — {M.topperHeight}</h3>
-        <ul className="layers-l">{TOPPER.map((l) => <li key={l}>{l}</li>)}</ul>
+        <ul className="layers-l">{TOPPER.map(([l, id]) => <LayerLink key={l} label={l} id={id} />)}</ul>
       </div>
       <div>
         <h3 className="layers-h">Mattress — {M.mattressHeight}</h3>
-        <ul className="layers-l">{CORE.map((l, i) => <li key={i}>{l}</li>)}</ul>
+        <ul className="layers-l">{CORE.map(([l, id], i) => <LayerLink key={i} label={l} id={id} />)}</ul>
       </div>
       <div className="layers-cover">
         <h3 className="layers-h">Cover</h3>
-        <ul className="layers-l"><li>Super soft 100% organic cotton twill (GOTS) over the entire mattress, in five colors with GOTS-approved plant dyes</li></ul>
+        <ul className="layers-l">
+          <LayerLink label="Super soft 100% organic cotton twill (GOTS) over the entire mattress, in five colors with GOTS-approved plant dyes" id="organic-cotton" />
+        </ul>
       </div>
     </div>
   );

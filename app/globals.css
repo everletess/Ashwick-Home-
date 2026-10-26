@@ -843,6 +843,15 @@ button.chip{cursor:pointer}
 .dog-faqs{margin-top:56px}
 .dog-faqs .eyebrow{margin:0 0 8px}
 @media (max-width:960px){.dog-faqs{margin-top:16px}}
+/* Mattress layers link to their material on Inside the Ashbury */
+.layers-l .layer-link{display:flex;justify-content:space-between;align-items:center;gap:16px;color:inherit}
+.layers-l .layer-link::after{content:"→";flex:none;color:var(--clay);transition:transform .2s}
+@media (hover:hover){.layers-l .layer-link:hover{color:var(--ink)}.layers-l .layer-link:hover::after{transform:translateX(3px);color:var(--ink)}}
+/* Phones: the 15% tab and the chat button can't share the bottom line, so the tab sits above the chat button */
+@media (max-width:640px){
+  .ep-tab{bottom:62px}
+  .has-sticky-buy .ep-tab{bottom:160px}
+}
 
 .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--ink);margin-top:12px}
 .btn-ghost:hover{background:var(--ink);color:var(--alabaster)}
