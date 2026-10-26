@@ -9,6 +9,7 @@ import { DogBedTeaser } from "@/components/dog-bed";
 import { BuyBoxEmail } from "@/components/buy-box-email";
 import { BUY_OPTIONS_ID, StickyBuy } from "@/components/sticky-buy";
 import { Photo } from "@/components/photo";
+import { RatingLink } from "@/components/reviews";
 import { OptGroup, Pills } from "@/components/product-view";
 import { GUARANTEE_PATH, MATTRESS, colorById, colorFromParam, sizeById } from "@/lib/mattress";
 import { PHOTOS, type PhotoKey } from "@/lib/photos";
@@ -142,6 +143,7 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
       <div className="info">
         <div className="eyebrow">{M.type} · Made to order</div>
         <h1 className="pdp-name">{M.title}</h1>
+        <RatingLink product="ashbury" />
         <div className="pdp-collection">{M.collection}</div>
         <div className="pdp-price">{fmt(sz.price)}</div>
         <p className="body">

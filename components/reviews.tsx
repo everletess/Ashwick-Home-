@@ -1,7 +1,7 @@
 import { reviewsFor, type ProductKey } from "@/lib/reviews";
 import { STUDIO_EMAIL, STUDIO_PHONE, STUDIO_PHONE_HREF } from "@/lib/site";
 
-function Stars({ rating }: { rating: number }) {
+export function Stars({ rating }: { rating: number }) {
   return (
     <span className="rv-stars" role="img" aria-label={`${rating} out of 5 stars`}>
       {[1, 2, 3, 4, 5].map((n) => (
@@ -48,5 +48,17 @@ export function Reviews({ product, name }: { product: ProductKey; name: string }
         )}
       </div>
     </section>
+  );
+}
+
+/** Star rating under the product name; tap to jump to the reviews. Renders nothing until there are real reviews. */
+export function RatingLink({ product }: { product: ProductKey }) {
+  const { count, average } = reviewsFor(product);
+  if (!count) return null;
+  return (
+    <a className="rv-link" href="#reviews" aria-label={`${average.toFixed(1)} out of 5 stars, ${count} ${count === 1 ? "review" : "reviews"}. Read the reviews`}>
+      <Stars rating={average} />
+      <span>{average.toFixed(1)} · {count} {count === 1 ? "review" : "reviews"}</span>
+    </a>
   );
 }

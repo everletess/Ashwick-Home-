@@ -869,3 +869,9 @@ button.chip{cursor:pointer}
 .rv-by{font:300 12px var(--sans);letter-spacing:.04em;color:var(--walnut);margin:0}
 .rv-ok{color:var(--ink)}
 @media (max-width:640px){.rv-list{margin-top:32px}}
+
+.rv-link{display:inline-flex;align-items:center;gap:10px;margin:10px 0 0;font:300 13px var(--sans);letter-spacing:.04em;color:var(--walnut);text-decoration:none}
+.rv-link:hover span:last-child{text-decoration:underline;text-underline-offset:3px}
+#reviews{scroll-margin-top:90px}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
