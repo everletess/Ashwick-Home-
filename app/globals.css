@@ -873,8 +873,6 @@ button.chip{cursor:pointer}
 .rv-link{display:inline-flex;align-items:center;gap:10px;margin:10px 0 0;font:300 13px var(--sans);letter-spacing:.04em;color:var(--walnut);text-decoration:none}
 .rv-link:hover span:last-child{text-decoration:underline;text-underline-offset:3px}
 #reviews{scroll-margin-top:90px}
-html{scroll-behavior:smooth}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 
 .nav-dd-panel.left{right:auto;left:-20px}
 .dogbeds-grid{grid-template-columns:repeat(2,minmax(0,1fr));max-width:980px;margin:0 auto}
