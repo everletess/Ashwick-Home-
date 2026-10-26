@@ -209,6 +209,11 @@ export function CartDrawer() {
   const [saveEmail, setSaveEmail] = useState("");
   const [savePhone, setSavePhone] = useState("");
   const [saveState, setSaveState] = useState<"idle" | "sending" | "done" | "error" | "badphone">("idle");
+  // On phones the email offer starts folded so the items and Check out keep the screen; on larger screens it starts open.
+  const [offerOpen, setOfferOpen] = useState(false);
+  useEffect(() => {
+    if (cart.open && window.matchMedia("(min-width: 641px)").matches) setOfferOpen(true);
+  }, [cart.open]);
 
   const save = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -342,18 +347,24 @@ export function CartDrawer() {
               <p className="fine">Saved. We&rsquo;ve emailed your cart, with 15% off your first order from The Ashwick Letter.</p>
             ) : (
               <form onSubmit={save} className="save-cart">
-                <label className="fine" htmlFor="save-cart-email">Not ready? Email me my cart, plus 15% off.</label>
-                <div className="save-cart-row">
-                  <input id="save-cart-email" type="email" required placeholder="Your email" value={saveEmail} onChange={(e) => setSaveEmail(e.target.value)} />
-                  <button type="submit" className="btn" disabled={saveState === "sending"}>{saveState === "sending" ? "Sending…" : "Send"}</button>
-                </div>
-                {saveState === "error" && <p className="fine" style={{ color: "var(--err, #b00)" }}>That didn&rsquo;t go through. Please try again.</p>}
-                <div className="save-cart-row">
-                  <input id="save-cart-phone" type="tel" autoComplete="tel" inputMode="tel" placeholder="Phone (optional)" aria-label="Phone number, optional" value={savePhone} onChange={(e) => setSavePhone(e.target.value)} />
-                </div>
-                <p className="fine" style={{ fontSize: 11 }}>Prefer a text or a call? Add your number and we&rsquo;ll reach out about your cart. We&rsquo;ll only contact you about your order or cart.</p>
-                {saveState === "badphone" && <p className="fine" style={{ color: "var(--err, #b00)" }}>Please enter a 10-digit US phone number, or leave it blank.</p>}
-                <p className="fine" style={{ fontSize: 11 }}>By sending, you join The Ashwick Letter. Unsubscribe any time.</p>
+                <button type="button" className="save-cart-toggle" aria-expanded={offerOpen} aria-controls="save-cart-body" onClick={() => setOfferOpen((o) => !o)}>
+                  <span>Not ready? Email me my cart, plus 15% off.</span>
+                  <span aria-hidden="true">{offerOpen ? "−" : "+"}</span>
+                </button>
+                {offerOpen && (
+                  <div id="save-cart-body" className="save-cart-body">
+                    <div className="save-cart-row">
+                      <input id="save-cart-email" type="email" required aria-label="Your email" placeholder="Your email" value={saveEmail} onChange={(e) => setSaveEmail(e.target.value)} />
+                      <button type="submit" className="btn" disabled={saveState === "sending"}>{saveState === "sending" ? "Sending…" : "Send"}</button>
+                    </div>
+                    {saveState === "error" && <p className="fine" style={{ color: "var(--err, #b00)" }}>That didn&rsquo;t go through. Please try again.</p>}
+                    <div className="save-cart-row">
+                      <input id="save-cart-phone" type="tel" autoComplete="tel" inputMode="tel" placeholder="Phone (optional)" aria-label="Phone number, optional" value={savePhone} onChange={(e) => setSavePhone(e.target.value)} />
+                    </div>
+                    <p className="fine" style={{ fontSize: 11 }}>Prefer a text or a call? Add your number and we&rsquo;ll reach out about your cart. We&rsquo;ll only contact you about your order or cart. By sending, you join The Ashwick Letter. Unsubscribe any time.</p>
+                    {saveState === "badphone" && <p className="fine" style={{ color: "var(--err, #b00)" }}>Please enter a 10-digit US phone number, or leave it blank.</p>}
+                  </div>
+                )}
               </form>
             )}
           </div>
