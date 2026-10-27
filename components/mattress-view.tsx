@@ -38,7 +38,7 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
   // The color's own shots, then the five-color lineup and the construction.
   const gallery: { photo: PhotoKey; alt: string }[] = [
     ...sel.photos.map((photo) => ({ photo, alt: sel.alt })),
-    { photo: sel.layers, alt: `${sel.alt}: the layers inside, numbered from the topper to the cover` },
+    ...(sel.layers ? [{ photo: sel.layers, alt: `${sel.alt}: the layers inside, numbered from the topper to the cover` }] : []),
   ];
   // Horizontal swipe on the main image steps through the gallery on touch screens.
   const swipeX = useRef<number | null>(null);
