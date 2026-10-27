@@ -2,7 +2,7 @@
 // API (handles = product ids, collections = categories).
 import { TINTABLE, type PhotoKey } from "@/lib/photos";
 
-export type FabricId = "linen" | "boucle" | "wool" | "leather" | "belgian" | "blend" | "cotton" | "irish" | "cork";
+export type FabricId = "linen" | "boucle" | "wool" | "leather" | "belgian" | "blend" | "cotton" | "irish";
 export type Category = "sofas" | "chairs";
 /** "mattress" lists the Ashbury, which lives in lib/mattress.ts rather than PRODUCTS. */
 export type CollectionHandle = "all" | Category | "mattress";
@@ -59,13 +59,6 @@ export const FABRICS: Record<FabricId, Fabric> = {
       { id: "cream", label: "Cream", swatch: "#E8E0CF" },
       { id: "flax", label: "Flax", swatch: "#CDBE9F" },
       { id: "oatmeal", label: "Oatmeal", swatch: "#D8CDB9" },
-    ],
-  },
-  cork: {
-    id: "cork", label: "Cork", swatch: "#C9A57E", tex: "leather",
-    colors: [
-      { id: "natural", label: "Natural", swatch: "#B98E63" },
-      { id: "ivory", label: "Ivory", swatch: "#DCD6CB" },
     ],
   },
 };
@@ -208,23 +201,19 @@ export const LEAD_TIMES = "Ships within 3–4 weeks as designed, or 8–12 weeks
 const ALL_PRODUCTS: Product[] = [
   {
     id: "marlowe", name: "The Marlowe Sofa", type: "Sofa", category: "sofas", price: 8500,
-    line: "A deep sofa on a hand-fluted solid wood plinth, in Irish Linen or Cork.",
+    line: "A deep sofa on a hand-fluted solid wood plinth, in Irish Linen.",
     photos: [
       "marlowe-studio", "marlowe-1", "marlowe-2",
       "marlowe-sofa-walnut-linen", "marlowe-sofa-oak-linen",
-      "marlowe-sofa-oak-cork-natural", "marlowe-sofa-oak-cork-ivory", "marlowe-sofa-oak-cork-ivory-2",
     ],
     cardSingle: true,
     photoTags: {
       "marlowe-sofa-walnut-linen": { wood: "walnut", fabric: "irish", color: "white" },
       "marlowe-sofa-oak-linen": { wood: "oak", fabric: "irish", color: "white" },
-      "marlowe-sofa-oak-cork-natural": { wood: "oak", fabric: "cork", color: "natural" },
-      "marlowe-sofa-oak-cork-ivory": { wood: "oak", fabric: "cork", color: "ivory" },
     },
-    fabricPrices: { cork: 9500 },
-    fabrics: ["irish", "cork"], designedFabric: "irish", wood: true,
+    fabrics: ["irish"], designedFabric: "irish", wood: true,
     delivery: WHITE_GLOVE,
-    materials: "Hand-fluted solid walnut or oak plinth · Irish Linen or Cork upholstery · Natural oil finish",
+    materials: "Hand-fluted solid walnut or oak plinth · Irish Linen upholstery · Natural oil finish",
     dimensions: {
       overall: "88.5″ W × 40″ D × 27″ H",
       rows: [
@@ -238,14 +227,13 @@ const ALL_PRODUCTS: Product[] = [
   },
   {
     id: "marlowe-loveseat", name: "The Marlowe Loveseat", type: "Loveseat", category: "sofas", price: 6500,
-    line: "The Marlowe as a two-seat loveseat, on the same hand-fluted solid wood plinth, in Irish Linen or Cork.",
+    line: "The Marlowe as a two-seat loveseat, on the same hand-fluted solid wood plinth, in Irish Linen.",
     photos: ["marlowe-loveseat-walnut-linen"], hideInNames: true,
     cardPhoto: "marlowe-loveseat-card",
     photoTags: { "marlowe-loveseat-walnut-linen": { wood: "walnut", fabric: "irish", color: "white" } },
-    fabricPrices: { cork: 7000 },
-    fabrics: ["irish", "cork"], designedFabric: "irish", wood: true,
+    fabrics: ["irish"], designedFabric: "irish", wood: true,
     delivery: WHITE_GLOVE,
-    materials: "Hand-fluted solid walnut or oak plinth · Irish Linen or Cork upholstery · Natural oil finish",
+    materials: "Hand-fluted solid walnut or oak plinth · Irish Linen upholstery · Natural oil finish",
   },
   {
     id: "chatsworth", name: "The Chatsworth", type: "Sofa", category: "sofas", price: 10500,
@@ -337,25 +325,23 @@ const ALL_PRODUCTS: Product[] = [
   },
   {
     id: "marlowe-chair", name: "The Marlowe Chair", type: "Chair", category: "chairs", price: 4500,
-    line: "A deep lounge chair on a hand-fluted solid wood plinth, made to sit beside the Marlowe sofa. In Irish Linen or Cork.",
+    line: "A deep lounge chair on a hand-fluted solid wood plinth, made to sit beside the Marlowe sofa. In Irish Linen.",
     photos: ["marlowe-chair-walnut-linen"], hideInNames: true,
     cardPhoto: "marlowe-chair-card",
     photoTags: { "marlowe-chair-walnut-linen": { wood: "walnut", fabric: "irish", color: "white" } },
-    fabricPrices: { cork: 5000 },
-    fabrics: ["irish", "cork"], designedFabric: "irish", wood: true,
+    fabrics: ["irish"], designedFabric: "irish", wood: true,
     delivery: WHITE_GLOVE,
-    materials: "Hand-fluted solid walnut or oak plinth · Irish Linen or Cork upholstery · Natural oil finish",
+    materials: "Hand-fluted solid walnut or oak plinth · Irish Linen upholstery · Natural oil finish",
   },
   {
     id: "marlowe-ottoman", name: "The Marlowe Ottoman", type: "Ottoman", category: "chairs", price: 2500,
-    line: "An ottoman on a hand-fluted solid wood plinth, to pair with the Marlowe sofa or chair. In Irish Linen or Cork.",
+    line: "An ottoman on a hand-fluted solid wood plinth, to pair with the Marlowe sofa or chair. In Irish Linen.",
     photos: ["marlowe-ottoman-walnut-linen"], hideInNames: true,
     cardPhoto: "marlowe-ottoman-card",
     photoTags: { "marlowe-ottoman-walnut-linen": { wood: "walnut", fabric: "irish", color: "white" } },
-    fabricPrices: { cork: 3000 },
-    fabrics: ["irish", "cork"], designedFabric: "irish", wood: true,
+    fabrics: ["irish"], designedFabric: "irish", wood: true,
     delivery: WHITE_GLOVE,
-    materials: "Hand-fluted solid walnut or oak plinth · Irish Linen or Cork upholstery · Natural oil finish",
+    materials: "Hand-fluted solid walnut or oak plinth · Irish Linen upholstery · Natural oil finish",
   },
 ];
 
