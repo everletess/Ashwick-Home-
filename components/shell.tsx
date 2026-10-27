@@ -354,7 +354,9 @@ export function CartDrawer() {
               {cart.items.every((i) => i.delivery)
                 ? "Paid in full at checkout. Includes delivery shown above. Taxes calculated at checkout."
                 : cart.items.every((i) => i.id === MATTRESS.id || i.id === DOG_BED_ID)
-                  ? "Free delivery. Ships within 3–4 days. Paid in full at checkout, taxes calculated there."
+                  ? cart.items.some((i) => i.id === MATTRESS.id)
+                    ? "Free delivery. Ships within 3–4 days. Pay in full at checkout, or over time with Shop Pay Installments, subject to approval. Taxes calculated there."
+                    : "Free delivery. Ships within 3–4 days. Paid in full at checkout, taxes calculated there."
                   : "Paid in full at checkout. Taxes and shipping calculated at checkout."}
             </p>
             {checkoutError && <p className="fine" style={{ color: "var(--err, #b00)" }}>{checkoutError}</p>}
