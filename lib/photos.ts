@@ -40,7 +40,7 @@ import bespokeHero from "@/assets/photos/bespoke-hero.jpg";
 import bespokeSwatches from "@/assets/photos/bespoke-swatches.jpg";
 import bespokeDrawing from "@/assets/photos/bespoke-drawing.jpg";
 import bespokeStitching from "@/assets/photos/bespoke-stitching.jpg";
-import mattressLayers from "@/assets/photos/mattress-layers.jpg";
+import mattressLayers from "@/assets/photos/mattress-layers-2.jpg";
 import materialsBandFill from "@/assets/photos/materials-band-fill.jpg";
 import mattressFeelSoft from "@/assets/photos/mattress-feel-soft-2.jpg";
 import mattressFeelFirm from "@/assets/photos/mattress-feel-firm-2.jpg";

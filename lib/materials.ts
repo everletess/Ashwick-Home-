@@ -65,7 +65,7 @@ export const FURNITURE_GROUPS: MaterialGroup[] = [
       {
         id: "coir", short: "Coir", name: "Coconut coir", descriptor: "Strength from the husk.",
         body: "Coir is the fiber from the outer husk of the coconut. It's firm, springy and breathable, which makes it a natural foundation in place of foam.",
-        where: "Seat foundations and firm support layers.",
+        where: "Seat foundations and firm support layers, and beneath the coils in the Ashbury.",
         origin: "OEKO-TEX Standard 100",
         photo: "fiber-coir",
         alt: "Coarse golden-brown coconut coir fiber",
@@ -73,7 +73,7 @@ export const FURNITURE_GROUPS: MaterialGroup[] = [
       {
         id: "agave", short: "Agave", name: "Agave", descriptor: "Strength from the desert.",
         body: "Agave is a hardy desert plant whose long leaves yield a strong natural fiber. It's tough, durable and breathable, and the plant grows with very little water. We're bringing agave fiber into our fills and foundations as another natural alternative to foam.",
-        where: "Fills and foundations.",
+        where: "Fills and foundations, and beneath the coils in the Ashbury.",
         origin: "OEKO-TEX Standard 100",
         photo: "fiber-agave",
         alt: "Long, pale golden agave fiber on linen and travertine",
@@ -147,7 +147,7 @@ export const ASHBURY_GROUPS: MaterialGroup[] = [
       },
       {
         id: "pocket-coils", short: "Pocket Coils", name: "Pocket coils", descriptor: "Support that moves with you.",
-        body: "At the center of the Ashbury, double-tempered steel pocket coils are each wrapped individually, so every coil responds on its own as you move. They're cushioned on both sides by organic cotton and organic wool, so you feel the support, never the steel.",
+        body: "At the center of the Ashbury, double-tempered steel pocket coils are each wrapped individually, so every coil responds on its own as you move. Above them sit organic cotton and organic wool; below, a firm base of coconut coir and agave over more cotton and wool. You feel the support, never the steel.",
         where: "The core of the 8\" mattress.",
         photo: "materials-pocket-coils",
         alt: "A bare steel coil and cotton-wrapped pocket coils on stone steps above a cutaway of the Ashbury",

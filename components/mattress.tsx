@@ -2,7 +2,7 @@
 // Copy is final (from the mattress handoff); values come from lib/mattress.ts.
 import Link from "next/link";
 import { Photo } from "@/components/photo";
-import { ASHBURY_PATH } from "@/lib/materials";
+import { ASHBURY_PATH, FURNITURE_MATERIALS_PATH } from "@/lib/materials";
 import { MATTRESS } from "@/lib/mattress";
 
 const M = MATTRESS;
@@ -26,7 +26,8 @@ export function Accordion({ items }: { items: [string, React.ReactNode][] }) {
 
 // The topper holds the hand-tufted comfort layers; the cotton twill cover wraps the whole mattress.
 // Each layer links to its entry on Inside the Ashbury (lib/materials.ts ASHBURY_GROUPS, ids are the anchors).
-// The core's organic wool has no entry of its own, so it goes to the wool entry, Living Wool.
+// The core's organic wool has no entry of its own, so it goes to the wool entry, Living Wool. Coir and agave are
+// described on Furniture materials, so those two link there.
 const TOPPER: [string, string][] = [
   ["Cashmere (OEKO-TEX Standard 100)", "cashmere"],
   ["Living Wool (GOTS, OEKO-TEX)", "living-wool"],
@@ -37,12 +38,15 @@ const CORE: [string, string][] = [
   ["Organic wool (GOTS)", "living-wool"],
   ["Organic cotton (GOTS)", "organic-cotton"],
   ["Double-tempered steel pocket coils", "pocket-coils"],
+  ["Coconut coir", "coir"],
+  ["Agave", "agave"],
   ["Organic cotton (GOTS)", "organic-cotton"],
   ["Organic wool (GOTS)", "living-wool"],
 ];
 
+const ON_FURNITURE_PAGE = ["coir", "agave"];
 const LayerLink = ({ label, id }: { label: string; id: string }) => (
-  <li><Link href={`${ASHBURY_PATH}#${id}`} className="layer-link">{label}</Link></li>
+  <li><Link href={`${ON_FURNITURE_PAGE.includes(id) ? FURNITURE_MATERIALS_PATH : ASHBURY_PATH}#${id}`} className="layer-link">{label}</Link></li>
 );
 
 /** Topper and mattress layer lists, with the cover across both. Each layer links to its material on Inside the Ashbury. */
@@ -74,7 +78,7 @@ export function Construction() {
       <section className="sec">
         <div className="wrap proc">
           <div className="proc-v">
-            <Photo src="mattress-layers" label="The Ashbury's layers stacked: the tufted topper folded back over wool and horsehair, then wool, pocket coils, wool and the cotton twill base" sizes="(max-width: 960px) 100vw, 50vw" />
+            <Photo src="mattress-layers" label="The Ashbury's layers stacked: the tufted topper folded back over wool and horsehair, then organic cotton, wool, pocket coils, coconut coir, agave, cotton, wool and the cotton twill base" sizes="(max-width: 960px) 100vw, 50vw" />
           </div>
           <div className="proc-t">
             <div className="eyebrow">Construction</div>
