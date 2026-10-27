@@ -49,11 +49,11 @@ export const MATTRESS = {
    * change); labels are the current names. File names still use the old names (mocha, safari, dove, khaki, natural).
    */
   colors: [
-    { id: "natural", label: "Fleece", swatch: "mattress-swatch-natural", photos: ["mattress-room-fleece", "mattress-studio-natural"], cutaway: "mattress-cutaway-fleece", alt: "The Ashbury in Fleece" },
-    { id: "dove", label: "Flint", swatch: "mattress-swatch-dove", photos: ["mattress-room-flint", "mattress-studio-dove"], cutaway: "mattress-cutaway-flint", alt: "The Ashbury in Flint" },
+    { id: "natural", label: "Fleece", swatch: "mattress-swatch-natural", photos: ["mattress-room-fleece", "mattress-studio-natural"], cutaway: "mattress-cutaway-fleece", layers: "mattress-layers-fleece", alt: "The Ashbury in Fleece" },
+    { id: "dove", label: "Flint", swatch: "mattress-swatch-dove", photos: ["mattress-room-flint", "mattress-studio-dove"], cutaway: "mattress-cutaway-flint", layers: "mattress-layers-flint", alt: "The Ashbury in Flint" },
     { id: "khaki", label: "Moss", swatch: "mattress-swatch-khaki", photos: ["mattress-room-moss", "mattress-studio-khaki"], cutaway: "mattress-cutaway-moss", alt: "The Ashbury in Moss" },
     // Was "Hazel" (and before that "Safari"); the brown Hazel photos are kept, unused.
-    { id: "safari", label: "Flax", swatch: "mattress-swatch-safari", photos: ["mattress-room-flax", "mattress-studio-safari", "mattress-safari-room"], cutaway: "mattress-cutaway-flax", alt: "The Ashbury in Flax" },
+    { id: "safari", label: "Flax", swatch: "mattress-swatch-safari", photos: ["mattress-room-flax", "mattress-studio-safari", "mattress-safari-room"], cutaway: "mattress-cutaway-flax", layers: "mattress-layers-flax", alt: "The Ashbury in Flax" },
     { id: "mocha", label: "Sorrel", swatch: "mattress-swatch-mocha", photos: ["mattress-room-sorrel", "mattress-studio-mocha", "mattress-mocha-room"], cutaway: "mattress-cutaway", layers: "mattress-layers-sorrel", alt: "The Ashbury in Sorrel" },
   ] satisfies MattressColor[],
   /** Color selected when the page opens (its first photo leads the gallery and the social preview). */
