@@ -229,9 +229,29 @@ export function CartDrawer() {
   // The email offer is open whenever the cart opens, on phones too: most add-to-carts here are phone visitors
   // who leave without buying, and this is the moment they're most interested.
   const [offerOpen, setOfferOpen] = useState(false);
+  // Phones: the email offer stays folded (one line) so the products and Check out stay visible. Desktop has room, so it opens.
   useEffect(() => {
-    if (cart.open) setOfferOpen(true);
+    if (cart.open) setOfferOpen(!window.matchMedia("(max-width: 640px)").matches);
   }, [cart.open]);
+
+  // Phones: the cart is a bottom sheet. Drag the header down, or tap outside, to close it.
+  const sheetRef = useRef<HTMLElement>(null);
+  const dragY = useRef<number | null>(null);
+  const onDragStart = (e: React.TouchEvent) => { dragY.current = e.touches[0].clientY; };
+  const onDragMove = (e: React.TouchEvent) => {
+    if (dragY.current == null || !sheetRef.current) return;
+    const dy = Math.max(0, e.touches[0].clientY - dragY.current);
+    sheetRef.current.style.transition = "none";
+    sheetRef.current.style.transform = `translateY(${dy}px)`;
+  };
+  const onDragEnd = (e: React.TouchEvent) => {
+    if (dragY.current == null || !sheetRef.current) return;
+    const dy = e.changedTouches[0].clientY - dragY.current;
+    dragY.current = null;
+    sheetRef.current.style.transition = "";
+    sheetRef.current.style.transform = "";
+    if (dy > 70) cart.setOpen(false);
+  };
 
   const save = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -305,8 +325,9 @@ export function CartDrawer() {
   return (
     <>
       <div className={"scrim" + (cart.open ? " on" : "")} onClick={close}></div>
-      <aside className={"drawer" + (cart.open ? " on" : "")} aria-hidden={!cart.open} aria-label="Cart" inert={!cart.open}>
-        <div className="drawer-h">
+      <aside ref={sheetRef} className={"drawer" + (cart.open ? " on" : "")} aria-hidden={!cart.open} aria-label="Cart" inert={!cart.open}>
+        <div className="drawer-h" onTouchStart={onDragStart} onTouchMove={onDragMove} onTouchEnd={onDragEnd}>
+          <span className="drawer-grab" aria-hidden="true"></span>
           <div className="h3">Your cart</div>
           <button className="x" aria-label="Close cart" onClick={close}>×</button>
         </div>
