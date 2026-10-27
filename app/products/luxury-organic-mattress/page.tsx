@@ -35,7 +35,8 @@ export const metadata: Metadata = {
 const MATERIALS: [string, string][] = [
   ["Living Wool", "GOTS-certified organic wool from Lanas Trinidad in Uruguay, OEKO-TEX Standard 100. Keeps an even temperature and a dry surface, and gives buoyant support that springs back."],
   ["Swedish horsehair", "OEKO-TEX certified. From tail clippings; no horse is harmed. Each curled strand acts like a small spring, letting air move through the layers."],
-  ["Organic cotton", "GOTS-certified and OEKO-TEX Standard 100. A super soft 100% organic cotton twill, plant-dyed, covers the entire mattress, and inside it wraps the coils on both sides."],
+  ["Organic cotton", "GOTS-certified and OEKO-TEX Standard 100. A super soft 100% organic cotton twill, plant-dyed, covers the entire mattress, and inside it layers above and below the coils."],
+  ["Coconut coir & agave", "OEKO-TEX Standard 100. A base under the pocket coils for steady support, in every size and feel. Agave helps with temperature control and breathability."],
 ];
 
 function productJsonLd() {

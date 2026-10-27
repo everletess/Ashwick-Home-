@@ -27,6 +27,7 @@ export function Accordion({ items }: { items: [string, React.ReactNode][] }) {
 // The topper holds the hand-tufted comfort layers; the cotton twill cover wraps the whole mattress.
 // Each layer links to its entry on Inside the Ashbury (lib/materials.ts ASHBURY_GROUPS, ids are the anchors).
 // The core's organic wool has no entry of its own, so it goes to the wool entry, Living Wool.
+// Coconut coir and agave form the supportive base under the coils, in every size and feel.
 const TOPPER: [string, string][] = [
   ["Cashmere (OEKO-TEX Standard 100)", "cashmere"],
   ["Living Wool (GOTS, OEKO-TEX)", "living-wool"],
@@ -34,9 +35,10 @@ const TOPPER: [string, string][] = [
   ["Hand-tufted with wool rosettes", "hand-tufting"],
 ];
 const CORE: [string, string][] = [
-  ["Organic wool (GOTS)", "living-wool"],
   ["Organic cotton (GOTS)", "organic-cotton"],
+  ["Living Wool (GOTS)", "living-wool"],
   ["Double-tempered steel pocket coils", "pocket-coils"],
+  ["Coconut coir & agave (OEKO-TEX Standard 100)", "coir-agave"],
   ["Organic cotton (GOTS)", "organic-cotton"],
   ["Organic wool (GOTS)", "living-wool"],
 ];
@@ -74,7 +76,7 @@ export function Construction() {
       <section className="sec">
         <div className="wrap proc">
           <div className="proc-v">
-            <Photo src="mattress-layers" label="The Ashbury's layers stacked: the tufted topper folded back over wool and horsehair, then wool, pocket coils, wool and the cotton twill base" sizes="(max-width: 960px) 100vw, 50vw" />
+            <Photo src="mattress-layers" label="The Ashbury's layers stacked: the tufted topper folded back over wool and horsehair, then cotton, Living Wool, pocket coils, a base of coconut coir and agave, cotton, wool and the cotton twill base" sizes="(max-width: 960px) 100vw, 50vw" />
           </div>
           <div className="proc-t">
             <div className="eyebrow">Construction</div>
