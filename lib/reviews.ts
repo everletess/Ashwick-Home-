@@ -17,7 +17,7 @@ export type Review = {
   date?: string;
   /** Only true when the reviewer is a matched order in Shopify. */
   verified: boolean;
-  /** What they bought, e.g. "Queen, Firm, Moss". */
+  /** What they bought, e.g. "Queen, Firm, Sorrel". */
   purchase?: string;
 };
 

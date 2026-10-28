@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 const BEDS: { bed: DogBed; key: ProductKey; photo: PhotoKey; alt: PhotoKey; blurb: string }[] = [
-  { bed: DOG_BED, key: "ashbury-dog-bed", photo: "dog-bed-sorrel-room-golden", alt: "dog-bed-moss-room", blurb: "Flat and low, in the Ashbury's five colors." },
+  { bed: DOG_BED, key: "ashbury-dog-bed", photo: "dog-bed-sorrel-room-golden", alt: "dog-bed-flint-room", blurb: "Flat and low, in the Ashbury's four colors." },
   { bed: NOOK, key: "nook", photo: "nook-olive-room", alt: "nook-oat", blurb: "A deep, curved bolster to curl up in." },
 ];
 

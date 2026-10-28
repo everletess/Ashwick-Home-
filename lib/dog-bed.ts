@@ -27,21 +27,21 @@ export const DOG_BED = {
   ],
   /** Marketing copy for the buy page. Facts only: materials, certifications, sizes, colors, how it is made. */
   headline: "Organic doesn't have to be beige.",
-  lede: "The Ashbury, made for the one who sleeps at the foot of it. Handmade to order in the USA from GOTS and OEKO-TEX certified materials, and finished in the same five colors as the mattress, so the whole bedroom matches, dog included.",
+  lede: "The Ashbury, made for the one who sleeps at the foot of it. Handmade to order in the USA from GOTS and OEKO-TEX certified materials, and finished in the same four colors as the mattress, so the whole bedroom matches, dog included.",
   materials: [
     { name: "Organic cotton", note: "GOTS and OEKO-TEX certified." },
     { name: "Living Wool", note: "GOTS and OEKO-TEX certified." },
     { name: "Cashmere", note: "OEKO-TEX certified." },
     { name: "Organic cotton twill cover", note: "100% organic cotton, the same twill as the Ashbury." },
   ],
-  matchNote: "Fleece, Flint, Moss, Flax and Sorrel: the Ashbury's five colors, so it can sit beside the bed it matches.",
+  matchNote: "Fleece, Flint, Flax and Sorrel: the Ashbury's four colors, so it can sit beside the bed it matches.",
   leadTime: "Handmade to order in the USA. Ships within 3–4 days.",
   returns: "30-day return window. Returned beds are donated.",
   warranty: "1-year warranty.",
   colors: [
     { id: "natural", label: "Fleece", swatch: "mattress-swatch-natural", photos: ["dog-bed-fleece", "dog-bed-fleece-room", "dog-bed-fleece-room-2"] },
     { id: "dove", label: "Flint", swatch: "mattress-swatch-dove", photos: ["dog-bed-flint", "dog-bed-flint-room", "dog-bed-flint-room-2"] },
-    { id: "khaki", label: "Moss", swatch: "mattress-swatch-khaki", photos: ["dog-bed-moss", "dog-bed-moss-room", "dog-bed-moss-room-2"] },
+    // Moss (khaki) was retired with the mattress color in Oct 2026; its photos are kept, unused.
     { id: "safari", label: "Flax", swatch: "mattress-swatch-safari", photos: ["dog-bed-flax", "dog-bed-flax-room", "dog-bed-flax-room-2"] },
     { id: "mocha", label: "Sorrel", swatch: "mattress-swatch-mocha", photos: ["dog-bed-sorrel", "dog-bed-sorrel-room-golden", "dog-bed-sorrel-room-2", "dog-bed-sorrel-front", "dog-bed-sorrel-detail"],
       sizePhotos: { small: "dog-bed-sorrel-small", medium: "dog-bed-sorrel-medium", large: "dog-bed-sorrel-large" } },
@@ -57,7 +57,7 @@ export const DOG_BED = {
   /** Editorial shots for the home page feature (they fade between each other) and the mattress page teaser. */
   editorial: [
     { photo: "dog-bed-sorrel-room", alt: "A chocolate doodle curled up on the Ashbury Dog Bed in Sorrel beside a bed" },
-    { photo: "dog-bed-moss-room", alt: "A small terrier on the Ashbury Dog Bed in Moss in a sunlit living room" },
+    { photo: "dog-bed-flint-room", alt: "A golden retriever on the Ashbury Dog Bed in Flint beside a bed" },
   ] as { photo: PhotoKey; alt: string }[],
 };
 
@@ -122,7 +122,7 @@ export const NOOK: DogBed = {
     },
     {
       q: "How is it different from the Ashbury Dog Bed?",
-      a: "The Nook is a curved bed with a raised bolster to rest a head on and curl into, and a low front to step in. The Ashbury Dog Bed is a flat, tufted bed made to match the Ashbury mattress, in the mattress's five colors.",
+      a: "The Nook is a curved bed with a raised bolster to rest a head on and curl into, and a low front to step in. The Ashbury Dog Bed is a flat, tufted bed made to match the Ashbury mattress, in the mattress's four colors.",
     },
     {
       q: "Where is it made?",
