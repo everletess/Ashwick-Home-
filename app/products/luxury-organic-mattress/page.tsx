@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "The Ashbury — An Organic Mattress Made From Nature",
-    description: "Horsehair · Living Wool · GOTS organic cotton · cashmere. Five colours. Handmade to order in the USA. From $3,200.",
+    description: "Horsehair · Living Wool · GOTS organic cotton · cashmere. Four colours. Handmade to order in the USA. From $3,200.",
     images: [PHOTOS["mattress-mocha-bedroom"].src],
     type: "website",
   },
@@ -165,7 +165,7 @@ export default function MattressPage() {
           <div className="center-head">
             <h2 className="h2">Your bed, in color.</h2>
             <p className="body" style={{ marginTop: 24 }}>
-              Natural mattresses are almost always white. Ours comes in five colors drawn from the English countryside, made to be seen: {M.colors.map((c) => c.label).join(", ").replace(/, ([^,]*)$/, " and $1")}.
+              Natural mattresses are almost always white. Ours comes in four colors drawn from the English countryside, made to be seen: {M.colors.map((c) => c.label).join(", ").replace(/, ([^,]*)$/, " and $1")}.
             </p>
           </div>
           <div className="m-colors">

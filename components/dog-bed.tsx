@@ -7,7 +7,7 @@ const D = DOG_BED;
 /** Home page: "Introducing dog beds", the Ashbury and the Nook side by side, each linking to its page. */
 export function DogBedFeature() {
   const beds = [
-    { bed: D, photo: D.editorial[0], line: "Tufted, in the Ashbury's five colors." },
+    { bed: D, photo: D.editorial[0], line: "Tufted, in the Ashbury's four colors." },
     { bed: NOOK, photo: NOOK.editorial[0], line: "A curved bolster to curl up in." },
   ];
   return (

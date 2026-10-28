@@ -85,7 +85,7 @@ export default function InsideTheAshburyPage() {
           <div className="center-head">
             <h2 className="h2">In full color.</h2>
             <p className="body" style={{ marginTop: 24 }}>
-              Natural mattresses are almost always white. The Ashbury comes in five colors drawn from the English countryside, made to be seen.
+              Natural mattresses are almost always white. The Ashbury comes in four colors drawn from the English countryside, made to be seen.
             </p>
           </div>
           <div className="m-colors">

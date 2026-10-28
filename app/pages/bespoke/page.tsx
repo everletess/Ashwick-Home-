@@ -161,7 +161,7 @@ export default function BespokePage() {
           <div className="bsp-mattress" id="mattresses">
             <h3 className="proc-h">The bespoke Ashbury.</h3>
             <p className="body">
-              Our all-natural, organic mattress, made to your measurements in any size or shape: extra long, extra wide, with cut corners for antique and four-poster beds, split for narrow staircases, or with a different feel on each side, in any of our five colors.
+              Our all-natural, organic mattress, made to your measurements in any size or shape: extra long, extra wide, with cut corners for antique and four-poster beds, split for narrow staircases, or with a different feel on each side, in any of our four colors.
             </p>
             <Link href={ASHBURY_PATH} className="ulink">Inside the Ashbury →</Link>
           </div>

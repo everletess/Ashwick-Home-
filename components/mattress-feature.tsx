@@ -32,7 +32,7 @@ export function MattressFeature() {
           <p className="m-feature-coll">{MATTRESS.collection}</p>
           <p className="m-feature-tag">Dare to dream in color.</p>
           <p className="body">
-            An all-natural, organic mattress made from nature&apos;s finest materials: Living Wool, cashmere, Swedish horsehair and organic cotton, hand-tufted and made in five colors.
+            An all-natural, organic mattress made from nature&apos;s finest materials: Living Wool, cashmere, Swedish horsehair and organic cotton, hand-tufted and made in four colors.
           </p>
           <ul className="m-feature-colors" aria-label="Colors">
             {MATTRESS.colors.map((c) => (

@@ -39,7 +39,7 @@ export function MattressCard({ custom }: { custom?: boolean }) {
         <span className="card-name">{M.title}</span>
         <span className="card-price">From {fmt(from)}</span>
       </div>
-      <p className="card-line">{custom ? "Choose size, feel and color. Custom sizes on request." : "An all-natural, organic mattress, hand-tufted and made in five colors."}</p>
+      <p className="card-line">{custom ? "Choose size, feel and color. Custom sizes on request." : "An all-natural, organic mattress, hand-tufted and made in four colors."}</p>
       <div className="card-meta">{M.type} · Made to order · {M.topperHeight} topper included</div>
     </Link>
   );
