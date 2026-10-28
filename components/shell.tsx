@@ -386,7 +386,7 @@ export function CartDrawer() {
               {checking ? "Redirecting…" : "Check out"}
             </button>
             <p className="fine" style={{ textAlign: "center" }}>
-              Questions? Call or text <a href={`tel:${STUDIO_PHONE.replace(/\D/g, "")}`} style={{ textDecoration: "underline" }}>{STUDIO_PHONE}</a>. Text anytime; calls 9am–6pm PT, Mon–Sat.
+              Questions? Call or text <a href={`tel:${STUDIO_PHONE.replace(/\D/g, "")}`} style={{ textDecoration: "underline" }}>{STUDIO_PHONE}</a>
             </p>
             {saveState === "done" ? (
               <p className="fine">Saved. We&rsquo;ve emailed your cart, with 15% off your first order from The Ashwick Letter.</p>
