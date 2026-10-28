@@ -1,4 +1,5 @@
 import { MATTRESS_DESCRIPTION, SITE, mattressItems } from "@/lib/mattress-feed";
+import { MATTRESS } from "@/lib/mattress";
 
 /**
  * Google Merchant Center product feed (RSS 2.0, g: namespace) for The Ashbury.
@@ -32,8 +33,8 @@ ${i.extraImages.map((u) => `      <g:additional_image_link>${esc(u)}</g:addition
       <g:material>Organic Wool/Horsehair/Organic Cotton</g:material>
       <g:shipping>
         <g:country>US</g:country>
-        <g:service>Standard</g:service>
-        <g:price>0.00 USD</g:price>
+        <g:service>White glove</g:service>
+        <g:price>${MATTRESS.delivery.price.toFixed(2)} USD</g:price>
       </g:shipping>
       <g:min_handling_time>3</g:min_handling_time>
       <g:max_handling_time>4</g:max_handling_time>

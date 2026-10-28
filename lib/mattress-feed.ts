@@ -9,7 +9,7 @@ export const photoUrl = (key: PhotoKey) => abs(PHOTOS[key].src);
 
 export const MATTRESS_TITLE = "The Ashbury Organic Mattress";
 export const MATTRESS_DESCRIPTION =
-  "A natural, organic mattress handmade to order in the USA from Living Wool (GOTS-certified organic wool), Swedish horsehair and GOTS-certified organic cotton over double-tempered steel pocket coils and a base of coconut coir and agave, with a 3\" cashmere topper included. No foam, no latex, no glue, no chemical flame retardants. Hand-tufted with wool rosettes, in four colors. OEKO-TEX Standard 100. 100-night guarantee (30-night minimum), lifetime limited warranty, delivery included.";
+  "A natural, organic mattress handmade to order in the USA from Living Wool (GOTS-certified organic wool), Swedish horsehair and GOTS-certified organic cotton over double-tempered steel pocket coils and a base of coconut coir and agave, with a 3\" cashmere topper included. No foam, no latex, no glue, no chemical flame retardants. Hand-tufted with wool rosettes, in four colors. OEKO-TEX Standard 100. 100-night guarantee (30-night minimum), lifetime limited warranty, white glove delivery $200.";
 
 /** One row per size and color, matching the Shopify variants. */
 export function mattressItems() {

@@ -16,7 +16,7 @@ const M = MATTRESS;
 
 export const metadata: Metadata = {
   title: "The Ashbury Organic Mattress — Horsehair, Wool & Organic Cotton",
-  description: `A natural, organic mattress handmade in the USA from Living Wool, Swedish horsehair and GOTS-certified organic cotton. Hand-tufted, made in color, ${M.mattressHeight} mattress with ${M.topperHeight} topper included. From $3,200. Delivery included. ${M.guaranteeNights}-night guarantee (${M.guaranteeMinNights}-night minimum).`,
+  description: `A natural, organic mattress handmade in the USA from Living Wool, Swedish horsehair and GOTS-certified organic cotton. Hand-tufted, made in color, ${M.mattressHeight} mattress with ${M.topperHeight} topper included. From $3,200. White glove delivery $200. ${M.guaranteeNights}-night guarantee (${M.guaranteeMinNights}-night minimum).`,
   keywords: [
     "organic mattress", "natural mattress", "horsehair mattress", "wool mattress",
     "organic cotton mattress", "non-toxic mattress", "GOTS certified mattress",
@@ -81,7 +81,7 @@ function productJsonLd() {
         itemCondition: "https://schema.org/NewCondition",
         shippingDetails: {
           "@type": "OfferShippingDetails",
-          shippingRate: { "@type": "MonetaryAmount", value: 0, currency: "USD" },
+          shippingRate: { "@type": "MonetaryAmount", value: M.delivery.price, currency: "USD" },
           shippingDestination: { "@type": "DefinedRegion", addressCountry: "US" },
           deliveryTime: {
             "@type": "ShippingDeliveryTime",
@@ -125,7 +125,7 @@ export default function MattressPage() {
     [
       "Delivery",
       <p className="body small" key="d">
-        Made to order and ships within 3–4 days. Standard delivery is included in the price; white-glove delivery is available for an additional fee. Every mattress arrives wrapped in biodegradable paper.
+        Made to order and ships within 3–4 days. White glove delivery is $200; our delivery team will contact you to schedule it once your mattress is made. Every mattress arrives wrapped in biodegradable paper.
       </p>,
     ],
     [

@@ -26,7 +26,7 @@ export default function DeliveryPage() {
       </Block>
       <Block title={`The ${MATTRESS.shortName} mattress`}>
         <p className="body">
-          {MATTRESS.leadTime} Standard delivery is included in the price; white-glove delivery is available for an additional fee. Every mattress arrives wrapped in biodegradable paper.{" "}
+          {MATTRESS.leadTime} {MATTRESS.shipping} Every mattress arrives wrapped in biodegradable paper.{" "}
           <Link href={MATTRESS_PATH} className="inl">Shop the {MATTRESS.shortName}</Link>
         </p>
       </Block>
