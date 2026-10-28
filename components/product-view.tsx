@@ -7,6 +7,7 @@ import { FormError, Honeypot, useFormSend } from "@/components/forms";
 import { BUY_OPTIONS_ID, StickyBuy } from "@/components/sticky-buy";
 import { Photo, Swatch } from "@/components/photo";
 import { TintedPhoto } from "@/components/tinted-photo";
+import { Lightbox } from "@/components/lightbox";
 import { track } from "@/lib/pixel";
 import { tintFor } from "@/lib/photos";
 import { CUSTOM_LEAD_TIME, FABRICS, LEAD_TIME, WOODS, fmt, getProduct, nearestPhoto, photoFor, priceFor, type FabricId, type Option, type PhotoTag } from "@/lib/products";
@@ -85,13 +86,18 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
 
   // Horizontal swipe on the main image steps through the gallery on touch screens.
   const swipeX = useRef<number | null>(null);
+  // A tap (not a swipe) on the main image opens it full screen.
+  const swiped = useRef(false);
+  const [zoom, setZoom] = useState<number | null>(null);
   const onPointerDown = (e: React.PointerEvent) => {
+    swiped.current = false;
     if (e.pointerType === "touch") swipeX.current = e.clientX;
   };
   const onPointerUp = (e: React.PointerEvent) => {
     if (swipeX.current == null) return;
     const dx = e.clientX - swipeX.current;
     swipeX.current = null;
+    if (Math.abs(dx) >= 10) swiped.current = true;
     if (Math.abs(dx) < 40) return;
     const n = p.photos.length;
     setImg((i) => (i + (dx < 0 ? 1 : -1) + n) % n);
@@ -138,9 +144,13 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
   const photo = p.photos[img];
   const shown = p.photoTags?.[photo];
   // No photo of this fabric and color: recolor the upholstery of a photo that has a mask for it.
-  const tint = shown && (shown.fabric !== fabric || shown.color !== (color || undefined))
-    ? tintFor(photo, selColor?.swatch ?? selFabric.swatch, shownSwatch(shown))
-    : undefined;
+  const tintOf = (ph: typeof photo) => {
+    const sh = p.photoTags?.[ph];
+    return sh && (sh.fabric !== fabric || sh.color !== (color || undefined))
+      ? tintFor(ph, selColor?.swatch ?? selFabric.swatch, shownSwatch(sh))
+      : undefined;
+  };
+  const tint = tintOf(photo);
   const note = p.photoNotes?.[photo] ?? (tint ? "Color shown digitally. Order a swatch to see it in person." : undefined);
   // When the photo shows a different fabric, color or wood than the one chosen, say so.
   const shownFabric = shown?.fabric && FABRICS[shown.fabric];
@@ -179,10 +189,11 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
     <section className="pdp wrap">
       <div className="gal">
         <div className="gal-main" onPointerDown={onPointerDown} onPointerUp={onPointerUp} onPointerCancel={() => (swipeX.current = null)}>
-          <div className="gal-photo">
+          <button type="button" className="gal-photo gal-zoom" aria-label="View larger image" onClick={() => !swiped.current && setZoom(img)}>
             <Photo src={photo} label={p.name} sizes="(max-width: 960px) 100vw, 56vw" preload={img === 0} />
             {tint && <TintedPhoto photo={photo} tint={tint} />}
-          </div>
+            <span className="gal-expand" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2"><path d="M10 1.5h4.5V6M6 14.5H1.5V10M14.5 1.5 9.5 6.5M1.5 14.5l5-5" /></svg></span>
+          </button>
           {hasChoices && (
             <div className="sel-swatch" aria-live="polite">
               <span className={"sel-chip tex-" + selFabric.tex} style={{ background: selColor?.swatch ?? selFabric.swatch }} />
@@ -193,6 +204,13 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
             </div>
           )}
         </div>
+        {zoom !== null && (
+          <Lightbox
+            items={p.photos.map((ph) => ({ photo: ph, alt: p.name, tint: tintOf(ph) }))}
+            start={zoom}
+            onClose={(last) => { setZoom(null); setImg(last); }}
+          />
+        )}
         {(note || shownAs) && <p className="gal-note">{[note, shownAs && `Photo shows ${shownAs}.`].filter(Boolean).join(" ")}</p>}
         {p.photos.length > 1 && (
           <div className="gal-thumbs">

@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { DogBedNotify } from "@/components/dog-bed-notify";
 import { Photo } from "@/components/photo";
+import { Lightbox } from "@/components/lightbox";
 import { RatingLink } from "@/components/reviews";
 import { OptGroup, Pills } from "@/components/product-view";
 import { ShipsFast, TrustRow } from "@/components/buy-icons";
@@ -17,6 +18,7 @@ import { PHOTOS } from "@/lib/photos";
 export function DogBedView({ bed: D = DOG_BED, children }: { bed?: DogBed; children?: React.ReactNode }) {
   const [color, setColorState] = useState(D.defaultColor);
   const [img, setImg] = useState(0);
+  const [zoom, setZoom] = useState<number | null>(null);
   const [size, setSize] = useState(D.sizes[0].id);
   const cart = useCart();
   const buyRef = useRef<HTMLButtonElement>(null);
@@ -59,8 +61,18 @@ export function DogBedView({ bed: D = DOG_BED, children }: { bed?: DogBed; child
     <section className="pdp wrap">
       <div className="gal">
         <div className="gal-main">
-          <div className="gal-photo"><Photo src={gallery[img] ?? gallery[0]} label={img === 1 && sizePhoto ? `${alt}, ${sz.label}` : alt} sizes="(max-width: 960px) 100vw, 56vw" preload={img === 0} /></div>
+          <button type="button" className="gal-photo gal-zoom" aria-label="View larger image" onClick={() => setZoom(img)}>
+            <Photo src={gallery[img] ?? gallery[0]} label={img === 1 && sizePhoto ? `${alt}, ${sz.label}` : alt} sizes="(max-width: 960px) 100vw, 56vw" preload={img === 0} />
+            <span className="gal-expand" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2"><path d="M10 1.5h4.5V6M6 14.5H1.5V10M14.5 1.5 9.5 6.5M1.5 14.5l5-5" /></svg></span>
+          </button>
         </div>
+        {zoom !== null && (
+          <Lightbox
+            items={gallery.map((ph, k) => ({ photo: ph, alt: k === 1 && sizePhoto ? `${alt}, ${sz.label}` : alt }))}
+            start={zoom}
+            onClose={(last) => { setZoom(null); setImg(last); }}
+          />
+        )}
         {gallery.length > 1 && (
           <div className="gal-thumbs">
             {gallery.map((ph, i) => (

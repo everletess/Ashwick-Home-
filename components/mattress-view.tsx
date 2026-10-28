@@ -9,6 +9,7 @@ import { DogBedTeaser } from "@/components/dog-bed";
 import { BuyBoxEmail } from "@/components/buy-box-email";
 import { BUY_OPTIONS_ID, StickyBuy } from "@/components/sticky-buy";
 import { Photo } from "@/components/photo";
+import { Lightbox } from "@/components/lightbox";
 import { RatingLink } from "@/components/reviews";
 import { OptGroup, Pills } from "@/components/product-view";
 import { GUARANTEE_PATH, MATTRESS, colorById, colorFromParam, sizeById } from "@/lib/mattress";
@@ -42,13 +43,18 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
   ];
   // Horizontal swipe on the main image steps through the gallery on touch screens.
   const swipeX = useRef<number | null>(null);
+  // A tap (not a swipe) on the main image opens it full screen.
+  const swiped = useRef(false);
+  const [zoom, setZoom] = useState<number | null>(null);
   const onPointerDown = (e: React.PointerEvent) => {
+    swiped.current = false;
     if (e.pointerType === "touch") swipeX.current = e.clientX;
   };
   const onPointerUp = (e: React.PointerEvent) => {
     if (swipeX.current == null) return;
     const dx = e.clientX - swipeX.current;
     swipeX.current = null;
+    if (Math.abs(dx) >= 10) swiped.current = true;
     if (Math.abs(dx) < 40) return;
     setImg((i) => (i + (dx < 0 ? 1 : -1) + gallery.length) % gallery.length);
   };
@@ -124,11 +130,13 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
     <section className="pdp wrap">
       <div className="gal">
         <div className="gal-main" onPointerDown={onPointerDown} onPointerUp={onPointerUp} onPointerCancel={() => (swipeX.current = null)}>
-          <div className="gal-photo">
+          <button type="button" className="gal-photo gal-zoom" aria-label="View larger image" onClick={() => !swiped.current && setZoom(img)}>
             {/* Keyed and eager: each picture loads the moment it is chosen (a lazy swap could stay blank until scrolled into view). */}
             <Photo key={gallery[img].photo} src={gallery[img].photo} label={gallery[img].alt} sizes="(max-width: 960px) 100vw, 56vw" preload />
-          </div>
+            <span className="gal-expand" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2"><path d="M10 1.5h4.5V6M6 14.5H1.5V10M14.5 1.5 9.5 6.5M1.5 14.5l5-5" /></svg></span>
+          </button>
         </div>
+        {zoom !== null && <Lightbox items={gallery} start={zoom} onClose={(last) => { setZoom(null); setImg(last); }} />}
         <div className="gal-thumbs">
           {gallery.map(({ photo: ph }, i) => (
             <button key={i} className={i === img ? "on" : ""} aria-label={"Image " + (i + 1)} aria-pressed={i === img} onClick={() => setImg(i)}>
