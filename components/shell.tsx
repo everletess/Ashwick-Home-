@@ -24,7 +24,7 @@ import { SUBSCRIBED_EVENT, SUBSCRIBED_KEY } from "@/lib/subscribe";
 import { trackThen } from "@/lib/pixel";
 import { saveCart, normalizePhone } from "@/lib/subscribe";
 import { MATTRESS } from "@/lib/mattress";
-import { DOG_BED_ID } from "@/lib/dog-bed";
+import { DOG_BED_ID, NOOK } from "@/lib/dog-bed";
 import { ASHBURY_PATH, FURNITURE_MATERIALS_PATH, MATERIALS_PATH } from "@/lib/materials";
 
 const MATERIAL_LINKS: [string, string, string][] = [
@@ -81,6 +81,23 @@ function NavMenu({ label, id, links, all, align = "right" }: { label: string; id
 
 import { Photo } from "@/components/photo";
 import { fmt } from "@/lib/products";
+
+const isDogBed = (id: string) => id === DOG_BED_ID || id === NOOK.id;
+
+/** The line under the cart subtotal: delivery (white glove for furniture and the mattress, free for dog beds), ship time and payment. */
+function cartNote(items: { id: string; delivery?: unknown }[]) {
+  if (!items.every((i) => i.delivery || isDogBed(i.id))) return "Paid in full at checkout. Taxes and shipping calculated at checkout.";
+  const mattress = items.some((i) => i.id === MATTRESS.id);
+  const dogBeds = items.some((i) => isDogBed(i.id));
+  return [
+    items.some((i) => i.delivery) && "Includes the delivery shown above.",
+    dogBeds && "Dog beds ship free.",
+    (mattress || dogBeds) && "Ships within 3–4 days.",
+    mattress && "Our delivery team will contact you to schedule your mattress delivery.",
+    mattress ? "Pay in full at checkout, or over time with Shop Pay Installments, subject to approval." : "Paid in full at checkout.",
+    "Taxes calculated at checkout.",
+  ].filter(Boolean).join(" ");
+}
 
 export function Wordmark({ tagline = true }: { tagline?: boolean }) {
   return (
@@ -373,13 +390,7 @@ export function CartDrawer() {
               <span className="sub-v">{fmt(cart.subtotal)}</span>
             </div>
             <p className="fine">
-              {cart.items.every((i) => i.delivery)
-                ? "Paid in full at checkout. Includes delivery shown above. Taxes calculated at checkout."
-                : cart.items.every((i) => i.id === MATTRESS.id || i.id === DOG_BED_ID)
-                  ? cart.items.some((i) => i.id === MATTRESS.id)
-                    ? "Free delivery. Ships within 3–4 days. Pay in full at checkout, or over time with Shop Pay Installments, subject to approval. Taxes calculated there."
-                    : "Free delivery. Ships within 3–4 days. Paid in full at checkout, taxes calculated there."
-                  : "Paid in full at checkout. Taxes and shipping calculated at checkout."}
+              {cartNote(cart.items)}
             </p>
             {checkoutError && <p className="fine" style={{ color: "var(--err, #b00)" }}>{checkoutError}</p>}
             <button className="btn full" onClick={checkout} disabled={checking}>

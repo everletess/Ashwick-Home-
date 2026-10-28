@@ -75,6 +75,7 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
       qty: 1,
       mode: "As designed",
       options: [["Size", `${sz.label} (${sz.dims})`], ["Feel", feelLabel], ["Color", sel.label]],
+      delivery: M.delivery,
     });
 
   // Buy now: straight to Shopify checkout with this bed, skipping the cart. Fires the same AddToCart and
@@ -146,6 +147,7 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
         <RatingLink product="ashbury" />
         <div className="pdp-collection">{M.collection}</div>
         <div className="pdp-price">{fmt(sz.price)}</div>
+        <p className="fine delivery">+ {fmt(M.delivery.price)} {M.delivery.label.toLowerCase()}</p>
         <p className="body">
           An all-natural, organic mattress made from nature&apos;s finest materials: organic Living Wool, organic cotton and Swedish horsehair, hand-tufted and made in color. An {M.mattressHeight} mattress with a {M.topperHeight} topper included: {M.combinedHeight} of natural fiber, with no foam, no latex and no chemical flame retardants.
         </p>
@@ -180,9 +182,9 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
               <button ref={buyRef} className="btn full" onClick={buyNow} disabled={buying}>{buying ? "Taking you to checkout\u2026" : `Buy now \u00b7 ${fmt(sz.price)}`}</button>
               <button className="btn full btn-ghost" onClick={add} disabled={buying}>Add to cart</button>
               {buyError && <p className="fine" role="alert" style={{ color: "var(--err, #b00)", textAlign: "center" }}>{buyError}</p>}
-              <p className="fine buy-direct">Goes straight to secure checkout. Free delivery, {M.guaranteeNights}-night trial.</p>
+              <p className="fine buy-direct">Goes straight to secure checkout. + {fmt(M.delivery.price)} {M.delivery.label.toLowerCase()}, {M.guaranteeNights}-night trial.</p>
               <BuyBoxEmail />
-              <TrustRow items={[["hand", "Handmade to order"], ["truck", "Free delivery"], ["moon", `${M.guaranteeNights}-night trial`]]} />
+              <TrustRow items={[["hand", "Handmade to order"], ["truck", "White glove delivery"], ["moon", `${M.guaranteeNights}-night trial`]]} />
               <StickyBuy
                 watch={buyRef}
                 photo={sel.photos[0]}

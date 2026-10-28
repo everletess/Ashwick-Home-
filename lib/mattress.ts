@@ -62,7 +62,9 @@ export const MATTRESS = {
   /** false shows "Coming soon" in place of Add to cart. */
   available: true,
   leadTime: "Made to order. Ships within 3–4 days.",
-  shipping: "Delivery included.",
+  /** Added per mattress in the cart; Shopify charges it at checkout as the mattress's shipping rate. */
+  delivery: { label: "White glove delivery", price: 200 },
+  shipping: "White glove delivery, $200. Our delivery team will contact you to schedule it once your mattress is made.",
   guarantee: "100-night money-back guarantee",
   guaranteeNights: 100,
   /** Nights a mattress must be slept on before a return can be requested. */

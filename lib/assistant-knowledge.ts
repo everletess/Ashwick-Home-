@@ -52,14 +52,14 @@ New email subscribers get ${WELCOME_OFFER.percent}% off their first order. They 
 
 THE ASHBURY MATTRESS (${SITE}${MATTRESS_PATH})
 ${M.title}, ${M.collection}. An all-natural, organic mattress, hand-tufted and made in color. An ${M.mattressHeight} mattress with a ${M.topperHeight} topper included (${M.combinedHeight} in total).
-Sizes and prices (topper and standard delivery included):
+Sizes and prices (topper included; white glove delivery is ${fmt(M.delivery.price)} extra):
 ${M.sizes.map((s) => `- ${s.label}: ${s.dims}, ${fmt(s.price)}`).join("\n")}
 ${M.customSize}
 Feels (same price): Soft, a deeper, more cushioned top for side sleepers and anyone who likes to sink in. Firm, more supportive and even, for back and stomach sleepers. Both share the same materials and construction.
 Colors (same price): ${M.colors.map((c) => c.label).join(", ")}. The cover is super soft 100% organic cotton twill (GOTS) colored with GOTS-approved plant dyes.
 Construction. Topper (${M.topperHeight}): cashmere (OEKO-TEX Standard 100), Living Wool (GOTS, OEKO-TEX), Swedish horsehair (OEKO-TEX), hand-tufted with wool rosettes. Mattress (${M.mattressHeight}), top to bottom: organic cotton, Living Wool, double-tempered steel pocket coils, a base of coconut coir and agave (in every size and feel; agave helps with temperature control and breathability), organic cotton, organic wool. No foam, no latex, no chemical flame retardants and no glue. Single-sided.
 Certifications: GOTS-certified organic wool and cotton, made by a GOTS-certified manufacturer (${M.gotsManufacturer}). OEKO-TEX Standard 100. Meets US federal mattress flammability standards without chemical flame retardants; wool provides the natural barrier.
-Ordering: ${M.leadTime} ${M.shipping} White-glove delivery is available for an additional fee. Every mattress arrives wrapped in biodegradable paper. Pay in full at checkout, or over time with Shop Pay Installments (subject to approval).
+Ordering: ${M.leadTime} ${M.shipping} Every mattress arrives wrapped in biodegradable paper. Pay in full at checkout, or over time with Shop Pay Installments (subject to approval).
 Foundation: needs a firm, flat base that lets it breathe: a solid platform, or slats no more than 3" apart. For Queen, King and Cal King, a base with a center support rail and legs. A rigid foundation (no springs) or an adjustable base also works. Avoid old box springs and placing it on the floor for long periods. A supportive base is a condition of the warranty.
 Sheets: deep-pocket sheets, 15"+ pocket depth with the topper, 12"+ without.
 Care: rotate 180° every 3–6 months; no flipping. Air it occasionally. Spot clean only. A breathable mattress protector is recommended from the first night. Wool and horsehair gently settle to you over the first months, which is normal.
@@ -74,7 +74,7 @@ Furniture returns: every piece is made to order. Pieces ordered as designed, wit
 Delivery: within the contiguous United States. If anything arrives damaged, email ${STUDIO_EMAIL} with photos within 5 business days of delivery and we repair or replace it at no cost. Warranty repairs and replacements are free; the customer covers shipping to and from the workshop.
 
 THE ASHBURY DOG BED (${SITE}/products/organic-dog-bed)
-Handmade to order in the USA from GOTS and OEKO-TEX certified materials: organic cotton, Living Wool and cashmere, in a 100% organic cotton twill cover. Sizes and prices: ${DOG_BED.sizes.map((z) => `${z.label} ${z.dims} ${fmt(z.price)}`).join("; ")}. Colors, same price: Fleece, Flint, Flax and Sorrel, matching the Ashbury. Ships within 3–4 days. 30-day return window; returned dog beds are donated. 1-year warranty against defects in materials and workmanship. It is not covered by the 100-night mattress guarantee or the lifetime furniture warranty. The 15% welcome code ASHWICK15 applies.
+Handmade to order in the USA from GOTS and OEKO-TEX certified materials: organic cotton, Living Wool and cashmere, in a 100% organic cotton twill cover. Sizes and prices: ${DOG_BED.sizes.map((z) => `${z.label} ${z.dims} ${fmt(z.price)}`).join("; ")}. Colors, same price: Fleece, Flint, Flax and Sorrel, matching the Ashbury. Ships within 3–4 days, free delivery. 30-day return window; returned dog beds are donated. 1-year warranty against defects in materials and workmanship. It is not covered by the 100-night mattress guarantee or the lifetime furniture warranty. The 15% welcome code ASHWICK15 applies.
 
 MATTRESS MATERIALS (${SITE}${ASHBURY_PATH})
 ${materials(ASHBURY_GROUPS)}
