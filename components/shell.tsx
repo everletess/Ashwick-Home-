@@ -18,6 +18,7 @@ function useScrollLock(locked: boolean) {
   }, [locked]);
 }
 import { useCart } from "@/components/cart";
+import { STUDIO_PHONE } from "@/lib/site";
 import { SHOW_SIGNUP_EVENT } from "@/components/email-popup";
 import { SUBSCRIBED_EVENT, SUBSCRIBED_KEY } from "@/lib/subscribe";
 import { trackThen } from "@/lib/pixel";
@@ -384,6 +385,9 @@ export function CartDrawer() {
             <button className="btn full" onClick={checkout} disabled={checking}>
               {checking ? "Redirecting…" : "Check out"}
             </button>
+            <p className="fine" style={{ textAlign: "center" }}>
+              Questions? Call or text <a href={`tel:${STUDIO_PHONE.replace(/\D/g, "")}`} style={{ textDecoration: "underline" }}>{STUDIO_PHONE}</a>
+            </p>
             {saveState === "done" ? (
               <p className="fine">Saved. We&rsquo;ve emailed your cart, with 15% off your first order from The Ashwick Letter.</p>
             ) : (
