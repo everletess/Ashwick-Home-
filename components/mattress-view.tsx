@@ -9,6 +9,7 @@ import { DogBedTeaser } from "@/components/dog-bed";
 import { BuyBoxEmail } from "@/components/buy-box-email";
 import { BUY_OPTIONS_ID, StickyBuy } from "@/components/sticky-buy";
 import { Photo } from "@/components/photo";
+import { Lightbox } from "@/components/lightbox";
 import { RatingLink } from "@/components/reviews";
 import { OptGroup, Pills } from "@/components/product-view";
 import { GUARANTEE_PATH, MATTRESS, colorById, colorFromParam, sizeById } from "@/lib/mattress";
@@ -45,11 +46,15 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
   const onPointerDown = (e: React.PointerEvent) => {
     if (e.pointerType === "touch") swipeX.current = e.clientX;
   };
+  // A swipe changes the photo; it shouldn't also open the enlarged view.
+  const swiped = useRef(false);
+  const [zoom, setZoom] = useState<number | null>(null);
   const onPointerUp = (e: React.PointerEvent) => {
     if (swipeX.current == null) return;
     const dx = e.clientX - swipeX.current;
     swipeX.current = null;
     if (Math.abs(dx) < 40) return;
+    swiped.current = true;
     setImg((i) => (i + (dx < 0 ? 1 : -1) + gallery.length) % gallery.length);
   };
   const setColor = (c: string) => {
@@ -125,9 +130,10 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
     <section className="pdp wrap">
       <div className="gal">
         <div className="gal-main" onPointerDown={onPointerDown} onPointerUp={onPointerUp} onPointerCancel={() => (swipeX.current = null)}>
-          <div className="gal-photo">
+          <div className="gal-photo zoomable" onClick={() => (swiped.current ? (swiped.current = false) : setZoom(img))}>
             {/* Keyed and eager: each picture loads the moment it is chosen (a lazy swap could stay blank until scrolled into view). */}
             <Photo key={gallery[img].photo} src={gallery[img].photo} label={gallery[img].alt} sizes="(max-width: 960px) 100vw, 56vw" preload />
+            <button type="button" className="gal-zoom" aria-label="Enlarge photo" onClick={(e) => { e.stopPropagation(); setZoom(img); }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="M15.5 15.5 21 21M10.5 7.5v6M7.5 10.5h6" /></svg></button>
           </div>
         </div>
         <div className="gal-thumbs">
@@ -137,6 +143,7 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
             </button>
           ))}
         </div>
+        {zoom != null && <Lightbox items={gallery} start={zoom} onClose={() => setZoom(null)} />}
         {/* Beside the gallery on wide screens; below the buy box on phones (the second copy). */}
         <div className="teaser-wide"><DogBedTeaser /></div>
       </div>
