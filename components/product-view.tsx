@@ -7,6 +7,7 @@ import { FormError, Honeypot, useFormSend } from "@/components/forms";
 import { BUY_OPTIONS_ID, StickyBuy } from "@/components/sticky-buy";
 import { Photo, Swatch } from "@/components/photo";
 import { TintedPhoto } from "@/components/tinted-photo";
+import { Lightbox } from "@/components/lightbox";
 import { track } from "@/lib/pixel";
 import { tintFor } from "@/lib/photos";
 import { CUSTOM_LEAD_TIME, FABRICS, LEAD_TIME, WOODS, fmt, getProduct, nearestPhoto, photoFor, priceFor, type FabricId, type Option, type PhotoTag } from "@/lib/products";
@@ -88,11 +89,15 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
   const onPointerDown = (e: React.PointerEvent) => {
     if (e.pointerType === "touch") swipeX.current = e.clientX;
   };
+  // A swipe changes the photo; it shouldn't also open the enlarged view.
+  const swiped = useRef(false);
+  const [zoom, setZoom] = useState<number | null>(null);
   const onPointerUp = (e: React.PointerEvent) => {
     if (swipeX.current == null) return;
     const dx = e.clientX - swipeX.current;
     swipeX.current = null;
     if (Math.abs(dx) < 40) return;
+    swiped.current = true;
     const n = p.photos.length;
     setImg((i) => (i + (dx < 0 ? 1 : -1) + n) % n);
   };
@@ -179,9 +184,10 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
     <section className="pdp wrap">
       <div className="gal">
         <div className="gal-main" onPointerDown={onPointerDown} onPointerUp={onPointerUp} onPointerCancel={() => (swipeX.current = null)}>
-          <div className="gal-photo">
+          <div className="gal-photo zoomable" onClick={() => (swiped.current ? (swiped.current = false) : setZoom(img))}>
             <Photo src={photo} label={p.name} sizes="(max-width: 960px) 100vw, 56vw" preload={img === 0} />
             {tint && <TintedPhoto photo={photo} tint={tint} />}
+            <button type="button" className="gal-zoom" aria-label="Enlarge photo" onClick={(e) => { e.stopPropagation(); setZoom(img); }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="M15.5 15.5 21 21M10.5 7.5v6M7.5 10.5h6" /></svg></button>
           </div>
           {hasChoices && (
             <div className="sel-swatch" aria-live="polite">
@@ -202,6 +208,19 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
               </button>
             ))}
           </div>
+        )}
+        {zoom != null && (
+          <Lightbox
+            items={p.photos.map((ph) => ({ photo: ph, alt: p.name }))}
+            start={zoom}
+            onClose={() => setZoom(null)}
+            overlay={(ph) => {
+              // The chosen fabric color, recolored on photos that show another one (as in the gallery).
+              const t = p.photoTags?.[ph];
+              const c = t && (t.fabric !== fabric || t.color !== (color || undefined)) ? tintFor(ph, selColor?.swatch ?? selFabric.swatch, shownSwatch(t)) : undefined;
+              return c ? <TintedPhoto photo={ph} tint={c} /> : null;
+            }}
+          />
         )}
       </div>
 

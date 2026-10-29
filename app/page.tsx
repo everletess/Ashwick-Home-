@@ -95,7 +95,7 @@ function HomeWays() {
         <div className="grid2">
           <div className="panel">
             <div className="panel-img">
-              <Photo src="marlowe-2" label="The Marlowe as designed" sizes="(max-width: 960px) 100vw, 50vw" />
+              <Photo src="marlowe-studio-linen" label="The Marlowe as designed" sizes="(max-width: 960px) 100vw, 50vw" />
             </div>
             <div className="eyebrow">As designed</div>
             <p className="body">Our fabrics, proportions and finishes, chosen to work together. The simplest way to begin.</p>

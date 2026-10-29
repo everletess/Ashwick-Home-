@@ -81,7 +81,7 @@ export default function BespokePage() {
       <section className="sec">
         <div className="wrap grid2 bsp-ways">
           <div className="panel">
-            <div className="panel-img"><Photo src="marlowe-2" label="The Marlowe" sizes={HALF} /></div>
+            <div className="panel-img"><Photo src="marlowe-room-linen" label="The Marlowe" sizes={HALF} /></div>
             <div className="eyebrow">Tailored</div>
             <h2 className="proc-h">Make one of ours yours.</h2>
             <p className="body">Start with a piece from the collection and change what matters to you: fabric, seat depth, length, wood finish or color.</p>
