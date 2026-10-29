@@ -104,7 +104,7 @@ export default function InsideTheAshburyPage() {
       <section className="statement mat-leave statement-sm">
         <p>What we leave out.</p>
         <ul className="leave-list">
-          {["No foam.", "No latex.", "No chemical flame retardants.", "No glue."].map((x) => <li key={x}>{x}</li>)}
+          {["No foam.", "No chemical flame retardants.", "No glue."].map((x) => <li key={x}>{x}</li>)}
         </ul>
       </section>
 
@@ -142,7 +142,7 @@ export default function InsideTheAshburyPage() {
             items={[
               ["What is Living Wool?", <p className="body small" key="1">Our name for the organic wool from Lanas Trinidad in Uruguay that forms the comfort layers of the Ashbury topper.</p>],
               ["Is the horsehair ethically sourced?", <p className="body small" key="2">Yes. It comes from tail clippings in Sweden. No horse is harmed.</p>],
-              ["Why no foam or latex?", <p className="body small" key="3">Natural fibers let air move, manage moisture and recover their shape. We&apos;d rather build a mattress that settles in over time than one engineered to feel soft on day one.</p>],
+              ["Why no foam?", <p className="body small" key="3">Natural fibers let air move, manage moisture and recover their shape. We&apos;d rather build a mattress that settles in over time than one engineered to feel soft on day one.</p>],
               ["How is it fire-safe without chemical flame retardants?", <p className="body small" key="4">Wool is naturally flame-resistant, so it does the work chemical treatments do in many mattresses. The Ashbury meets US federal flammability standards.</p>],
               ["Will it settle?", <p className="body small" key="5">Wool and horsehair gently conform to you over the first months, which is normal. Rotating the mattress 180° every 3–6 months keeps it even.</p>],
               ["How do I care for it?", <p className="body small" key="6">Rotate every 3–6 months, air it occasionally by removing the bedding for an hour, and spot clean only. A breathable mattress protector is recommended from the first night.</p>],

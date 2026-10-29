@@ -74,7 +74,7 @@ export default function BespokePage() {
       <section className="statement tall">
         <p>There&apos;s only one rule.</p>
         <span className="body statement-body bsp-rule">
-          Everything we make comes from the earth: {ONE_RULE}. No foam. No latex. No chemical flame retardants. Within that, the only limit is your imagination.
+          Everything we make comes from the earth: {ONE_RULE}. No foam. No chemical flame retardants. Within that, the only limit is your imagination.
         </span>
       </section>
 

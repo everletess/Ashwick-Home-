@@ -37,7 +37,7 @@ export default function MaterialsPage() {
 
       <section className="statement mat-leave statement-sm">
         <ul className="leave-list">
-          {["No foam.", "No latex.", "No chemical flame retardants."].map((x) => <li key={x}>{x}</li>)}
+          {["No foam.", "No chemical flame retardants."].map((x) => <li key={x}>{x}</li>)}
         </ul>
       </section>
 
