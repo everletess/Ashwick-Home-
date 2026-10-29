@@ -105,6 +105,8 @@ import marloweLoveseatWalnutLinen from "@/assets/photos/marlowe-loveseat-walnut-
 import marloweChairWalnutLinen from "@/assets/photos/marlowe-chair-walnut-linen.jpg";
 import marloweOttomanWalnutLinen from "@/assets/photos/marlowe-ottoman-walnut-linen.jpg";
 import marloweStudio from "@/assets/photos/marlowe-studio.jpg";
+import marloweStudioLinen from "@/assets/photos/marlowe-studio-linen.jpg";
+import marloweRoomLinen from "@/assets/photos/marlowe-room-linen.jpg";
 import materialsRosettes from "@/assets/photos/materials-rosettes.jpg";
 import materialsCashmere from "@/assets/photos/materials-cashmere.jpg";
 import materialsBandBlend from "@/assets/photos/materials-band-blend.jpg";
@@ -262,6 +264,8 @@ export const PHOTOS = {
   "marlowe-chair-walnut-linen": marloweChairWalnutLinen,
   "marlowe-ottoman-walnut-linen": marloweOttomanWalnutLinen,
   "marlowe-studio": marloweStudio,
+  "marlowe-studio-linen": marloweStudioLinen,
+  "marlowe-room-linen": marloweRoomLinen,
   "materials-rosettes": materialsRosettes,
   "materials-cashmere": materialsCashmere,
   "materials-band-blend": materialsBandBlend,

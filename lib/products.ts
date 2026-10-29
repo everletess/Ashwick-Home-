@@ -203,7 +203,8 @@ const ALL_PRODUCTS: Product[] = [
     id: "marlowe", name: "The Marlowe Sofa", type: "Sofa", category: "sofas", price: 8500,
     line: "A deep sofa on a hand-fluted solid wood plinth, in Irish Linen.",
     photos: [
-      "marlowe-studio", "marlowe-1", "marlowe-2",
+      // White linen studio and room shots (Oct 2026) replace the earlier tan marlowe-studio/-1/-2 here; those are still used elsewhere.
+      "marlowe-studio-linen", "marlowe-room-linen",
       "marlowe-sofa-walnut-linen", "marlowe-sofa-oak-linen",
     ],
     cardSingle: true,
