@@ -65,7 +65,7 @@ export default function TradePage() {
       <section className="sec linen" id="program">
         <div className="wrap process">
           <div className="proc">
-            <div className="proc-v"><Photo src="marlowe-2" label="The Marlowe" sizes={HALF} /></div>
+            <div className="proc-v"><Photo src="marlowe-studio-linen" label="The Marlowe" sizes={HALF} /></div>
             <div className="proc-t">
               <div className="eyebrow">The trade program</div>
               <h2 className="proc-h">Organic furniture, specified to your project.</h2>

@@ -7,7 +7,7 @@ import type { PhotoKey } from "@/lib/photos";
  * until then the panel plays a slow slideshow of the photos below.
  */
 const FILM: string | null = null;
-const FILM_STILLS: PhotoKey[] = ["burford-3", "marlowe-2", "csofa-c", "pembroke-2"];
+const FILM_STILLS: PhotoKey[] = ["burford-3", "marlowe-room-linen", "csofa-c", "pembroke-2"];
 
 type Badge = { top: string; bottom: string; icon: React.ReactNode };
 
