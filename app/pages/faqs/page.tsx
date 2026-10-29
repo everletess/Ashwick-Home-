@@ -17,7 +17,7 @@ const M = MATTRESS;
 const a = (children: React.ReactNode) => <p className="body small">{children}</p>;
 
 const FAQS: [string, React.ReactNode][] = [
-  ["What are your pieces made of?", a(<>Solid hardwood, organic wool, linen, coconut coir, agave and natural oils. Nothing synthetic: no polyurethane foam, no latex and no chemical flame retardants. <Link href="/pages/furniture-materials" className="inl">Furniture materials</Link></>)],
+  ["What are your pieces made of?", a(<>Solid hardwood, organic wool, linen, coconut coir, agave and natural oils. Nothing synthetic: no polyurethane foam and no chemical flame retardants. <Link href="/pages/furniture-materials" className="inl">Furniture materials</Link></>)],
   ["Where is everything made?", a("Every piece is made to order by hand in the USA.")],
   ["How long does delivery take?", a(<>Furniture as designed ships within 3–4 weeks of your order; customized pieces ship within 8–12 weeks. The {M.shortName} mattress: {M.leadTime} <Link href="/pages/delivery" className="inl">Delivery</Link></>)],
   ["Is delivery included?", a(<>The {M.shortName} arrives by white glove delivery for {fmt(M.delivery.price)}; our delivery team will contact you to schedule it once your mattress is made. Dog beds ship free. For furniture, white-glove delivery is charged per piece and shown on each product page.</>)],

@@ -69,7 +69,7 @@ export function Layers() {
   );
 }
 
-/** The cutaway beside the layer list, then "No foam. Not even latex." */
+/** The cutaway beside the layer list, then "No foam." */
 export function Construction() {
   return (
     <>
@@ -86,9 +86,9 @@ export function Construction() {
       </section>
       <section className="sec linen">
         <div className="wrap center-head">
-          <h2 className="h2">No foam. Not even latex.</h2>
+          <h2 className="h2">No foam.</h2>
           <p className="body" style={{ marginTop: 24 }}>
-            No foam, no latex, no chemical flame retardants and no glue. The topper&apos;s layers are held in place by hand-tied wool rosettes.
+            No chemical flame retardants and no glue. The topper&apos;s layers are held in place by hand-tied wool rosettes.
           </p>
         </div>
       </section>

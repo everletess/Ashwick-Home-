@@ -149,7 +149,7 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
         <div className="pdp-price">{fmt(sz.price)}</div>
         <p className="fine delivery">+ {fmt(M.delivery.price)} {M.delivery.label.toLowerCase()}</p>
         <p className="body">
-          An all-natural, organic mattress made from nature&apos;s finest materials: organic Living Wool, organic cotton and Swedish horsehair, hand-tufted and made in color. An {M.mattressHeight} mattress with a {M.topperHeight} topper included: {M.combinedHeight} of natural fiber, with no foam, no latex and no chemical flame retardants.
+          An all-natural, organic mattress made from nature&apos;s finest materials: organic Living Wool, organic cotton and Swedish horsehair, hand-tufted and made in color. An {M.mattressHeight} mattress with a {M.topperHeight} topper included: {M.combinedHeight} of natural fiber, with no foam and no chemical flame retardants.
         </p>
 
         <div className="choices" id={BUY_OPTIONS_ID}>

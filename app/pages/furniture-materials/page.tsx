@@ -64,7 +64,7 @@ export default function FurnitureMaterialsPage() {
       <section className="statement mat-leave statement-sm">
         <p>What we leave out.</p>
         <ul className="leave-list">
-          {["No foam.", "No latex.", "No chemical flame retardants.", "No plastic."].map((x) => <li key={x}>{x}</li>)}
+          {["No foam.", "No chemical flame retardants.", "No plastic."].map((x) => <li key={x}>{x}</li>)}
         </ul>
       </section>
 
@@ -88,7 +88,7 @@ export default function FurnitureMaterialsPage() {
           </div>
           <Accordion
             items={[
-              ["Why don't you use foam or latex?", <p className="body small" key="1">Natural fills let air move and recover their shape when plumped. We&apos;d rather build furniture that settles in over years than cushions engineered to feel soft on day one.</p>],
+              ["Why don't you use foam?", <p className="body small" key="1">Natural fills let air move and recover their shape when plumped. We&apos;d rather build furniture that settles in over years than cushions engineered to feel soft on day one.</p>],
               ["Will natural cushions flatten?", <p className="body small" key="2">They settle gently as they conform to you, which is normal. Plumping and turning cushions regularly keeps them full and even.</p>],
               ["How do I care for oiled wood?", <p className="body small" key="3">Dust with a soft, dry cloth. If the wood looks dry or picks up a small mark, a fresh coat of natural wood oil restores it.</p>],
             ]}
