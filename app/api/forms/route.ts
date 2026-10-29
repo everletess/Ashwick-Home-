@@ -13,8 +13,7 @@ const FORMS = {
 } as const;
 type FormName = keyof typeof FORMS;
 
-// Notifications go to Tessa while hello@ is on Resend's suppression list (hard bounces).
-const TO = process.env.FORMS_TO ?? "tessa@everle.com";
+const TO = process.env.FORMS_TO ?? STUDIO_EMAIL;
 const FROM = process.env.FORMS_FROM ?? `Ashwick Home <${STUDIO_EMAIL}>`;
 const RESEND_URL = process.env.RESEND_API_URL ?? "https://api.resend.com/emails";
 // Vercel caps request bodies at 4.5 MB, so attachments must fit under that.
