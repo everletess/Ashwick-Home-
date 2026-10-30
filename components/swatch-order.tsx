@@ -62,7 +62,7 @@ export function SwatchOrder({ fabrics }: { fabrics: FabricId[] }) {
                 return (
                   <button type="button" key={s.key} className={"sw-opt" + (on ? " on" : "")} aria-pressed={on} onClick={() => toggle(s.key)}>
                     <span className={"chip tex-" + s.tex} style={{ background: s.color }} />
-                    <span>{s.label.split(" · ")[1] ?? s.label}{s.code && <small>{s.code}</small>}</span>
+                    <span>{s.label.split(" · ")[1] ?? s.label}</span>
                   </button>
                 );
               })}
