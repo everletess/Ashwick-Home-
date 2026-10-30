@@ -51,7 +51,7 @@ export function SwatchGrid({ className = "swgrid" }: { className?: string }) {
   return (
     <div className={className}>
       {SWATCH_ORDER.map((f) => (
-        <div className={"swt tex-" + FABRICS[f].tex} key={f} style={{ background: FABRICS[f].swatch }}>
+        <div className={"swt tex-" + FABRICS[f].tex} key={f} style={{ background: FABRICS[f].swatch, ...(SWATCH_ORDER.length % 2 && f === SWATCH_ORDER[SWATCH_ORDER.length - 1] ? { gridColumn: "span 2" } : {}) }}>
           <span className={f === "leather" ? "lt" : ""}>{FABRICS[f].label}</span>
         </div>
       ))}
