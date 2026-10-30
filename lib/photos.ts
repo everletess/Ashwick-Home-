@@ -112,6 +112,9 @@ import marloweSofaFleece from "@/assets/photos/marlowe-sofa-fleece.jpg";
 import marloweSofaFawn from "@/assets/photos/marlowe-sofa-fawn.jpg";
 import marloweSofaSaddle from "@/assets/photos/marlowe-sofa-saddle.jpg";
 import marloweSofaFlint from "@/assets/photos/marlowe-sofa-flint.jpg";
+import marloweSofaOat from "@/assets/photos/marlowe-sofa-oat.jpg";
+import marloweSofaReed from "@/assets/photos/marlowe-sofa-reed.jpg";
+import marloweSofaFlax from "@/assets/photos/marlowe-sofa-flax.jpg";
 import materialsRosettes from "@/assets/photos/materials-rosettes.jpg";
 import materialsCashmere from "@/assets/photos/materials-cashmere.jpg";
 import materialsBandBlend from "@/assets/photos/materials-band-blend.jpg";
@@ -275,6 +278,9 @@ export const PHOTOS = {
   "marlowe-sofa-fawn": marloweSofaFawn,
   "marlowe-sofa-saddle": marloweSofaSaddle,
   "marlowe-sofa-flint": marloweSofaFlint,
+  "marlowe-sofa-oat": marloweSofaOat,
+  "marlowe-sofa-reed": marloweSofaReed,
+  "marlowe-sofa-flax": marloweSofaFlax,
   "materials-rosettes": materialsRosettes,
   "materials-cashmere": materialsCashmere,
   "materials-band-blend": materialsBandBlend,
