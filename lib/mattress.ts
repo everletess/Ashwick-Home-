@@ -28,7 +28,6 @@ export const MATTRESS = {
 
   /** Prices include the 3" topper and shipping. */
   sizes: [
-    { id: "twin", label: "Twin", dims: '39" × 75"', price: 3200 },
     { id: "twin-xl", label: "Twin XL", dims: '38" × 80"', price: 3800 },
     { id: "full", label: "Full", dims: '54" × 75"', price: 4200 },
     { id: "queen", label: "Queen", dims: '60" × 80"', price: 4800 },
@@ -36,7 +35,7 @@ export const MATTRESS = {
     { id: "cal-king", label: "Cal King", dims: '72" × 84"', price: 5800 },
   ] satisfies MattressSize[],
   /** Size selected when the page opens. */
-  defaultSize: "twin",
+  defaultSize: "twin-xl",
 
   /** Same price for both feels. */
   feels: [

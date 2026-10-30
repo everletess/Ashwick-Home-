@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://ashwickhome.com"),
   title: { default: "Ashwick Home — Made of nature. Built to last.", template: "%s — Ashwick Home" },
   description:
-    "Organic furniture and natural mattresses, handmade to order in the USA. Solid hardwood, organic wool, horsehair and linen — nothing synthetic. The Ashbury organic mattress from $3,200.",
+    "Organic furniture and natural mattresses, handmade to order in the USA. Solid hardwood, organic wool, horsehair and linen — nothing synthetic. The Ashbury organic mattress from $3,800.",
 };
 
 // Matches the header, so the mobile browser chrome blends into the page.
