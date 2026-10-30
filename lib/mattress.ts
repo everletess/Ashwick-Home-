@@ -69,9 +69,9 @@ export const MATTRESS = {
   /** Nights a mattress must be slept on before a return can be requested. */
   guaranteeMinNights: 30,
   warranty: "Lifetime limited warranty",
-  mattressHeight: '8"',
+  mattressHeight: '10"',
   topperHeight: '3"',
-  combinedHeight: '11"',
+  combinedHeight: '13"',
   customSize: "Custom sizes available. A surcharge applies; we'll quote it on request.",
   gotsManufacturer: "IDFL No. 32860",
 };
