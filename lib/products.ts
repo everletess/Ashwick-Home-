@@ -216,8 +216,8 @@ const ALL_PRODUCTS: Product[] = [
     photos: [
       // White linen studio and room shots (Oct 2026). The walnut/oak plinth renders were removed from this gallery (files kept).
       "marlowe-studio-linen", "marlowe-room-linen",
-      // In swatch order (Chalk has no photo yet).
-      "marlowe-sofa-fleece", "marlowe-sofa-oat", "marlowe-sofa-reed", "marlowe-sofa-flax",
+      // In swatch order; Fleece is the studio and room shots above.
+      "marlowe-sofa-oat", "marlowe-sofa-reed", "marlowe-sofa-flax", "marlowe-sofa-chalk",
       "marlowe-sofa-fawn", "marlowe-sofa-saddle", "marlowe-sofa-flint",
     ],
     cardSingle: true,
@@ -225,10 +225,10 @@ const ALL_PRODUCTS: Product[] = [
     photoTags: {
       "marlowe-studio-linen": { wood: "red-oak", fabric: "irish", color: "white" },
       "marlowe-room-linen": { wood: "red-oak", fabric: "irish", color: "white" },
-      "marlowe-sofa-fleece": { wood: "red-oak", fabric: "irish", color: "white" },
       "marlowe-sofa-oat": { wood: "red-oak", fabric: "irish", color: "cream" },
       "marlowe-sofa-reed": { wood: "red-oak", fabric: "irish", color: "flax" },
       "marlowe-sofa-flax": { wood: "red-oak", fabric: "irish", color: "oatmeal" },
+      "marlowe-sofa-chalk": { wood: "red-oak", fabric: "irish", color: "ivory" },
       "marlowe-sofa-fawn": { wood: "red-oak", fabric: "irish", color: "sand" },
       "marlowe-sofa-saddle": { wood: "red-oak", fabric: "irish", color: "coco" },
       "marlowe-sofa-flint": { wood: "red-oak", fabric: "irish", color: "dove" },
