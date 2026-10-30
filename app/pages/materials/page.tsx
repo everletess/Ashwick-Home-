@@ -52,7 +52,7 @@ export default function MaterialsPage() {
           <Link href={ASHBURY_PATH} className="panel mat-card">
             <div className="panel-img"><Photo src="workshop-mattress" label="A maker hand-tying wool rosettes on an Ashbury in the workshop" sizes={HALF} /></div>
             <h2 className="proc-h">The Ashbury</h2>
-            <p className="body">Living Wool, Swedish horsehair and organic cotton, hand-tufted into an all-natural, organic mattress.</p>
+            <p className="body">Living Wool, Swedish horsehair and organic cotton, hand-tufted into an all-natural mattress.</p>
             <span className="ulink">Inside the Ashbury →</span>
           </Link>
         </div>

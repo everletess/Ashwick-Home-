@@ -51,7 +51,7 @@ EMAIL OFFER
 New email subscribers get ${WELCOME_OFFER.percent}% off their first order. They sign up through the email pop-up on the site, and the code arrives by email.
 
 THE ASHBURY MATTRESS (${SITE}${MATTRESS_PATH})
-${M.title}, ${M.collection}. An all-natural, organic mattress, hand-tufted and made in color. An ${M.mattressHeight} mattress with a ${M.topperHeight} topper included (${M.combinedHeight} in total).
+${M.title}, ${M.collection}. An all-natural mattress, hand-tufted and made in color. An ${M.mattressHeight} mattress with a ${M.topperHeight} topper included (${M.combinedHeight} in total).
 Sizes and prices (topper included; white glove delivery is ${fmt(M.delivery.price)} extra):
 ${M.sizes.map((s) => `- ${s.label}: ${s.dims}, ${fmt(s.price)}`).join("\n")}
 ${M.customSize}
