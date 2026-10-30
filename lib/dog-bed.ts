@@ -103,14 +103,13 @@ export const NOOK: DogBed = {
   soonLede: "A deep, curved bolster bed in a soft textured weave, for the dog who likes to curl up. Handmade to order in the USA, with a cover you can machine wash.",
   specs: [
     { label: "Overall width × depth", values: ['36" × 28"', '46" × 36"'] },
-    { label: "Sleeping area, approx.", values: ['26" × 19"', '36" × 26"'] },
     { label: "Rear bolster height", values: ['9"', '11"'] },
     { label: "Front entrance height", values: ['4"', '5"'] },
   ],
   faqs: [
     {
       q: "Which size should I choose?",
-      a: "Go by the sleeping area inside the bolster: about 26\" × 19\" in the Medium and 36\" × 26\" in the Large. Measure your dog lying curled up, nose to tail, and choose the size it fits comfortably. If they're in between, size up.",
+      a: "Measure your dog lying curled up, nose to tail, and choose the size it fits comfortably. The Medium is 36\" × 28\" overall and the Large is 46\" × 36\". If they're in between, size up.",
     },
     {
       q: "Can I wash it?",
