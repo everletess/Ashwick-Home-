@@ -35,7 +35,7 @@ const product = (p: (typeof PRODUCTS)[number]) => {
   return [
     `- ${p.name} (${p.type}), ${from ? "from " : ""}${fmt(price)}. ${p.line}`,
     `  Materials: ${p.materials}.`,
-    `  Fabrics: ${p.fabrics.map(fabric).join("; ")}.${p.wood ? " Plinth in walnut or oak." : ""}`,
+    `  Fabrics: ${p.fabrics.map(fabric).join("; ")}.${p.wood ? " Plinth in solid red oak." : ""}`,
     p.dimensions ? `  Size: ${p.dimensions.overall}.` : "",
     p.delivery ? `  ${p.delivery.label}: ${fmt(p.delivery.price)} per piece.` : "",
     p.preorder ? "  Available to pre-order; we confirm the order and estimated ship date by email." : `  ${p.leadTime ?? LEAD_TIMES}`,

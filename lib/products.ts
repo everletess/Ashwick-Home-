@@ -60,9 +60,10 @@ export const FABRICS: Record<FabricId, Fabric> = {
 
 /** Plinth woods for pieces that offer them (replaces the finish option). */
 export const WOODS: Option[] = [
-  { id: "walnut", label: "Walnut" },
-  { id: "oak", label: "Oak" },
+  { id: "red-oak", label: "Red Oak" },
 ];
+/** Woods some photos still show (walnut and white oak are no longer offered), for "Photo shows the walnut plinth". */
+export const PHOTO_WOODS: Option[] = [...WOODS, { id: "walnut", label: "Walnut" }, { id: "oak", label: "Oak" }];
 export const SWATCH_ORDER: FabricId[] = ["irish", "cotton", "belgian"];
 
 
@@ -211,7 +212,7 @@ const ALL_PRODUCTS: Product[] = [
     cardSingle: true,
     fabrics: ["irish"], designedFabric: "irish", wood: true,
     delivery: WHITE_GLOVE,
-    materials: "Hand-fluted solid walnut or oak plinth · Irish Linen upholstery · Natural oil finish",
+    materials: "Hand-fluted solid red oak plinth · Irish Linen upholstery · Natural oil finish",
     dimensions: {
       overall: "88.5″ W × 40″ D × 27″ H",
       rows: [
@@ -231,7 +232,7 @@ const ALL_PRODUCTS: Product[] = [
     photoTags: { "marlowe-loveseat-walnut-linen": { wood: "walnut", fabric: "irish", color: "white" } },
     fabrics: ["irish"], designedFabric: "irish", wood: true,
     delivery: WHITE_GLOVE,
-    materials: "Hand-fluted solid walnut or oak plinth · Irish Linen upholstery · Natural oil finish",
+    materials: "Hand-fluted solid red oak plinth · Irish Linen upholstery · Natural oil finish",
   },
   {
     id: "chatsworth", name: "The Chatsworth", type: "Sofa", category: "sofas", price: 10500,
@@ -333,7 +334,7 @@ const ALL_PRODUCTS: Product[] = [
     photoTags: { "marlowe-chair-walnut-linen": { wood: "walnut", fabric: "irish", color: "white" } },
     fabrics: ["irish"], designedFabric: "irish", wood: true,
     delivery: WHITE_GLOVE,
-    materials: "Hand-fluted solid walnut or oak plinth · Irish Linen upholstery · Natural oil finish",
+    materials: "Hand-fluted solid red oak plinth · Irish Linen upholstery · Natural oil finish",
   },
   {
     id: "marlowe-ottoman", name: "The Marlowe Ottoman", type: "Ottoman", category: "chairs", price: 2500,
@@ -343,7 +344,7 @@ const ALL_PRODUCTS: Product[] = [
     photoTags: { "marlowe-ottoman-walnut-linen": { wood: "walnut", fabric: "irish", color: "white" } },
     fabrics: ["irish"], designedFabric: "irish", wood: true,
     delivery: WHITE_GLOVE,
-    materials: "Hand-fluted solid walnut or oak plinth · Irish Linen upholstery · Natural oil finish",
+    materials: "Hand-fluted solid red oak plinth · Irish Linen upholstery · Natural oil finish",
   },
 ];
 
