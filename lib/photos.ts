@@ -107,6 +107,14 @@ import marloweOttomanWalnutLinen from "@/assets/photos/marlowe-ottoman-walnut-li
 import marloweStudio from "@/assets/photos/marlowe-studio.jpg";
 import marloweStudioLinen from "@/assets/photos/marlowe-studio-linen.jpg";
 import marloweRoomLinen from "@/assets/photos/marlowe-room-linen.jpg";
+// The Marlowe Sofa in red oak, one per Irish Linen colorway (Marlowe names).
+import marloweSofaFleece from "@/assets/photos/marlowe-sofa-fleece.jpg";
+import marloweSofaFawn from "@/assets/photos/marlowe-sofa-fawn.jpg";
+import marloweSofaSaddle from "@/assets/photos/marlowe-sofa-saddle.jpg";
+import marloweSofaFlint from "@/assets/photos/marlowe-sofa-flint.jpg";
+import marloweSofaOat from "@/assets/photos/marlowe-sofa-oat.jpg";
+import marloweSofaReed from "@/assets/photos/marlowe-sofa-reed.jpg";
+import marloweSofaFlax from "@/assets/photos/marlowe-sofa-flax.jpg";
 import materialsRosettes from "@/assets/photos/materials-rosettes.jpg";
 import materialsCashmere from "@/assets/photos/materials-cashmere.jpg";
 import materialsBandBlend from "@/assets/photos/materials-band-blend.jpg";
@@ -266,6 +274,13 @@ export const PHOTOS = {
   "marlowe-studio": marloweStudio,
   "marlowe-studio-linen": marloweStudioLinen,
   "marlowe-room-linen": marloweRoomLinen,
+  "marlowe-sofa-fleece": marloweSofaFleece,
+  "marlowe-sofa-fawn": marloweSofaFawn,
+  "marlowe-sofa-saddle": marloweSofaSaddle,
+  "marlowe-sofa-flint": marloweSofaFlint,
+  "marlowe-sofa-oat": marloweSofaOat,
+  "marlowe-sofa-reed": marloweSofaReed,
+  "marlowe-sofa-flax": marloweSofaFlax,
   "materials-rosettes": materialsRosettes,
   "materials-cashmere": materialsCashmere,
   "materials-band-blend": materialsBandBlend,

@@ -10,7 +10,7 @@ import { TintedPhoto } from "@/components/tinted-photo";
 import { Lightbox } from "@/components/lightbox";
 import { track } from "@/lib/pixel";
 import { tintFor } from "@/lib/photos";
-import { CUSTOM_LEAD_TIME, FABRICS, LEAD_TIME, WOODS, fmt, getProduct, nearestPhoto, photoFor, priceFor, colorsFor, type FabricId, type Option, type PhotoTag } from "@/lib/products";
+import { CUSTOM_LEAD_TIME, FABRICS, LEAD_TIME, WOODS, fmt, getProduct, PHOTO_WOODS, nearestPhoto, photoFor, priceFor, colorsFor, type FabricId, type Option, type PhotoTag } from "@/lib/products";
 
 type Mode = "designed" | "custom";
 
@@ -157,8 +157,8 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
   );
   const shownAs = differs && shownFabric
     ? (tint
-        ? [`the ${lab(WOODS, shown.wood!).toLowerCase()} plinth`]
-        : [shownFabric.label, shownFabric.colors?.find((c) => c.id === shown?.color)?.label, shown?.wood && p.wood ? `on ${lab(WOODS, shown.wood).toLowerCase()}` : ""]
+        ? [`the ${lab(PHOTO_WOODS, shown.wood!).toLowerCase()} plinth`]
+        : [shownFabric.label, colorsFor(p, shown.fabric!)?.find((c) => c.id === shown?.color)?.label, shown?.wood && p.wood ? `on ${lab(PHOTO_WOODS, shown.wood).toLowerCase()}` : ""]
       ).filter(Boolean).join(" ")
     : "";
   const hasChoices = p.fabrics.length > 1 || !!selColors;
