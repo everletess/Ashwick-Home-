@@ -16,7 +16,7 @@ const M = MATTRESS;
 
 export const metadata: Metadata = {
   title: "The Ashbury Organic Mattress — Horsehair, Wool & Organic Cotton",
-  description: `A natural, organic mattress handmade in the USA from Living Wool, Swedish horsehair and GOTS-certified organic cotton. Hand-tufted, made in color, ${M.mattressHeight} mattress with ${M.topperHeight} topper included. From $3,200. White glove delivery $200. ${M.guaranteeNights}-night guarantee (${M.guaranteeMinNights}-night minimum).`,
+  description: `A natural, organic mattress handmade in the USA from Living Wool, Swedish horsehair and GOTS-certified organic cotton. Hand-tufted, made in color, ${M.mattressHeight} mattress with ${M.topperHeight} topper included. From $3,800. White glove delivery $200. ${M.guaranteeNights}-night guarantee (${M.guaranteeMinNights}-night minimum).`,
   keywords: [
     "organic mattress", "natural mattress", "horsehair mattress", "wool mattress",
     "organic cotton mattress", "non-toxic mattress", "GOTS certified mattress",
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "The Ashbury — An Organic Mattress Made From Nature",
-    description: "Horsehair · Living Wool · GOTS organic cotton · cashmere. Four colours. Handmade to order in the USA. From $3,200.",
+    description: "Horsehair · Living Wool · GOTS organic cotton · cashmere. Four colours. Handmade to order in the USA. From $3,800.",
     images: [PHOTOS["mattress-mocha-bedroom"].src],
     type: "website",
   },
