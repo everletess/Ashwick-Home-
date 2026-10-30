@@ -10,7 +10,7 @@ import { TintedPhoto } from "@/components/tinted-photo";
 import { Lightbox } from "@/components/lightbox";
 import { track } from "@/lib/pixel";
 import { tintFor } from "@/lib/photos";
-import { CUSTOM_LEAD_TIME, FABRICS, LEAD_TIME, WOODS, fmt, getProduct, nearestPhoto, photoFor, priceFor, type FabricId, type Option, type PhotoTag } from "@/lib/products";
+import { CUSTOM_LEAD_TIME, FABRICS, LEAD_TIME, WOODS, fmt, getProduct, nearestPhoto, photoFor, priceFor, colorsFor, type FabricId, type Option, type PhotoTag } from "@/lib/products";
 
 type Mode = "designed" | "custom";
 
@@ -79,7 +79,7 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
   const [mode, setModeState] = useState<Mode>(initialMode);
   const buyRef = useRef<HTMLButtonElement>(null);
   const [img, setImg] = useState(0);
-  const firstColor = (f: FabricId) => FABRICS[f].colors?.[0].id;
+  const firstColor = (f: FabricId) => colorsFor(p, f)?.[0].id;
   const [fabric, setFabricState] = useState<FabricId>(p.designedFabric);
   const [color, setColorState] = useState(firstColor(p.designedFabric) ?? "");
   const [wood, setWoodState] = useState(WOODS[0].id);
@@ -130,7 +130,8 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
   };
 
   const selFabric = FABRICS[fabric];
-  const selColor = selFabric.colors?.find((c) => c.id === color);
+  const selColors = colorsFor(p, fabric);
+  const selColor = selColors?.find((c) => c.id === color);
   const price = priceFor(p, fabric);
   // Meta Pixel: one ViewContent per product page view (not per option change).
   const viewed = useRef(false);
@@ -160,7 +161,7 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
         : [shownFabric.label, shownFabric.colors?.find((c) => c.id === shown?.color)?.label, shown?.wood && p.wood ? `on ${lab(WOODS, shown.wood).toLowerCase()}` : ""]
       ).filter(Boolean).join(" ")
     : "";
-  const hasChoices = p.fabrics.length > 1 || !!selFabric.colors;
+  const hasChoices = p.fabrics.length > 1 || !!selColors;
 
   const summary = [
     ["Fabric", selFabric.label],
@@ -237,9 +238,9 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
               {fabricChoices.map((f) => <Swatch key={f} f={f} size={52} on={fabric === f} onClick={() => setFabric(f)} />)}
             </OptGroup>
           )}
-          {selFabric.colors && (
+          {selColors && (
             <OptGroup label={fabricChoices.length > 1 ? "Color" : selFabric.label} value={selColor ? [selColor.label, selColor.code].filter(Boolean).join(" · ") : ""}>
-              {selFabric.colors.map((c) => (
+              {selColors.map((c) => (
                 <button
                   key={c.id}
                   type="button"
