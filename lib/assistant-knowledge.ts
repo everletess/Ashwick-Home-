@@ -8,7 +8,7 @@ import { BESPOKE_PATH, BESPOKE_REPLY } from "@/lib/bespoke";
 import { ASHBURY_GROUPS, ASHBURY_PATH, FURNITURE_GROUPS, FURNITURE_MATERIALS_PATH, type MaterialGroup } from "@/lib/materials";
 import { DOG_BED } from "@/lib/dog-bed";
 import { GUARANTEE_PATH, MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
-import { FABRICS, LEAD_TIMES, PRODUCTS, cardPrice, fmt } from "@/lib/products";
+import { FABRICS, LEAD_TIMES, PRODUCTS, cardPrice, colorsFor, fmt } from "@/lib/products";
 import { STUDIO_EMAIL, STUDIO_PHONE } from "@/lib/site";
 import { TRADE_TERMS, WARRANTY_PATH } from "@/lib/trade-terms";
 
@@ -24,9 +24,9 @@ const materials = (groups: MaterialGroup[]) =>
     .flatMap((g) => g.materials.map((m) => `- ${m.name} (${g.eyebrow.replace(/^The /, "")}): ${m.body} Where: ${m.where}${m.origin ? ` ${m.origin}.` : ""}`))
     .join("\n");
 
-const fabric = (id: keyof typeof FABRICS) => {
+const fabric = (p: (typeof PRODUCTS)[number]) => (id: keyof typeof FABRICS) => {
   const f = FABRICS[id];
-  const colors = f.colors?.map((c) => c.label).join(", ");
+  const colors = colorsFor(p, id)?.map((c) => c.label).join(", ");
   return `${f.label}${f.detail ? ` (${f.detail.replace(/\.$/, "")})` : ""}${colors ? `: ${colors}` : ""}`;
 };
 
@@ -35,7 +35,7 @@ const product = (p: (typeof PRODUCTS)[number]) => {
   return [
     `- ${p.name} (${p.type}), ${from ? "from " : ""}${fmt(price)}. ${p.line}`,
     `  Materials: ${p.materials}.`,
-    `  Fabrics: ${p.fabrics.map(fabric).join("; ")}.${p.wood ? " Plinth in solid red oak." : ""}`,
+    `  Fabrics: ${p.fabrics.map(fabric(p)).join("; ")}.${p.wood ? " Plinth in solid red oak." : ""}`,
     p.dimensions ? `  Size: ${p.dimensions.overall}.` : "",
     p.delivery ? `  ${p.delivery.label}: ${fmt(p.delivery.price)} per piece.` : "",
     p.preorder ? "  Available to pre-order; we confirm the order and estimated ship date by email." : `  ${p.leadTime ?? LEAD_TIMES}`,

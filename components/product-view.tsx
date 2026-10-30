@@ -158,7 +158,7 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
   const shownAs = differs && shownFabric
     ? (tint
         ? [`the ${lab(PHOTO_WOODS, shown.wood!).toLowerCase()} plinth`]
-        : [shownFabric.label, shownFabric.colors?.find((c) => c.id === shown?.color)?.label, shown?.wood && p.wood ? `on ${lab(PHOTO_WOODS, shown.wood).toLowerCase()}` : ""]
+        : [shownFabric.label, colorsFor(p, shown.fabric!)?.find((c) => c.id === shown?.color)?.label, shown?.wood && p.wood ? `on ${lab(PHOTO_WOODS, shown.wood).toLowerCase()}` : ""]
       ).filter(Boolean).join(" ")
     : "";
   const hasChoices = p.fabrics.length > 1 || !!selColors;

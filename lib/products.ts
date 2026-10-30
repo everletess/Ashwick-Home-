@@ -85,6 +85,8 @@ export type Product = {
   designedFabric: FabricId;
   /** Limit a fabric's colors for this piece (default: all of that fabric's colors). */
   fabricColors?: Partial<Record<FabricId, string[]>>;
+  /** This piece's own names for a fabric's colors (same swatches), by color id. */
+  colorNames?: Partial<Record<FabricId, Record<string, string>>>;
   materials: string;
   /** Shown on the product page when set, e.g. pieces held ready to ship. */
   leadTime?: string;
@@ -112,7 +114,8 @@ export type PhotoTag = { wood?: string; fabric?: FabricId; color?: string };
 
 export const colorsFor = (p: Product, f: FabricId) => {
   const ids = p.fabricColors?.[f];
-  const all = FABRICS[f].colors;
+  const names = p.colorNames?.[f];
+  const all = names ? FABRICS[f].colors?.map((c) => (names[c.id] ? { ...c, label: names[c.id] } : c)) : FABRICS[f].colors;
   return ids && all ? ids.map((id) => all.find((c) => c.id === id)!).filter(Boolean) : all;
 };
 export const priceFor = (p: Product, fabric: FabricId) => p.fabricPrices?.[fabric] ?? p.price;
@@ -198,6 +201,11 @@ export const SWATCH_PRICE = 2;
 
 /** Every piece is made by hand to order. As designed, and when customized (see /pages/terms#orders). */
 export const LEAD_TIME = "Ships within 3–4 weeks as designed.";
+/** The Marlowe pieces' names for the Irish Linen colors (Oct 2026); the swatches are unchanged. */
+const MARLOWE_COLORS: Record<string, string> = {
+  white: "Fleece", cream: "Oat", flax: "Reed", oatmeal: "Flax", ivory: "Chalk", sand: "Fawn", coco: "Saddle", dove: "Flint",
+};
+
 export const CUSTOM_LEAD_TIME = "Ships within 8–12 weeks when customized.";
 export const LEAD_TIMES = "Ships within 3–4 weeks as designed, or 8–12 weeks when customized.";
 
@@ -208,9 +216,20 @@ const ALL_PRODUCTS: Product[] = [
     photos: [
       // White linen studio and room shots (Oct 2026). The walnut/oak plinth renders were removed from this gallery (files kept).
       "marlowe-studio-linen", "marlowe-room-linen",
+      "marlowe-sofa-fleece", "marlowe-sofa-fawn", "marlowe-sofa-saddle", "marlowe-sofa-flint",
     ],
     cardSingle: true,
+    // Choosing a color shows its photo; colors without one show the nearest, with a note naming what it shows.
+    photoTags: {
+      "marlowe-studio-linen": { wood: "red-oak", fabric: "irish", color: "white" },
+      "marlowe-room-linen": { wood: "red-oak", fabric: "irish", color: "white" },
+      "marlowe-sofa-fleece": { wood: "red-oak", fabric: "irish", color: "white" },
+      "marlowe-sofa-fawn": { wood: "red-oak", fabric: "irish", color: "sand" },
+      "marlowe-sofa-saddle": { wood: "red-oak", fabric: "irish", color: "coco" },
+      "marlowe-sofa-flint": { wood: "red-oak", fabric: "irish", color: "dove" },
+    },
     fabrics: ["irish"], designedFabric: "irish", wood: true,
+    colorNames: { irish: MARLOWE_COLORS },
     delivery: WHITE_GLOVE,
     materials: "Hand-fluted solid red oak plinth · Irish Linen upholstery · Natural oil finish",
     dimensions: {
@@ -231,6 +250,7 @@ const ALL_PRODUCTS: Product[] = [
     cardPhoto: "marlowe-loveseat-card",
     photoTags: { "marlowe-loveseat-walnut-linen": { wood: "walnut", fabric: "irish", color: "white" } },
     fabrics: ["irish"], designedFabric: "irish", wood: true,
+    colorNames: { irish: MARLOWE_COLORS },
     delivery: WHITE_GLOVE,
     materials: "Hand-fluted solid red oak plinth · Irish Linen upholstery · Natural oil finish",
   },
@@ -333,6 +353,7 @@ const ALL_PRODUCTS: Product[] = [
     cardPhoto: "marlowe-chair-card",
     photoTags: { "marlowe-chair-walnut-linen": { wood: "walnut", fabric: "irish", color: "white" } },
     fabrics: ["irish"], designedFabric: "irish", wood: true,
+    colorNames: { irish: MARLOWE_COLORS },
     delivery: WHITE_GLOVE,
     materials: "Hand-fluted solid red oak plinth · Irish Linen upholstery · Natural oil finish",
   },
@@ -343,6 +364,7 @@ const ALL_PRODUCTS: Product[] = [
     cardPhoto: "marlowe-ottoman-card",
     photoTags: { "marlowe-ottoman-walnut-linen": { wood: "walnut", fabric: "irish", color: "white" } },
     fabrics: ["irish"], designedFabric: "irish", wood: true,
+    colorNames: { irish: MARLOWE_COLORS },
     delivery: WHITE_GLOVE,
     materials: "Hand-fluted solid red oak plinth · Irish Linen upholstery · Natural oil finish",
   },
