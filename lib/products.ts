@@ -205,15 +205,10 @@ const ALL_PRODUCTS: Product[] = [
     id: "marlowe", name: "The Marlowe Sofa", type: "Sofa", category: "sofas", price: 8500,
     line: "A deep sofa on a hand-fluted solid wood plinth, in Irish Linen.",
     photos: [
-      // White linen studio and room shots (Oct 2026) replace the earlier tan marlowe-studio/-1/-2 here; those are still used elsewhere.
+      // White linen studio and room shots (Oct 2026). The walnut/oak plinth renders were removed from this gallery (files kept).
       "marlowe-studio-linen", "marlowe-room-linen",
-      "marlowe-sofa-walnut-linen", "marlowe-sofa-oak-linen",
     ],
     cardSingle: true,
-    photoTags: {
-      "marlowe-sofa-walnut-linen": { wood: "walnut", fabric: "irish", color: "white" },
-      "marlowe-sofa-oak-linen": { wood: "oak", fabric: "irish", color: "white" },
-    },
     fabrics: ["irish"], designedFabric: "irish", wood: true,
     delivery: WHITE_GLOVE,
     materials: "Hand-fluted solid walnut or oak plinth · Irish Linen upholstery · Natural oil finish",
