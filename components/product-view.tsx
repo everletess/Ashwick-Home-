@@ -38,7 +38,6 @@ const shownSwatch = (t: PhotoTag) => {
 };
 
 const lab = (arr: Option[], v: string) => arr.find((o) => o.id === v)?.label ?? "";
-const colorName = (c: { label: string; code?: string }) => (c.code ? `${c.label} (${c.code})` : c.label);
 
 /** "Customize" tab: anything beyond the standard choices is a request we follow up on. */
 function CustomRequest({ about }: { about: string }) {
@@ -175,7 +174,7 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
 
   const summary = [
     ["Fabric", selFabric.label],
-    selColor && ["Color", colorName(selColor)],
+    selColor && ["Color", selColor.label],
     p.wood && ["Wood", lab(WOODS, wood)],
   ].filter(Boolean) as [string, string][];
 
@@ -188,7 +187,8 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
       delivery: p.delivery,
       qty: 1,
       mode: p.preorder ? "Pre-order" : "As designed",
-      options: summary,
+      // The mill code rides along for the workroom; "_" keeps it off the cart and Shopify checkout.
+      options: selColor?.code ? [...summary, ["_Mill code", selColor.code]] : summary,
     });
 
   return (
@@ -249,15 +249,15 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
             </OptGroup>
           )}
           {selColors && (
-            <OptGroup label={fabricChoices.length > 1 ? "Color" : selFabric.label} value={selColor ? [selColor.label, selColor.code].filter(Boolean).join(" · ") : ""}>
+            <OptGroup label={fabricChoices.length > 1 ? "Color" : selFabric.label} value={selColor?.label ?? ""}>
               {selColors.map((c) => (
                 <button
                   key={c.id}
                   type="button"
                   className={"chip color-chip tex-" + selFabric.tex + (color === c.id ? " on" : "")}
                   style={{ background: c.swatch }}
-                  title={colorName(c)}
-                  aria-label={colorName(c)}
+                  title={c.label}
+                  aria-label={c.label}
                   aria-pressed={color === c.id}
                   onClick={() => setColor(c.id)}
                 />

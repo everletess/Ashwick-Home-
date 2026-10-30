@@ -365,7 +365,7 @@ export function CartDrawer() {
                   <span className="line-price">{i.price == null ? "[PRICE]" : fmt(i.price * i.qty)}</span>
                 </div>
                 <div className="line-mode">{i.mode}</div>
-                {i.options.map(([k, v]) => (
+                {i.options.filter(([k]) => !k.startsWith("_")).map(([k, v]) => (
                   <div className="line-opt" key={k}><span>{k}</span>{v}</div>
                 ))}
                 {i.delivery && (
