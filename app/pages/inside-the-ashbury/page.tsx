@@ -73,8 +73,8 @@ export default function InsideTheAshburyPage() {
             <Photo src="mattress-layers" label="The Ashbury's layers stacked: the tufted topper folded back over wool and horsehair, then cotton, Living Wool, pocket coils, a base of coconut coir and agave, cotton, wool and the cotton twill base" sizes={HALF} />
           </div>
           <div className="proc-t">
-            <h2 className="proc-h">Eleven inches, layer by layer.</h2>
-            <p className="body">An {M.mattressHeight} mattress and a {M.topperHeight} topper, made as one system.</p>
+            <h2 className="proc-h">Thirteen inches, layer by layer.</h2>
+            <p className="body">A {M.mattressHeight} mattress and a {M.topperHeight} topper, made as one system.</p>
             <Layers />
           </div>
         </div>
