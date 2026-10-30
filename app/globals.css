@@ -899,3 +899,5 @@ button.chip{cursor:pointer}
 .gal-photo.zoomable{cursor:zoom-in}
 .gal-zoom{position:absolute;top:12px;right:12px;width:40px;height:40px;border-radius:50%;border:1px solid var(--hair);background:rgba(246,242,236,.92);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink);padding:0}
 @media (max-width:640px){.lb-arrow{width:40px;height:40px;font-size:26px}.lb-arrow.prev{left:8px}.lb-arrow.next{right:8px}.lb-hint{font-size:11px}}
+/* Phones: a smaller selection tag and zoom button, tucked into the corners so they cover less of the piece. */
+@media (max-width:640px){.sel-swatch{left:8px;bottom:8px;gap:8px;padding:6px 10px 6px 6px;font-size:12px;max-width:calc(100% - 16px)}.sel-chip{width:26px;height:26px}.sel-label{gap:0}.sel-label .eyebrow{font-size:8px}.gal-zoom{top:8px;right:8px;width:34px;height:34px}}
