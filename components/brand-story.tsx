@@ -39,7 +39,7 @@ const rings = (
 );
 
 const BADGES: Badge[] = [
-  { top: "100% organic", bottom: "& natural", icon: leaf },
+  { top: "All natural", bottom: "materials", icon: leaf },
   { top: "Handmade", bottom: "in the USA", icon: hand },
   { top: "Nothing", bottom: "synthetic", icon: drop },
   { top: "Solid", bottom: "hardwood", icon: rings },

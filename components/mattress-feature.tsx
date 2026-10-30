@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Photo } from "@/components/photo";
 import { MATTRESS, colorById, mattressColorHref } from "@/lib/mattress";
 import { ASHBURY_PATH } from "@/lib/materials";
+import { fmt } from "@/lib/products";
 
 export function MattressFeature() {
   const [color, setColor] = useState(MATTRESS.defaultColor);
@@ -32,8 +33,9 @@ export function MattressFeature() {
           <p className="m-feature-coll">{MATTRESS.collection}</p>
           <p className="m-feature-tag">Dare to dream in color.</p>
           <p className="body">
-            An all-natural, organic mattress made from nature&apos;s finest materials: Living Wool, cashmere, Swedish horsehair and organic cotton, hand-tufted and made in four colors.
+            An all-natural mattress made from nature&apos;s finest materials: Living Wool, cashmere, Swedish horsehair and organic cotton, hand-tufted and made in four colors.
           </p>
+          <p className="body">From {fmt(Math.min(...MATTRESS.sizes.map((z) => z.price)))}</p>
           <ul className="m-feature-colors" aria-label="Colors">
             {MATTRESS.colors.map((c) => (
               <li key={c.id}>

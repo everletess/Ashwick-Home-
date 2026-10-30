@@ -355,7 +355,7 @@ export const COLLECTIONS: Record<CollectionHandle, { title: string; description:
   all: { title: "The collection", description: "Sofas, chairs, an ottoman and the Ashbury mattress. Order each as we designed it, or make it yours." },
   sofas: { title: "Sofas", description: "Sofas and a loveseat, each made to order by hand." },
   chairs: { title: "Chairs", description: "Chairs and an ottoman, each made to order by hand." },
-  mattress: { title: "Mattress", description: "The Ashbury: an all-natural, organic mattress, hand-tufted and made in color." },
+  mattress: { title: "Mattress", description: "The Ashbury: an all-natural mattress, hand-tufted and made in color." },
 };
 
 export const productsIn = (handle: CollectionHandle) =>

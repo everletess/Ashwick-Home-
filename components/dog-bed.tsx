@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Photo } from "@/components/photo";
 import { DOG_BED, DOG_BED_PATH, NOOK } from "@/lib/dog-bed";
+import { fmt } from "@/lib/products";
 
 const D = DOG_BED;
 
@@ -24,6 +25,7 @@ export function DogBedFeature() {
               <div className="dog-pair-img"><Photo src={photo.photo} label={photo.alt} sizes="(max-width: 960px) 100vw, 50vw" /></div>
               <p className="dog-pair-name">{bed.title}{bed.comingSoon && <span className="dog-pair-soon">Coming soon</span>}</p>
               <p className="body small">{line}</p>
+              <p className="body small">From {fmt(Math.min(...bed.sizes.map((z) => z.price)))}</p>
               <span className="ulink">{bed.comingSoon ? "Take a look" : "Shop now"}</span>
             </Link>
           ))}
