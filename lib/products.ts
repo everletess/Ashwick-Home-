@@ -216,8 +216,8 @@ const ALL_PRODUCTS: Product[] = [
     photos: [
       // White linen studio and room shots (Oct 2026). The walnut/oak plinth renders were removed from this gallery (files kept).
       "marlowe-studio-linen", "marlowe-room-linen",
-      // In swatch order; Fleece is the studio and room shots above.
-      "marlowe-sofa-oat", "marlowe-sofa-reed", "marlowe-sofa-flax", "marlowe-sofa-chalk",
+      // One per color, in swatch order (the studio and room shots above are Fleece too).
+      "marlowe-sofa-fleece", "marlowe-sofa-oat", "marlowe-sofa-reed", "marlowe-sofa-flax", "marlowe-sofa-chalk",
       "marlowe-sofa-fawn", "marlowe-sofa-saddle", "marlowe-sofa-flint",
     ],
     cardSingle: true,
@@ -227,6 +227,7 @@ const ALL_PRODUCTS: Product[] = [
       "marlowe-room-linen": { wood: "red-oak", fabric: "irish", color: "white" },
       "marlowe-sofa-oat": { wood: "red-oak", fabric: "irish", color: "cream" },
       "marlowe-sofa-reed": { wood: "red-oak", fabric: "irish", color: "flax" },
+      "marlowe-sofa-fleece": { wood: "red-oak", fabric: "irish", color: "white" },
       "marlowe-sofa-flax": { wood: "red-oak", fabric: "irish", color: "oatmeal" },
       "marlowe-sofa-chalk": { wood: "red-oak", fabric: "irish", color: "ivory" },
       "marlowe-sofa-fawn": { wood: "red-oak", fabric: "irish", color: "sand" },

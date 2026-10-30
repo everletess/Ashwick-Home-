@@ -108,6 +108,7 @@ import marloweStudio from "@/assets/photos/marlowe-studio.jpg";
 import marloweStudioLinen from "@/assets/photos/marlowe-studio-linen.jpg";
 import marloweRoomLinen from "@/assets/photos/marlowe-room-linen.jpg";
 // The Marlowe Sofa in red oak, one per Irish Linen colorway (Marlowe names).
+import marloweSofaFleece from "@/assets/photos/marlowe-sofa-fleece.jpg";
 import marloweSofaChalk from "@/assets/photos/marlowe-sofa-chalk.jpg";
 import marloweSofaFawn from "@/assets/photos/marlowe-sofa-fawn.jpg";
 import marloweSofaSaddle from "@/assets/photos/marlowe-sofa-saddle.jpg";
@@ -274,6 +275,7 @@ export const PHOTOS = {
   "marlowe-studio": marloweStudio,
   "marlowe-studio-linen": marloweStudioLinen,
   "marlowe-room-linen": marloweRoomLinen,
+  "marlowe-sofa-fleece": marloweSofaFleece,
   "marlowe-sofa-chalk": marloweSofaChalk,
   "marlowe-sofa-fawn": marloweSofaFawn,
   "marlowe-sofa-saddle": marloweSofaSaddle,

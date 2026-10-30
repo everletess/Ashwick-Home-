@@ -99,7 +99,17 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
     if (Math.abs(dx) < 40) return;
     swiped.current = true;
     const n = p.photos.length;
-    setImg((i) => (i + (dx < 0 ? 1 : -1) + n) % n);
+    goTo((img + (dx < 0 ? 1 : -1) + n) % n);
+  };
+  // Browsing to a photo of one of this piece's colors selects that color, so "Your selection" names what's shown.
+  const goTo = (i: number) => {
+    setImg(i);
+    const t = p.photoTags?.[p.photos[i]];
+    if (!t?.fabric || !p.fabrics.includes(t.fabric)) return;
+    if (t.color && !colorsFor(p, t.fabric)?.some((c) => c.id === t.color)) return;
+    setFabricState(t.fabric);
+    setColorState(t.color ?? firstColor(t.fabric) ?? "");
+    if (t.wood && WOODS.some((w) => w.id === t.wood)) setWoodState(t.wood);
   };
 
   // Keep the URL in step with the tab (/products/:id vs /products/:id/customize) without a navigation.
@@ -204,7 +214,7 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
         {p.photos.length > 1 && (
           <div className="gal-thumbs">
             {p.photos.map((ph, i) => (
-              <button key={ph} className={i === img ? "on" : ""} aria-label={"Image " + (i + 1)} aria-pressed={i === img} onClick={() => setImg(i)}>
+              <button key={ph} className={i === img ? "on" : ""} aria-label={"Image " + (i + 1)} aria-pressed={i === img} onClick={() => goTo(i)}>
                 <Photo src={ph} label="" sizes="84px" />
               </button>
             ))}
