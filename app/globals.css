@@ -473,6 +473,7 @@ button.chip{cursor:pointer}
 .gal-note{margin:10px 0 0;font:400 11px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--walnut)}
 .color-chip{width:52px;height:52px}
 .pdp-price+.delivery{margin-top:-18px}
+.price-assure{margin:6px 0 18px;line-height:1.5}
 .lead-time{margin:0;font:400 15px/1.5 var(--sans);color:var(--ink);display:flex;align-items:center;gap:12px}
 .lead-time::before{content:'';flex:none;width:7px;height:7px;border-radius:50%;background:var(--sage)}
 
