@@ -13,6 +13,9 @@ import { MattressTeaser } from "@/components/mattress-teaser";
 import { BUY_OPTIONS_ID, StickyBuy } from "@/components/sticky-buy";
 import { DOG_BED, type DogBed } from "@/lib/dog-bed";
 import { PHOTOS } from "@/lib/photos";
+import { Price, SaleNote } from "@/components/sale";
+import { salePrice } from "@/lib/sale";
+import { fmt } from "@/lib/products";
 
 /** Gallery and color choice for a dog bed (the Ashbury by default); the gallery follows the color. */
 export function DogBedView({ bed: D = DOG_BED, children }: { bed?: DogBed; children?: React.ReactNode }) {
@@ -87,7 +90,8 @@ export function DogBedView({ bed: D = DOG_BED, children }: { bed?: DogBed; child
         <RatingLink product={D.id === "nook-dog-bed" ? "nook" : "ashbury-dog-bed"} />
         {D.collection !== D.title && <div className="pdp-collection">{D.collection}</div>}
         <p className="m-feature-tag dog-tag">{D.tagline}</p>
-        {sz.price > 0 && <div className="pdp-price">${sz.price}</div>}
+        {sz.price > 0 && <div className="pdp-price"><Price price={sz.price} /></div>}
+        {sz.price > 0 && <SaleNote />}
         <p className="body">
           {D.comingSoon ? D.soonLede : D.lede}
         </p>
@@ -117,14 +121,14 @@ export function DogBedView({ bed: D = DOG_BED, children }: { bed?: DogBed; child
         {!D.comingSoon && (
           <div className="designed">
             <ShipsFast when="3–4 days" note="Handmade to order in the USA. Free delivery." />
-            <button ref={buyRef} className="btn full" onClick={add}>Add to cart · ${sz.price}</button>
+            <button ref={buyRef} className="btn full" onClick={add}>Add to cart · {fmt(salePrice(sz.price))}</button>
             <TrustRow items={[["hand", "Handmade to order"], ["truck", "Free delivery"], ["returns", "30-day returns"]]} />
             <StickyBuy
               watch={buyRef}
               photo={sel.photos[0]}
               name={D.title}
               summary={`${sz.label} · ${sel.label}`}
-              price={sz.price}
+              price={salePrice(sz.price)}
               cta="Add to cart"
               onAdd={add}
             />

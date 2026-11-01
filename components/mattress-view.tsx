@@ -15,6 +15,8 @@ import { OptGroup, Pills } from "@/components/product-view";
 import { GUARANTEE_PATH, MATTRESS, colorById, colorFromParam, sizeById } from "@/lib/mattress";
 import { PHOTOS, type PhotoKey } from "@/lib/photos";
 import { fmt } from "@/lib/products";
+import { Price, SaleNote } from "@/components/sale";
+import { SALE, mattressDelivery, salePrice } from "@/lib/sale";
 import { track, trackThen } from "@/lib/pixel";
 import { trackAddedToCart } from "@/lib/subscribe";
 
@@ -80,7 +82,7 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
       qty: 1,
       mode: "As designed",
       options: [["Size", `${sz.label} (${sz.dims})`], ["Feel", feelLabel], ["Color", sel.label]],
-      delivery: M.delivery,
+      delivery: mattressDelivery(),
     });
 
   // Buy now: straight to Shopify checkout with this bed, skipping the cart. Fires the same AddToCart and
@@ -153,8 +155,9 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
         <h1 className="pdp-name">{M.title}</h1>
         <RatingLink product="ashbury" />
         <div className="pdp-collection">{M.collection}</div>
-        <div className="pdp-price">{fmt(sz.price)}</div>
+        <div className="pdp-price"><Price price={sz.price} /></div>
         <p className="fine delivery">+ {fmt(M.delivery.price)} {M.delivery.label.toLowerCase()}</p>
+        <SaleNote />
         <p className="fine price-assure">
           <strong>{M.guaranteeNights}-night trial</strong> with free pickup and a full refund. Or pay over time with Shop Pay Installments, subject to approval.
         </p>
@@ -189,7 +192,7 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
           <ShipsFast when="3–4 days" note={`Handmade to order in the USA. ${M.shipping}`} />
           {M.available ? (
             <>
-              <button ref={buyRef} className="btn full" onClick={buyNow} disabled={buying}>{buying ? "Taking you to checkout\u2026" : `Buy now \u00b7 ${fmt(sz.price)}`}</button>
+              <button ref={buyRef} className="btn full" onClick={buyNow} disabled={buying}>{buying ? "Taking you to checkout\u2026" : `Buy now \u00b7 ${fmt(salePrice(sz.price))}`}</button>
               <button className="btn full btn-ghost" onClick={add} disabled={buying}>Add to cart</button>
               {buyError && <p className="fine" role="alert" style={{ color: "var(--err, #b00)", textAlign: "center" }}>{buyError}</p>}
               <p className="fine buy-direct">Goes straight to secure checkout. + {fmt(M.delivery.price)} {M.delivery.label.toLowerCase()}, {M.guaranteeNights}-night trial.</p>
@@ -200,7 +203,7 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
                 photo={sel.photos[0]}
                 name={M.title}
                 summary={`${feelLabel} · ${sz.label} · ${sel.label}`}
-                price={sz.price}
+                price={salePrice(sz.price)}
                 note="Pay over time with Shop Pay Installments"
                 cta="Buy now"
                 onAdd={buyNow}

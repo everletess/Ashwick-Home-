@@ -2,6 +2,7 @@ import Link from "next/link";
 import { FURNITURE_MATERIALS_PATH } from "@/lib/materials";
 import { Photo } from "@/components/photo";
 import { MATERIALS, cardPrice, fmt, type Product } from "@/lib/products";
+import { Price, SaleTag } from "@/components/sale";
 import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
 
 const CARD_SIZES = "(max-width: 620px) 100vw, (max-width: 1180px) 50vw, 460px";
@@ -12,11 +13,12 @@ export function ProductCard({ p, custom }: { p: Product; custom?: boolean }) {
       <div className="card-img">
         <Photo src={p.cardPhoto ?? p.photos[0]} label={p.name} fill sizes={CARD_SIZES} />
         {p.photos[1] && !p.cardSingle && <Photo src={p.photos[1]} label={p.name} className="alt" fill sizes={CARD_SIZES} />}
+        {!custom && <SaleTag />}
         <span className="card-cta">{custom ? "Customize" : "Shop now"}</span>
       </div>
       <div className="card-row">
         <span className="card-name">{p.name}</span>
-        <span className="card-price">{cardPrice(p).from ? "From " : ""}{fmt(cardPrice(p).price)}</span>
+        <span className="card-price">{custom ? <>{cardPrice(p).from ? "From " : ""}{fmt(cardPrice(p).price)}</> : <Price price={cardPrice(p).price} from={cardPrice(p).from} />}</span>
       </div>
       <p className="card-line">{p.line}</p>
       <div className="card-meta">{p.type} · Made to order · Customizable</div>
@@ -33,11 +35,12 @@ export function MattressCard({ custom }: { custom?: boolean }) {
       <div className="card-img">
         <Photo src="mattress-mocha-room" label={`${M.title} in Sorrel`} fill sizes={CARD_SIZES} />
         <Photo src="mattress-studio-mocha" label={`${M.title} in Sorrel`} className="alt" fill sizes={CARD_SIZES} />
+        {!custom && <SaleTag />}
         <span className="card-cta">{custom ? "Customize" : "Shop now"}</span>
       </div>
       <div className="card-row">
         <span className="card-name">{M.title}</span>
-        <span className="card-price">From {fmt(from)}</span>
+        <span className="card-price">{custom ? <>From {fmt(from)}</> : <Price price={from} from />}</span>
       </div>
       <p className="card-line">{custom ? "Choose size, feel and color. Custom sizes on request." : "An all-natural mattress, hand-tufted and made in four colors."}</p>
       <div className="card-meta">{M.type} · Made to order · {M.topperHeight} topper included</div>

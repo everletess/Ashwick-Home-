@@ -10,6 +10,8 @@ import { TintedPhoto } from "@/components/tinted-photo";
 import { Lightbox } from "@/components/lightbox";
 import { track } from "@/lib/pixel";
 import { tintFor } from "@/lib/photos";
+import { Price, SaleNote } from "@/components/sale";
+import { salePrice } from "@/lib/sale";
 import { CUSTOM_LEAD_TIME, FABRICS, LEAD_TIME, WOODS, fmt, getProduct, PHOTO_WOODS, nearestPhoto, photoFor, priceFor, colorsFor, type FabricId, type Option, type PhotoTag } from "@/lib/products";
 
 type Mode = "designed" | "custom";
@@ -238,7 +240,8 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
       <div className="info">
         <div className="eyebrow">{p.type} · Made to order · Handmade in the USA</div>
         <h1 className="pdp-name">{p.name}</h1>
-        <div className="pdp-price">{p.priceFrom ? "From " : ""}{fmt(price)}</div>
+        <div className="pdp-price"><Price price={price} from={p.priceFrom} /></div>
+        <SaleNote />
         {p.delivery && <p className="fine delivery">+ {fmt(p.delivery.price)} {p.delivery.label.toLowerCase()}</p>}
         <p className="body">{p.line}</p>
 
@@ -277,14 +280,14 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
           <div className="designed" role="tabpanel">
             <p className="lead-time">{p.leadTime ?? LEAD_TIME}</p>
             <button ref={buyRef} className="btn full" onClick={add}>
-              {p.preorder ? "Pre-order" : "Add to cart"} · {fmt(price)}
+              {p.preorder ? "Pre-order" : "Add to cart"} · {fmt(salePrice(price))}
             </button>
             <StickyBuy
               watch={buyRef}
               photo={photoFor(p, current) ?? p.cardPhoto ?? p.photos[0]}
               name={p.name}
               summary={summary.map(([, v]) => v).join(" · ")}
-              price={price}
+              price={salePrice(price)}
               note={p.delivery ? `+ ${fmt(p.delivery.price)} ${p.delivery.label.toLowerCase()}` : undefined}
               cta={p.preorder ? "Pre-order" : "Add to cart"}
               onAdd={add}
