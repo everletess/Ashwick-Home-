@@ -435,7 +435,10 @@ export function CartDrawer() {
                   <div className="line-mode">{SALE.percent}% off{BUNDLE_CONFIG.whiteGloveIncluded ? " · Free white glove" : ""}</div>
                   {g.lines.map((i) => (
                     <div className="line-opt bundle-item" key={i.lineId}>
-                      <strong>{i.name}</strong> {i.options.filter(([k]) => !k.startsWith("_") && k !== "Feel").map(([, v]) => v).join(" · ")}
+                      <strong>{i.name}</strong>{" "}
+                      {i.id === BUNDLE_CONFIG.beddingSet.handle
+                        ? (() => { const o = (k: string) => i.options.find(([key]) => key === k)?.[1] ?? ""; return `${o("Mattress size")} · ${o("Pillow")} pillows, ${o("Pillow size")} in · ${o("Cover color")} covers · Mattress Protector`; })()
+                        : i.options.filter(([k]) => !k.startsWith("_") && k !== "Feel").map(([, v]) => v).join(" · ")}
                     </div>
                   ))}
                   <LineActions line={g.lines[0]} />
