@@ -980,7 +980,7 @@ button.chip{cursor:pointer}
 .bf-fine{font:300 12px/1.6 var(--sans);opacity:.8;max-width:80ch;margin:12px auto 0;text-align:center}
 .bf-fine a{text-decoration:underline}
 .bf-banner-links{font:300 13px var(--sans);margin:0;opacity:.9}
-.bf-banner-links a{text-decoration:underline}
+.bf-banner-links a{text-decoration:underline;color:var(--alabaster)}
 .bf-banner-img{min-height:300px}
 .bf-banner-t{padding:40px var(--gut);gap:12px}
 @media (max-width:960px){
