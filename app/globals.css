@@ -929,7 +929,7 @@ button.chip{cursor:pointer}
 .bf-banner{background:var(--sorrel-deep);color:var(--alabaster)}
 .bf-banner-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);max-width:1440px;margin:0 auto;align-items:stretch}
 .bf-banner-img{display:block;position:relative;min-height:440px;overflow:hidden}
-.bf-banner-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bf-banner-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:35% 60%}
 .bf-banner-t{display:flex;flex-direction:column;justify-content:center;gap:20px;padding:72px var(--gut)}
 .bf-banner-t .eyebrow{color:var(--oat)}
 .bf-banner-t .h2{margin:0;max-width:18ch}
@@ -943,8 +943,8 @@ button.chip{cursor:pointer}
 }
 /* Landing page */
 .bf-hero{position:relative;height:70vh;height:70svh;min-height:460px;max-height:760px;overflow:hidden;background:var(--moss)}
-.bf-hero img{object-fit:cover}
-.bf-hero-scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(40,28,22,.15),rgba(40,28,22,.62))}
+.bf-hero img{object-fit:cover;object-position:50% 62%}
+.bf-hero-scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(40,28,22,.05) 0%,rgba(40,28,22,.15) 30%,rgba(30,20,15,.78) 100%)}
 .bf-hero-txt{position:absolute;left:0;right:0;bottom:9%;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 24px;color:var(--alabaster);text-shadow:0 1px 18px rgba(20,18,14,.35)}
 .bf-hero-txt .eyebrow{color:var(--alabaster)}
 .bf-hero-txt .h1{font-size:clamp(40px,5.6vw,84px)}
@@ -952,8 +952,8 @@ button.chip{cursor:pointer}
 .bf-terms{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:1px solid var(--hair)}
 .bf-terms .val{padding:32px 32px 8px 0}
 .bf-bundle-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:80px;align-items:center}
-.bf-bundle-img{display:block;position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--linen)}
-.bf-bundle-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bf-bundle-img{display:block;position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--linen)}
+.bf-bundle-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:68% 50%}
 .bf-bundle-t{display:flex;flex-direction:column;gap:20px}
 .bf-bundle-t .h2{margin:0}
 .bf-bundle-t .body{margin:0}
@@ -994,3 +994,14 @@ button.chip{cursor:pointer}
 .bundle-line .line-mode{color:var(--sorrel-deep)}
 .bundle-item strong{font-weight:500;color:var(--ink)}
 @media (max-width:640px){.bundle-pics{flex-direction:row;flex-wrap:wrap}.bundle-line{grid-template-columns:56px minmax(0,1fr)}.bundle-pics .line-img{width:56px;height:56px}.bundle-pics{flex-direction:column}}
+/* Black Friday photography crops (bf-banner is 3:2 landscape; bundle-hero is 16:9) */
+.bundle-hero img{object-position:62% 50%}
+@media (max-width: 620px) {
+  .bundle-hero > div{aspect-ratio:4 / 3 !important}
+  /* Portrait crop would lose either the mattress or the sofa, so on phones the photo sits on top at its own shape and the copy goes beneath it. */
+  .bf-hero{height:auto;min-height:0;max-height:none;display:flex;flex-direction:column;background:var(--sorrel-deep)}
+  .bf-hero img{position:relative !important;inset:auto !important;height:auto !important;aspect-ratio:4/3;object-position:40% 60%}
+  .bf-hero-scrim{display:none}
+  .bf-hero-txt{position:static;padding:32px var(--gut) 40px;text-shadow:none}
+}
+.bundle-hero{padding-bottom:24px}

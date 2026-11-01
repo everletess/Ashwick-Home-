@@ -15,9 +15,9 @@ import type { PhotoKey } from "@/lib/photos";
  * and `isFinal` to true. Do not use third-party (e.g. competitor) imagery here.
  */
 export const BUNDLE_HERO: { photo: PhotoKey; alt: string; isFinal: boolean } = {
-  photo: "dog-bed-sorrel-room",
-  alt: "A chocolate doodle curled up on the Ashbury Dog Bed in Sorrel beside a bed",
-  isFinal: false,
+  photo: "bundle-hero",
+  alt: "Two cream pillows on a travertine ledge beside a stack of four removable covers in different colors",
+  isFinal: true,
 };
 
 /** The two pillows that can come in the bedding set (Shopify option "Pillow" values), with one factual line each. */

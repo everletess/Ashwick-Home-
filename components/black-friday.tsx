@@ -11,7 +11,7 @@ export function BlackFridayBanner() {
     <section className="bf-banner">
       <div className="bf-banner-in">
         <Link href={SALE.path} className="bf-banner-img" aria-label={`${SALE.name} at Ashwick`}>
-          <Photo src="mattress-room-sorrel" label="The Ashbury in Sorrel in a sunlit bedroom" sizes="(max-width: 960px) 100vw, 50vw" />
+          <Photo src="bf-banner" label="A terracotta Ashbury mattress, a boucle chair and a cream sofa on a rug in an autumn hillside landscape" sizes="(max-width: 960px) 100vw, 50vw" />
         </Link>
         <div className="bf-banner-t">
           <div className="eyebrow">{SALE.name} at Ashwick</div>

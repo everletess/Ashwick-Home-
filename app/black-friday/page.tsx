@@ -22,7 +22,7 @@ export default function BlackFridayPage() {
   return (
     <main className="bf-page">
       <section className="bf-hero">
-        <Photo src="hero-bedroom" label="A sunlit bedroom with an upholstered bed in rust linen bedding and a pair of textured cream wingback chairs" fill preload />
+        <Photo src="bf-banner" label="A terracotta Ashbury mattress, a boucle chair and a cream sofa on a rug in an autumn hillside landscape" fill preload />
         <div className="bf-hero-scrim"></div>
         <div className="bf-hero-txt">
           <div className="eyebrow">{SALE.name} at Ashwick</div>

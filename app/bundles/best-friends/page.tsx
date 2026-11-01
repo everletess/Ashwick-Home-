@@ -21,9 +21,9 @@ export default function BestFriendsPage() {
           An Ashbury mattress for you and an Ashbury Dog Bed for the one who sleeps at the foot of it. Pick each in the colors you like. {SALE.percent}% off the bundle, free white glove delivery for the mattress, and a bedding set of two pillows and a Mattress Protector.
         </p>
       </section>
-      {/* Hero slot: BUNDLE_HERO in lib/sale.ts (falls back to site photography until the final hero is supplied). */}
+      {/* Hero slot: BUNDLE_HERO in lib/sale.ts. */}
       <section className="wrap bundle-hero" data-hero-final={BUNDLE_HERO.isFinal}>
-        <div style={{ position: "relative", aspectRatio: "16 / 7", overflow: "hidden", borderRadius: 4 }}>
+        <div style={{ position: "relative", aspectRatio: "16 / 9", overflow: "hidden", borderRadius: 4 }}>
           <Photo src={BUNDLE_HERO.photo} label={BUNDLE_HERO.alt} fill sizes="(max-width: 1280px) 100vw, 1200px" preload />
         </div>
       </section>
