@@ -81,6 +81,8 @@ function NavMenu({ label, id, links, all, align = "right" }: { label: string; id
 }
 
 import { Photo } from "@/components/photo";
+import { CartUpsell } from "@/components/cart-upsell";
+import upsell from "@/components/cart-upsell.module.css";
 import { fmt } from "@/lib/products";
 
 const isDogBed = (id: string) => id === DOG_BED_ID || id === NOOK.id;
@@ -259,7 +261,7 @@ export function Header() {
           <Link href="/account">Account</Link>
           <button type="button" className="linkbtn" onClick={openCart}>{cartLabel}</button>
         </nav>
-        <button type="button" className="mcart linkbtn" onClick={openCart}>{cartLabel}</button>
+        <button type="button" className={"mcart linkbtn " + upsell.mcartLabel} aria-label={cartLabel} data-label={cartLabel} onClick={openCart}></button>
       </div>
       {/* On <body>, above the add-to-cart bar, chat button and 15% tab (inside the sticky header it was capped below them).
           Any link closes it, including one to the page you're already on. */}
@@ -474,6 +476,7 @@ export function CartDrawer() {
         </div>
         {cart.items.length > 0 && (
           <div className="drawer-f">
+            <CartUpsell items={cart.items} onNavigate={close} />
             <div className="sub">
               <span className="eyebrow">Subtotal</span>
               <span className="sub-v">{fmt(cart.subtotal)}</span>
