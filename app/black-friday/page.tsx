@@ -57,7 +57,7 @@ export default function BlackFridayPage() {
     return <SwipeCard key={it.key} href={it.href} photo={it.photo} name={it.name} price={it.price} from={it.from} rating={rv?.average} count={rv?.count} />;
   };
   const gifts = items.filter((i) => i.cat === "dog-beds" && salePrice(i.price) < 300);
-  const mchips = [["m-bundles", "Bundles"], ["m-gifts", "Gifts"], ["m-mattress", "Mattress"], ["m-sofas", "Sofas"], ["m-chairs", "Chairs"]];
+  const mchips = [["m-bundles", "All"], ["m-bundles", "Bundles"], ["m-gifts", "Gifts"], ["m-mattress", "Mattress"], ["m-sofas", "Sofas"], ["m-chairs", "Chairs"]];
   const trust: [React.ReactNode, string][] = [
     [<><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" /></>, "100-night trial"],
     [<><path d="M3 21h18M5 21V9l7-5 7 5v12M10 21v-6h4v6" /></>, "Handmade in the USA"],
@@ -99,7 +99,7 @@ export default function BlackFridayPage() {
       </div>
 
       <nav className="bf-m bf-mchips" aria-label="Jump to a category">
-        {mchips.map(([id, label]) => <a key={id} href={"#" + id} className="bf-chip">{label}</a>)}
+        {mchips.map(([id, label]) => <a key={label} href={"#" + id} className="bf-chip">{label}</a>)}
       </nav>
 
       <div className="bf-m">

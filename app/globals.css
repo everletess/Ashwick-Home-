@@ -990,7 +990,7 @@ button.chip{cursor:pointer}
 @media (max-width:620px){
   .bf-hero{height:260px;min-height:260px}
   .bf-hero-txt{bottom:14px;gap:4px}
-  .bf-hero-txt .h1{font-size:30px}
+  .bf-hero-txt .h1{text-shadow:0 1px 14px rgba(20,14,10,.5);font-size:30px}
   .bf-hero-txt .hero-body{font-size:13px}
   .bf-hero-txt .btns{flex-direction:row;gap:8px;margin-top:6px}
   .bf-hero-txt .btns .btn{padding:10px 14px;font-size:13px;width:auto}
@@ -1045,13 +1045,13 @@ button.chip{cursor:pointer}
   .bf-hero img{object-position:14% 72%}
   .bf-hero-scrim{background:linear-gradient(180deg,rgba(30,22,16,.05) 0%,rgba(30,22,16,.25) 35%,rgba(24,17,12,.82) 100%)}
   .bf-hero-txt.bf-m{display:flex;bottom:20px;gap:8px;padding:0 20px}
-  .bf-hero-txt .h1{font-size:30px;line-height:1.1;max-width:14ch}
+  .bf-hero-txt .h1{text-shadow:0 1px 14px rgba(20,14,10,.5);font-size:30px;line-height:1.1;max-width:14ch}
   .bf-hero-txt .hero-body{font-size:16px}
   .bf-hero-txt .btn{width:100%;max-width:340px;min-height:48px;margin-top:6px}
   .bf-rs{padding:16px 20px;background:var(--linen);font:300 16px/1.45 var(--sans)}
   .bf-rs-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
   .bf-rs-top strong{font-weight:500}
-  .bf-rs-q{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:8px}
+  .bf-rs-q{list-style:none;margin:10px 0 0;padding:0;display:grid;grid-template-columns:minmax(0,1fr);gap:8px}.bf-rs-q li{overflow-wrap:anywhere}
   .bf-rs-q li{font-family:var(--serif);font-size:17px;line-height:1.35;font-style:italic}
   .bf-rs-q li span{display:block;font:300 14px var(--sans);font-style:normal;color:var(--walnut)}
   .bf-mchips{position:sticky;top:var(--bf-hdr,60px);z-index:30;display:flex !important;gap:8px;overflow-x:auto;padding:10px 20px;background:var(--alabaster);border-bottom:1px solid var(--hair);scrollbar-width:none}
