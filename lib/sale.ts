@@ -76,6 +76,25 @@ export const BUNDLE = {
   idAttribute: "_Bundle ID",
 };
 
+/**
+ * The Complete Sleep Suite: one Ashbury plus the same Best Friends Bedding Set (no dog bed). Same cart attributes,
+ * same sitewide percent, same free white glove on the mattress (it checks out as the bundle mattress product).
+ */
+export const SLEEP_SUITE: { name: string; path: string; photo: PhotoKey; alt: string } = {
+  name: "The Complete Sleep Suite",
+  path: "/bundles/sleep-suite",
+  photo: "sleep-suite-hero",
+  alt: "A terracotta Ashbury mattress on an oak bed frame with two matching pillows and a folded cream mattress cover on a wooden stool",
+};
+
+/** Every bundle, by the value its lines carry in the `_Bundle` attribute. */
+export const BUNDLES: { value: string; title: string; path: string }[] = [
+  { value: BUNDLE.name, title: BUNDLE.title, path: BUNDLE.path },
+  { value: SLEEP_SUITE.name, title: SLEEP_SUITE.name, path: SLEEP_SUITE.path },
+];
+/** Display title for a `_Bundle` attribute value (unknown values show as is). */
+export const bundleTitleFor = (value: string) => BUNDLES.find((b) => b.value === value)?.title ?? value;
+
 /** The price after the sale, to the cent (Shopify rounds a percentage discount to the cent). */
 export const salePrice = (n: number) => (SALE.active ? Math.round(n * (100 - SALE.percent)) / 100 : n);
 
@@ -88,3 +107,11 @@ export const bundleMattressDelivery = () => ({ label: MATTRESS.delivery.label, p
 
 /** A cart line's delivery as stored. */
 export const deliveryFor = (line: { id: string; delivery?: { label: string; price: number } }) => line.delivery;
+
+/** Sleep Suite price for a mattress size (index into MATTRESS.sizes, or size id): mattress + bedding set, at list and after the sitewide percent. */
+export function sleepSuitePrice(sizeIndexOrId: number | string = 0) {
+  const m = typeof sizeIndexOrId === "number" ? MATTRESS.sizes[sizeIndexOrId] : MATTRESS.sizes.find((s) => s.id === sizeIndexOrId);
+  const size = m ?? MATTRESS.sizes[0];
+  const list = size.price + BUNDLE_CONFIG.beddingSet.price;
+  return { list, sale: bundlePrice(size.price) + bundlePrice(BUNDLE_CONFIG.beddingSet.price) };
+}

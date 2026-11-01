@@ -18,7 +18,7 @@ function useScrollLock(locked: boolean) {
   }, [locked]);
 }
 import { bundleIdOf, useCart, type CartLine } from "@/components/cart";
-import { BUNDLE, BUNDLE_CONFIG, SALE, bundlePrice, deliveryFor, salePrice } from "@/lib/sale";
+import { BUNDLE_CONFIG, bundleTitleFor, SALE, bundlePrice, deliveryFor, salePrice } from "@/lib/sale";
 import { STUDIO_PHONE } from "@/lib/site";
 import { SHOW_SIGNUP_EVENT } from "@/components/email-popup";
 import { SUBSCRIBED_EVENT, SUBSCRIBED_KEY } from "@/lib/subscribe";
@@ -426,7 +426,7 @@ export function CartDrawer() {
                 </div>
                 <div>
                   <div className="line-top">
-                    <span className="line-name">{BUNDLE.title}</span>
+                    <span className="line-name">{bundleTitleFor(g.lines[0].options.find(([k]) => k === "_Bundle")?.[1] ?? "")}</span>
                     <span className="line-price">
                       <s className="price-was">{fmt(g.lines.reduce((s, i) => s + (i.price ?? 0), 0) * g.lines[0].qty)}</s>
                       {fmt(g.lines.reduce((s, i) => s + bundlePrice(i.price ?? 0), 0) * g.lines[0].qty)}

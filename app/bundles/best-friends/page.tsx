@@ -23,7 +23,7 @@ export default function BestFriendsPage() {
       </section>
       {/* Hero slot: BUNDLE_HERO in lib/sale.ts. */}
       <section className="wrap bundle-hero" data-hero-final={BUNDLE_HERO.isFinal}>
-        <div style={{ position: "relative", aspectRatio: "16 / 9", overflow: "hidden", borderRadius: 4 }}>
+        <div style={{ position: "relative", aspectRatio: "16 / 9", maxHeight: "min(60vh, max(45vw, 280px))", margin: "0 auto", overflow: "hidden", borderRadius: 4 }}>
           <Photo src={BUNDLE_HERO.photo} label={BUNDLE_HERO.alt} fill sizes="(max-width: 1280px) 100vw, 1200px" preload />
         </div>
       </section>

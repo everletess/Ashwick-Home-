@@ -10,7 +10,7 @@ import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
 import { DOG_BED } from "@/lib/dog-bed";
 import { PHOTOS } from "@/lib/photos";
 import { fmt } from "@/lib/products";
-import { BUNDLE, BUNDLE_CONFIG, SALE, bundleMattressDelivery, bundlePrice, pillowSizeFor, pillowSizeNameFor, BUNDLE_PILLOWS, BUNDLE_COVER_BY_MATTRESS_COLOR } from "@/lib/sale";
+import { BUNDLE, BUNDLE_CONFIG, SALE, SLEEP_SUITE, sleepSuitePrice, bundleMattressDelivery, bundlePrice, pillowSizeFor, pillowSizeNameFor, BUNDLE_PILLOWS, BUNDLE_COVER_BY_MATTRESS_COLOR } from "@/lib/sale";
 
 /** Ties the three cart lines of one bundle together (and the pair on the order). */
 const newBundleId = () => `${BUNDLE.name}-${Math.random().toString(36).slice(2, 8)}`;
@@ -169,6 +169,98 @@ export function BundleBuilder() {
         <TrustRow items={[["hand", "Handmade to order"], ["truck", "White glove, mattress"], ["moon", `${M.guaranteeNights}-night trial`]]} />
         <p className="fine">
           Each is also sold on its own: <Link href={MATTRESS_PATH} className="ulink-inline">the Ashbury</Link> and <Link href={D.path} className="ulink-inline">the Ashbury Dog Bed</Link>.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+/** The Complete Sleep Suite: an Ashbury plus the Best Friends Bedding Set (no dog bed). Compact: pickers, live total and one button. */
+export function SleepSuiteBuilder() {
+  const cart = useCart();
+  const [mSize, setMSize] = useState("queen");
+  const [feel, setFeel] = useState(M.feels[0].id);
+  const [mColor, setMColor] = useState(M.defaultColor);
+  const [pillow, setPillow] = useState<string>(BUNDLE_PILLOWS[0].id as string);
+
+  const m = M.sizes.find((s) => s.id === mSize) ?? M.sizes[0];
+  const bed = BUNDLE_CONFIG.beddingSet.price;
+  const { list, sale: now } = sleepSuitePrice(m.id);
+  const mc = M.colors.find((c) => c.id === mColor) ?? M.colors[0];
+  const pil = BUNDLE_PILLOWS.find((x) => x.id === pillow) ?? BUNDLE_PILLOWS[0];
+  const pillowSize = `${pillowSizeNameFor(m.id)} ${pillowSizeFor(m.id).replace("×", "x")}`;
+  const coverColor = BUNDLE_COVER_BY_MATTRESS_COLOR[mc.id] ?? mc.label;
+  const feelLabel = M.feels.find((f) => f.id === feel)!.label;
+
+  const add = () => {
+    const tag: [string, string][] = [["_Bundle", SLEEP_SUITE.name], ["_Bundle ID", `sleep-suite-${Math.random().toString(36).slice(2, 8)}`]];
+    cart.addMany([
+      {
+        id: M.id,
+        name: M.title,
+        photo: mc.photos[0] ?? mc.swatch,
+        price: m.price,
+        qty: 1,
+        mode: "As designed",
+        options: [["Size", `${m.label} (${m.dims})`], ["Feel", feelLabel], ["Color", mc.label], ...tag],
+        delivery: bundleMattressDelivery(),
+      },
+      {
+        id: BUNDLE_CONFIG.beddingSet.handle,
+        name: BUNDLE_CONFIG.beddingSet.name,
+        photo: mc.photos[0] ?? mc.swatch,
+        price: bed,
+        qty: 1,
+        mode: "As designed",
+        options: [["Mattress size", m.label], ["Pillow", pil.label], ["Pillow size", pillowSize], ["Cover color", coverColor], ["Includes", "Two pillows and a Mattress Protector"], ...tag],
+      },
+    ]);
+  };
+
+  return (
+    <section className="bundle-build wrap" style={{ gap: 40, paddingBottom: 72 }}>
+      <div style={{ position: "sticky", top: 96 }}>
+        <div style={{ position: "relative", aspectRatio: "4 / 3", maxHeight: "min(60vh, 45vh)", width: "100%", overflow: "hidden", background: "var(--linen)" }} className="sleep-hero">
+          <Photo src={SLEEP_SUITE.photo} label={SLEEP_SUITE.alt} fill sizes="(max-width: 960px) 100vw, 600px" preload />
+        </div>
+      </div>
+
+      <div className="bundle-opts">
+        <div className="choices">
+          <OptGroup label="Mattress size" value={`${m.label} · ${m.dims}`}>
+            <Pills options={M.sizes} value={mSize} onChange={setMSize} />
+          </OptGroup>
+          <OptGroup label="Feel" value={feelLabel}>
+            <Pills options={M.feels} value={feel} onChange={setFeel} />
+          </OptGroup>
+          <OptGroup label="Mattress color" value={`${mc.label} · bedding cover ${coverColor}`}>
+            <Colors colors={M.colors} value={mColor} onChange={setMColor} label="Mattress" />
+          </OptGroup>
+          <OptGroup label="Pillow" value={pil.label}>
+            <Pills options={BUNDLE_PILLOWS.map((x) => ({ id: x.id as string, label: x.label }))} value={pillow} onChange={setPillow} />
+          </OptGroup>
+        </div>
+        <p className="fine" style={{ marginTop: 0 }}>{pil.desc} Two {pil.label} pillows ({pillowSize} in) with {coverColor} removable covers, and a Mattress Protector, in the {BUNDLE_CONFIG.beddingSet.name} ({fmt(bed)}).</p>
+
+        <div className="bundle-sum">
+          <div className="bundle-sum-row"><span>{M.title}, {m.label}</span><span>{fmt(m.price)}</span></div>
+          <div className="bundle-sum-row"><span>{BUNDLE_CONFIG.beddingSet.name}</span><span>{fmt(bed)}</span></div>
+          {SALE.active && <div className="bundle-sum-row save"><span>{SALE.percent}% off the bundle</span><span>−{fmt(list - now)}</span></div>}
+          <div className="bundle-sum-total">
+            <span className="eyebrow">The suite</span>
+            <span className="bundle-price">
+              {SALE.active && <s className="price-was">{fmt(list)}</s>}
+              {fmt(now)}
+            </span>
+          </div>
+        </div>
+
+        <button className="btn full" onClick={add}>Add the suite to cart · {fmt(now)}</button>
+        <p className="fine">Free white glove delivery for the mattress is included with this bundle; on its own it is {fmt(M.delivery.price)}. {SALE.active ? `${SALE.percent}% off is applied automatically at checkout. ` : ""}Taxes calculated at checkout.</p>
+        <ShipsFast when="3–4 days" note="Handmade to order in the USA. Our delivery team will contact you to schedule the mattress once it is made." />
+        <TrustRow items={[["hand", "Handmade to order"], ["truck", "White glove, mattress"], ["moon", `${M.guaranteeNights}-night trial`]]} />
+        <p className="fine">
+          Each is also sold on its own: <Link href={MATTRESS_PATH} className="ulink-inline">the Ashbury</Link>.
         </p>
       </div>
     </section>
