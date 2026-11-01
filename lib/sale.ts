@@ -7,6 +7,7 @@
  * Deliberately no end date, countdown or scarcity wording anywhere on the site.
  */
 import { MATTRESS } from "@/lib/mattress";
+import { PILLOW_TYPES } from "@/lib/pillow";
 import type { PhotoKey } from "@/lib/photos";
 
 /**
@@ -20,11 +21,8 @@ export const BUNDLE_HERO: { photo: PhotoKey; alt: string; isFinal: boolean } = {
   isFinal: true,
 };
 
-/** The two pillows that can come in the bedding set (Shopify option "Pillow" values), with one factual line each. */
-export const BUNDLE_PILLOWS = [
-  { id: "horsehair-wool", label: "Horse hair & Wool", desc: "OEKO-TEX horsetail hair wrapped in wool, in an organic cotton barrier case. Medium firm." },
-  { id: "living-wool", label: "Living Wool", desc: "Wool fill in an organic cotton sateen case. Medium firm." },
-] as const;
+/** The four approved pillows that can come in the bedding set (Shopify option "Pillow" values), with one factual line each. */
+export const BUNDLE_PILLOWS = PILLOW_TYPES;
 
 /** Bedding cover colors (Shopify option "Cover color"). The Ashbury's four colors map one to one by id, so the cover follows the mattress color. */
 export const BUNDLE_COVER_BY_MATTRESS_COLOR: Record<string, string> = { natural: "Fleece", dove: "Flint", safari: "Flax", mocha: "Sorrel" };

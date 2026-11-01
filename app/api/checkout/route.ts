@@ -15,6 +15,7 @@ import { createCheckout, fetchProductVariants, type ShopifyVariant } from "@/lib
 import { MATTRESS } from "@/lib/mattress";
 import { DOG_BED_ID, NOOK } from "@/lib/dog-bed";
 import { BUNDLE_CONFIG } from "@/lib/sale";
+import { PILLOW_ID } from "@/lib/pillow";
 
 export type CheckoutRequestLine = {
   productId: string;
@@ -127,6 +128,28 @@ function beddingSetVariant(variants: ShopifyVariant[], options: [string, string]
   return match;
 }
 
+/**
+ * The standalone pillow has one Shopify variant per Fill / Size / Cover color, titled e.g.
+ * "Kapok / Queen 20x30 / Sorrel". Matched on all three by title. While the product is a draft or unpublished it is
+ * not in `variants`, and we fail with a clear message rather than drop the line (wrong total).
+ */
+function pillowVariant(variants: ShopifyVariant[], options: [string, string][]) {
+  const opt = (k: string) => options.find(([key]) => key === k)?.[1] ?? "";
+  const fill = opt("Fill"), size = opt("Size"), color = opt("Cover color");
+  const mine = variants.filter((v) => v.productHandle === PILLOW_ID);
+  if (!mine.length) {
+    throw new Error(`The Ashwick Pillow can't be checked out yet: the product (${PILLOW_ID}) isn't Active and published to the website's sales channel in Shopify.`);
+  }
+  const match = mine.find((v) => {
+    const parts = v.title.split(" / ").map(norm);
+    return parts.length === 3 && parts[0] === norm(fill) && parts[1] === norm(size) && parts[2] === norm(color);
+  });
+  if (!match) {
+    throw new Error(`No Ashwick Pillow variant for ${fill} / ${size} / ${color} (Shopify has: ${mine.map((v) => v.title).slice(0, 8).join("; ")}${mine.length > 8 ? "; …" : ""})`);
+  }
+  return match;
+}
+
 export async function POST(req: Request) {
   try {
     const { lines } = (await req.json()) as { lines: CheckoutRequestLine[] };
@@ -140,6 +163,13 @@ export async function POST(req: Request) {
       if (line.productId === BUNDLE_CONFIG.beddingSet.handle) {
         return {
           variantId: beddingSetVariant(variants, line.options).variantId,
+          quantity: line.qty,
+          customAttributes: line.options.map(([key, value]) => ({ key, value })),
+        };
+      }
+      if (line.productId === PILLOW_ID) {
+        return {
+          variantId: pillowVariant(variants, line.options).variantId,
           quantity: line.qty,
           customAttributes: line.options.map(([key, value]) => ({ key, value })),
         };

@@ -51,7 +51,7 @@ export function BundleBuilder() {
   const [mColor, setMColor] = useState(M.defaultColor);
   const [dSize, setDSize] = useState("medium");
   const [dColor, setDColor] = useState(D.defaultColor);
-  const [pillow, setPillow] = useState<string>(BUNDLE_PILLOWS[0].id);
+  const [pillow, setPillow] = useState<string>(BUNDLE_PILLOWS[0].id as string);
 
   const { m, d, bed, list, now } = bundleTotals(mSize, dSize);
   const mc = M.colors.find((c) => c.id === mColor) ?? M.colors[0];
@@ -138,7 +138,7 @@ export function BundleBuilder() {
         <p className="fine" style={{ marginTop: 0 }}>Two pillows with removable covers in your mattress color ({coverColor}), plus a Mattress Protector. Pillow size follows your mattress: {pillowSize} in.</p>
         <div className="choices">
           <OptGroup label="Pillow" value={pil.label}>
-            <Pills options={BUNDLE_PILLOWS.map((x) => ({ id: x.id, label: x.label }))} value={pillow} onChange={setPillow} />
+            <Pills options={BUNDLE_PILLOWS.map((x) => ({ id: x.id as string, label: x.label }))} value={pillow} onChange={setPillow} />
           </OptGroup>
         </div>
         <ul className="fine" style={{ margin: "0 0 8px", paddingLeft: 18 }}>
