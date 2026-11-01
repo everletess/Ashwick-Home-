@@ -2,7 +2,8 @@ import Link from "next/link";
 import { Photo } from "@/components/photo";
 import { Price, SaleTag } from "@/components/sale";
 import { DOG_BED, NOOK, type DogBed } from "@/lib/dog-bed";
-import { BUNDLE, SALE } from "@/lib/sale";
+import { fmt } from "@/lib/products";
+import { BUNDLE, SALE, salePrice } from "@/lib/sale";
 
 /** Homepage banner for the event, under the hero. Renders nothing when the sale is off. */
 export function BlackFridayBanner() {
@@ -15,17 +16,50 @@ export function BlackFridayBanner() {
         </Link>
         <div className="bf-banner-t">
           <div className="eyebrow">{SALE.name} at Ashwick</div>
-          <h2 className="h2">{SALE.percent}% off everything. Free white glove with the bundle.</h2>
-          <p className="body">
-            The whole collection, mattresses included. Pair an Ashbury with an Ashbury Dog Bed in the Best Friends Bundle and white glove delivery for the mattress is included, along with a Best Friends Bedding Set (two pillows and a Mattress Protector).
-          </p>
+          <h2 className="h2">{SALE.percent}% off everything.</h2>
+          <p className="body">No code needed. Two bundles with free white glove delivery for the mattress.</p>
           <div className="btns">
             <Link href={SALE.path} className="btn light">Shop {SALE.name}</Link>
-            <Link href={BUNDLE.path} className="btn outline-light">The Best Friends Bundle</Link>
+            <Link href={SALE.path + "#bundles"} className="btn outline-light">See the bundles</Link>
           </div>
+          <p className="bf-banner-links"><Link href={BUNDLE.path}>Best Friends Bundle</Link> · <Link href={SLEEP_SUITE_PATH}>Complete Sleep Suite</Link></p>
         </div>
       </div>
     </section>
+  );
+}
+
+export const SLEEP_SUITE_PATH = "/bundles/sleep-suite";
+
+/** Compact bundle card: thumbnail left, copy right. */
+export function BundleTile({ href, photo, alt, title, desc, was, now }: { href: string; photo: Parameters<typeof Photo>[0]["src"]; alt: string; title: string; desc: string; was: number; now: number }) {
+  return (
+    <Link href={href} className="bf-bun">
+      <div className="bf-bun-img">
+        <Photo src={photo} label={alt} fill sizes="(max-width: 620px) 40vw, 260px" />
+        <span className="sale-tag">{SALE.percent}% off</span>
+      </div>
+      <div className="bf-bun-t">
+        <h3 className="bf-bun-h">{title}</h3>
+        <p className="bf-bun-d">{desc}</p>
+        <div className="bf-bun-p">From <s className="price-was">{fmt(was)}</s> <strong className="price-now">{fmt(now)}</strong></div>
+        <span className="btn bf-bun-cta">Shop the bundle</span>
+      </div>
+    </Link>
+  );
+}
+
+/** Small square product tile for the dense sale grid. */
+export function MiniCard({ href, photo, name, price, from }: { href: string; photo: Parameters<typeof Photo>[0]["src"]; name: string; price: number; from?: boolean }) {
+  return (
+    <Link href={href} className="bf-mini">
+      <div className="bf-mini-img">
+        <Photo src={photo} label={name} fill sizes="(max-width: 620px) 50vw, (max-width: 1180px) 33vw, 300px" />
+        <span className="sale-tag">{SALE.percent}% off</span>
+      </div>
+      <div className="bf-mini-name">{name}</div>
+      <div className="bf-mini-price">{from ? "From " : ""}<s className="price-was">{fmt(price)}</s> <span className="price-now">{fmt(salePrice(price))}</span></div>
+    </Link>
   );
 }
 
