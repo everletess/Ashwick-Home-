@@ -9,7 +9,7 @@ import { BUY_OPTIONS_ID, StickyBuy } from "@/components/sticky-buy";
 import { Price, SaleNote } from "@/components/sale";
 import { PHOTOS } from "@/lib/photos";
 import { fmt } from "@/lib/products";
-import { BUNDLE_HERO, salePrice } from "@/lib/sale";
+import { PILLOW_HERO, salePrice } from "@/lib/sale";
 import { PILLOW_COVERS, PILLOW_ID, PILLOW_SIZES, PILLOW_TYPES } from "@/lib/pillow";
 
 /** Standalone Ashwick Pillow: fill, size and cover color; price follows the fill. */
@@ -27,7 +27,7 @@ export function PillowView() {
     cart.add({
       id: PILLOW_ID,
       name: "The Ashwick Pillow",
-      photo: BUNDLE_HERO.photo,
+      photo: PILLOW_HERO.photo,
       price: fill.price,
       qty: 1,
       mode: "As designed",
@@ -39,7 +39,7 @@ export function PillowView() {
       <div className="gal">
         <div className="gal-main">
           <div className="gal-photo">
-            <Photo src={BUNDLE_HERO.photo} label={BUNDLE_HERO.alt} sizes="(max-width: 960px) 100vw, 56vw" preload />
+            <Photo src={PILLOW_HERO.photo} label={PILLOW_HERO.alt} sizes="(max-width: 960px) 100vw, 56vw" preload />
           </div>
         </div>
       </div>
@@ -75,7 +75,7 @@ export function PillowView() {
           <ShipsFast when="3–4 days" note="Handmade to order in the USA." />
           <button ref={buyRef} className="btn full" onClick={add}>Add to cart · {fmt(salePrice(fill.price))}</button>
           <TrustRow items={[["hand", "Handmade to order"], ["returns", "Removable cover included"]]} />
-          <StickyBuy watch={buyRef} photo={BUNDLE_HERO.photo} name="The Ashwick Pillow" summary={`${fill.label} · ${size.label} · ${cover.label}`} price={salePrice(fill.price)} cta="Add to cart" onAdd={add} />
+          <StickyBuy watch={buyRef} photo={PILLOW_HERO.photo} name="The Ashwick Pillow" summary={`${fill.label} · ${size.label} · ${cover.label}`} price={salePrice(fill.price)} cta="Add to cart" onAdd={add} />
         </div>
         <p className="body small">Every pillow comes with a removable cover in your choice of Fleece, Flint, Flax or Sorrel, the mattress colors.</p>
       </div>
