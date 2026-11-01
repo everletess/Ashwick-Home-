@@ -6,7 +6,7 @@ import { trackAddedToCart } from "@/lib/subscribe";
 import type { PhotoKey } from "@/lib/photos";
 import { BUNDLE, bundlePrice, deliveryFor, salePrice } from "@/lib/sale";
 
-/** The Best Friends Bundle id a line belongs to (both lines of the pair share it), if any. */
+/** The Best Friends Bundle id a line belongs to (all lines of the bundle share it), if any. */
 export const bundleIdOf = (l: { options: [string, string][] }) =>
   l.options.find(([k]) => k === BUNDLE.attribute) ? (l.options.find(([k]) => k === BUNDLE.idAttribute)?.[1] ?? "bundle") : null;
 
@@ -96,7 +96,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     );
     setOpen(true);
   }, []);
-  // The two lines of a bundle are removed, and change quantity, together.
+  // The lines of a bundle are removed, and change quantity, together.
   const remove = useCallback(
     (lineId: string) =>
       setItems((c) => {

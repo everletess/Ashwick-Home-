@@ -12,13 +12,13 @@ import { BUNDLE, BUNDLE_CONFIG, SALE, bundlePrice, salePrice } from "@/lib/sale"
 
 export const metadata: Metadata = {
   title: "Black Friday at Ashwick: 20% off everything",
-  description: "20% off the whole collection, mattresses included, Plus the Best Friends Bundle: an Ashbury, an Ashbury Dog Bed and a Mattress Protector, with free white glove delivery.",
+  description: "20% off the whole collection, mattresses included, Plus the Best Friends Bundle: an Ashbury, an Ashbury Dog Bed and a Best Friends Bedding Set, with free white glove delivery.",
   alternates: { canonical: SALE.path },
 };
 
 export default function BlackFridayPage() {
   if (!SALE.active) notFound();
-  const pairFrom = MATTRESS.sizes[0].price + DOG_BED.sizes[0].price;
+  const pairFrom = MATTRESS.sizes[0].price + DOG_BED.sizes[0].price + BUNDLE_CONFIG.beddingSet.price;
   return (
     <main className="bf-page">
       <section className="bf-hero">
@@ -64,15 +64,15 @@ export default function BlackFridayPage() {
               An Ashbury mattress and an Ashbury Dog Bed, in colors that match: Fleece, Flint, Flax or Sorrel. Organic doesn&apos;t have to be beige, and neither does the dog&apos;s corner of the room.
             </p>
             <ul className="bf-list">
-              <li>{BUNDLE_CONFIG.discountPercent}% off the pair</li>
+              <li>{SALE.percent}% off the bundle</li>
               <li>Free white glove delivery for the mattress is included</li>
-              {BUNDLE_CONFIG.protectorIncluded && <li>A {BUNDLE_CONFIG.protectorName} is included: {BUNDLE_CONFIG.protectorCopy}</li>}
-              <li>Choose each size and color, and add both to your cart in one tap</li>
+              <li>A Best Friends Bedding Set: two pillows sized to your mattress and a Mattress Protector, {fmt(BUNDLE_CONFIG.beddingSet.price)}</li>
+              <li>Choose each size and color, and add all three to your cart in one tap</li>
             </ul>
             <p className="body">
-              From <s className="price-was">{fmt(pairFrom)}</s> <strong>{fmt(bundlePrice(MATTRESS.sizes[0].price) + bundlePrice(DOG_BED.sizes[0].price))}</strong> for a Twin XL and a Small
+              From <s className="price-was">{fmt(pairFrom)}</s> <strong>{fmt(bundlePrice(MATTRESS.sizes[0].price) + bundlePrice(DOG_BED.sizes[0].price) + bundlePrice(BUNDLE_CONFIG.beddingSet.price))}</strong> for a Twin XL, a Small and the bedding set
             </p>
-            <div className="btns"><Link href={BUNDLE.path} className="btn">Build your pair</Link></div>
+            <div className="btns"><Link href={BUNDLE.path} className="btn">Build your bundle</Link></div>
           </div>
         </div>
       </section>

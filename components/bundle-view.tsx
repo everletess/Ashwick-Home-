@@ -10,9 +10,9 @@ import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
 import { DOG_BED } from "@/lib/dog-bed";
 import { PHOTOS } from "@/lib/photos";
 import { fmt } from "@/lib/products";
-import { BUNDLE, BUNDLE_CONFIG, SALE, bundleMattressDelivery, bundlePrice } from "@/lib/sale";
+import { BUNDLE, BUNDLE_CONFIG, SALE, bundleMattressDelivery, bundlePrice, pillowSizeFor } from "@/lib/sale";
 
-/** Ties the two cart lines of one bundle together (and the pair on the order). */
+/** Ties the three cart lines of one bundle together (and the pair on the order). */
 const newBundleId = () => `${BUNDLE.name}-${Math.random().toString(36).slice(2, 8)}`;
 
 const M = MATTRESS;
@@ -22,8 +22,9 @@ const D = DOG_BED;
 export function bundleTotals(mattressSize: string, dogSize: string) {
   const m = M.sizes.find((s) => s.id === mattressSize) ?? M.sizes[0];
   const d = D.sizes.find((s) => s.id === dogSize) ?? D.sizes[0];
-  const list = m.price + d.price;
-  return { m, d, list, now: bundlePrice(m.price) + bundlePrice(d.price) };
+  const bed = BUNDLE_CONFIG.beddingSet.price;
+  const list = m.price + d.price + bed;
+  return { m, d, bed, list, now: bundlePrice(m.price) + bundlePrice(d.price) + bundlePrice(bed) };
 }
 
 /** Color swatches (the mattress and the Ashbury Dog Bed share the same four colors). */
@@ -42,7 +43,7 @@ function Colors({ colors, value, onChange, label }: { colors: { id: string; labe
   ));
 }
 
-/** Choose an Ashbury and an Ashbury Dog Bed, see the pair's price, and add both to the cart in one action. */
+/** Choose an Ashbury and an Ashbury Dog Bed, see the bundle price (with the bedding set), and add all three to the cart in one action. */
 export function BundleBuilder() {
   const cart = useCart();
   const [mSize, setMSize] = useState("queen");
@@ -51,9 +52,11 @@ export function BundleBuilder() {
   const [dSize, setDSize] = useState("medium");
   const [dColor, setDColor] = useState(D.defaultColor);
 
-  const { m, d, list, now } = bundleTotals(mSize, dSize);
+  const { m, d, bed, list, now } = bundleTotals(mSize, dSize);
   const mc = M.colors.find((c) => c.id === mColor) ?? M.colors[0];
   const dc = D.colors.find((c) => c.id === dColor) ?? D.colors[0];
+  const pillows = pillowSizeFor(m.id);
+  const bedName = BUNDLE_CONFIG.beddingSet.name;
   const feelLabel = M.feels.find((f) => f.id === feel)!.label;
 
   const add = () => {
@@ -77,6 +80,15 @@ export function BundleBuilder() {
         qty: 1,
         mode: "As designed",
         options: [["Size", `${d.label} (${d.dims})`], ["Color", dc.label], ...tag],
+      },
+      {
+        id: BUNDLE_CONFIG.beddingSet.handle,
+        name: bedName,
+        photo: mc.photos[0] ?? mc.swatch,
+        price: bed,
+        qty: 1,
+        mode: "As designed",
+        options: [["Mattress size", m.label], ["Pillows", `Two pillows, ${pillows} in`], ["Includes", "Mattress Protector"], ...tag],
       },
     ]);
   };
@@ -121,11 +133,11 @@ export function BundleBuilder() {
         <div className="bundle-sum">
           <div className="bundle-sum-row"><span>{M.title}, {m.label}</span><span>{fmt(m.price)}</span></div>
           <div className="bundle-sum-row"><span>{D.title}, {d.label}</span><span>{fmt(d.price)}</span></div>
-          {SALE.active && <div className="bundle-sum-row save"><span>{BUNDLE_CONFIG.discountPercent}% off the pair</span><span>−{fmt(list - now)}</span></div>}
+          <div className="bundle-sum-row"><span>{bedName}: two pillows sized to your mattress ({pillows} in) and a Mattress Protector</span><span>{fmt(bed)}</span></div>
+          {SALE.active && <div className="bundle-sum-row save"><span>{SALE.percent}% off the bundle</span><span>−{fmt(list - now)}</span></div>}
           <div className="bundle-sum-row"><span>White glove delivery for the mattress</span><span>{BUNDLE_CONFIG.whiteGloveIncluded ? "Free with the bundle" : fmt(M.delivery.price)}</span></div>
-          {BUNDLE_CONFIG.protectorIncluded && <div className="bundle-sum-row"><span>{BUNDLE_CONFIG.protectorName}</span><span>Included</span></div>}
           <div className="bundle-sum-total">
-            <span className="eyebrow">The pair</span>
+            <span className="eyebrow">The bundle</span>
             <span className="bundle-price">
               {SALE.active && <s className="price-was">{fmt(list)}</s>}
               {fmt(now)}
@@ -134,10 +146,10 @@ export function BundleBuilder() {
         </div>
 
         <ShipsFast when="3–4 days" note="Handmade to order in the USA. Our delivery team will contact you to schedule the mattress once it is made." />
-        <button className="btn full" onClick={add}>Add the pair to cart · {fmt(now)}</button>
-        {BUNDLE_CONFIG.protectorIncluded && <p className="fine">{BUNDLE_CONFIG.protectorName}: {BUNDLE_CONFIG.protectorCopy}</p>}
+        <button className="btn full" onClick={add}>Add the bundle to cart · {fmt(now)}</button>
+        <p className="fine">The bedding set is {fmt(bed)} ({BUNDLE_CONFIG.beddingSet.contents}) and free white glove is included, a {fmt(BUNDLE_CONFIG.whiteGloveValue)} value. Priced on its own, a Mattress Protector alone lists from {BUNDLE_CONFIG.protectorListRange}, depending on size.</p>
         <p className="fine">
-          {SALE.active ? `${BUNDLE_CONFIG.discountPercent}% off is applied automatically at checkout. ` : ""}Taxes calculated at checkout.
+          {SALE.active ? `${SALE.percent}% off is applied automatically at checkout. ` : ""}Taxes calculated at checkout.
         </p>
         <TrustRow items={[["hand", "Handmade to order"], ["truck", "White glove, mattress"], ["moon", `${M.guaranteeNights}-night trial`]]} />
         <p className="fine">

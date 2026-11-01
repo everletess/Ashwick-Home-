@@ -101,7 +101,7 @@ function cartNote(items: { id: string; delivery?: { label: string; price: number
   ].filter(Boolean).join(" ");
 }
 
-/** Cart lines in order, with the two lines of a Best Friends Bundle gathered into one group. */
+/** Cart lines in order, with the three lines of a Best Friends Bundle gathered into one group. */
 function groupLines(items: CartLine[]) {
   const out: { bundle: boolean; lines: CartLine[] }[] = [];
   for (const i of items) {
@@ -432,7 +432,7 @@ export function CartDrawer() {
                       {fmt(g.lines.reduce((s, i) => s + bundlePrice(i.price ?? 0), 0) * g.lines[0].qty)}
                     </span>
                   </div>
-                  <div className="line-mode">{BUNDLE_CONFIG.discountPercent}% off the pair{BUNDLE_CONFIG.whiteGloveIncluded ? " · Free white glove" : ""}{BUNDLE_CONFIG.protectorIncluded ? ` · ${BUNDLE_CONFIG.protectorName} included` : ""}</div>
+                  <div className="line-mode">{SALE.percent}% off{BUNDLE_CONFIG.whiteGloveIncluded ? " · Free white glove" : ""}</div>
                   {g.lines.map((i) => (
                     <div className="line-opt bundle-item" key={i.lineId}>
                       <strong>{i.name}</strong> {i.options.filter(([k]) => !k.startsWith("_") && k !== "Feel").map(([, v]) => v).join(" · ")}

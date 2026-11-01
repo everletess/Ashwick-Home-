@@ -14,6 +14,7 @@ import { NextResponse } from "next/server";
 import { createCheckout, fetchProductVariants, type ShopifyVariant } from "@/lib/shopify";
 import { MATTRESS } from "@/lib/mattress";
 import { DOG_BED_ID, NOOK } from "@/lib/dog-bed";
+import { BUNDLE_CONFIG } from "@/lib/sale";
 
 export type CheckoutRequestLine = {
   productId: string;
@@ -100,6 +101,26 @@ function dogBedVariant(variants: ShopifyVariant[], options: [string, string][], 
   return match;
 }
 
+/**
+ * The Best Friends Bedding Set has one Shopify variant per mattress size (Twin XL, Full, Queen, King, Cal King). Matched
+ * on the variant title. While the product is a draft or not on the Storefront channel it is not in `variants`, and we
+ * fail with a clear message rather than drop the line (which would charge the wrong total).
+ */
+function beddingSetVariant(variants: ShopifyVariant[], options: [string, string][]) {
+  const handle = BUNDLE_CONFIG.beddingSet.handle;
+  const size = options.find(([k]) => k === "Mattress size")?.[1] ?? "";
+  const mine = variants.filter((v) => v.productHandle === handle);
+  if (!mine.length) {
+    throw new Error(
+      `The Best Friends Bundle can't be checked out yet: the "${BUNDLE_CONFIG.beddingSet.name}" product (${handle}) isn't Active and published to the website's sales channel in Shopify.`,
+    );
+  }
+  const names = [size, ...(size === "King" ? ["Eastern King"] : []), ...(size === "Cal King" ? ["California King"] : [])].map(norm);
+  const match = mine.find((v) => names.includes(norm(v.title)));
+  if (!match) throw new Error(`No "${BUNDLE_CONFIG.beddingSet.name}" option for mattress size "${size}" (Shopify has: ${mine.map((v) => v.title).join("; ")})`);
+  return match;
+}
+
 export async function POST(req: Request) {
   try {
     const { lines } = (await req.json()) as { lines: CheckoutRequestLine[] };
@@ -110,6 +131,13 @@ export async function POST(req: Request) {
     const variants = await fetchProductVariants();
 
     const checkoutLines = lines.map((line) => {
+      if (line.productId === BUNDLE_CONFIG.beddingSet.handle) {
+        return {
+          variantId: beddingSetVariant(variants, line.options).variantId,
+          quantity: line.qty,
+          customAttributes: line.options.map(([key, value]) => ({ key, value })),
+        };
+      }
       if (line.productId === MATTRESS.id) {
         return {
           variantId: mattressVariant(variants, line.options).variantId,

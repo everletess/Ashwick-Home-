@@ -17,7 +17,7 @@ export function BlackFridayBanner() {
           <div className="eyebrow">{SALE.name} at Ashwick</div>
           <h2 className="h2">{SALE.percent}% off everything. Free white glove with the bundle.</h2>
           <p className="body">
-            The whole collection, mattresses included. Pair an Ashbury with an Ashbury Dog Bed in the Best Friends Bundle and white glove delivery for the mattress is included, along with a Mattress Protector.
+            The whole collection, mattresses included. Pair an Ashbury with an Ashbury Dog Bed in the Best Friends Bundle and white glove delivery for the mattress is included, along with a Best Friends Bedding Set (two pillows and a Mattress Protector).
           </p>
           <div className="btns">
             <Link href={SALE.path} className="btn light">Shop {SALE.name}</Link>
