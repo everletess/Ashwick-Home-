@@ -4,6 +4,15 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import { track } from "@/lib/pixel";
 import { trackAddedToCart } from "@/lib/subscribe";
 import type { PhotoKey } from "@/lib/photos";
+import { BUNDLE, bundlePrice, deliveryFor, salePrice } from "@/lib/sale";
+
+/** The Best Friends Bundle id a line belongs to (both lines of the pair share it), if any. */
+export const bundleIdOf = (l: { options: [string, string][] }) =>
+  l.options.find(([k]) => k === BUNDLE.attribute) ? (l.options.find(([k]) => k === BUNDLE.idAttribute)?.[1] ?? "bundle") : null;
+
+/** What one unit of a line costs now: the sale price plus any per-piece delivery. Matches what Shopify charges at checkout. */
+export const unitTotal = (l: { id: string; price: number | null; options?: [string, string][]; delivery?: { label: string; price: number } }) =>
+  (l.options && bundleIdOf({ options: l.options }) ? bundlePrice(l.price ?? 0) : salePrice(l.price ?? 0)) + (deliveryFor(l)?.price ?? 0);
 
 export type CartLine = {
   lineId: string;
@@ -23,6 +32,8 @@ type Cart = {
   open: boolean;
   setOpen: (open: boolean) => void;
   add: (line: Omit<CartLine, "lineId">) => void;
+  /** Several lines in one action (a bundle). */
+  addMany: (lines: Omit<CartLine, "lineId">[]) => void;
   remove: (lineId: string) => void;
   qty: (lineId: string, qty: number) => void;
   count: number;
@@ -61,28 +72,54 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       content_name: line.name,
       content_type: "product",
       contents: [{ id: line.id, quantity: line.qty, item_price: line.price ?? undefined }],
-      value: ((line.price ?? 0) + (line.delivery?.price ?? 0)) * line.qty,
+      value: unitTotal(line) * line.qty,
     });
     // Tell Klaviyo (known subscribers only) so the abandoned-cart flow can follow up.
     void trackAddedToCart(
       [{ productId: line.id, name: line.name, qty: line.qty, price: line.price, options: line.options }],
-      line.price == null ? null : ((line.price ?? 0) + (line.delivery?.price ?? 0)) * line.qty,
+      line.price == null ? null : unitTotal(line) * line.qty,
     );
     setOpen(true);
   }, []);
-  const remove = useCallback((lineId: string) => setItems((c) => c.filter((i) => i.lineId !== lineId)), []);
+  const addMany = useCallback((lines: Omit<CartLine, "lineId">[]) => {
+    setItems((c) => [...c, ...lines.map((l) => ({ ...l, lineId: Math.random().toString(36).slice(2, 9) }))]);
+    track("AddToCart", {
+      content_ids: lines.map((l) => l.id),
+      content_name: BUNDLE.title,
+      content_type: "product",
+      contents: lines.map((l) => ({ id: l.id, quantity: l.qty, item_price: l.price == null ? undefined : salePrice(l.price) })),
+      value: lines.reduce((s, l) => s + unitTotal(l) * l.qty, 0),
+    });
+    void trackAddedToCart(
+      lines.map((l) => ({ productId: l.id, name: l.name, qty: l.qty, price: l.price, options: l.options })),
+      lines.reduce((s, l) => s + unitTotal(l) * l.qty, 0),
+    );
+    setOpen(true);
+  }, []);
+  // The two lines of a bundle are removed, and change quantity, together.
+  const remove = useCallback(
+    (lineId: string) =>
+      setItems((c) => {
+        const b = bundleIdOf(c.find((i) => i.lineId === lineId) ?? { options: [] });
+        return c.filter((i) => i.lineId !== lineId && (b == null || bundleIdOf(i) !== b));
+      }),
+    [],
+  );
   const qty = useCallback(
     (lineId: string, q: number) =>
-      setItems((c) => c.map((i) => (i.lineId === lineId ? { ...i, qty: Math.max(1, q) } : i))),
+      setItems((c) => {
+        const b = bundleIdOf(c.find((i) => i.lineId === lineId) ?? { options: [] });
+        return c.map((i) => (i.lineId === lineId || (b != null && bundleIdOf(i) === b) ? { ...i, qty: Math.max(1, q) } : i));
+      }),
     [],
   );
 
   const value = useMemo<Cart>(() => {
     const count = items.reduce((s, i) => s + i.qty, 0);
     const unpriced = items.some((i) => i.price == null);
-    const subtotal = unpriced ? null : items.reduce((s, i) => s + ((i.price ?? 0) + (i.delivery?.price ?? 0)) * i.qty, 0);
-    return { items, open, setOpen, add, remove, qty, count, subtotal };
-  }, [items, open, add, remove, qty]);
+    const subtotal = unpriced ? null : items.reduce((s, i) => s + unitTotal(i) * i.qty, 0);
+    return { items, open, setOpen, add, addMany, remove, qty, count, subtotal };
+  }, [items, open, add, addMany, remove, qty]);
 
   return <CartCtx.Provider value={value}>{children}</CartCtx.Provider>;
 }

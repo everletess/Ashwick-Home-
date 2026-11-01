@@ -17,7 +17,8 @@ function useScrollLock(locked: boolean) {
     };
   }, [locked]);
 }
-import { useCart } from "@/components/cart";
+import { bundleIdOf, useCart, type CartLine } from "@/components/cart";
+import { BUNDLE, BUNDLE_CONFIG, SALE, bundlePrice, deliveryFor, salePrice } from "@/lib/sale";
 import { STUDIO_PHONE } from "@/lib/site";
 import { SHOW_SIGNUP_EVENT } from "@/components/email-popup";
 import { SUBSCRIBED_EVENT, SUBSCRIBED_KEY } from "@/lib/subscribe";
@@ -85,18 +86,46 @@ import { fmt } from "@/lib/products";
 const isDogBed = (id: string) => id === DOG_BED_ID || id === NOOK.id;
 
 /** The line under the cart subtotal: delivery (white glove for furniture and the mattress, free for dog beds), ship time and payment. */
-function cartNote(items: { id: string; delivery?: unknown }[]) {
-  if (!items.every((i) => i.delivery || isDogBed(i.id))) return "Paid in full at checkout. Taxes and shipping calculated at checkout.";
+function cartNote(items: { id: string; delivery?: { label: string; price: number } }[]) {
+  const sale = SALE.active ? `${SALE.name}: ${SALE.percent}% off is applied automatically at checkout. ` : "";
+  if (!items.every((i) => i.delivery || isDogBed(i.id))) return sale + "Paid in full at checkout. Taxes and shipping calculated at checkout.";
   const mattress = items.some((i) => i.id === MATTRESS.id);
   const dogBeds = items.some((i) => isDogBed(i.id));
-  return [
-    items.some((i) => i.delivery) && "Includes the delivery shown above.",
+  return sale + [
+    items.some((i) => deliveryFor(i)?.price) && "Includes the delivery shown above.",
     dogBeds && "Dog beds ship free.",
     (mattress || dogBeds) && "Ships within 3–4 days.",
     mattress && "Our delivery team will contact you to schedule your mattress delivery.",
     mattress ? "Pay in full at checkout, or over time with Shop Pay Installments, subject to approval." : "Paid in full at checkout.",
     "Taxes calculated at checkout.",
   ].filter(Boolean).join(" ");
+}
+
+/** Cart lines in order, with the two lines of a Best Friends Bundle gathered into one group. */
+function groupLines(items: CartLine[]) {
+  const out: { bundle: boolean; lines: CartLine[] }[] = [];
+  for (const i of items) {
+    const b = bundleIdOf(i);
+    const hit = b == null ? undefined : out.find((g) => g.bundle && bundleIdOf(g.lines[0]) === b);
+    if (hit) hit.lines.push(i);
+    else out.push({ bundle: b != null, lines: [i] });
+  }
+  return out;
+}
+
+/** Quantity and Remove for a line (a bundle's pair moves together). */
+function LineActions({ line }: { line: CartLine }) {
+  const cart = useCart();
+  return (
+    <div className="line-act">
+      <div className="qty">
+        <button aria-label="Decrease quantity" onClick={() => cart.qty(line.lineId, line.qty - 1)}>−</button>
+        <span>{line.qty}</span>
+        <button aria-label="Increase quantity" onClick={() => cart.qty(line.lineId, line.qty + 1)}>+</button>
+      </div>
+      <button className="rm" onClick={() => cart.remove(line.lineId)}>Remove</button>
+    </div>
+  );
 }
 
 export function Wordmark({ tagline = true }: { tagline?: boolean }) {
@@ -109,6 +138,7 @@ export function Wordmark({ tagline = true }: { tagline?: boolean }) {
 }
 
 const ANNOUNCE_MS = 5000;
+const SALE_BAR_KEY = "ashwick-sale-bar-dismissed";
 
 /**
  * Alternates "Handmade to order…" with the 15% offer, which opens the email sign-up. Subscribers only see the
@@ -116,6 +146,13 @@ const ANNOUNCE_MS = 5000;
  */
 export function AnnouncementBar() {
   const [offer, setOffer] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
+  useEffect(() => {
+    try {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- read once from storage after mount
+      setDismissed(sessionStorage.getItem(SALE_BAR_KEY) === "1");
+    } catch {}
+  }, []);
   const [showOffer, setShowOffer] = useState(false);
   const [paused, setPaused] = useState(false);
 
@@ -136,6 +173,30 @@ export function AnnouncementBar() {
     const t = setInterval(() => setShowOffer((v) => !v), ANNOUNCE_MS);
     return () => clearInterval(t);
   }, [offer, paused]);
+
+  // During the sale the bar carries the event (a link to its page, closable for the visit); otherwise the usual lines.
+  if (SALE.active) {
+    if (dismissed) return null;
+    return (
+      <div className="announce announce-sale">
+        <Link href={SALE.path} className="announce-link">
+          <span className="announce-long">{SALE.name} at Ashwick: {SALE.percent}% off everything, free white glove with the Best Friends Bundle.</span>
+          <span className="announce-short">{SALE.name}: {SALE.percent}% off · Free white glove with the bundle</span>
+        </Link>
+        <button
+          type="button"
+          className="announce-x"
+          aria-label="Dismiss announcement"
+          onClick={() => {
+            setDismissed(true);
+            try { sessionStorage.setItem(SALE_BAR_KEY, "1"); } catch {}
+          }}
+        >
+          ×
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="announce" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocus={() => setPaused(true)} onBlur={() => setPaused(false)}>
@@ -215,6 +276,7 @@ export function Header() {
             <button className="x" aria-label="Close" onClick={() => setMenu(false)}>×</button>
           </div>
           <nav className="mmenu-links">
+            {SALE.active && <Link href={SALE.path} className="mmenu-sale">{SALE.name}</Link>}
             <Link href="/collections/all">Shop</Link>
             <Link href="/collections/sofas">Sofas</Link>
             <Link href="/collections/chairs">Chairs</Link>
@@ -356,32 +418,56 @@ export function CartDrawer() {
               <Link href="/collections/all" className="btn" onClick={close}>Shop the collection</Link>
             </div>
           )}
-          {cart.items.map((i) => (
-            <div className="line" key={i.lineId}>
-              <Photo src={i.photo} label={i.name} className="line-img" sizes="96px" preload />
-              <div>
-                <div className="line-top">
-                  <span className="line-name">{i.name}</span>
-                  <span className="line-price">{i.price == null ? "[PRICE]" : fmt(i.price * i.qty)}</span>
+          {groupLines(cart.items).map((g) =>
+            g.bundle ? (
+              <div className="line bundle-line" key={g.lines[0].lineId}>
+                <div className="bundle-pics">
+                  {g.lines.map((i) => <Photo key={i.lineId} src={i.photo} label={i.name} className="line-img" sizes="96px" preload />)}
                 </div>
-                <div className="line-mode">{i.mode}</div>
-                {i.options.filter(([k]) => !k.startsWith("_")).map(([k, v]) => (
-                  <div className="line-opt" key={k}><span>{k}</span>{v}</div>
-                ))}
-                {i.delivery && (
-                  <div className="line-opt"><span>Delivery</span>{i.delivery.label} · {fmt(i.delivery.price * i.qty)}</div>
-                )}
-                <div className="line-act">
-                  <div className="qty">
-                    <button aria-label="Decrease quantity" onClick={() => cart.qty(i.lineId, i.qty - 1)}>−</button>
-                    <span>{i.qty}</span>
-                    <button aria-label="Increase quantity" onClick={() => cart.qty(i.lineId, i.qty + 1)}>+</button>
+                <div>
+                  <div className="line-top">
+                    <span className="line-name">{BUNDLE.title}</span>
+                    <span className="line-price">
+                      <s className="price-was">{fmt(g.lines.reduce((s, i) => s + (i.price ?? 0), 0) * g.lines[0].qty)}</s>
+                      {fmt(g.lines.reduce((s, i) => s + bundlePrice(i.price ?? 0), 0) * g.lines[0].qty)}
+                    </span>
                   </div>
-                  <button className="rm" onClick={() => cart.remove(i.lineId)}>Remove</button>
+                  <div className="line-mode">{BUNDLE_CONFIG.discountPercent}% off the pair{BUNDLE_CONFIG.whiteGloveIncluded ? " · Free white glove" : ""}{BUNDLE_CONFIG.protectorIncluded ? ` · ${BUNDLE_CONFIG.protectorName} included` : ""}</div>
+                  {g.lines.map((i) => (
+                    <div className="line-opt bundle-item" key={i.lineId}>
+                      <strong>{i.name}</strong> {i.options.filter(([k]) => !k.startsWith("_") && k !== "Feel").map(([, v]) => v).join(" · ")}
+                    </div>
+                  ))}
+                  <LineActions line={g.lines[0]} />
                 </div>
               </div>
-            </div>
-          ))}
+            ) : (
+              g.lines.map((i) => {
+                const d = deliveryFor(i);
+                return (
+                  <div className="line" key={i.lineId}>
+                    <Photo src={i.photo} label={i.name} className="line-img" sizes="96px" preload />
+                    <div>
+                      <div className="line-top">
+                        <span className="line-name">{i.name}</span>
+                        <span className="line-price">
+                          {i.price == null ? "[PRICE]" : SALE.active ? <><s className="price-was">{fmt(i.price * i.qty)}</s>{fmt(salePrice(i.price) * i.qty)}</> : fmt(i.price * i.qty)}
+                        </span>
+                      </div>
+                      <div className="line-mode">{i.mode}{SALE.active && i.price != null ? ` · ${SALE.percent}% off` : ""}</div>
+                      {i.options.filter(([k]) => !k.startsWith("_")).map(([k, v]) => (
+                        <div className="line-opt" key={k}><span>{k}</span>{v}</div>
+                      ))}
+                      {d && (
+                        <div className="line-opt"><span>Delivery</span>{d.label} · {d.price === 0 ? "Complimentary" : fmt(d.price * i.qty)}</div>
+                      )}
+                      <LineActions line={i} />
+                    </div>
+                  </div>
+                );
+              })
+            ),
+          )}
         </div>
         {cart.items.length > 0 && (
           <div className="drawer-f">
