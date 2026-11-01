@@ -2,6 +2,7 @@ import Link from "next/link";
 import { BrandStory } from "@/components/brand-story";
 import { DogBedFeature } from "@/components/dog-bed";
 import { Newsletter } from "@/components/forms";
+import { BlackFridayBanner } from "@/components/black-friday";
 import { Fibers } from "@/components/fibers";
 import { MattressFeature } from "@/components/mattress-feature";
 import { Photo, SwatchGrid } from "@/components/photo";
@@ -137,6 +138,7 @@ export default function HomePage() {
   return (
     <main>
       <HomeHero />
+      <BlackFridayBanner />
       <ValueStrip />
       <MattressFeature />
       <DogBedFeature />

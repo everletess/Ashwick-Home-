@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Photo } from "@/components/photo";
 import { RatingLink } from "@/components/reviews";
+import { Price, SaleTag } from "@/components/sale";
 import { DOG_BED, NOOK } from "@/lib/dog-bed";
 import type { DogBed } from "@/lib/dog-bed";
 import type { PhotoKey } from "@/lib/photos";
@@ -35,11 +36,12 @@ export default function DogBedsPage() {
                   <div className="card-img">
                     <Photo src={photo} label={bed.title} sizes="(max-width: 960px) 100vw, 33vw" preload />
                     <Photo src={alt} label="" className="alt" sizes="(max-width: 960px) 100vw, 33vw" preload />
+                    <SaleTag />
                     <span className="card-cta">View</span>
                   </div>
                   <div className="card-row">
                     <span className="card-name">{bed.title}</span>
-                    <span className="card-price">From ${from}</span>
+                    <span className="card-price"><Price price={from} from /></span>
                   </div>
                   <p className="body small" style={{ marginTop: 8 }}>{blurb}</p>
                 </Link>

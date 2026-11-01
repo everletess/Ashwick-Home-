@@ -399,7 +399,8 @@ export const relatedTo = (p: Product) =>
     .concat(PRODUCTS.filter((o) => o.category !== p.category))
     .slice(0, 3);
 
-export const fmt = (n: number | null) => (n == null ? "[PRICE]" : "$" + n.toLocaleString("en-US"));
+export const fmt = (n: number | null) =>
+  n == null ? "[PRICE]" : "$" + n.toLocaleString("en-US", Number.isInteger(n) ? undefined : { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 export const MATERIALS: [string, string][] = [
   ["Solid hardwood", "Frames built to hold for generations."],

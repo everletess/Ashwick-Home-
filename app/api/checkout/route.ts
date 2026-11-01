@@ -14,6 +14,8 @@ import { NextResponse } from "next/server";
 import { createCheckout, fetchProductVariants, type ShopifyVariant } from "@/lib/shopify";
 import { MATTRESS } from "@/lib/mattress";
 import { DOG_BED_ID, NOOK } from "@/lib/dog-bed";
+import { BUNDLE_CONFIG } from "@/lib/sale";
+import { PILLOW_ID } from "@/lib/pillow";
 
 export type CheckoutRequestLine = {
   productId: string;
@@ -36,6 +38,8 @@ const SHOPIFY_HANDLES: Record<string, string> = {
 };
 
 /** The Ashbury's likely Shopify handles; failing those, any product titled or typed as the Ashbury or a mattress. */
+/** The bundle's mattress: a separate Shopify product (same sizes, colors and prices) on the free white glove delivery profile. */
+const BUNDLE_MATTRESS_HANDLE = "the-ashbury-best-friends";
 const MATTRESS_HANDLES = ["luxury-organic-mattress", MATTRESS.handle, "the-ashbury"];
 const isMattress = (v: ShopifyVariant) => /ashbury|mattress/i.test(`${v.productHandle} ${v.productTitle} ${v.productType}`);
 
@@ -56,7 +60,7 @@ const norm = (s: string) => s.trim().toLowerCase();
  * The Ashbury has a Shopify variant per size (and per feel and color, if those are variant options too). Pick the
  * variant whose every option is one we chose, never a different size, so Shopify charges the right price.
  */
-function mattressVariant(variants: ShopifyVariant[], options: [string, string][]) {
+function mattressVariant(variants: ShopifyVariant[], options: [string, string][], bundle = false) {
   const opt = (k: string) => options.find(([key]) => key === k)?.[1] ?? "";
   const size = MATTRESS.sizes.find((z) => opt("Size").startsWith(`${z.label} (`));
   const color = MATTRESS.colors.find((c) => c.label === opt("Color"));
@@ -64,8 +68,14 @@ function mattressVariant(variants: ShopifyVariant[], options: [string, string][]
   const sizeNames = [size.label, ...(ALIASES[size.id] ?? [])].map(norm);
   const wanted = new Set([...sizeNames, norm(opt("Feel")), ...(color ? [color.label, ...(ALIASES[color.id] ?? [])].map(norm) : [])]);
 
-  const handle =
-    MATTRESS_HANDLES.find((h) => variants.some((v) => v.productHandle === h)) ?? variants.find(isMattress)?.productHandle;
+  // Bundle mattresses are a separate Shopify product (same sizes/prices) whose delivery profile has free white
+  // glove; standalone mattresses keep the paid white glove. Fail loudly rather than fall back to the paid product.
+  const handle = bundle
+    ? BUNDLE_MATTRESS_HANDLE
+    : MATTRESS_HANDLES.find((h) => variants.some((v) => v.productHandle === h)) ?? variants.find(isMattress)?.productHandle;
+  if (bundle && !variants.some((v) => v.productHandle === handle)) {
+    throw new Error(`The Best Friends Bundle can't be checked out yet: the bundle mattress product (${handle}) isn't published to the website's sales channel in Shopify.`);
+  }
   if (!handle) {
     throw new Error(
       "The mattress isn't available to the website yet: in Shopify, make it available on the sales channel the website uses (the same one as the sofas).",
@@ -100,6 +110,54 @@ function dogBedVariant(variants: ShopifyVariant[], options: [string, string][], 
   return match;
 }
 
+/**
+ * The Best Friends Bedding Set has one Shopify variant per mattress size / pillow / cover color, titled e.g.
+ * "Queen / Living Wool / Sorrel". Matched on all three by title. While the product is a draft or not on the Storefront
+ * channel it is not in `variants`, and we fail with a clear message rather than drop the line (wrong total).
+ */
+function beddingSetVariant(variants: ShopifyVariant[], options: [string, string][]) {
+  const handle = BUNDLE_CONFIG.beddingSet.handle;
+  const opt = (k: string) => options.find(([key]) => key === k)?.[1] ?? "";
+  const size = opt("Mattress size"), pillow = opt("Pillow"), color = opt("Cover color");
+  const mine = variants.filter((v) => v.productHandle === handle);
+  if (!mine.length) {
+    throw new Error(
+      `The Best Friends Bundle can't be checked out yet: the "${BUNDLE_CONFIG.beddingSet.name}" product (${handle}) isn't Active and published to the website's sales channel in Shopify.`,
+    );
+  }
+  const sizeNames = [size, ...(size === "King" ? ["Eastern King"] : []), ...(size === "Cal King" ? ["California King"] : [])].map(norm);
+  const match = mine.find((v) => {
+    const [s = "", p = "", c = ""] = v.title.split(" / ").map(norm);
+    return v.title.split(" / ").length === 3 && sizeNames.includes(s) && p === norm(pillow) && c === norm(color);
+  });
+  if (!match) {
+    throw new Error(`No "${BUNDLE_CONFIG.beddingSet.name}" variant for ${size} / ${pillow} / ${color} (Shopify has: ${mine.map((v) => v.title).slice(0, 8).join("; ")}${mine.length > 8 ? "; …" : ""})`);
+  }
+  return match;
+}
+
+/**
+ * The standalone pillow has one Shopify variant per Fill / Size / Cover color, titled e.g.
+ * "Kapok / Queen 20x30 / Sorrel". Matched on all three by title. While the product is a draft or unpublished it is
+ * not in `variants`, and we fail with a clear message rather than drop the line (wrong total).
+ */
+function pillowVariant(variants: ShopifyVariant[], options: [string, string][]) {
+  const opt = (k: string) => options.find(([key]) => key === k)?.[1] ?? "";
+  const fill = opt("Fill"), size = opt("Size"), color = opt("Cover color");
+  const mine = variants.filter((v) => v.productHandle === PILLOW_ID);
+  if (!mine.length) {
+    throw new Error(`The Ashwick Pillow can't be checked out yet: the product (${PILLOW_ID}) isn't Active and published to the website's sales channel in Shopify.`);
+  }
+  const match = mine.find((v) => {
+    const parts = v.title.split(" / ").map(norm);
+    return parts.length === 3 && parts[0] === norm(fill) && parts[1] === norm(size) && parts[2] === norm(color);
+  });
+  if (!match) {
+    throw new Error(`No Ashwick Pillow variant for ${fill} / ${size} / ${color} (Shopify has: ${mine.map((v) => v.title).slice(0, 8).join("; ")}${mine.length > 8 ? "; …" : ""})`);
+  }
+  return match;
+}
+
 export async function POST(req: Request) {
   try {
     const { lines } = (await req.json()) as { lines: CheckoutRequestLine[] };
@@ -110,9 +168,24 @@ export async function POST(req: Request) {
     const variants = await fetchProductVariants();
 
     const checkoutLines = lines.map((line) => {
-      if (line.productId === MATTRESS.id) {
+      if (line.productId === BUNDLE_CONFIG.beddingSet.handle) {
         return {
-          variantId: mattressVariant(variants, line.options).variantId,
+          variantId: beddingSetVariant(variants, line.options).variantId,
+          quantity: line.qty,
+          customAttributes: line.options.map(([key, value]) => ({ key, value })),
+        };
+      }
+      if (line.productId === PILLOW_ID) {
+        return {
+          variantId: pillowVariant(variants, line.options).variantId,
+          quantity: line.qty,
+          customAttributes: line.options.map(([key, value]) => ({ key, value })),
+        };
+      }
+      if (line.productId === MATTRESS.id) {
+        const inBundle = line.options.some(([k]) => k === "_Bundle");
+        return {
+          variantId: mattressVariant(variants, line.options, inBundle).variantId,
           quantity: line.qty,
           customAttributes: line.options.map(([key, value]) => ({ key, value })),
         };

@@ -1,0 +1,176 @@
+"use client";
+
+import Link from "next/link";
+import { useState } from "react";
+import { useCart } from "@/components/cart";
+import { Photo } from "@/components/photo";
+import { OptGroup, Pills } from "@/components/product-view";
+import { ShipsFast, TrustRow } from "@/components/buy-icons";
+import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
+import { DOG_BED } from "@/lib/dog-bed";
+import { PHOTOS } from "@/lib/photos";
+import { fmt } from "@/lib/products";
+import { BUNDLE, BUNDLE_CONFIG, SALE, bundleMattressDelivery, bundlePrice, pillowSizeFor, pillowSizeNameFor, BUNDLE_PILLOWS, BUNDLE_COVER_BY_MATTRESS_COLOR } from "@/lib/sale";
+
+/** Ties the three cart lines of one bundle together (and the pair on the order). */
+const newBundleId = () => `${BUNDLE.name}-${Math.random().toString(36).slice(2, 8)}`;
+
+const M = MATTRESS;
+const D = DOG_BED;
+
+/** The pair's price at list, and after the event's percentage. The same 20% Shopify takes off each line at checkout. */
+export function bundleTotals(mattressSize: string, dogSize: string) {
+  const m = M.sizes.find((s) => s.id === mattressSize) ?? M.sizes[0];
+  const d = D.sizes.find((s) => s.id === dogSize) ?? D.sizes[0];
+  const bed = BUNDLE_CONFIG.beddingSet.price;
+  const list = m.price + d.price + bed;
+  return { m, d, bed, list, now: bundlePrice(m.price) + bundlePrice(d.price) + bundlePrice(bed) };
+}
+
+/** Color swatches (the mattress and the Ashbury Dog Bed share the same four colors). */
+function Colors({ colors, value, onChange, label }: { colors: { id: string; label: string; swatch: keyof typeof PHOTOS }[]; value: string; onChange: (id: string) => void; label: string }) {
+  return colors.map((c) => (
+    <button
+      key={c.id}
+      type="button"
+      className={"chip color-chip mattress-chip" + (value === c.id ? " on" : "")}
+      style={{ backgroundImage: `url(${PHOTOS[c.swatch].src})` }}
+      title={c.label}
+      aria-label={`${label} ${c.label}`}
+      aria-pressed={value === c.id}
+      onClick={() => onChange(c.id)}
+    />
+  ));
+}
+
+/** Choose an Ashbury and an Ashbury Dog Bed, see the bundle price (with the bedding set), and add all three to the cart in one action. */
+export function BundleBuilder() {
+  const cart = useCart();
+  const [mSize, setMSize] = useState("queen");
+  const [feel, setFeel] = useState(M.feels[0].id);
+  const [mColor, setMColor] = useState(M.defaultColor);
+  const [dSize, setDSize] = useState("medium");
+  const [dColor, setDColor] = useState(D.defaultColor);
+  const [pillow, setPillow] = useState<string>(BUNDLE_PILLOWS[0].id as string);
+
+  const { m, d, bed, list, now } = bundleTotals(mSize, dSize);
+  const mc = M.colors.find((c) => c.id === mColor) ?? M.colors[0];
+  const dc = D.colors.find((c) => c.id === dColor) ?? D.colors[0];
+  const pillows = pillowSizeFor(m.id);
+  const pil = BUNDLE_PILLOWS.find((x) => x.id === pillow) ?? BUNDLE_PILLOWS[0];
+  const pillowSize = `${pillowSizeNameFor(m.id)} ${pillows.replace("×", "x")}`;
+  const coverColor = BUNDLE_COVER_BY_MATTRESS_COLOR[mc.id] ?? mc.label;
+  const bedName = BUNDLE_CONFIG.beddingSet.name;
+  const feelLabel = M.feels.find((f) => f.id === feel)!.label;
+
+  const add = () => {
+    const tag: [string, string][] = [[BUNDLE.attribute, BUNDLE.name], [BUNDLE.idAttribute, newBundleId()]];
+    cart.addMany([
+      {
+        id: M.id,
+        name: M.title,
+        photo: mc.photos[0] ?? mc.swatch,
+        price: m.price,
+        qty: 1,
+        mode: "As designed",
+        options: [["Size", `${m.label} (${m.dims})`], ["Feel", feelLabel], ["Color", mc.label], ...tag],
+        delivery: bundleMattressDelivery(),
+      },
+      {
+        id: D.id,
+        name: D.title,
+        photo: dc.photos[0] ?? dc.swatch,
+        price: d.price,
+        qty: 1,
+        mode: "As designed",
+        options: [["Size", `${d.label} (${d.dims})`], ["Color", dc.label], ...tag],
+      },
+      {
+        id: BUNDLE_CONFIG.beddingSet.handle,
+        name: bedName,
+        photo: mc.photos[0] ?? mc.swatch,
+        price: bed,
+        qty: 1,
+        mode: "As designed",
+        options: [["Mattress size", m.label], ["Pillow", pil.label], ["Pillow size", pillowSize], ["Cover color", coverColor], ["Includes", "Two pillows and a Mattress Protector"], ...tag],
+      },
+    ]);
+  };
+
+  return (
+    <section className="bundle-build wrap">
+      <div className="bundle-pair">
+        <div className="bundle-shot">
+          <Photo src={mc.photos[0]} label={`${M.title} in ${mc.label}`} sizes="(max-width: 960px) 100vw, 28vw" preload />
+          <span className="bundle-cap">{M.title} · {mc.label}</span>
+        </div>
+        <div className="bundle-plus" aria-hidden="true">+</div>
+        <div className="bundle-shot">
+          <Photo src={dc.photos[0]} label={`${D.title} in ${dc.label}`} sizes="(max-width: 960px) 100vw, 28vw" preload />
+          <span className="bundle-cap">{D.title} · {dc.label}</span>
+        </div>
+      </div>
+
+      <div className="bundle-opts">
+        <div className="eyebrow">Step 1 · The mattress</div>
+        <div className="choices">
+          <OptGroup label="Mattress size" value={`${m.label} · ${m.dims}`}>
+            <Pills options={M.sizes} value={mSize} onChange={setMSize} />
+          </OptGroup>
+          <OptGroup label="Feel" value={feelLabel}>
+            <Pills options={M.feels} value={feel} onChange={setFeel} />
+          </OptGroup>
+          <OptGroup label="Mattress color" value={mc.label}>
+            <Colors colors={M.colors} value={mColor} onChange={setMColor} label="Mattress" />
+          </OptGroup>
+        </div>
+        <div className="eyebrow" style={{ marginTop: 28 }}>Step 2 · The dog bed</div>
+        <div className="choices">
+          <OptGroup label="Dog bed size" value={`${d.label} · ${d.dims}`}>
+            <Pills options={D.sizes} value={dSize} onChange={setDSize} />
+          </OptGroup>
+          <OptGroup label="Dog bed color" value={dc.label}>
+            <Colors colors={D.colors} value={dColor} onChange={setDColor} label="Dog bed" />
+          </OptGroup>
+        </div>
+
+        <div className="eyebrow" style={{ marginTop: 28 }}>Step 3 · The bedding set</div>
+        <p className="fine" style={{ marginTop: 0 }}>Two pillows with removable covers in your mattress color ({coverColor}), plus a Mattress Protector. Pillow size follows your mattress: {pillowSize} in.</p>
+        <div className="choices">
+          <OptGroup label="Pillow" value={pil.label}>
+            <Pills options={BUNDLE_PILLOWS.map((x) => ({ id: x.id as string, label: x.label }))} value={pillow} onChange={setPillow} />
+          </OptGroup>
+        </div>
+        <ul className="fine" style={{ margin: "0 0 8px", paddingLeft: 18 }}>
+          {BUNDLE_PILLOWS.map((x) => <li key={x.id}><strong>{x.label}:</strong> {x.desc}</li>)}
+        </ul>
+
+        <div className="bundle-sum">
+          <div className="bundle-sum-row"><span>{M.title}, {m.label}</span><span>{fmt(m.price)}</span></div>
+          <div className="bundle-sum-row"><span>{D.title}, {d.label}</span><span>{fmt(d.price)}</span></div>
+          <div className="bundle-sum-row"><span>{bedName}: two {pil.label} pillows ({pillowSize} in) with {coverColor} removable covers, and a Mattress Protector</span><span>{fmt(bed)}</span></div>
+          {SALE.active && <div className="bundle-sum-row save"><span>{SALE.percent}% off the bundle</span><span>−{fmt(list - now)}</span></div>}
+          <div className="bundle-sum-row"><span>White glove delivery for the mattress</span><span>{BUNDLE_CONFIG.whiteGloveIncluded ? "Free with the bundle" : fmt(M.delivery.price)}</span></div>
+          <div className="bundle-sum-total">
+            <span className="eyebrow">The bundle</span>
+            <span className="bundle-price">
+              {SALE.active && <s className="price-was">{fmt(list)}</s>}
+              {fmt(now)}
+            </span>
+          </div>
+        </div>
+
+        <ShipsFast when="3–4 days" note="Handmade to order in the USA. Our delivery team will contact you to schedule the mattress once it is made." />
+        <button className="btn full" onClick={add}>Add the bundle to cart · {fmt(now)}</button>
+        <p className="fine">The bedding set is {fmt(bed)} ({BUNDLE_CONFIG.beddingSet.contents}) and free white glove is included, a {fmt(BUNDLE_CONFIG.whiteGloveValue)} value. Priced on its own, a Mattress Protector alone lists from {BUNDLE_CONFIG.protectorListRange}, depending on size.</p>
+        <p className="fine">
+          {SALE.active ? `${SALE.percent}% off is applied automatically at checkout. ` : ""}Taxes calculated at checkout.
+        </p>
+        <TrustRow items={[["hand", "Handmade to order"], ["truck", "White glove, mattress"], ["moon", `${M.guaranteeNights}-night trial`]]} />
+        <p className="fine">
+          Each is also sold on its own: <Link href={MATTRESS_PATH} className="ulink-inline">the Ashbury</Link> and <Link href={D.path} className="ulink-inline">the Ashbury Dog Bed</Link>.
+        </p>
+      </div>
+    </section>
+  );
+}
