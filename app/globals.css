@@ -944,7 +944,7 @@ button.chip{cursor:pointer}
 /* Landing page */
 .bf-hero{position:relative;height:42vh;min-height:300px;max-height:460px;overflow:hidden;background:var(--moss)}
 .bf-hero img{object-fit:cover;object-position:50% 62%}
-.bf-hero-scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(40,28,22,.05) 0%,rgba(40,28,22,.2) 30%,rgba(30,20,15,.78) 100%)}
+.bf-hero-scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(40,28,22,.1) 0%,rgba(40,28,22,.35) 35%,rgba(30,20,15,.85) 100%)}
 .bf-hero-txt{position:absolute;left:0;right:0;bottom:7%;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 20px;gap:8px;color:var(--alabaster);text-shadow:0 1px 18px rgba(20,18,14,.35)}
 .bf-hero-txt .h1{font-size:clamp(34px,4.6vw,64px);margin:0}
 .bf-hero-txt .hero-body{margin:0;font-size:16px}
