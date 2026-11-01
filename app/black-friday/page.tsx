@@ -8,7 +8,7 @@ import { Photo } from "@/components/photo";
 import { DOG_BED } from "@/lib/dog-bed";
 import { MATTRESS } from "@/lib/mattress";
 import { fmt, productsIn } from "@/lib/products";
-import { BUNDLE, BUNDLE_CONFIG, SALE, bundlePrice, salePrice } from "@/lib/sale";
+import { BUNDLE, BUNDLE_HERO, BUNDLE_CONFIG, SALE, bundlePrice, salePrice } from "@/lib/sale";
 
 export const metadata: Metadata = {
   title: "Black Friday at Ashwick: 20% off everything",
@@ -55,7 +55,7 @@ export default function BlackFridayPage() {
       <section className="sec tint bf-bundle" id="bundle">
         <div className="wrap bf-bundle-in">
           <Link href={BUNDLE.path} className="bf-bundle-img" aria-label={BUNDLE.title}>
-            <Photo src="dog-bed-sorrel-room" label="A chocolate doodle curled up on the Ashbury Dog Bed in Sorrel beside a bed" sizes="(max-width: 960px) 100vw, 50vw" />
+            <Photo src={BUNDLE_HERO.photo} label={BUNDLE_HERO.alt} sizes="(max-width: 960px) 100vw, 50vw" />
           </Link>
           <div className="bf-bundle-t">
             <div className="eyebrow">Only at Ashwick</div>

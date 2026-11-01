@@ -7,6 +7,27 @@
  * Deliberately no end date, countdown or scarcity wording anywhere on the site.
  */
 import { MATTRESS } from "@/lib/mattress";
+import type { PhotoKey } from "@/lib/photos";
+
+/**
+ * HERO IMAGE SLOT for the Best Friends Bundle (bundle page and /black-friday). Until the owner supplies the final
+ * hero, this falls back to existing site photography. To swap: add the image to lib/photos.ts, set `photo` to its key
+ * and `isFinal` to true. Do not use third-party (e.g. competitor) imagery here.
+ */
+export const BUNDLE_HERO: { photo: PhotoKey; alt: string; isFinal: boolean } = {
+  photo: "dog-bed-sorrel-room",
+  alt: "A chocolate doodle curled up on the Ashbury Dog Bed in Sorrel beside a bed",
+  isFinal: false,
+};
+
+/** The two pillows that can come in the bedding set (Shopify option "Pillow" values), with one factual line each. */
+export const BUNDLE_PILLOWS = [
+  { id: "horsehair-wool", label: "Horse hair & Wool", desc: "OEKO-TEX horsetail hair wrapped in wool, in an organic cotton barrier case. Medium firm." },
+  { id: "living-wool", label: "Living Wool", desc: "Wool fill in an organic cotton sateen case. Medium firm." },
+] as const;
+
+/** Bedding cover colors (Shopify option "Cover color"). The Ashbury's four colors map one to one by id, so the cover follows the mattress color. */
+export const BUNDLE_COVER_BY_MATTRESS_COLOR: Record<string, string> = { natural: "Fleece", dove: "Flint", safari: "Flax", mocha: "Sorrel" };
 
 export const SALE = {
   active: true,
@@ -28,7 +49,7 @@ export const BUNDLE_CONFIG = {
     handle: "best-friends-bedding-set",
     contents: "2 pillows and a Mattress Protector",
     /** Pillow size that comes with each mattress size (by MATTRESS size id). */
-    pillowSize: { "twin-xl": "26×20", full: "26×20", queen: "30×20", "eastern-king": "36×20", "cal-king": "36×20" } as Record<string, string>,
+    pillowSize: { "twin-xl": "20×26", full: "20×26", queen: "20×30", "eastern-king": "20×36", "cal-king": "20×36" } as Record<string, string>,
   },
   /** Protector list price by size is $249 to $299 in Shopify. Per-size mapping not wired, so only the range is shown. */
   protectorListRange: "$249 to $299",
@@ -38,6 +59,8 @@ export const BUNDLE_CONFIG = {
   whiteGloveValue: 200,
 };
 
+/** Pillow size name by mattress size id (Standard, Queen, King). */
+export const pillowSizeNameFor = (id: string) => ({ "twin-xl": "Standard", full: "Standard", queen: "Queen", "eastern-king": "King", "cal-king": "King" } as Record<string, string>)[id] ?? "";
 export const pillowSizeFor = (mattressSizeId: string) => BUNDLE_CONFIG.beddingSet.pillowSize[mattressSizeId] ?? "";
 
 export const BUNDLE = {

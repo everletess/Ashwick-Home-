@@ -10,7 +10,7 @@ import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
 import { DOG_BED } from "@/lib/dog-bed";
 import { PHOTOS } from "@/lib/photos";
 import { fmt } from "@/lib/products";
-import { BUNDLE, BUNDLE_CONFIG, SALE, bundleMattressDelivery, bundlePrice, pillowSizeFor } from "@/lib/sale";
+import { BUNDLE, BUNDLE_CONFIG, SALE, bundleMattressDelivery, bundlePrice, pillowSizeFor, pillowSizeNameFor, BUNDLE_PILLOWS, BUNDLE_COVER_BY_MATTRESS_COLOR } from "@/lib/sale";
 
 /** Ties the three cart lines of one bundle together (and the pair on the order). */
 const newBundleId = () => `${BUNDLE.name}-${Math.random().toString(36).slice(2, 8)}`;
@@ -51,11 +51,15 @@ export function BundleBuilder() {
   const [mColor, setMColor] = useState(M.defaultColor);
   const [dSize, setDSize] = useState("medium");
   const [dColor, setDColor] = useState(D.defaultColor);
+  const [pillow, setPillow] = useState<string>(BUNDLE_PILLOWS[0].id);
 
   const { m, d, bed, list, now } = bundleTotals(mSize, dSize);
   const mc = M.colors.find((c) => c.id === mColor) ?? M.colors[0];
   const dc = D.colors.find((c) => c.id === dColor) ?? D.colors[0];
   const pillows = pillowSizeFor(m.id);
+  const pil = BUNDLE_PILLOWS.find((x) => x.id === pillow) ?? BUNDLE_PILLOWS[0];
+  const pillowSize = `${pillowSizeNameFor(m.id)} ${pillows.replace("×", "x")}`;
+  const coverColor = BUNDLE_COVER_BY_MATTRESS_COLOR[mc.id] ?? mc.label;
   const bedName = BUNDLE_CONFIG.beddingSet.name;
   const feelLabel = M.feels.find((f) => f.id === feel)!.label;
 
@@ -88,7 +92,7 @@ export function BundleBuilder() {
         price: bed,
         qty: 1,
         mode: "As designed",
-        options: [["Mattress size", m.label], ["Pillows", `Two pillows, ${pillows} in`], ["Includes", "Mattress Protector"], ...tag],
+        options: [["Mattress size", m.label], ["Pillow", pil.label], ["Pillow size", pillowSize], ["Cover color", coverColor], ["Includes", "Two pillows and a Mattress Protector"], ...tag],
       },
     ]);
   };
@@ -130,10 +134,21 @@ export function BundleBuilder() {
           </OptGroup>
         </div>
 
+        <div className="eyebrow" style={{ marginTop: 28 }}>Step 3 · The bedding set</div>
+        <p className="fine" style={{ marginTop: 0 }}>Two pillows with removable covers in your mattress color ({coverColor}), plus a Mattress Protector. Pillow size follows your mattress: {pillowSize} in.</p>
+        <div className="choices">
+          <OptGroup label="Pillow" value={pil.label}>
+            <Pills options={BUNDLE_PILLOWS.map((x) => ({ id: x.id, label: x.label }))} value={pillow} onChange={setPillow} />
+          </OptGroup>
+        </div>
+        <ul className="fine" style={{ margin: "0 0 8px", paddingLeft: 18 }}>
+          {BUNDLE_PILLOWS.map((x) => <li key={x.id}><strong>{x.label}:</strong> {x.desc}</li>)}
+        </ul>
+
         <div className="bundle-sum">
           <div className="bundle-sum-row"><span>{M.title}, {m.label}</span><span>{fmt(m.price)}</span></div>
           <div className="bundle-sum-row"><span>{D.title}, {d.label}</span><span>{fmt(d.price)}</span></div>
-          <div className="bundle-sum-row"><span>{bedName}: two pillows sized to your mattress ({pillows} in) and a Mattress Protector</span><span>{fmt(bed)}</span></div>
+          <div className="bundle-sum-row"><span>{bedName}: two {pil.label} pillows ({pillowSize} in) with {coverColor} removable covers, and a Mattress Protector</span><span>{fmt(bed)}</span></div>
           {SALE.active && <div className="bundle-sum-row save"><span>{SALE.percent}% off the bundle</span><span>−{fmt(list - now)}</span></div>}
           <div className="bundle-sum-row"><span>White glove delivery for the mattress</span><span>{BUNDLE_CONFIG.whiteGloveIncluded ? "Free with the bundle" : fmt(M.delivery.price)}</span></div>
           <div className="bundle-sum-total">
