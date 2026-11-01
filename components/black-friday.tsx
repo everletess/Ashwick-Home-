@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Photo } from "@/components/photo";
 import { Price, SaleTag } from "@/components/sale";
 import { DOG_BED, NOOK, type DogBed } from "@/lib/dog-bed";
+import { Stars } from "@/components/reviews";
 import { fmt } from "@/lib/products";
 import { BUNDLE, SALE, salePrice } from "@/lib/sale";
 
@@ -87,3 +88,33 @@ export const DOG_BED_CARDS = [
   { bed: DOG_BED, photo: "dog-bed-sorrel-room-golden", alt: "dog-bed-flint-room", blurb: "Flat and low, in the Ashbury's four colors." },
   { bed: NOOK, photo: "nook-olive-room", alt: "nook-oat", blurb: "A deep, curved bolster to curl up in." },
 ] as const;
+
+/** Compact mobile product card for the swipe rows. Stars only where real reviews exist. */
+export function SwipeCard({ href, photo, name, price, from, rating, count, wide }: { href: string; photo: Parameters<typeof Photo>[0]["src"]; name: string; price: number; from?: boolean; rating?: number; count?: number; wide?: boolean }) {
+  const now = salePrice(price);
+  return (
+    <Link href={href} className={"bf-sw" + (wide ? " wide" : "")}>
+      <div className="bf-sw-img"><Photo src={photo} label={name} fill sizes="(max-width: 760px) 46vw, 300px" /></div>
+      <div className="bf-sw-name">{name}</div>
+      {count ? <div className="bf-sw-rt"><Stars rating={rating ?? 0} /> <span>{rating?.toFixed(1)} ({count})</span></div> : null}
+      <div className="bf-sw-p">{from && <span className="bf-from">From </span>}<strong>{fmt(now)}</strong> <s>{fmt(price)}</s></div>
+      <div className="bf-save">Save {fmt(Math.round((price - now) * 100) / 100)}</div>
+    </Link>
+  );
+}
+
+/** Mobile bundle card: sale price big, list struck through, bold dollar saving. */
+export function BundleCard({ href, photo, alt, title, desc, was, now }: { href: string; photo: Parameters<typeof Photo>[0]["src"]; alt: string; title: string; desc: string; was: number; now: number }) {
+  return (
+    <Link href={href} className="bf-bc">
+      <div className="bf-bc-img"><Photo src={photo} label={alt} fill sizes="(max-width: 760px) 80vw, 300px" /></div>
+      <div className="bf-bc-t">
+        <h3 className="bf-bc-h">{title}</h3>
+        <p className="bf-bc-d">{desc}</p>
+        <div className="bf-bc-p"><span className="bf-from">From </span><strong>{fmt(now)}</strong> <s>{fmt(was)}</s></div>
+        <div className="bf-bc-save">You save {fmt(Math.round((was - now) * 100) / 100)}</div>
+        <span className="btn bf-bc-cta">Shop the bundle</span>
+      </div>
+    </Link>
+  );
+}
