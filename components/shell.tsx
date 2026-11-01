@@ -181,7 +181,7 @@ export function AnnouncementBar() {
       <div className="announce announce-sale">
         <Link href={SALE.path} className="announce-link">
           <span className="announce-long">{SALE.name} at Ashwick: {SALE.percent}% off everything, free white glove with the Best Friends Bundle.</span>
-          <span className="announce-short">{SALE.name}: {SALE.percent}% off · Free white glove with the bundle</span>
+          <span className="announce-short">{SALE.percent}% off everything · Free white glove with bundle</span>
         </Link>
         <button
           type="button"
