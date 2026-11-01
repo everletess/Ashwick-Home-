@@ -4,11 +4,11 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import { track } from "@/lib/pixel";
 import { trackAddedToCart } from "@/lib/subscribe";
 import type { PhotoKey } from "@/lib/photos";
-import { BUNDLE, bundlePrice, deliveryFor, salePrice } from "@/lib/sale";
+import { bundlePrice, bundleTitleFor, deliveryFor, salePrice } from "@/lib/sale";
 
-/** The Best Friends Bundle id a line belongs to (all lines of the bundle share it), if any. */
+/** The bundle id a line belongs to (all lines of the bundle share it), if any. */
 export const bundleIdOf = (l: { options: [string, string][] }) =>
-  l.options.find(([k]) => k === BUNDLE.attribute) ? (l.options.find(([k]) => k === BUNDLE.idAttribute)?.[1] ?? "bundle") : null;
+  l.options.find(([k]) => k === "_Bundle") ? (l.options.find(([k]) => k === "_Bundle ID")?.[1] ?? "bundle") : null;
 
 /** What one unit of a line costs now: the sale price plus any per-piece delivery. Matches what Shopify charges at checkout. */
 export const unitTotal = (l: { id: string; price: number | null; options?: [string, string][]; delivery?: { label: string; price: number } }) =>
@@ -85,7 +85,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setItems((c) => [...c, ...lines.map((l) => ({ ...l, lineId: Math.random().toString(36).slice(2, 9) }))]);
     track("AddToCart", {
       content_ids: lines.map((l) => l.id),
-      content_name: BUNDLE.title,
+      content_name: bundleTitleFor(lines[0]?.options.find(([k]) => k === "_Bundle")?.[1] ?? ""),
       content_type: "product",
       contents: lines.map((l) => ({ id: l.id, quantity: l.qty, item_price: l.price == null ? undefined : salePrice(l.price) })),
       value: lines.reduce((s, l) => s + unitTotal(l) * l.qty, 0),
