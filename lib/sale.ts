@@ -17,8 +17,14 @@ import type { PhotoKey } from "@/lib/photos";
  */
 export const BUNDLE_HERO: { photo: PhotoKey; alt: string; isFinal: boolean } = {
   photo: "bundle-hero",
-  alt: "Two cream pillows on a travertine ledge beside a stack of four removable covers in different colors",
+  alt: "A terracotta Ashbury mattress on an oak bed frame, with a matching dog bed in the foreground and a curly golden dog resting on it",
   isFinal: true,
+};
+
+/** The pillow photo (two cream pillows beside a stack of removable covers), used on the standalone pillow page. */
+export const PILLOW_HERO: { photo: PhotoKey; alt: string } = {
+  photo: "pillow-hero",
+  alt: "Two cream pillows on a travertine ledge beside a stack of four removable covers in different colors",
 };
 
 /** The four approved pillows that can come in the bedding set (Shopify option "Pillow" values), with one factual line each. */

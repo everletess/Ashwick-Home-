@@ -32,6 +32,7 @@ import fiberKashmir from "@/assets/photos/fiber-kashmir.jpg";
 import frameFillCover from "@/assets/photos/frame-fill-cover.jpg";
 import bfBanner from "@/assets/photos/bf-banner.jpg";
 import bundleHero from "@/assets/photos/bundle-hero.jpg";
+import pillowHero from "@/assets/photos/pillow-hero.jpg";
 import hero from "@/assets/photos/hero.jpg";
 import heroFamily from "@/assets/photos/hero-family.jpg";
 import heroBedroom from "@/assets/photos/hero-bedroom.jpg";
@@ -230,6 +231,7 @@ export const PHOTOS = {
   "nook-olive-room": nookOliveRoom,
   "bf-banner": bfBanner,
   "bundle-hero": bundleHero,
+  "pillow-hero": pillowHero,
   "nook-olive-sizes": nookOliveSizes,
   "nook-oat": nookOat,
   "nook-olive": nookOlive,
