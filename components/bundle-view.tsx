@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useCart } from "@/components/cart";
 import { Photo } from "@/components/photo";
 import { OptGroup, Pills } from "@/components/product-view";
 import { ShipsFast, TrustRow } from "@/components/buy-icons";
+import { StickyBuy } from "@/components/sticky-buy";
 import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
 import { DOG_BED } from "@/lib/dog-bed";
 import { PHOTOS } from "@/lib/photos";
@@ -46,6 +47,7 @@ function Colors({ colors, value, onChange, label }: { colors: { id: string; labe
 /** Choose an Ashbury and an Ashbury Dog Bed, see the bundle price (with the bedding set), and add all three to the cart in one action. */
 export function BundleBuilder() {
   const cart = useCart();
+  const buyRef = useRef<HTMLButtonElement>(null);
   const [mSize, setMSize] = useState("queen");
   const [feel, setFeel] = useState(M.feels[0].id);
   const [mColor, setMColor] = useState(M.defaultColor);
@@ -161,7 +163,8 @@ export function BundleBuilder() {
         </div>
 
         <ShipsFast when="3–4 days" note="Handmade to order in the USA. Our delivery team will contact you to schedule the mattress once it is made." />
-        <button className="btn full" onClick={add}>Add the bundle to cart · {fmt(now)}</button>
+        <button ref={buyRef} className="btn full" onClick={add}>Add the bundle to cart · {fmt(now)}</button>
+        <StickyBuy watch={buyRef} name="The Best Friends Bundle" summary="Mattress, dog bed and bedding set" price={now} cta="Add to cart" onAdd={add} />
         <p className="fine">The bedding set is {fmt(bed)} ({BUNDLE_CONFIG.beddingSet.contents}) and free white glove is included, a {fmt(BUNDLE_CONFIG.whiteGloveValue)} value. Priced on its own, a Mattress Protector alone lists from {BUNDLE_CONFIG.protectorListRange}, depending on size.</p>
         <p className="fine">
           {SALE.active ? `${SALE.percent}% off is applied automatically at checkout. ` : ""}Taxes calculated at checkout.
@@ -178,6 +181,7 @@ export function BundleBuilder() {
 /** The Complete Sleep Suite: an Ashbury plus the Best Friends Bedding Set (no dog bed). Compact: pickers, live total and one button. */
 export function SleepSuiteBuilder() {
   const cart = useCart();
+  const buyRef = useRef<HTMLButtonElement>(null);
   const [mSize, setMSize] = useState("queen");
   const [feel, setFeel] = useState(M.feels[0].id);
   const [mColor, setMColor] = useState(M.defaultColor);
@@ -255,7 +259,8 @@ export function SleepSuiteBuilder() {
           </div>
         </div>
 
-        <button className="btn full" onClick={add}>Add the suite to cart · {fmt(now)}</button>
+        <button ref={buyRef} className="btn full" onClick={add}>Add the suite to cart · {fmt(now)}</button>
+        <StickyBuy watch={buyRef} name="The Complete Sleep Suite" summary="Mattress and bedding set" price={now} cta="Add to cart" onAdd={add} />
         <p className="fine">Free white glove delivery for the mattress is included with this bundle; on its own it is {fmt(M.delivery.price)}. {SALE.active ? `${SALE.percent}% off is applied automatically at checkout. ` : ""}Taxes calculated at checkout.</p>
         <ShipsFast when="3–4 days" note="Handmade to order in the USA. Our delivery team will contact you to schedule the mattress once it is made." />
         <TrustRow items={[["hand", "Handmade to order"], ["truck", "White glove, mattress"], ["moon", `${M.guaranteeNights}-night trial`]]} />
