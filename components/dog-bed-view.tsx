@@ -1,5 +1,6 @@
 "use client";
 
+import { SALE } from "@/lib/sale";
 import { useRef, useState } from "react";
 import { DogBedNotify } from "@/components/dog-bed-notify";
 import { Photo } from "@/components/photo";
@@ -140,7 +141,7 @@ export function DogBedView({ bed: D = DOG_BED, children }: { bed?: DogBed; child
         )}
         {D.comingSoon && (
           <div className="dog-soon">
-            <p className="body small">Launching soon. Sign up and we&apos;ll let you know the day it&apos;s here, with 15% off your first order.</p>
+            <p className="body small">Launching soon. Sign up and we&apos;ll let you know the day it&apos;s here.{!SALE.active && " Plus 15% off your first order."}</p>
             <DogBedNotify />
           </div>
         )}

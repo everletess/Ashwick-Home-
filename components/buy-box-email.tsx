@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { SALE } from "@/lib/sale";
 import { SUBSCRIBED_EVENT, SUBSCRIBED_KEY, subscribeEmail } from "@/lib/subscribe";
 
 const DISCOUNT_CODE = "ASHWICK15";
@@ -37,17 +38,17 @@ export function BuyBoxEmail() {
   if (status === "done") {
     return (
       <p className="bb-email-done" role="status">
-        You&apos;re on the list. Your 15% code is on its way: {DISCOUNT_CODE}
+        {SALE.active ? "You&apos;re on the list." : <>You&apos;re on the list. Your 15% code is on its way: {DISCOUNT_CODE}</>}
       </p>
     );
   }
   if (known) return null;
   return (
     <div className="bb-email">
-      <p className="bb-email-h">Not ready yet? Take 15% off your first order.</p>
+      <p className="bb-email-h">{SALE.active ? "Not ready yet? Join the Ashwick Letter." : "Not ready yet? Take 15% off your first order."}</p>
       <form className="bb-email-form" onSubmit={submit} noValidate>
         <input type="email" required placeholder="Email address" aria-label="Email address" value={email} onChange={(e) => { setEmail(e.target.value); setStatus("idle"); }} autoComplete="email" />
-        <button type="submit" disabled={status === "loading"}>{status === "loading" ? "…" : "Send my code"}</button>
+        <button type="submit" disabled={status === "loading"}>{status === "loading" ? "…" : SALE.active ? "Sign up" : "Send my code"}</button>
       </form>
       {status === "error" && <p className="form-error" role="alert">{errorMsg}</p>}
       <p className="bb-email-fine">Joins The Ashwick Letter. Unsubscribe any time.</p>

@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useCart } from "@/components/cart";
 import { SUBSCRIBED_EVENT, SUBSCRIBED_KEY, subscribeEmail } from "@/lib/subscribe";
+import { SALE } from "@/lib/sale";
 
 const STORAGE_KEY = SUBSCRIBED_KEY;
 const SCROLL_PX = 120; // opens as soon as the visitor scrolls this far (they are reading, not bouncing)
@@ -186,10 +187,10 @@ export function EmailPopup() {
             <p className="ep-eyebrow eyebrow">Welcome</p>
             <p className="ep-h h3" id="ep-title">You&apos;re on the list.</p>
             <p className="ep-body body small" id="ep-desc">
-              Here&apos;s 15% off your first order.{emailed && <> We&apos;ve sent it to your inbox too.</>} The first Ashwick Letter will land in your inbox soon.
+              {SALE.active ? <>Thank you for joining. The first Ashwick Letter will land in your inbox soon.</> : <>Here&apos;s 15% off your first order.{emailed && <> We&apos;ve sent it to your inbox too.</>} The first Ashwick Letter will land in your inbox soon.</>}
             </p>
-            <p className="ep-code">{DISCOUNT_CODE}</p>
-            <p className="fine">Enter it at checkout. One use per customer.</p>
+            {!SALE.active && <><p className="ep-code">{DISCOUNT_CODE}</p>
+            <p className="fine">Enter it at checkout. One use per customer.</p></>}
             <button type="button" className="btn full" onClick={dismiss}>Continue browsing</button>
           </div>
         ) : (
@@ -199,11 +200,11 @@ export function EmailPopup() {
             {/* Phones get the short version (ep-short), a compact card that leaves the page visible. */}
             <p className="ep-h h3" id="ep-title">
               <span className="ep-long">Built to be inherited.</span>
-              <span className="ep-short">15% off your first order</span>
+              <span className="ep-short">{SALE.active ? "Sign up for our newsletter" : "15% off your first order"}</span>
             </p>
             <p className="ep-body body small" id="ep-desc">
-              <span className="ep-long">Join our exclusive organic design newsletter: material stories, natural interiors, and first access to new pieces. Plus 15% off your first order.</span>
-              <span className="ep-short">Join the Ashwick Letter for material stories, new pieces and your code.</span>
+              <span className="ep-long">Join our exclusive organic design newsletter: material stories, natural interiors, and first access to new pieces.{!SALE.active && " Plus 15% off your first order."}</span>
+              <span className="ep-short">{SALE.active ? "Material stories, natural interiors and first access to new pieces." : "Join the Ashwick Letter for material stories, new pieces and your code."}</span>
             </p>
 
             <div className="ep-row">
@@ -270,10 +271,10 @@ export function FooterSignup() {
     <div className="ftr-nl">
       <div className="fcol-t">The Ashwick Letter</div>
       {status === "done" ? (
-        <p className="ftr-nl-done" role="status">You&apos;re on the list. Your 15% code is on its way: {DISCOUNT_CODE}</p>
+        <p className="ftr-nl-done" role="status">{SALE.active ? "You&apos;re on the list." : <>You&apos;re on the list. Your 15% code is on its way: {DISCOUNT_CODE}</>}</p>
       ) : (
         <>
-          <p className="ftr-nl-copy">Material stories and natural interiors, weekly. 15% off your first order.</p>
+          <p className="ftr-nl-copy">Material stories and natural interiors, weekly.{!SALE.active && " 15% off your first order."}</p>
           <form className="nl-form ftr-nl-form" onSubmit={submit} noValidate>
             <input type="email" required placeholder="Email address" aria-label="Email address" value={email} onChange={(e) => { setEmail(e.target.value); setStatus("idle"); }} autoComplete="email" />
             <button type="submit" disabled={status === "loading"}>{status === "loading" ? "…" : "Join"}</button>

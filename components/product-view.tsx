@@ -242,7 +242,7 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
         <h1 className="pdp-name">{p.name}</h1>
         <div className="pdp-price"><Price price={price} from={p.priceFrom} /></div>
         <SaleNote />
-        {p.delivery && <p className="fine delivery">+ {fmt(p.delivery.price)} {p.delivery.label.toLowerCase()}</p>}
+        {p.delivery && <p className="fine delivery">+ {fmt(p.delivery.price)} white glove delivery per order, however many pieces</p>}
         <p className="body">{p.line}</p>
 
         <div className="choices" id={BUY_OPTIONS_ID}>
@@ -288,7 +288,7 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
               name={p.name}
               summary={summary.map(([, v]) => v).join(" · ")}
               price={salePrice(price)}
-              note={p.delivery ? `+ ${fmt(p.delivery.price)} ${p.delivery.label.toLowerCase()}` : undefined}
+              note={p.delivery ? `+ ${fmt(p.delivery.price)} white glove delivery per order` : undefined}
               cta={p.preorder ? "Pre-order" : "Add to cart"}
               onAdd={add}
             />
