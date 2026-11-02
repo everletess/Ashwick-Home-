@@ -3,6 +3,7 @@
 // client API, so only the public company ID is used, never a secret key. Also notifies the studio (best effort).
 
 import { PHOTOS, type PhotoKey } from "@/lib/photos";
+import { bundlePhotoFor } from "@/lib/sale";
 
 const KLAVIYO_COMPANY_ID = process.env.NEXT_PUBLIC_KLAVIYO_COMPANY_ID ?? "";
 const KLAVIYO_LIST_ID = process.env.NEXT_PUBLIC_KLAVIYO_LIST_ID ?? "";
@@ -97,6 +98,17 @@ export type SavedCartLine = { productId: string; name: string; qty: number; pric
  * One cart line as the saved-cart and abandoned-cart emails read it: the shopper's own photo (absolute URL, resized),
  * and only the options a shopper chose. Internal tags such as _Bundle and _Bundle ID start with an underscore and stay out.
  */
+const emailImage = (key?: PhotoKey) => {
+  const src = key ? PHOTOS[key]?.src : undefined;
+  return src ? `https://ashwickhome.com/_next/image?url=${encodeURIComponent(src)}&w=640&q=75` : "";
+};
+
+/** The email's hero: a bundle's own picture if the cart holds a bundle, else the first item's photo. */
+function heroImage(lines: SavedCartLine[]) {
+  const b = lines.map((l) => l.options.find(([k]) => k === "_Bundle")?.[1]).find(Boolean);
+  return b ? emailImage(bundlePhotoFor(b)) : emailImage(lines[0]?.photo);
+}
+
 function emailItem(l: SavedCartLine) {
   const src = l.photo ? PHOTOS[l.photo]?.src : undefined;
   return {
@@ -163,6 +175,7 @@ export async function saveCart(email: string, lines: SavedCartLine[], total: num
             CheckoutURL: checkoutUrl,
             ItemNames: lines.map((l) => l.name),
             Items: lines.map(emailItem),
+            HeroImage: heroImage(lines),
             Total: total,
           },
         },
@@ -202,6 +215,7 @@ async function sendAddedToCart(email: string, lines: SavedCartLine[], total: num
             CheckoutURL: checkoutUrl,
             ItemNames: lines.map((l) => l.name),
             Items: lines.map(emailItem),
+            HeroImage: heroImage(lines),
             Total: total,
           },
         },

@@ -18,7 +18,7 @@ function useScrollLock(locked: boolean) {
   }, [locked]);
 }
 import { bundleIdOf, useCart, type CartLine } from "@/components/cart";
-import { BUNDLE_CONFIG, bundleTitleFor, SALE, bundlePrice, deliveryFor, isFurnitureLine, orderDelivery, salePrice } from "@/lib/sale";
+import { BUNDLE_CONFIG, bundlePhotoFor, bundleTitleFor, SALE, bundlePrice, deliveryFor, isFurnitureLine, orderDelivery, salePrice } from "@/lib/sale";
 import { STUDIO_PHONE } from "@/lib/site";
 import { SHOW_SIGNUP_EVENT } from "@/components/email-popup";
 import { SUBSCRIBED_EVENT, SUBSCRIBED_KEY } from "@/lib/subscribe";
@@ -424,7 +424,7 @@ export function CartDrawer() {
             g.bundle ? (
               <div className="line bundle-line" key={g.lines[0].lineId}>
                 <div className="bundle-pics">
-                  {g.lines.map((i) => <Photo key={i.lineId} src={i.photo} label={i.name} className="line-img" sizes="96px" preload />)}
+                  <Photo src={bundlePhotoFor(g.lines[0].options.find(([k]) => k === "_Bundle")?.[1] ?? "")} label={bundleTitleFor(g.lines[0].options.find(([k]) => k === "_Bundle")?.[1] ?? "")} className="line-img" sizes="96px" preload />
                 </div>
                 <div>
                   <div className="line-top">
