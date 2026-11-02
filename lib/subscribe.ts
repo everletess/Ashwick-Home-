@@ -217,7 +217,7 @@ async function trackExistingCart(email: string): Promise<void> {
     if (!Array.isArray(items) || items.length === 0) return;
     const lines = items.map((i) => ({ productId: i.id, name: i.name, qty: i.qty, price: i.price, options: i.options ?? [] }));
     const unpriced = items.some((i) => i.price == null);
-    const total = unpriced ? null : items.reduce((t, i) => t + ((i.price ?? 0) + (i.delivery?.price ?? 0)) * i.qty, 0);
+    const total = unpriced ? null : items.reduce((t, i) => t + ((i.price ?? 0) + (i.id === "natural-mattress" ? (i.delivery?.price ?? 0) : 0)) * i.qty, 0) + (items.some((i) => i.delivery && i.id !== "natural-mattress") ? 450 : 0);
     await sendAddedToCart(email, lines, total);
   } catch {
     // Never let tracking break sign-up.

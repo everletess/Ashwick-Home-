@@ -67,7 +67,7 @@ export default function BlackFridayPage() {
   const faq: [string, string][] = [
     ["When will it ship?", "Mattresses and dog beds ship within 3\u20134 days of your order. Furniture as designed ships within 3\u20134 weeks; customized furniture within 8\u201312 weeks."],
     ["What is the return policy?", "Mattress: a 100-night trial, with a 30-night minimum before you request a return. Dog beds: 30 days from delivery. Furniture as designed: 14 days from delivery, unused, less return shipping and a 15% restocking fee. Customized furniture is final sale."],
-    ["What does white glove delivery cost?", `$${BUNDLE_CONFIG.whiteGloveValue} per mattress and $750 per piece of furniture. It is free for the mattress in a bundle.`],
+    ["What does white glove delivery cost?", `$${BUNDLE_CONFIG.whiteGloveValue} per mattress and a flat $450 per order for furniture, however many pieces. It is free for the mattress in a bundle.`],
     ["Can I pay in installments?", "Yes. Shop Pay Installments is available at checkout, subject to approval."],
   ];
 
@@ -183,7 +183,7 @@ export default function BlackFridayPage() {
             <li>Free white glove with a bundle</li>
           </ul>
           <p className="bf-fine">
-            Discount applied automatically at checkout. White glove delivery is free for the mattress in a bundle; otherwise $200 per mattress and $750 per piece of furniture. Taxes calculated at checkout.{" "}
+            Discount applied automatically at checkout. White glove delivery is free for the mattress in a bundle; otherwise $200 per mattress and a flat $450 per order for furniture, however many pieces. Taxes calculated at checkout.{" "}
             <Link href="/collections/all">All products</Link>
           </p>
         </div>

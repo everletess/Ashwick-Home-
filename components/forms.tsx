@@ -3,6 +3,7 @@
 // Every form posts to /api/forms, which emails the studio. A failed send shows an
 // error with the studio's address rather than a thank-you.
 import { useRef, useState } from "react";
+import { SALE } from "@/lib/sale";
 
 import { BESPOKE_REPLY } from "@/lib/bespoke";
 import { STUDIO_EMAIL } from "@/lib/site";
@@ -88,9 +89,9 @@ export function Newsletter() {
     <section className="sec nl">
       <div className="wrap center-head">
         <h2 className="h2">The Ashwick Letter.</h2>
-        <p className="body" style={{ marginTop: 20 }}>Our organic design newsletter: material stories, natural interiors, and first access to new pieces. Plus 15% off your first order.</p>
+        <p className="body" style={{ marginTop: 20 }}>Our organic design newsletter: material stories, natural interiors, and first access to new pieces.{!SALE.active && " Plus 15% off your first order."}</p>
         {sent ? (
-          <p className="nl-done" role="status">Thank you. You&apos;re on the list. Your 15% code, ASHWICK15, is on its way.</p>
+          <p className="nl-done" role="status">Thank you. You&apos;re on the list. {SALE.active ? "" : "Your 15% code, ASHWICK15, is on its way."}</p>
         ) : (
           <>
             <form className="nl-form" onSubmit={onSubmit}>

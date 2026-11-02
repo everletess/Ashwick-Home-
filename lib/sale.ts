@@ -7,6 +7,7 @@
  * Deliberately no end date, countdown or scarcity wording anywhere on the site.
  */
 import { MATTRESS } from "@/lib/mattress";
+import { FURNITURE_DELIVERY_PRICE } from "@/lib/products";
 import { PILLOW_TYPES } from "@/lib/pillow";
 import type { PhotoKey } from "@/lib/photos";
 
@@ -107,6 +108,13 @@ export const bundleMattressDelivery = () => ({ label: MATTRESS.delivery.label, p
 
 /** A cart line's delivery as stored. */
 export const deliveryFor = (line: { id: string; delivery?: { label: string; price: number } }) => line.delivery;
+
+/** Furniture lines: any line with white glove that is not the mattress. Ignores a stale stored price (older saved carts say $750). */
+export const isFurnitureLine = (line: { id: string; delivery?: { label: string; price: number } }) => !!line.delivery && line.id !== MATTRESS.id;
+
+/** The one flat furniture delivery charge for the whole order: $450 if any furniture is in the cart, else $0. */
+export const orderDelivery = (lines: { id: string; delivery?: { label: string; price: number } }[]) =>
+  lines.some(isFurnitureLine) ? FURNITURE_DELIVERY_PRICE : 0;
 
 /** Sleep Suite price for a mattress size (index into MATTRESS.sizes, or size id): mattress + bedding set, at list and after the sitewide percent. */
 export function sleepSuitePrice(sizeIndexOrId: number | string = 0) {

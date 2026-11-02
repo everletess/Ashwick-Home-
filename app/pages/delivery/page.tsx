@@ -20,7 +20,7 @@ export default function DeliveryPage() {
         <p className="body">Pieces as designed ship within 3–4 weeks of your order. Customized pieces ship within 8–12 weeks. For pieces available to pre-order, we confirm your order and estimated ship date by email.</p>
         {whiteGlove && (
           <p className="body">
-            {whiteGlove.label} is {fmt(whiteGlove.price)} per piece, shown on each product page.
+            {whiteGlove.label} for furniture is a flat {fmt(whiteGlove.price)} per order, however many pieces are in it, and is added once at checkout.
           </p>
         )}
       </Block>

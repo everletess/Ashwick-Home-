@@ -104,7 +104,7 @@ export type Product = {
   hideInNames?: boolean;
   /** Plinth wood choice, in place of the finish option. */
   wood?: boolean;
-  /** Delivery charged per piece on top of the price. */
+  /** Furniture delivery: one flat charge per order on top of the pieces (see FURNITURE_DELIVERY_PRICE). */
   delivery?: { label: string; price: number };
   /** Measurements in inches: overall size first, then the detail rows. */
   dimensions?: { overall: string; rows: [string, string][] };
@@ -154,7 +154,9 @@ export const nearestPhoto = (p: Product, sel: PhotoTag) =>
   p.photos.find((ph) => p.photoTags?.[ph] && TINTABLE[ph]) ??
   p.photos.find((ph) => p.photoTags?.[ph]);
 
-const WHITE_GLOVE = { label: "White glove delivery", price: 750 };
+/** Furniture white glove: one flat charge per ORDER (not per piece). Must equal the Shopify "White Glove Delivery" profile rate. */
+export const FURNITURE_DELIVERY_PRICE = 450;
+const WHITE_GLOVE = { label: "White glove delivery", price: FURNITURE_DELIVERY_PRICE };
 
 /** Construction spec from the workshop (Sue). Same for every sofa, and for every chair. */
 export type Construction = { statement: string; intro: string; rows: [string, string][] };

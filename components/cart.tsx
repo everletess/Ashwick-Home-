@@ -4,15 +4,19 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import { track } from "@/lib/pixel";
 import { trackAddedToCart } from "@/lib/subscribe";
 import type { PhotoKey } from "@/lib/photos";
-import { bundlePrice, bundleTitleFor, deliveryFor, salePrice } from "@/lib/sale";
+import { bundlePrice, bundleTitleFor, orderDelivery, salePrice } from "@/lib/sale";
 
 /** The bundle id a line belongs to (all lines of the bundle share it), if any. */
 export const bundleIdOf = (l: { options: [string, string][] }) =>
   l.options.find(([k]) => k === "_Bundle") ? (l.options.find(([k]) => k === "_Bundle ID")?.[1] ?? "bundle") : null;
 
-/** What one unit of a line costs now: the sale price plus any per-piece delivery. Matches what Shopify charges at checkout. */
+/** What one unit of a line costs now (sale price). Delivery is added once per order by `orderDelivery`, not per line; the mattress' own delivery is per mattress. */
 export const unitTotal = (l: { id: string; price: number | null; options?: [string, string][]; delivery?: { label: string; price: number } }) =>
-  (l.options && bundleIdOf({ options: l.options }) ? bundlePrice(l.price ?? 0) : salePrice(l.price ?? 0)) + (deliveryFor(l)?.price ?? 0);
+  (l.options && bundleIdOf({ options: l.options }) ? bundlePrice(l.price ?? 0) : salePrice(l.price ?? 0)) + mattressDeliveryOf(l);
+
+import { isFurnitureLine } from "@/lib/sale";
+/** A mattress line carries its own delivery per unit; furniture delivery is per order. */
+const mattressDeliveryOf = (l: { id: string; delivery?: { label: string; price: number } }) => (isFurnitureLine(l) ? 0 : (l.delivery?.price ?? 0));
 
 export type CartLine = {
   lineId: string;
@@ -23,7 +27,7 @@ export type CartLine = {
   qty: number;
   mode: "As designed" | "Customized" | "Pre-order";
   options: [string, string][];
-  /** Per-piece delivery charge (e.g. white glove), added to the subtotal. */
+  /** Delivery as stored on the line. Furniture's is charged once per order (see orderDelivery), not per line. */
   delivery?: { label: string; price: number };
 };
 
@@ -72,12 +76,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       content_name: line.name,
       content_type: "product",
       contents: [{ id: line.id, quantity: line.qty, item_price: line.price ?? undefined }],
-      value: unitTotal(line) * line.qty,
+      value: unitTotal(line) * line.qty + (isFurnitureLine(line) ? orderDelivery([line]) : 0),
     });
     // Tell Klaviyo (known subscribers only) so the abandoned-cart flow can follow up.
     void trackAddedToCart(
       [{ productId: line.id, name: line.name, qty: line.qty, price: line.price, options: line.options }],
-      line.price == null ? null : unitTotal(line) * line.qty,
+      line.price == null ? null : unitTotal(line) * line.qty + (isFurnitureLine(line) ? orderDelivery([line]) : 0),
     );
     setOpen(true);
   }, []);
@@ -88,11 +92,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       content_name: bundleTitleFor(lines[0]?.options.find(([k]) => k === "_Bundle")?.[1] ?? ""),
       content_type: "product",
       contents: lines.map((l) => ({ id: l.id, quantity: l.qty, item_price: l.price == null ? undefined : salePrice(l.price) })),
-      value: lines.reduce((s, l) => s + unitTotal(l) * l.qty, 0),
+      value: lines.reduce((s, l) => s + unitTotal(l) * l.qty, 0) + orderDelivery(lines),
     });
     void trackAddedToCart(
       lines.map((l) => ({ productId: l.id, name: l.name, qty: l.qty, price: l.price, options: l.options })),
-      lines.reduce((s, l) => s + unitTotal(l) * l.qty, 0),
+      lines.reduce((s, l) => s + unitTotal(l) * l.qty, 0) + orderDelivery(lines),
     );
     setOpen(true);
   }, []);
@@ -117,7 +121,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const value = useMemo<Cart>(() => {
     const count = items.reduce((s, i) => s + i.qty, 0);
     const unpriced = items.some((i) => i.price == null);
-    const subtotal = unpriced ? null : items.reduce((s, i) => s + unitTotal(i) * i.qty, 0);
+    const subtotal = unpriced ? null : items.reduce((s, i) => s + unitTotal(i) * i.qty, 0) + orderDelivery(items);
     return { items, open, setOpen, add, addMany, remove, qty, count, subtotal };
   }, [items, open, add, addMany, remove, qty]);
 

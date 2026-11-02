@@ -18,7 +18,7 @@ function useScrollLock(locked: boolean) {
   }, [locked]);
 }
 import { bundleIdOf, useCart, type CartLine } from "@/components/cart";
-import { BUNDLE_CONFIG, bundleTitleFor, SALE, bundlePrice, deliveryFor, salePrice } from "@/lib/sale";
+import { BUNDLE_CONFIG, bundleTitleFor, SALE, bundlePrice, deliveryFor, isFurnitureLine, orderDelivery, salePrice } from "@/lib/sale";
 import { STUDIO_PHONE } from "@/lib/site";
 import { SHOW_SIGNUP_EVENT } from "@/components/email-popup";
 import { SUBSCRIBED_EVENT, SUBSCRIBED_KEY } from "@/lib/subscribe";
@@ -94,7 +94,7 @@ function cartNote(items: { id: string; delivery?: { label: string; price: number
   const mattress = items.some((i) => i.id === MATTRESS.id);
   const dogBeds = items.some((i) => isDogBed(i.id));
   return sale + [
-    items.some((i) => deliveryFor(i)?.price) && "Includes the delivery shown above.",
+    items.some((i) => deliveryFor(i)?.price) && "Includes white glove delivery.",
     dogBeds && "Dog beds ship free.",
     (mattress || dogBeds) && "Ships within 3–4 days.",
     mattress && "Our delivery team will contact you to schedule your mattress delivery.",
@@ -211,7 +211,7 @@ export function AnnouncementBar() {
           aria-hidden={!showOffer}
           onClick={() => window.dispatchEvent(new Event(SHOW_SIGNUP_EVENT))}
         >
-          Click for 15% off your first order
+          {SALE.active ? "Join the Ashwick Letter" : "Click for 15% off your first order"}
         </button>
       )}
     </div>
@@ -463,7 +463,7 @@ export function CartDrawer() {
                       {i.options.filter(([k]) => !k.startsWith("_")).map(([k, v]) => (
                         <div className="line-opt" key={k}><span>{k}</span>{v}</div>
                       ))}
-                      {d && (
+                      {d && !isFurnitureLine(i) && (
                         <div className="line-opt"><span>Delivery</span>{d.label} · {d.price === 0 ? "Complimentary" : fmt(d.price * i.qty)}</div>
                       )}
                       <LineActions line={i} />
@@ -477,6 +477,12 @@ export function CartDrawer() {
         {cart.items.length > 0 && (
           <div className="drawer-f">
             <CartUpsell items={cart.items} onNavigate={close} />
+            {orderDelivery(cart.items) > 0 && (
+              <div className="sub" style={{ marginBottom: 4 }}>
+                <span className="eyebrow">White glove delivery, furniture (one flat charge per order)</span>
+                <span className="sub-v">{fmt(orderDelivery(cart.items))}</span>
+              </div>
+            )}
             <div className="sub">
               <span className="eyebrow">Subtotal</span>
               <span className="sub-v">{fmt(cart.subtotal)}</span>
@@ -492,7 +498,7 @@ export function CartDrawer() {
               Questions? Call or text <a href={`tel:${STUDIO_PHONE.replace(/\D/g, "")}`} style={{ textDecoration: "underline" }}>{STUDIO_PHONE}</a>
             </p>
             {saveState === "done" ? (
-              <p className="fine">Saved. We&rsquo;ve emailed your cart, with 15% off your first order from The Ashwick Letter.</p>
+              <p className="fine">Saved. We&rsquo;ve emailed your cart.{!SALE.active && " Plus 15% off your first order from The Ashwick Letter."}</p>
             ) : (
               <form onSubmit={save} className="save-cart">
                 <button type="button" className="save-cart-toggle" aria-expanded={offerOpen} aria-controls="save-cart-body" onClick={() => setOfferOpen((o) => !o)}>
