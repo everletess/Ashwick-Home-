@@ -108,9 +108,9 @@ export default function BlackFridayPage() {
           <p className="bf-msub">Free white glove delivery for the mattress.</p>
           <div className="bf-rail bf-rail-b">
             <BundleCard href={BUNDLE.path} photo={BUNDLE_HERO.photo} alt={BUNDLE_HERO.alt} title={BUNDLE.title}
-              desc="Ashbury mattress, Ashbury Dog Bed and a bedding set." was={bfList} now={bfNow} />
+              desc="Ashbury mattress, Ashbury Dog Bed, and a bedding set of two pillows and a Mattress Protector." was={bfList} now={bfNow} />
             <BundleCard href={SLEEP_SUITE_PATH} photo="sleep-suite-hero" alt="The Complete Sleep Suite: an Ashbury mattress with a bedding set" title="The Complete Sleep Suite"
-              desc="Ashbury mattress and a bedding set." was={ssList} now={ssNow} />
+              desc="Ashbury mattress and a bedding set of two pillows and a Mattress Protector." was={ssList} now={ssNow} />
           </div>
         </section>
         <section className="bf-msec" id="m-gifts">
