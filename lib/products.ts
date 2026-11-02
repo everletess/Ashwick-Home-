@@ -241,11 +241,11 @@ const ALL_PRODUCTS: Product[] = [
     delivery: WHITE_GLOVE,
     materials: "Hand-fluted solid red oak plinth · Irish Linen upholstery · Natural oil finish",
     dimensions: {
-      overall: "88.5″ W × 40″ D × 27″ H",
+      overall: "87″ W × 40″ D × 27″ H",
       rows: [
         ["Seat width", "80″"],
-        ["Seat depth", "23″"],
-        ["Arm height", "20″"],
+        ["Seat depth", "30″ without cushions · 26″ with cushions"],
+        ["Arm height", "27″ (floor to top of arm)"],
         ["Seat cushion", "7″ thick"],
         ["Plinth", "80″ W × 32.5″ D × 7″ H"],
       ],
