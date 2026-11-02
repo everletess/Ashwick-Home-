@@ -45,7 +45,9 @@ export function Assistant() {
   const [busy, setBusy] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => endRef.current?.scrollIntoView({ block: "end" }), [msgs, open]);
+  useEffect(() => {
+    endRef.current?.scrollIntoView({ block: "end" });
+  }, [msgs, open]);
   if (HIDDEN.some((p) => pathname?.startsWith(p))) return null;
 
   async function send(text: string) {

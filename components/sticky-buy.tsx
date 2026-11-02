@@ -58,7 +58,9 @@ export function StickyBuy({ watch, photo, name, summary, price, note, cta, onAdd
   // Rendered on <body> so no transformed or sticky ancestor can trap the fixed bar.
   const [mounted, setMounted] = useState(false);
   // eslint-disable-next-line react-hooks/set-state-in-effect -- portal target exists only after mount
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   if (!mounted) return null;
 
   return createPortal(
