@@ -347,7 +347,7 @@ export function CartDrawer() {
     try {
       await saveCart(
         saveEmail,
-        cart.items.map((i) => ({ productId: i.id, name: i.name, qty: i.qty, price: i.price, options: i.options })),
+        cart.items.map((i) => ({ productId: i.id, name: i.name, qty: i.qty, price: i.price, options: i.options, photo: i.photo })),
         cart.subtotal,
         phone,
       );
@@ -502,7 +502,7 @@ export function CartDrawer() {
             ) : (
               <form onSubmit={save} className="save-cart">
                 <button type="button" className="save-cart-toggle" aria-expanded={offerOpen} aria-controls="save-cart-body" onClick={() => setOfferOpen((o) => !o)}>
-                  <span>Not ready? Email me this cart, plus 15% off.</span>
+                  <span>{SALE.active ? "Not ready? Email me this cart." : "Not ready? Email me this cart, plus 15% off."}</span>
                   <span aria-hidden="true">{offerOpen ? "−" : "+"}</span>
                 </button>
                 {offerOpen && (
