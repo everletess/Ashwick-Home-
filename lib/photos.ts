@@ -51,6 +51,13 @@ import pillowInsideCotton from "@/assets/photos/pillow-inside-cotton.jpg";
 import pillowFillCotton from "@/assets/photos/pillow-fill-cotton.jpg";
 import pillowFillHorsehair from "@/assets/photos/pillow-fill-horsehair.jpg";
 import pillowFillLatex from "@/assets/photos/pillow-fill-latex.jpg";
+import dogBedFleeceCard from "@/assets/photos/dog-bed-fleece-card.jpg";
+import dogBedFlintCard from "@/assets/photos/dog-bed-flint-card.jpg";
+import dogBedFlaxCard from "@/assets/photos/dog-bed-flax-card.jpg";
+import dogBedSorrelCard from "@/assets/photos/dog-bed-sorrel-card.jpg";
+import nookOliveCard from "@/assets/photos/nook-olive-card.jpg";
+import nookOatCard from "@/assets/photos/nook-oat-card.jpg";
+import nookToffeeCard from "@/assets/photos/nook-toffee-card.jpg";
 import pillowStackLedge from "@/assets/photos/pillow-stack-ledge.jpg";
 import pillowStackMeadow from "@/assets/photos/pillow-stack-meadow.jpg";
 import hero from "@/assets/photos/hero.jpg";
@@ -269,6 +276,13 @@ export const PHOTOS = {
   "pillow-fill-cotton": pillowFillCotton,
   "pillow-fill-horsehair": pillowFillHorsehair,
   "pillow-fill-latex": pillowFillLatex,
+  "dog-bed-fleece-card": dogBedFleeceCard,
+  "dog-bed-flint-card": dogBedFlintCard,
+  "dog-bed-flax-card": dogBedFlaxCard,
+  "dog-bed-sorrel-card": dogBedSorrelCard,
+  "nook-olive-card": nookOliveCard,
+  "nook-oat-card": nookOatCard,
+  "nook-toffee-card": nookToffeeCard,
   "pillow-stack-ledge": pillowStackLedge,
   "pillow-stack-meadow": pillowStackMeadow,
   "nook-olive-sizes": nookOliveSizes,

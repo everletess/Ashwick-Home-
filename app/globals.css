@@ -1555,3 +1555,4 @@ button.chip{cursor:pointer}
 
 /* Two- and three-product grids keep the same card width as the four-across grids */
 @media (min-width:1181px){.cc-grid-3{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
