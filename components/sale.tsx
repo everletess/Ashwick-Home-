@@ -2,12 +2,12 @@ import { SALE, salePrice } from "@/lib/sale";
 import { fmt } from "@/lib/products";
 
 /** A price: the sale price with the original struck through while the sale is on, otherwise just the price. */
-export function Price({ price, from }: { price: number; from?: boolean }) {
+export function Price({ price, from, was = true }: { price: number; from?: boolean; was?: boolean }) {
   if (!SALE.active) return <>{from ? "From " : ""}{fmt(price)}</>;
   return (
     <>
       {from ? "From " : ""}
-      <s className="price-was" aria-label={`Original price ${fmt(price)}`}>{fmt(price)}</s>
+      {was && <s className="price-was" aria-label={`Original price ${fmt(price)}`}>{fmt(price)}</s>}
       <span className="price-now" aria-label={`Sale price ${fmt(salePrice(price))}`}>{fmt(salePrice(price))}</span>
     </>
   );

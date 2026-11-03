@@ -11,7 +11,7 @@ import { Lightbox } from "@/components/lightbox";
 import { track } from "@/lib/pixel";
 import { tintFor } from "@/lib/photos";
 import { Price, SaleNote } from "@/components/sale";
-import { salePrice } from "@/lib/sale";
+import { NO_WAS_PRICE, salePrice } from "@/lib/sale";
 import { CUSTOM_LEAD_TIME, FABRICS, LEAD_TIME, WOODS, fmt, getProduct, PHOTO_WOODS, nearestPhoto, photoFor, priceFor, colorsFor, type FabricId, type Option, type PhotoTag } from "@/lib/products";
 
 type Mode = "designed" | "custom";
@@ -240,7 +240,7 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
       <div className="info">
         <div className="eyebrow">{p.type} · Made to order · Handmade in the USA</div>
         <h1 className="pdp-name">{p.name}</h1>
-        <div className="pdp-price"><Price price={price} from={p.priceFrom} /></div>
+        <div className="pdp-price"><Price price={price} from={p.priceFrom} was={!NO_WAS_PRICE.has(p.id)} /></div>
         <SaleNote />
         {p.delivery && <p className="fine delivery">+ {fmt(p.delivery.price)} white glove delivery per order, however many pieces</p>}
         <p className="body">{p.line}</p>
