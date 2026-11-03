@@ -35,6 +35,7 @@ const MATERIAL_LINKS: [string, string, string][] = [
 
 const MATTRESS_LINKS: [string, string, string][] = [
   ["The Ashbury", "Organic mattress, made in color", "/products/luxury-organic-mattress"],
+  ["Pillows", "The Ashwick Pillow, in three fills", "/products/ashwick-pillow"],
   ["Dog Beds", "The Ashbury and The Nook", "/collections/dog-beds"],
 ];
 

@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages = [
     { url: `${BASE}/`, priority: 1.0 },
     { url: `${BASE}/products/luxury-organic-mattress`, priority: 1.0 },
+    { url: `${BASE}/products/ashwick-pillow`, priority: 0.8 },
     { url: `${BASE}/pages/inside-the-ashbury`, priority: 0.9 },
     { url: `${BASE}/collections/all`, priority: 0.8 },
     { url: `${BASE}/collections/sofas`, priority: 0.8 },
