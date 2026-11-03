@@ -130,4 +130,4 @@ export function bundlePhotoFor(bundleName: string): PhotoKey {
 }
 
 /** Products whose list price was raised before they sold at the old price: show only the sale price, no struck-through "was". */
-export const NO_WAS_PRICE = new Set<string>(["marlowe"]);
+export const NO_WAS_PRICE = new Set<string>([]);
