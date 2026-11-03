@@ -18,7 +18,7 @@ const first = (id: string): PhotoKey => {
 /** Shop by category: a swipeable row of 4:5 tiles on a phone (a peek of the next one), a row of six on desktop. */
 export function CategoryRail() {
   const tiles: { name: string; href: string; photo: PhotoKey; alt: string }[] = [
-    { name: "The Ashbury", href: MATTRESS_PATH, photo: "mattress-mocha-room", alt: "The Ashbury mattress in Sorrel in a sunlit bedroom" },
+    { name: "The Ashbury", href: MATTRESS_PATH, photo: "mattress-room-flint", alt: "The Ashbury mattress in Flint on a light oak bed in a sunlit bedroom" },
     { name: "Pillows", href: PILLOW_PATH, photo: "pillow-covers", alt: "Two cream pillows on a travertine ledge beside a stack of removable covers in Sorrel, Fleece, Flint and Flax" },
     { name: "Dog Beds", href: "/collections/dog-beds", photo: "dog-bed-sorrel-room-golden", alt: "A Sorrel Ashbury dog bed with a golden dog resting on it" },
     { name: "Sofas", href: "/collections/sofas", photo: first("marlowe"), alt: "The Marlowe sofa" },
