@@ -126,7 +126,7 @@ export function sleepSuitePrice(sizeIndexOrId: number | string = 0) {
 
 /** The picture for a bundle in the cart and in emails: the bundle's own hero, not the separate product photos. */
 export function bundlePhotoFor(bundleName: string): PhotoKey {
-  return bundleName === SLEEP_SUITE.name ? "sleep-suite-thumb" : BUNDLE_HERO.photo;
+  return bundleName === SLEEP_SUITE.name ? "sleep-suite-flint" : BUNDLE_HERO.photo;
 }
 
 /** Products whose list price was raised before they sold at the old price: show only the sale price, no struck-through "was". */
