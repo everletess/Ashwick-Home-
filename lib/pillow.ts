@@ -3,7 +3,9 @@
  * fill across sizes. NOT linked from navigation or collections until the owner approves; the direct URL works.
  * A removable cover in the mattress colors always comes with every pillow.
  */
-export const PILLOW_PATH = "/products/ashwick-pillow";
+export const PILLOW_PATH = "/collections/pillows";
+/** The old single page; it redirects to the pillows collection. */
+export const PILLOW_OLD_PATH = "/products/ashwick-pillow";
 /** Cart / checkout product id and Shopify handle. */
 export const PILLOW_ID = "ashwick-pillow";
 
@@ -33,13 +35,22 @@ export const PILLOW_COVERS = [
  * Fills offered on the standalone pillow page (Tessa, 03/11): three. Kapok stays a bedding-set option only.
  * Each line states only what the fill is made of.
  */
+const PILLOW_SLUGS: Record<string, string> = {
+  "living-wool-latex": "pillow-living-wool-latex",
+  "living-wool-horse-hair": "pillow-living-wool-horsehair",
+  "organic-cotton": "pillow-organic-cotton",
+};
+
 export const PILLOW_STANDALONE_FILLS = PILLOW_TYPES.filter((f) => f.id !== "kapok").map((f) => ({
   ...f,
   blurb:
     f.id === "living-wool-latex" ? "Organic Living Wool around an organic latex core."
     : f.id === "living-wool-horse-hair" ? "Organic Living Wool with horsehair."
     : "Organic cotton fill throughout.",
-  /** Longer note for the "Which fill?" section: what it is made of and the plain character of those materials. */
+  /** Each fill is its own product page (Tessa, 03/11). */
+  slug: PILLOW_SLUGS[f.id as string],
+  path: "/products/" + PILLOW_SLUGS[f.id as string],
+  /** What it is made of and how it behaves, from The Futon Shop's pages for the same pillow. */
   story:
     f.id === "living-wool-latex"
       ? "Shredded organic latex (GOLS certified) with organic Living Wool (GOTS). Latex is breathable and naturally resistant to dust mites and mold, and it does not off-gas. Wool regulates temperature, wicks away moisture and is naturally flame resistant. Medium-firm."
@@ -72,3 +83,10 @@ export const PILLOW_FAQ: [string, string][] = [
   ["What is it made of?", "A removable cover in 100% organic cotton twill, over your choice of fill: organic Living Wool with organic latex, organic Living Wool with horsehair, or 100% organic cotton. No synthetic fills."],
   ["What are the sizes?", "Standard 20 × 26 in, Queen 20 × 30 in and King 20 × 36 in."],
 ];
+
+/** Side-by-side facts for the pillows collection page, from The Futon Shop's pages for the same pillows. */
+export const PILLOW_COMPARE: Record<string, { fill: string; feel: string; notes: string }> = {
+  "living-wool-latex": { fill: "Shredded organic latex (GOLS) with organic Living Wool (GOTS)", feel: "Medium-firm", notes: "Breathable, no off-gassing, naturally resistant to dust mites and mold, flame resistant." },
+  "living-wool-horse-hair": { fill: "Three layers of OEKO-TEX certified horsehair wrapped in organic Living Wool (GOTS)", feel: "Medium-firm", notes: "Hollow strands move air and wick moisture, regulates temperature, holds its structure for years, flame resistant." },
+  "organic-cotton": { fill: "Certified organic cotton (USDA organic), stuffing to case", feel: "Medium-firm", notes: "Soft and breathable, hypoallergenic, resistant to dust mites, mold and mildew." },
+};

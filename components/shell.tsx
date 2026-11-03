@@ -247,7 +247,7 @@ export function Header() {
           <Link href="/collections/sofas">Sofas</Link>
           <Link href="/collections/chairs">Chairs</Link>
           <NavMenu label="Mattress" id="mattress-menu" links={MATTRESS_LINKS} align="left" />
-          <Link href="/products/ashwick-pillow">Pillows</Link>
+          <Link href="/collections/pillows">Pillows</Link>
           <Link href="/pages/bespoke">Bespoke</Link>
           <Link href="/pages/trade" className="nav-trade">Trade</Link>
         </nav>
@@ -285,7 +285,7 @@ export function Header() {
             <Link href="/collections/chairs">Chairs</Link>
             <Link href="/products/luxury-organic-mattress">Mattress</Link>
             {MATTRESS_LINKS.map(([t, , href]) => <Link key={href} href={href} className="mmenu-child">{t}</Link>)}
-            <Link href="/products/ashwick-pillow">Pillows</Link>
+            <Link href="/collections/pillows">Pillows</Link>
             <Link href="/pages/bespoke">Bespoke</Link>
             <Link href="/pages/trade">Trade</Link>
           </nav>

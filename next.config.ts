@@ -12,6 +12,8 @@ const nextConfig: NextConfig = {
       { source: "/pages/living-wool", destination: "/pages/inside-the-ashbury#living-wool", permanent: true },
       // Design your own became Ashwick Bespoke; its old #choose and #bespoke anchors are mapped on the page.
       { source: "/pages/design-your-own", destination: "/pages/bespoke", permanent: true },
+      // The single pillow page became one page per fill, under a Pillows collection.
+      { source: "/products/ashwick-pillow", destination: "/collections/pillows", permanent: true },
       // The Wren dog bed was renamed the Nook.
       { source: "/products/wren-dog-bed", destination: "/products/nook-dog-bed", permanent: true },
     ];

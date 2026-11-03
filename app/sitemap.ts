@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { PRODUCTS } from "@/lib/products";
+import { PILLOW_STANDALONE_FILLS } from "@/lib/pillow";
 import { BUNDLE, SALE, SLEEP_SUITE } from "@/lib/sale";
 
 const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://ashwickhome.com";
@@ -10,7 +11,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages = [
     { url: `${BASE}/`, priority: 1.0 },
     { url: `${BASE}/products/luxury-organic-mattress`, priority: 1.0 },
-    { url: `${BASE}/products/ashwick-pillow`, priority: 0.8 },
+    { url: `${BASE}/collections/pillows`, priority: 0.8 },
+    ...PILLOW_STANDALONE_FILLS.map((f) => ({ url: `${BASE}${f.path}`, priority: 0.8 })),
     { url: `${BASE}/pages/inside-the-ashbury`, priority: 0.9 },
     { url: `${BASE}/collections/all`, priority: 0.8 },
     { url: `${BASE}/collections/sofas`, priority: 0.8 },
