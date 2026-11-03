@@ -62,6 +62,7 @@ import dogBedSorrelCard from "@/assets/photos/dog-bed-sorrel-card.jpg";
 import nookOliveCard from "@/assets/photos/nook-olive-card.jpg";
 import nookOatCard from "@/assets/photos/nook-oat-card.jpg";
 import nookToffeeCard from "@/assets/photos/nook-toffee-card.jpg";
+import bfShare from "@/assets/photos/bf-share.jpg";
 import pillowStackLedge from "@/assets/photos/pillow-stack-ledge.jpg";
 import pillowStackMeadow from "@/assets/photos/pillow-stack-meadow.jpg";
 import hero from "@/assets/photos/hero.jpg";
@@ -289,6 +290,7 @@ export const PHOTOS = {
   "nook-olive-card": nookOliveCard,
   "nook-oat-card": nookOatCard,
   "nook-toffee-card": nookToffeeCard,
+  "bf-share": bfShare,
   "pillow-stack-ledge": pillowStackLedge,
   "pillow-stack-meadow": pillowStackMeadow,
   "nook-olive-sizes": nookOliveSizes,
