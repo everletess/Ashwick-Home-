@@ -58,7 +58,7 @@ export const CATALOG: CatalogItem[] = [
   // Sleep
   {
     id: "sleep-suite", name: SLEEP_SUITE.name, href: SLEEP_SUITE.path, section: "sleep", group: "bundles", price: m0 + 200, from: true,
-    nowPrice: salePrice(m0 + 200), photo: "sleep-suite-thumb", badge: "Free white glove", fast: true,
+    nowPrice: salePrice(m0 + 200), photo: "sleep-suite-flint-tall", badge: "Free white glove", fast: true,
   },
   {
     id: "best-friends", name: BUNDLE.title, href: BUNDLE.path, section: "sleep", group: "bundles", price: m0 + bed0 + bedding, from: true,
@@ -72,7 +72,7 @@ export const CATALOG: CatalogItem[] = [
   },
   {
     id: "pillow", name: "The Ashwick Pillow", href: PILLOW_PATH, section: "sleep", group: "pillows", price: pillowFromPrice("organic-cotton"), from: true,
-    photo: PILLOW_COVER_PHOTOS.mocha.photo, hover: "pillow-covers", badge: "New", fast: true,
+    photo: "pillow-stack-ledge", hover: "pillow-stack-meadow", badge: "New", fast: true,
     dots: PILLOW_COVERS.map((c) => ({ id: c.id, label: c.label, swatch: c.swatch, photo: PILLOW_COVER_PHOTOS[c.id].photo })),
     quick: { kind: "pillow", href: PILLOW_PATH },
   },

@@ -1535,3 +1535,13 @@ button.chip{cursor:pointer}
 }
 
 @media (max-width:1180px){.cc-name{min-height:2.3em}}
+
+.pillows-hero{padding-bottom:56px}
+.pillows-hero-img{position:relative;aspect-ratio:16/7;overflow:hidden;background:var(--linen)}
+.pillows-hero-img img{object-fit:cover;object-position:50% 55%}
+@media (max-width:640px){.pillows-hero{padding-bottom:32px;padding-left:0;padding-right:0}.pillows-hero-img{aspect-ratio:1/1}}
+
+.pillows-hero-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.pillows-hero-img{aspect-ratio:1/1!important}
+.pillows-hero-img img{object-position:50% 50%!important}
+@media (max-width:640px){.pillows-hero-grid{grid-template-columns:minmax(0,1fr);gap:0}.pillows-hero-grid .pillows-hero-img+.pillows-hero-img{display:none}}
