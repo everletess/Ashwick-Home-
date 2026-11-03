@@ -42,10 +42,10 @@ export const PILLOW_STANDALONE_FILLS = PILLOW_TYPES.filter((f) => f.id !== "kapo
   /** Longer note for the "Which fill?" section: what it is made of and the plain character of those materials. */
   story:
     f.id === "living-wool-latex"
-      ? "A core of organic Dunlop latex (GOLS certified) wrapped in shredded Living Wool (GOTS organic). Latex springs back and keeps its shape; wool is breathable."
+      ? "Shredded organic latex (GOLS certified) with Living Wool (GOTS organic). Latex is breathable and naturally resistant to dust mites and mold, and it does not off-gas. Wool regulates temperature and wicks away moisture. Medium-firm."
       : f.id === "living-wool-horse-hair"
-        ? "Living Wool (GOTS organic) blended with horsehair, the same two fibers that sit in the top of the Ashbury. Both are natural, springy fibers that breathe."
-        : "Filled with organic cotton and nothing else: no foam, no synthetics. A soft, plant-based pillow and our most accessible price.",
+        ? "Three layers of OEKO-TEX certified horsehair wrapped in organic Living Wool. The hollow hair strands let air move through and wick away moisture, so it stays dry and regulates temperature. Horsehair holds its structure for years. Medium-firm."
+        : "Certified organic cotton from the stuffing to the case, with no synthetics and no chemicals. Naturally breathable, soft, and resistant to dust mites, mold and mildew. Medium-firm.",
 }));
 
 /** Cover-color photos for the standalone pillow page. Flint has no photo yet (falls back to the covers shot). */
@@ -62,3 +62,12 @@ export const PILLOW_RETURNS = {
   short: "14-day returns",
   full: "Return within 14 days. Unused pillows are fully refunded. A used pillow carries a 15% restocking fee. Email hello@ashwickhome.com to arrange it first.",
 } as const;
+
+/** Pillow FAQ, drawn from The Futon Shop's own product pages (they make the pillows; Tessa 03/11). */
+export const PILLOW_FAQ: [string, string][] = [
+  ["Is there a smell when it arrives?", "You may notice a slight, natural odor when you first unpack a new pillow. It is harmless and fades on its own within about a week, or a few extra days in a humid climate."],
+  ["How firm is it?", "Medium-firm."],
+  ["How do I wash it?", "Do not machine wash the pillow itself. Air it out in the sun to refresh it. The removable cover washes in cold water and should be line dried."],
+  ["What is it made of?", "A removable cover in 100% organic cotton twill, over your choice of fill: Living Wool with organic latex, Living Wool with horsehair, or 100% organic cotton. No synthetic fills."],
+  ["What are the sizes?", "Standard 20 × 26 in, Queen 20 × 30 in and King 20 × 36 in."],
+];

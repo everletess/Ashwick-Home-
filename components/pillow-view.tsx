@@ -11,7 +11,7 @@ import { Price, SaleNote } from "@/components/sale";
 import { PHOTOS } from "@/lib/photos";
 import { fmt } from "@/lib/products";
 import { PILLOW_HERO, SALE, salePrice } from "@/lib/sale";
-import { PILLOW_COVERS, PILLOW_COVER_PHOTOS, PILLOW_ID, PILLOW_RETURNS, PILLOW_SIZES, PILLOW_STANDALONE_FILLS } from "@/lib/pillow";
+import { PILLOW_COVERS, PILLOW_COVER_PHOTOS, PILLOW_FAQ, PILLOW_ID, PILLOW_RETURNS, PILLOW_SIZES, PILLOW_STANDALONE_FILLS } from "@/lib/pillow";
 import type { PhotoKey } from "@/lib/photos";
 
 const FILLS = PILLOW_STANDALONE_FILLS;
@@ -75,8 +75,13 @@ export function PillowView() {
         </tbody>
       </table>,
     ],
+    [
+      "Care",
+      <p>Do not machine wash the pillow. Air it out in the sun to refresh it. The removable cover washes in cold water and should be line dried.</p>,
+    ],
     ["Delivery", <p>Handmade to order in the USA. Ships within 3–4 days.</p>],
     ["Returns", <p>{PILLOW_RETURNS.full}</p>],
+    ...PILLOW_FAQ.filter(([q]) => q === "Is there a smell when it arrives?").map(([q, a]): [string, React.ReactNode] => [q, <p>{a}</p>]),
   ];
 
   return (
