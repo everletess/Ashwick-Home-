@@ -1552,3 +1552,7 @@ button.chip{cursor:pointer}
 .pinside-img{position:relative;aspect-ratio:1/1;overflow:hidden;background:var(--linen)}
 .pinside-img img{object-fit:cover}
 @media (max-width:640px){.pinside{padding:48px 0 16px}.pinside-grid{grid-template-columns:minmax(0,1fr);gap:16px}}
+
+/* Two- and three-product grids keep the same card width as the four-across grids */
+@media (min-width:1181px){.cc-grid-3{grid-template-columns:repeat(4,minmax(0,1fr))}}
+

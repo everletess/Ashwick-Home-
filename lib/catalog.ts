@@ -78,14 +78,14 @@ export const CATALOG: CatalogItem[] = [
   },
   {
     id: DOG_BED.id, name: DOG_BED.title, href: DOG_BED.path, section: "sleep", group: "dog-beds", price: Math.min(...DOG_BED.sizes.map((s) => s.price)), from: true,
-    photo: "dog-bed-sorrel-room-golden", hover: "dog-bed-flint-room", review: "ashbury-dog-bed", fast: true,
-    dots: DOG_BED.colors.map((c) => ({ id: c.id, label: c.label, swatch: c.swatch, photo: (c.photos[1] ?? c.photos[0]) as PhotoKey })),
+    photo: "dog-bed-sorrel-card", review: "ashbury-dog-bed", fast: true,
+    dots: DOG_BED.colors.map((c) => ({ id: c.id, label: c.label, swatch: c.swatch, photo: (c.photos[0] + "-card") as PhotoKey })),
     quick: { kind: "dog-bed", href: DOG_BED.path },
   },
   {
     id: NOOK.id, name: NOOK.title, href: NOOK.path, section: "sleep", group: "dog-beds", price: Math.min(...NOOK.sizes.map((z) => z.price)), from: true,
-    photo: "nook-olive-room", hover: "nook-oat", review: "nook", fast: true,
-    dots: NOOK.colors.map((c) => ({ id: c.id, label: c.label, swatch: c.swatch, photo: (c.photos[1] ?? c.photos[0]) as PhotoKey })),
+    photo: "nook-olive-card", review: "nook", fast: true,
+    dots: NOOK.colors.map((c) => ({ id: c.id, label: c.label, swatch: c.swatch, photo: (c.photos[0] + "-card") as PhotoKey })),
   },
   // Living
   ...(["marlowe", "marlowe-loveseat", "cotswold", "chatsworth", "burford"].map((id) => furniture(id, "sofas")).filter(Boolean) as CatalogItem[]),

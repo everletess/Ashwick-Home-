@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { Photo } from "@/components/photo";
-import { Price, SaleTag } from "@/components/sale";
+import { CollectionTabs } from "@/components/collection-tabs";
+import { CatalogCard } from "@/components/catalog-card";
+import type { CatalogItem } from "@/lib/catalog";
 import { PillowCompare, PillowHelper } from "@/components/pillow-compare";
-import { PILLOW_COMPARE, PILLOW_PATH, PILLOW_STANDALONE_FILLS } from "@/lib/pillow";
+import { PILLOW_PATH, PILLOW_STANDALONE_FILLS, pillowFromPrice } from "@/lib/pillow";
 
 export const metadata: Metadata = {
   title: "Pillows | The Ashwick Pillow",
@@ -26,25 +26,13 @@ export default function PillowsPage() {
         <h1 className="h1">Pillows</h1>
         <p className="body">Three fills, one pillow. Handmade to order in the USA, with a removable organic cotton cover in Fleece, Flint, Flax or Sorrel. Fast, free delivery, shipping within 1–2 business days.</p>
       </section>
+      <CollectionTabs current="pillows" />
       <section className="wrap" style={{ paddingBottom: 140 }}>
-        <div className="grid3 pillows-grid coll-grid">
-          {PILLOW_STANDALONE_FILLS.map((f) => {
-            const [a, b] = PHOTO[f.id as keyof typeof PHOTO];
-            return (
-              <Link key={f.id} href={f.path} className="card">
-                <div className="card-img">
-                  <Photo src={a} label={`${f.label} pillow`} sizes="(max-width: 960px) 100vw, 33vw" preload />
-                  <Photo src={b} label="" className="alt" sizes="(max-width: 960px) 100vw, 33vw" />
-                  <SaleTag />
-                  <span className="card-cta">View</span>
-                </div>
-                <div className="card-row">
-                  <span className="card-name">{f.label}</span>
-                  <span className="card-price"><Price price={f.price} from /></span>
-                </div>
-                <p className="body small" style={{ marginTop: 8 }}>{PILLOW_COMPARE[f.id].fill}. {PILLOW_COMPARE[f.id].feel}.</p>
-              </Link>
-            );
+        <div className="cc-grid cc-grid-3">
+          {PILLOW_STANDALONE_FILLS.map((f, i) => {
+            const [photo, hover] = PHOTO[f.id as keyof typeof PHOTO];
+            const item: CatalogItem = { id: f.id, name: f.label, href: f.path, section: "sleep", group: "pillows", price: pillowFromPrice(f.id), from: true, photo, hover, fast: true };
+            return <CatalogCard key={f.id} item={item} priority={i === 0} />;
           })}
         </div>
         <PillowHelper />
