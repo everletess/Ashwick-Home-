@@ -109,7 +109,7 @@ export default function BlackFridayPage() {
           <div className="bf-rail bf-rail-b">
             <BundleCard href={BUNDLE.path} photo={BUNDLE_HERO.photo} alt={BUNDLE_HERO.alt} title={BUNDLE.title}
               desc="Ashbury mattress, Ashbury Dog Bed, and a bedding set of two pillows and a Mattress Protector." was={bfList} now={bfNow} />
-            <BundleCard href={SLEEP_SUITE_PATH} photo="sleep-suite-hero" alt="The Complete Sleep Suite: an Ashbury mattress with a bedding set" title="The Complete Sleep Suite"
+            <BundleCard href={SLEEP_SUITE_PATH} photo="sleep-suite-thumb" alt="The Complete Sleep Suite: an Ashbury mattress with a bedding set" title="The Complete Sleep Suite"
               desc="Ashbury mattress and a bedding set of two pillows and a Mattress Protector." was={ssList} now={ssNow} />
           </div>
         </section>
@@ -150,7 +150,7 @@ export default function BlackFridayPage() {
           <div className="bf-bundles">
             <BundleTile href={BUNDLE.path} photo={BUNDLE_HERO.photo} alt={BUNDLE_HERO.alt} title={BUNDLE.title}
               desc="Ashbury mattress + Ashbury Dog Bed + bedding set (two pillows and a Mattress Protector). Free white glove delivery for the mattress." was={bfList} now={bfNow} />
-            <BundleTile href={SLEEP_SUITE_PATH} photo="sleep-suite-hero" alt="The Complete Sleep Suite: an Ashbury mattress with a bedding set"
+            <BundleTile href={SLEEP_SUITE_PATH} photo="sleep-suite-thumb" alt="The Complete Sleep Suite: an Ashbury mattress with a bedding set"
               title="The Complete Sleep Suite" desc="Ashbury mattress + bedding set (two pillows and a Mattress Protector). Free white glove delivery for the mattress." was={ssList} now={ssNow} />
           </div>
         </div>
