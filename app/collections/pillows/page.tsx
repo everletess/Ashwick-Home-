@@ -39,7 +39,7 @@ export default function PillowsPage() {
                 </div>
                 <div className="card-row">
                   <span className="card-name">{f.label}</span>
-                  <span className="card-price"><Price price={f.price} /></span>
+                  <span className="card-price"><Price price={f.price} from /></span>
                 </div>
                 <p className="body small" style={{ marginTop: 8 }}>{PILLOW_COMPARE[f.id].fill}. {PILLOW_COMPARE[f.id].feel}.</p>
               </Link>

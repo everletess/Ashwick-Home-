@@ -1136,3 +1136,71 @@ button.chip{cursor:pointer}
 @media (max-width:960px){.pillows-grid{grid-template-columns:minmax(0,1fr);gap:48px}}
 .pillow-compare{margin-top:96px}
 .pillow-compare h2{font:300 clamp(28px,3vw,40px)/1.1 var(--serif);margin:0 0 28px}
+
+/* ===== Mobile pass, part 1 (04/11): one floating thing at a time, type >= 12px, tap targets >= 44px ===== */
+/* Chat: a 48px round icon; hidden while the sticky add-to-cart bar is showing. */
+.asst-fab{display:flex;align-items:center;justify-content:center;gap:10px}
+.asst-fab svg{flex:none}
+@media (max-width:960px){
+  .asst-fab{width:48px;height:48px;padding:0;border-radius:50%;right:12px;bottom:12px}
+  .asst-fab-t{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .has-sticky-buy .asst-fab{display:none}
+  .bf-sticky-on .asst-fab{bottom:calc(78px + env(safe-area-inset-bottom))}
+}
+/* The old 15% tab and the "Change options" tab are gone. */
+.ep-tab,.sticky-buy-change{display:none!important}
+/* Sticky add-to-cart bar: name on two lines, tapping name or photo goes back to the options. */
+.sticky-buy-go{display:flex;align-items:center;gap:12px;flex:1;min-width:0;background:none;border:0;padding:0;text-align:left;color:inherit;cursor:pointer;font:inherit}
+.sticky-buy-go .sticky-buy-name{display:flex;flex-direction:column;min-width:0;flex:1}
+.sticky-buy-title{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;white-space:normal;overflow:hidden;font-size:18px;line-height:1.15}
+.sticky-buy-sum{display:block;font-size:13px;white-space:normal}
+.trust-link{display:flex;flex-direction:column;align-items:center;gap:8px;color:inherit;text-decoration:none;min-height:44px}
+
+@media (max-width:640px){
+  /* announcement bar: one line, 12px */
+  .announce,.announce-sale{font-size:12px;letter-spacing:.06em;line-height:1.3}
+  .announce-link{padding:12px 44px 12px 12px;min-height:44px}
+  .announce-x{width:44px;min-height:44px}
+  /* uppercase labels: 12px minimum */
+  .eyebrow,.fcol-t,.card-meta,.ulink,.btn,.sale-tag,.fiber-n,.line-mode,.rm,.m-feature-name,.trust-row,.film-s,.ships-fast-h,
+  .cart-upsell-module__fdDRpq__eyebrow,.cart-upsell-module__fdDRpq__add,.asst-fab,.sticky-buy-btn,.crumb a,.crumb span,.nav a,.mmenu a,.footer a,.ftr-bot>*{font-size:12px}
+  .trust-row{font-size:12px;letter-spacing:.08em}
+  .wm-s{font-size:14px}
+  /* secondary text: 14px */
+  .fine,.fiber-d,.rv-by,.sale-note,.ships-fast-b,.price-assure,.delivery,.buy-direct,.small{font-size:14px;line-height:1.55}
+  .body{font-weight:400}
+  .price-was,.sale-tag s,s{font-size:.8em}
+  /* tap targets: 44px minimum */
+  .nav a,.mmenu a,.mmenu-links a,.mmenu-sub a,.fcol a,.ftr-bot a,.ftr-bot button,.crumb a,.ulink,.rm,.save-cart-toggle,.rv-link,.wm,.gal-zoom,.qty button,.linkbtn,.cart-upsell-module__fdDRpq__add{min-height:44px;min-width:44px;display:inline-flex;align-items:center}
+  .ulink{padding:10px 0}
+  .rm{padding:0 12px}
+  .gal-zoom{width:44px;height:44px}
+  .trust-row li,.trust-link{min-height:44px}
+  .sticky-buy-title{font-size:17px}
+  .pillow-covers .chip,.chip.color-chip{min-width:44px;min-height:44px}
+}
+
+@media (max-width:640px){
+  .home-hero .btns .btn,.hero .btn{font-size:12px}
+  .m-feature-new,.swt span,.nl-form button,.ftr-nl-form button{font-size:12px}
+  .drawer-f .fine{font-size:14px}
+  .drawer-f .fine a,.ftr-contact a,.bf-banner-links a{display:inline-flex;align-items:center;min-height:44px}
+  .sticky-buy-go{min-height:44px}
+  .sticky-buy-go .sticky-buy-name{min-height:44px;justify-content:center}
+}
+
+@media (max-width:640px){
+  .sticky-buy-title{font-size:15px;line-height:1.2;-webkit-line-clamp:2}
+  .sticky-buy-sum{font-size:13px;line-height:1.3}
+  .sticky-buy-amt{font-size:20px}
+  .sticky-buy-btn{min-width:0;padding:0 18px}
+}
+
+@media (max-width:640px){
+  .sticky-buy-in{flex-wrap:wrap;row-gap:8px;padding-top:10px;padding-bottom:calc(10px + env(safe-area-inset-bottom))}
+  .sticky-buy-go{flex:1 1 100%}
+  .sticky-buy-img{width:44px;height:44px}
+  .sticky-buy-price{flex:0 0 auto;text-align:left}
+  .sticky-buy-btn{flex:1 1 0;min-height:48px}
+  .sticky-buy-title{font-size:16px;-webkit-line-clamp:2}
+}

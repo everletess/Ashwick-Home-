@@ -12,7 +12,7 @@ export const PILLOW_ID = "ashwick-pillow";
 /** The four approved fills (Shopify option values, also the bedding set's Pillow values). One factual line each. */
 export const PILLOW_TYPES = [
   { id: "living-wool-latex", label: "Living Wool + Organic Latex", price: 269, desc: "Living Wool with an organic latex core. Removable cover in your mattress color. Handmade." },
-  { id: "living-wool-horse-hair", label: "Living Wool + Horse Hair", price: 269, desc: "Living Wool with horse hair. Removable cover in your mattress color. Handmade." },
+  { id: "living-wool-horse-hair", label: "Living Wool + Horsehair", price: 269, desc: "Living Wool with horsehair. Removable cover in your mattress color. Handmade." },
   { id: "kapok", label: "Kapok", price: 229, desc: "Kapok fill. Removable cover in your mattress color. Handmade." },
   { id: "organic-cotton", label: "100% Organic Cotton", price: 199, desc: "Organic cotton fill. Removable cover in your mattress color. Handmade." },
 ] as const;
@@ -22,6 +22,15 @@ export const PILLOW_SIZES = [
   { id: "queen", label: "Queen 20x30" },
   { id: "king", label: "King 20x36" },
 ] as const;
+
+/** Regular price by fill and size (Tessa's brief, 04/11). The Black Friday 20% comes off automatically on top. */
+export const PILLOW_PRICES: Record<string, Record<string, number>> = {
+  "living-wool-horse-hair": { standard: 269, queen: 299, king: 329 },
+  "living-wool-latex": { standard: 199, queen: 229, king: 249 },
+  "organic-cotton": { standard: 129, queen: 149, king: 169 },
+};
+export const pillowPrice = (fillId: string, sizeId: string) => PILLOW_PRICES[fillId]?.[sizeId] ?? PILLOW_PRICES[fillId]?.standard ?? 0;
+export const pillowFromPrice = (fillId: string) => Math.min(...Object.values(PILLOW_PRICES[fillId] ?? { x: 0 }));
 
 /** Cover colors are the mattress colors (Shopify option "Cover color"). Swatches are the Ashbury's. */
 export const PILLOW_COVERS = [
@@ -43,6 +52,8 @@ const PILLOW_SLUGS: Record<string, string> = {
 
 export const PILLOW_STANDALONE_FILLS = PILLOW_TYPES.filter((f) => f.id !== "kapok").map((f) => ({
   ...f,
+  /** The "From" price (Standard). The price for the chosen size is pillowPrice(). */
+  price: pillowFromPrice(f.id),
   blurb:
     f.id === "living-wool-latex" ? "Organic Living Wool around an organic latex core."
     : f.id === "living-wool-horse-hair" ? "Organic Living Wool with horsehair."
@@ -71,12 +82,12 @@ export const PILLOW_COVER_PHOTOS = {
 export const PILLOW_RETURNS = {
   days: 14,
   short: "14-day returns",
-  full: "Return within 14 days. Unused pillows are fully refunded. A used pillow carries a 15% restocking fee. Email hello@ashwickhome.com to arrange it first.",
+  full: "Pillows can be returned within 14 days of delivery. An unused pillow is refunded in full to your original payment method. A used pillow carries a 15% restocking fee. Email hello@ashwickhome.com with your order number to arrange a return before sending anything back.",
 } as const;
 
 /** Pillow FAQ, drawn from The Futon Shop's own product pages (they make the pillows; Tessa 03/11). */
 export const PILLOW_FAQ: [string, string][] = [
-  ["Is there a smell when it arrives?", "You may notice a slight, natural odor when you first unpack a new pillow. It is harmless and fades on its own within about a week, or a few extra days in a humid climate."],
+  ["Fresh out of the box", "You may notice a slight, natural odor when you first unpack a new pillow. It is harmless and fades on its own within about a week, or a few extra days in a humid climate."],
   ["How firm is it?", "Medium-firm. The fill is adjustable, so you can add or remove fill material to set your own height and firmness, whether you sleep on your back, side or stomach."],
   ["Can I adjust the fill?", "Yes. Add or remove fill to find your level of support. Adjustable pillows adapt to your needs by changing their height and firmness."],
   ["How do I wash it?", "Do not machine wash the pillow itself. Air it out in the sun to refresh it. The removable cover washes in cold water and should be line dried."],

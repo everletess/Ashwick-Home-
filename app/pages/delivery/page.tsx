@@ -30,6 +30,12 @@ export default function DeliveryPage() {
           <Link href={MATTRESS_PATH} className="inl">Shop the {MATTRESS.shortName}</Link>
         </p>
       </Block>
+      <Block title="Pillows">
+        <p className="body">
+          Pillows ship free and go out within 1–2 business days.{" "}
+          <Link href="/collections/pillows" className="inl">Shop pillows</Link>
+        </p>
+      </Block>
       <Block title="Bespoke">
         <p className="body">
           Lead time depends on the project, and we&apos;ll confirm it with your quote. Bespoke pieces arrive by white-glove delivery.{" "}

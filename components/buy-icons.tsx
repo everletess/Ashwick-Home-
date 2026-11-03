@@ -42,11 +42,11 @@ export function Icon({ name, size = 18 }: { name: IconName; size?: number }) {
 }
 
 /** "Handmade to order · Free delivery · …" under Add to cart, each with an icon. */
-export function TrustRow({ items }: { items: [IconName, string][] }) {
+export function TrustRow({ items }: { items: [IconName, string, string?][] }) {
   return (
     <ul className="trust-row">
-      {items.map(([icon, label]) => (
-        <li key={label}><Icon name={icon} size={24} />{label}</li>
+      {items.map(([icon, label, href]) => (
+        <li key={label}>{href ? <a href={href} className="trust-link"><Icon name={icon} size={24} />{label}</a> : <><Icon name={icon} size={24} />{label}</>}</li>
       ))}
     </ul>
   );

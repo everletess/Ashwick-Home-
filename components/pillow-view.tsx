@@ -12,7 +12,7 @@ import { PHOTOS } from "@/lib/photos";
 import { fmt } from "@/lib/products";
 import { PILLOW_HERO, SALE, salePrice } from "@/lib/sale";
 import Link from "next/link";
-import { PILLOW_COVERS, PILLOW_COVER_PHOTOS, PILLOW_FAQ, PILLOW_ID, PILLOW_PATH, PILLOW_RETURNS, PILLOW_SIZES, PILLOW_STANDALONE_FILLS } from "@/lib/pillow";
+import { PILLOW_COVERS, PILLOW_COVER_PHOTOS, PILLOW_FAQ, PILLOW_ID, PILLOW_PATH, PILLOW_RETURNS, PILLOW_SIZES, PILLOW_STANDALONE_FILLS, pillowFromPrice, pillowPrice } from "@/lib/pillow";
 import type { PhotoKey } from "@/lib/photos";
 
 const FILLS = PILLOW_STANDALONE_FILLS;
@@ -25,6 +25,7 @@ export function PillowView({ fillId }: { fillId: string }) {
   const [coverId, setCover] = useState<string>("mocha");
   const fill = FILLS.find((f) => f.id === fillId) ?? FILLS[0];
   const others = FILLS.filter((f) => f.id !== fill.id);
+  const price = pillowPrice(fill.id, sizeId);
   const size = PILLOW_SIZES.find((s) => s.id === sizeId) ?? PILLOW_SIZES[0];
   const cover = PILLOW_COVERS.find((c) => c.id === coverId) ?? PILLOW_COVERS[0];
   // The gallery: the chosen color first, then the other shots. Picking a cover swaps the main photo.
@@ -41,7 +42,7 @@ export function PillowView({ fillId }: { fillId: string }) {
       id: PILLOW_ID,
       name: "The Ashwick Pillow",
       photo: PILLOW_HERO.photo,
-      price: fill.price,
+      price,
       qty: 1,
       mode: "As designed",
       options: [["Fill", fill.label], ["Size", size.label], ["Cover color", cover.label]],
@@ -82,7 +83,7 @@ export function PillowView({ fillId }: { fillId: string }) {
     ],
     ["Delivery", <p>Fast, free delivery. Handmade to order in the USA, shipping within 1–2 business days.</p>],
     ["Returns", <p>{PILLOW_RETURNS.full}</p>],
-    ...PILLOW_FAQ.filter(([q]) => q === "Is there a smell when it arrives?").map(([q, a]): [string, React.ReactNode] => [q, <p>{a}</p>]),
+    ...PILLOW_FAQ.filter(([q]) => q === "Fresh out of the box").map(([q, a]): [string, React.ReactNode] => [q, <p>{a}</p>]),
   ];
 
   return (
@@ -105,7 +106,7 @@ export function PillowView({ fillId }: { fillId: string }) {
         <div className="pillow-head">
           <div className="eyebrow">The Ashwick Pillow · Made to order</div>
           <h1 className="pdp-name">{fill.label} Pillow</h1>
-          <div className="pdp-price"><Price price={fill.price} /></div>
+          <div className="pdp-price"><Price price={price} /></div>
           <SaleNote />
           <p className="body">{fill.story}</p>
         </div>
@@ -131,10 +132,10 @@ export function PillowView({ fillId }: { fillId: string }) {
           </OptGroup>
         </div>
         <div className="designed">
-          <button ref={buyRef} className="btn full" onClick={add}>Add to cart · {fmt(salePrice(fill.price))}</button>
+          <button ref={buyRef} className="btn full" onClick={add}>Add to cart · {fmt(salePrice(price))}</button>
           <ShipsFast when="1–2 business days" note="Fast, free delivery. Handmade to order in the USA." />
-          <TrustRow items={[["truck", "Fast & free delivery"], ["hand", "Handmade to order"], ["returns", PILLOW_RETURNS.short]]} />
-          <StickyBuy watch={buyRef} photo={main.photo} name="The Ashwick Pillow" summary={`${fill.label} · ${size.label} · ${cover.label}`} price={salePrice(fill.price)} cta="Add to cart" onAdd={add} />
+          <TrustRow items={[["truck", "Fast & free delivery"], ["hand", "Handmade to order"], ["returns", PILLOW_RETURNS.short, "/pages/terms#returns"]]} />
+          <StickyBuy watch={buyRef} photo={main.photo} name={`${fill.label} Pillow`} summary={`${size.label} · ${cover.label}`} price={salePrice(price)} cta="Add to cart" onAdd={add} />
         </div>
         <Accordion items={details} />
         <div className="pillow-others">
@@ -142,7 +143,7 @@ export function PillowView({ fillId }: { fillId: string }) {
           {others.map((f) => (
             <Link key={f.id} href={f.path} className="pillow-other">
               <span>{f.label}</span>
-              <span>{SALE.active && <s className="price-was">{fmt(f.price)}</s>}{fmt(salePrice(f.price))}</span>
+              <span>From {SALE.active && <s className="price-was">{fmt(pillowFromPrice(f.id))}</s>}{fmt(salePrice(pillowFromPrice(f.id)))}</span>
             </Link>
           ))}
           <Link href={PILLOW_PATH} className="ulink">Compare all three pillows</Link>

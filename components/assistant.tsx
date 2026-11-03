@@ -77,7 +77,8 @@ export function Assistant() {
     <>
       {!open && (
         <button className="asst-fab" onClick={() => setOpen(true)} aria-label="Ask us a question">
-          Questions? Ask us
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z" /></svg>
+          <span className="asst-fab-t">Questions? Ask us</span>
         </button>
       )}
       {open && (

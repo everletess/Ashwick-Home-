@@ -7,10 +7,12 @@ import { SUBSCRIBED_EVENT, SUBSCRIBED_KEY, subscribeEmail } from "@/lib/subscrib
 import { SALE } from "@/lib/sale";
 
 const STORAGE_KEY = SUBSCRIBED_KEY;
-const SCROLL_PX = 120; // opens as soon as the visitor scrolls this far (they are reading, not bouncing)
+const SCROLL_FRACTION = 0.5; // phones: opens after 30 s or at 50% scroll, once per session
+const WAIT_MS = 30000;
+const SESSION_KEY = "aw-sheet-shown";
 // Pages where someone is mid-form; the pop-up and the tab wait until they move on.
-const QUIET_PATHS = ["/pages/bespoke", "/pages/trade", "/account"];
-const DISMISS_DAYS = 14; // "No thanks" hides the pop-up this long (the small tab stays); subscribers never see either again
+const QUIET_PATHS = ["/pages/bespoke", "/pages/trade", "/account", "/products/", "/cart", "/checkout"];
+const DISMISS_DAYS = 30; // "No thanks" hides the pop-up this long (the small tab stays); subscribers never see either again
 const TAB_HIDDEN_KEY = "aw-tab-hidden"; // closing the tab hides it for this browser session
 const DISCOUNT_CODE = "ASHWICK15";
 /** Dispatch on window to open the sign-up form on request (the site assistant does this). */
@@ -64,21 +66,21 @@ export function EmailPopup() {
         return;
       }
     } catch {}
-    if (seen()) {
-      if (!tabHidden()) setTab(true);
-      return;
-    }
+    if (seen()) return;
+    try { if (sessionStorage.getItem(SESSION_KEY) === "1") return; } catch {}
     const onScroll = () => {
-      if (window.scrollY >= SCROLL_PX) setDue(true);
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      if (max > 0 && window.scrollY / max >= SCROLL_FRACTION) setDue(true);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
+    const timer = window.setTimeout(() => setDue(true), WAIT_MS);
     // Exit intent (desktop): if they head for the tabs or address bar before scrolling, open now.
     const onLeave = (e: MouseEvent) => {
       if (e.clientY <= 0 && !e.relatedTarget) setDue(true);
     };
     document.documentElement.addEventListener("mouseleave", onLeave);
     return () => {
+      window.clearTimeout(timer);
       window.removeEventListener("scroll", onScroll);
       document.documentElement.removeEventListener("mouseleave", onLeave);
     };
@@ -91,6 +93,7 @@ export function EmailPopup() {
   if (show && !shown) {
     setShown(true);
     setVisible(true);
+    try { sessionStorage.setItem(SESSION_KEY, "1"); } catch {}
   }
 
   const open = useCallback(() => {
@@ -124,7 +127,6 @@ export function EmailPopup() {
       return;
     }
     if (!seen()) remember(String(Date.now() + DISMISS_DAYS * 86400000));
-    if (!tabHidden()) setTab(true);
   }, []);
 
   const hideTab = () => {
@@ -159,13 +161,8 @@ export function EmailPopup() {
   }
 
   if (!visible) {
-    if (!tab || quiet) return null;
-    return (
-      <div className="ep-tab">
-        <button type="button" className="ep-tab-open" onClick={open}>15% off · The Ashwick Letter</button>
-        <button type="button" className="ep-tab-x" aria-label="Hide" onClick={hideTab}>×</button>
-      </div>
-    );
+    // No persistent bar or tab any more: the sign-up is one bottom sheet, shown once per session.
+    return null;
   }
 
   return (
