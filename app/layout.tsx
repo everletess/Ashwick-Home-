@@ -7,6 +7,8 @@ import { EmailPopup } from "@/components/email-popup";
 import { UtmCapture } from "@/components/utm-capture";
 import { Footer } from "@/components/footer";
 import { AnnouncementBar, CartDrawer, Header } from "@/components/shell";
+import { PHOTOS } from "@/lib/photos";
+import { SALE } from "@/lib/sale";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
@@ -22,6 +24,18 @@ export const metadata: Metadata = {
   title: { default: "Ashwick Home — Made of nature. Built to last.", template: "%s — Ashwick Home" },
   description:
     "Organic furniture and natural mattresses, handmade to order in the USA. Solid hardwood, organic wool, horsehair and linen — nothing synthetic. The Ashbury organic mattress from $3,800.",
+  // The link preview (iMessage, Facebook, Instagram, X). During the sale it carries the Black Friday message; when
+  // SALE.active goes false it reverts to the standard wording by itself.
+  openGraph: SALE.active
+    ? {
+        type: "website",
+        siteName: "Ashwick Home",
+        title: `${SALE.name} at Ashwick: ${SALE.percent}% off everything`,
+        description: `${SALE.percent}% off the whole collection, mattresses included. Plus two bundles with free white glove delivery for the mattress. Organic furniture and mattresses, handmade to order in the USA.`,
+        images: [{ url: PHOTOS["bf-share"].src, width: 1200, height: 630, alt: "A terracotta Ashbury mattress, a boucle chair and a cream sofa on a rug in an autumn hillside landscape" }],
+      }
+    : { type: "website", siteName: "Ashwick Home", title: "Ashwick Home — Made of nature. Built to last.", images: [{ url: PHOTOS["mattress-mocha-bedroom"].src }] },
+  twitter: { card: "summary_large_image" },
 };
 
 // Matches the header, so the mobile browser chrome blends into the page.
