@@ -63,10 +63,11 @@ export function CatalogCard({ item, priority }: { item: CatalogItem; priority?: 
   );
 }
 
-function QuickAddSheet({ kind, href, onClose }: { kind: "pillow" | "dog-bed"; href: string; onClose: () => void }) {
+/** Choose size and color (and fill, for a pillow) without leaving the grid. `fill` preselects a pillow fill. */
+export function QuickAddSheet({ kind, href, onClose, fill: startFill }: { kind: "pillow" | "dog-bed"; href: string; onClose: () => void; fill?: string }) {
   const cart = useCart();
   const isPillow = kind === "pillow";
-  const [fillId, setFill] = useState<string>(PILLOW_STANDALONE_FILLS[2]?.id ?? PILLOW_STANDALONE_FILLS[0].id);
+  const [fillId, setFill] = useState<string>(startFill ?? PILLOW_STANDALONE_FILLS[2]?.id ?? PILLOW_STANDALONE_FILLS[0].id);
   const [sizeId, setSize] = useState<string>(isPillow ? PILLOW_SIZES[0].id : DOG_BED.sizes[0].id);
   const [colorId, setColor] = useState<string>("mocha");
   const fill = PILLOW_STANDALONE_FILLS.find((f) => f.id === fillId) ?? PILLOW_STANDALONE_FILLS[0];

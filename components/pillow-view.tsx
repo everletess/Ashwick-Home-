@@ -12,7 +12,8 @@ import { PHOTOS } from "@/lib/photos";
 import { fmt } from "@/lib/products";
 import { PILLOW_HERO, SALE, salePrice } from "@/lib/sale";
 import Link from "next/link";
-import { PILLOW_COVERS, PILLOW_COVER_PHOTOS, PILLOW_FAQ, PILLOW_ID, PILLOW_PATH, PILLOW_RETURNS, PILLOW_SIZES, PILLOW_STANDALONE_FILLS, pillowFromPrice, pillowPrice } from "@/lib/pillow";
+import { PILLOW_COVERS, PILLOW_COVER_PHOTOS, PILLOW_FAQ, PILLOW_ID, PILLOW_PATH, PILLOW_RETURNS, PILLOW_SIZES, PILLOW_STANDALONE_FILLS, PILLOW_STORY, bestForText, pillowFromPrice, pillowPrice } from "@/lib/pillow";
+import { SleepIcon } from "@/components/pillow-landing";
 import type { PhotoKey } from "@/lib/photos";
 
 const FILLS = PILLOW_STANDALONE_FILLS;
@@ -30,6 +31,7 @@ export function PillowView({ fillId }: { fillId: string }) {
   const [sizeId, setSize] = useState<string>(PILLOW_SIZES[0].id);
   const [coverId, setCover] = useState<string>("mocha");
   const fill = FILLS.find((f) => f.id === fillId) ?? FILLS[0];
+  const story = PILLOW_STORY[fill.id];
   const others = FILLS.filter((f) => f.id !== fill.id);
   const price = pillowPrice(fill.id, sizeId);
   const size = PILLOW_SIZES.find((s) => s.id === sizeId) ?? PILLOW_SIZES[0];
@@ -60,7 +62,7 @@ export function PillowView({ fillId }: { fillId: string }) {
     [
       "Materials",
       <>
-        <p>{fill.story}</p>
+        <p>{story.desc}</p>
         <p>The cover is 100% organic cotton twill, in the same colors as the Ashbury, and it removes from the pillow. Handmade to order in the USA.</p>
       </>,
     ],
@@ -103,7 +105,12 @@ export function PillowView({ fillId }: { fillId: string }) {
           <h1 className="pdp-name">{fill.label} Pillow</h1>
           <div className="pdp-price"><Price price={price} /></div>
           <SaleNote />
-          <p className="pillow-blurb">{fill.blurb}</p>
+          <p className="pillow-blurb">{story.personality}</p>
+          <p className="pillow-best">
+            <span className="pl-best-icos">{story.bestFor.map((p) => <SleepIcon key={p} pos={p} size={24} />)}</span>
+            Best for {bestForText(story.bestFor).toLowerCase()}
+          </p>
+          <p className="pillow-desc">{story.desc}</p>
         </div>
         <div className="choices" id={BUY_OPTIONS_ID}>
           <OptGroup label="Size" value={size.label}>
