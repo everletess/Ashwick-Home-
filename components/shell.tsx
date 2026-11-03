@@ -18,7 +18,7 @@ function useScrollLock(locked: boolean) {
   }, [locked]);
 }
 import { bundleIdOf, useCart, type CartLine } from "@/components/cart";
-import { BUNDLE_CONFIG, bundlePhotoFor, bundleTitleFor, SALE, bundlePrice, deliveryFor, isFurnitureLine, orderDelivery, salePrice } from "@/lib/sale";
+import { BUNDLE_CONFIG, NO_WAS_PRICE, bundlePhotoFor, bundleTitleFor, SALE, bundlePrice, deliveryFor, isFurnitureLine, orderDelivery, salePrice } from "@/lib/sale";
 import { STUDIO_PHONE } from "@/lib/site";
 import { SHOW_SIGNUP_EVENT } from "@/components/email-popup";
 import { SUBSCRIBED_EVENT, SUBSCRIBED_KEY } from "@/lib/subscribe";
@@ -456,7 +456,7 @@ export function CartDrawer() {
                       <div className="line-top">
                         <span className="line-name">{i.name}</span>
                         <span className="line-price">
-                          {i.price == null ? "[PRICE]" : SALE.active ? <><s className="price-was">{fmt(i.price * i.qty)}</s>{fmt(salePrice(i.price) * i.qty)}</> : fmt(i.price * i.qty)}
+                          {i.price == null ? "[PRICE]" : SALE.active ? <>{!NO_WAS_PRICE.has(i.id) && <s className="price-was">{fmt(i.price * i.qty)}</s>}{fmt(salePrice(i.price) * i.qty)}</> : fmt(i.price * i.qty)}
                         </span>
                       </div>
                       <div className="line-mode">{i.mode}{SALE.active && i.price != null ? ` · ${SALE.percent}% off` : ""}</div>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { NO_WAS_PRICE } from "@/lib/sale";
 import { FURNITURE_MATERIALS_PATH } from "@/lib/materials";
 import { Photo } from "@/components/photo";
 import { MATERIALS, cardPrice, fmt, type Product } from "@/lib/products";
@@ -18,7 +19,7 @@ export function ProductCard({ p, custom }: { p: Product; custom?: boolean }) {
       </div>
       <div className="card-row">
         <span className="card-name">{p.name}</span>
-        <span className="card-price">{custom ? <>{cardPrice(p).from ? "From " : ""}{fmt(cardPrice(p).price)}</> : <Price price={cardPrice(p).price} from={cardPrice(p).from} />}</span>
+        <span className="card-price">{custom ? <>{cardPrice(p).from ? "From " : ""}{fmt(cardPrice(p).price)}</> : <Price price={cardPrice(p).price} from={cardPrice(p).from} was={!NO_WAS_PRICE.has(p.id)} />}</span>
       </div>
       <p className="card-line">{p.line}</p>
       <div className="card-meta">{p.type} · Made to order · Customizable</div>

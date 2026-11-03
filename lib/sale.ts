@@ -128,3 +128,6 @@ export function sleepSuitePrice(sizeIndexOrId: number | string = 0) {
 export function bundlePhotoFor(bundleName: string): PhotoKey {
   return bundleName === SLEEP_SUITE.name ? "sleep-suite-thumb" : BUNDLE_HERO.photo;
 }
+
+/** Products whose list price was raised before they sold at the old price: show only the sale price, no struck-through "was". */
+export const NO_WAS_PRICE = new Set<string>(["marlowe"]);

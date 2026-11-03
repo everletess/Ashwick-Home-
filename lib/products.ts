@@ -213,7 +213,7 @@ export const LEAD_TIMES = "Ships within 3–4 weeks as designed, or 8–12 weeks
 
 const ALL_PRODUCTS: Product[] = [
   {
-    id: "marlowe", name: "The Marlowe Sofa", type: "Sofa", category: "sofas", price: 8500,
+    id: "marlowe", name: "The Marlowe Sofa", type: "Sofa", category: "sofas", price: 9800,
     line: "A deep sofa on a hand-fluted solid wood plinth, in Irish Linen.",
     photos: [
       // White linen studio and room shots (Oct 2026). The walnut/oak plinth renders were removed from this gallery (files kept).
