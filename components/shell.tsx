@@ -35,15 +35,15 @@ const MATERIAL_LINKS: [string, string, string][] = [
   ["Furniture", "Frames, fills and fabrics", FURNITURE_MATERIALS_PATH],
 ];
 
-const MENU_SLEEP: [string, string, PhotoKey][] = [
-  ["The Ashbury", "/products/luxury-organic-mattress", "mattress-mocha-room"],
-  ["Pillows", "/collections/pillows", "pillow-sorrel"],
-  ["Dog Beds", "/collections/dog-beds", "dog-bed-sorrel-room-golden"],
-  ["Bundles", "/collections/bundles", "sleep-suite-thumb"],
+const MENU_SLEEP: [string, string][] = [
+  ["The Ashbury", "/products/luxury-organic-mattress"],
+  ["Pillows", "/collections/pillows"],
+  ["Dog Beds", "/collections/dog-beds"],
+  ["Bundles", "/collections/bundles"],
 ];
-const MENU_LIVING: [string, string, PhotoKey][] = [
-  ["Sofas", "/collections/sofas", PRODUCTS.find((p) => p.id === "marlowe")!.photos[0] as PhotoKey],
-  ["Chairs", "/collections/chairs", PRODUCTS.find((p) => p.id === "pembroke")!.photos[0] as PhotoKey],
+const MENU_LIVING: [string, string][] = [
+  ["Sofas", "/collections/sofas"],
+  ["Chairs", "/collections/chairs"],
 ];
 /** What the menu search looks through: product and page names. */
 const SEARCH_INDEX: [string, string][] = [
@@ -344,25 +344,17 @@ export function Header() {
             <button className="x" aria-label="Close" onClick={() => setMenu(false)}>×</button>
           </div>
           <MenuSearch />
-          <div className="mmenu-tiles">
-            {SALE.active && <Link href={SALE.path} className="mmenu-sale-pill">{SALE.name}: {SALE.percent}% off everything</Link>}
+          <nav className="mmenu-words" aria-label="Shop">
+            {SALE.active && <Link href={SALE.path} className="mmenu-sale">{SALE.name}: {SALE.percent}% off</Link>}
+            <Link href="/collections/all">Shop all</Link>
             <p className="mmenu-group">Sleep</p>
-            <div className="mmenu-row two">
-              {MENU_SLEEP.map(([t, href, photo]) => (
-                <Link key={t} href={href} className="mmenu-tile"><Photo src={photo} label="" fill sizes="50vw" /><span>{t}</span></Link>
-              ))}
-            </div>
+            {MENU_SLEEP.map(([t, href]) => <Link key={t} href={href}>{t}</Link>)}
             <p className="mmenu-group">Living</p>
-            <div className="mmenu-row two">
-              {MENU_LIVING.map(([t, href, photo]) => (
-                <Link key={t} href={href} className="mmenu-tile"><Photo src={photo} label="" fill sizes="50vw" /><span>{t}</span></Link>
-              ))}
-            </div>
-            <div className="mmenu-row two">
-              <Link href="/pages/bespoke" className="mmenu-tile wide"><Photo src="bespoke-hero" label="" fill sizes="50vw" /><span>Bespoke</span></Link>
-              <Link href="/pages/trade" className="mmenu-tile wide plain"><span>Trade</span></Link>
-            </div>
-          </div>
+            {MENU_LIVING.map(([t, href]) => <Link key={t} href={href}>{t}</Link>)}
+            <p className="mmenu-group">More</p>
+            <Link href="/pages/bespoke">Bespoke</Link>
+            <Link href="/pages/trade">Trade</Link>
+          </nav>
           <nav className="mmenu-sub">
             <Link href="/pages/our-story">Our story</Link>
             <Link href={MATERIALS_PATH}>Materials</Link>
