@@ -29,7 +29,7 @@ export function PillowView() {
   // The gallery: the chosen color first, then the other shots. Picking a cover swaps the main photo.
   const gallery = ([
     PILLOW_COVER_PHOTOS[coverId as keyof typeof PILLOW_COVER_PHOTOS] ?? PILLOW_COVER_PHOTOS.natural,
-    { photo: "pillow-covers", alt: PILLOW_COVER_PHOTOS.dove.alt },
+    { photo: "pillow-covers", alt: "Cream pillows beside folded removable covers in Sorrel, Fleece, Flint and Flax" },
     { photo: "pillow-covers-wide", alt: "Two cream pillows on a travertine ledge beside a stack of four removable covers in different colors" },
   ] as { photo: PhotoKey; alt: string }[]).filter((g, i, a) => a.findIndex((x) => x.photo === g.photo) === i);
   const [shot, setShot] = useState(0);

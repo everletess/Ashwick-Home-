@@ -48,12 +48,12 @@ export const PILLOW_STANDALONE_FILLS = PILLOW_TYPES.filter((f) => f.id !== "kapo
         : "Certified organic cotton (USDA organic) from the stuffing to the case, with no synthetics and no chemicals. Naturally breathable and soft, hypoallergenic, and resistant to dust mites, mold and mildew. Medium-firm.",
 }));
 
-/** Cover-color photos for the standalone pillow page. Flint has no photo yet (falls back to the covers shot). */
+/** Cover-color photos for the standalone pillow page. One photo per cover color. */
 export const PILLOW_COVER_PHOTOS = {
   natural: { photo: "pillow-fleece", alt: "Two Fleece cream pillows stacked on a travertine ledge" },
   mocha: { photo: "pillow-sorrel", alt: "Two Sorrel terracotta pillows stacked on a travertine ledge" },
   safari: { photo: "pillow-flax", alt: "Two Flax sand-colored pillows stacked on a travertine ledge" },
-  dove: { photo: "pillow-covers", alt: "Cream pillows beside folded removable covers in Sorrel, Fleece, Flint and Flax" },
+  dove: { photo: "pillow-flint", alt: "Two Flint grey pillows stacked on a travertine ledge" },
 } as const;
 
 /** Pillow returns (Tessa, 03/11). */
