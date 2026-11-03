@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { Photo } from "@/components/photo";
+import { SwipeGallery } from "@/components/swipe-gallery";
 import { OptGroup, Pills } from "@/components/product-view";
 import { ShipsFast, TrustRow } from "@/components/buy-icons";
 import { Accordion } from "@/components/mattress";
@@ -88,27 +88,14 @@ export function PillowView({ fillId }: { fillId: string }) {
 
   return (
     <section className="pdp wrap pillow-pdp">
-      <div className="gal">
-        <div className="gal-main">
-          <div className="gal-photo">
-            <Photo src={main.photo} label={main.alt} sizes="(max-width: 960px) 100vw, 56vw" preload />
-          </div>
-        </div>
-        <div className="gal-thumbs">
-          {gallery.map((g, i) => (
-            <button key={g.photo} className={i === shot ? "on" : ""} aria-label={"Image " + (i + 1)} aria-pressed={i === shot} onClick={() => setShot(i)}>
-              <Photo src={g.photo} label="" sizes="84px" />
-            </button>
-          ))}
-        </div>
-      </div>
+      <SwipeGallery shots={gallery} index={Math.min(shot, gallery.length - 1)} onIndex={setShot} aspect="1/1" />
       <div className="info">
         <div className="pillow-head">
           <div className="eyebrow">The Ashwick Pillow · Made to order</div>
           <h1 className="pdp-name">{fill.label} Pillow</h1>
           <div className="pdp-price"><Price price={price} /></div>
           <SaleNote />
-          <p className="body">{fill.story}</p>
+          <p className="pillow-blurb">{fill.blurb}</p>
         </div>
         <div className="choices" id={BUY_OPTIONS_ID}>
           <OptGroup label="Size" value={size.label}>

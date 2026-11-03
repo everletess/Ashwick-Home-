@@ -10,7 +10,7 @@ const CARD_SIZES = "(max-width: 620px) 100vw, (max-width: 1180px) 50vw, 460px";
 
 export function ProductCard({ p, custom }: { p: Product; custom?: boolean }) {
   return (
-    <Link href={"/products/" + p.id + (custom ? "/customize" : "")} className="card">
+    <Link href={"/products/" + p.id + (custom ? "/customize" : "")} className="card" data-price={cardPrice(p).price} data-name={p.name}>
       <div className="card-img">
         <Photo src={p.cardPhoto ?? p.photos[0]} label={p.name} fill sizes={CARD_SIZES} />
         {p.photos[1] && !p.cardSingle && <Photo src={p.photos[1]} label={p.name} className="alt" fill sizes={CARD_SIZES} />}
@@ -32,7 +32,7 @@ export function MattressCard({ custom }: { custom?: boolean }) {
   const M = MATTRESS;
   const from = Math.min(...M.sizes.map((z) => z.price));
   return (
-    <Link href={MATTRESS_PATH} className="card">
+    <Link href={MATTRESS_PATH} className="card" data-price={from} data-name={M.title} data-fast="1">
       <div className="card-img">
         <Photo src="mattress-mocha-room" label={`${M.title} in Sorrel`} fill sizes={CARD_SIZES} />
         <Photo src="mattress-studio-mocha" label={`${M.title} in Sorrel`} className="alt" fill sizes={CARD_SIZES} />
@@ -51,7 +51,7 @@ export function MattressCard({ custom }: { custom?: boolean }) {
 
 export function ProductGrid({ products, custom, mattress }: { products: Product[]; custom?: boolean; mattress?: boolean }) {
   return (
-    <div className="grid3">
+    <div className="grid3 coll-grid" data-grid>
       {products.map((p) => <ProductCard key={p.id} p={p} custom={custom} />)}
       {mattress && <MattressCard custom={custom} />}
     </div>
