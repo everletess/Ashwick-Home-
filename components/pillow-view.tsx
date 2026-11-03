@@ -11,7 +11,8 @@ import { Price, SaleNote } from "@/components/sale";
 import { PHOTOS } from "@/lib/photos";
 import { fmt } from "@/lib/products";
 import { PILLOW_HERO, SALE, salePrice } from "@/lib/sale";
-import { PILLOW_COVERS, PILLOW_ID, PILLOW_RETURNS, PILLOW_SIZES, PILLOW_STANDALONE_FILLS } from "@/lib/pillow";
+import { PILLOW_COVERS, PILLOW_COVER_PHOTOS, PILLOW_ID, PILLOW_RETURNS, PILLOW_SIZES, PILLOW_STANDALONE_FILLS } from "@/lib/pillow";
+import type { PhotoKey } from "@/lib/photos";
 
 const FILLS = PILLOW_STANDALONE_FILLS;
 
@@ -25,6 +26,14 @@ export function PillowView() {
   const fill = FILLS.find((f) => f.id === fillId) ?? FILLS[0];
   const size = PILLOW_SIZES.find((s) => s.id === sizeId) ?? PILLOW_SIZES[0];
   const cover = PILLOW_COVERS.find((c) => c.id === coverId) ?? PILLOW_COVERS[0];
+  // The gallery: the chosen color first, then the other shots. Picking a cover swaps the main photo.
+  const gallery = ([
+    PILLOW_COVER_PHOTOS[coverId as keyof typeof PILLOW_COVER_PHOTOS] ?? PILLOW_COVER_PHOTOS.natural,
+    { photo: "pillow-covers", alt: PILLOW_COVER_PHOTOS.dove.alt },
+    { photo: "pillow-covers-wide", alt: "Two cream pillows on a travertine ledge beside a stack of four removable covers in different colors" },
+  ] as { photo: PhotoKey; alt: string }[]).filter((g, i, a) => a.findIndex((x) => x.photo === g.photo) === i);
+  const [shot, setShot] = useState(0);
+  const main = gallery[Math.min(shot, gallery.length - 1)];
 
   const add = () =>
     cart.add({
@@ -41,10 +50,10 @@ export function PillowView() {
     [
       "Materials",
       <>
-        <p>The cover is 100% organic cotton twill and removes from the pillow. The fill is your choice of three.</p>
+        <p>The cover is 100% organic cotton twill, in the same colors as the Ashbury, and it removes from the pillow. Every pillow is handmade to order in the USA.</p>
         <ul className="pillow-list">
           {FILLS.map((f) => (
-            <li key={f.id}><strong>{f.label}.</strong> {f.blurb}</li>
+            <li key={f.id}><strong>{f.label}.</strong> {f.story}</li>
           ))}
         </ul>
       </>,
@@ -75,8 +84,15 @@ export function PillowView() {
       <div className="gal">
         <div className="gal-main">
           <div className="gal-photo">
-            <Photo src={PILLOW_HERO.photo} label={PILLOW_HERO.alt} sizes="(max-width: 960px) 100vw, 56vw" preload />
+            <Photo src={main.photo} label={main.alt} sizes="(max-width: 960px) 100vw, 56vw" preload />
           </div>
+        </div>
+        <div className="gal-thumbs">
+          {gallery.map((g, i) => (
+            <button key={g.photo} className={i === shot ? "on" : ""} aria-label={"Image " + (i + 1)} aria-pressed={i === shot} onClick={() => setShot(i)}>
+              <Photo src={g.photo} label="" sizes="84px" />
+            </button>
+          ))}
         </div>
       </div>
       <div className="info">
@@ -122,7 +138,7 @@ export function PillowView() {
                   title={c.label}
                   aria-label={`Cover ${c.label}`}
                   aria-pressed={coverId === c.id}
-                  onClick={() => setCover(c.id)}
+                  onClick={() => { setCover(c.id); setShot(0); }}
                 />
               ))}
             </div>
@@ -132,7 +148,7 @@ export function PillowView() {
           <button ref={buyRef} className="btn full" onClick={add}>Add to cart · {fmt(salePrice(fill.price))}</button>
           <ShipsFast when="3–4 days" note="Handmade to order in the USA." />
           <TrustRow items={[["hand", "Handmade to order"], ["returns", PILLOW_RETURNS.short]]} />
-          <StickyBuy watch={buyRef} photo={PILLOW_HERO.photo} name="The Ashwick Pillow" summary={`${fill.label} · ${size.label} · ${cover.label}`} price={salePrice(fill.price)} cta="Add to cart" onAdd={add} />
+          <StickyBuy watch={buyRef} photo={main.photo} name="The Ashwick Pillow" summary={`${fill.label} · ${size.label} · ${cover.label}`} price={salePrice(fill.price)} cta="Add to cart" onAdd={add} />
         </div>
         <Accordion items={details} />
       </div>

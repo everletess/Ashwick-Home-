@@ -36,10 +36,25 @@ export const PILLOW_COVERS = [
 export const PILLOW_STANDALONE_FILLS = PILLOW_TYPES.filter((f) => f.id !== "kapok").map((f) => ({
   ...f,
   blurb:
-    f.id === "living-wool-latex" ? "Living Wool with an organic latex core."
+    f.id === "living-wool-latex" ? "Living Wool around an organic latex core."
     : f.id === "living-wool-horse-hair" ? "Living Wool with horsehair."
     : "Organic cotton fill throughout.",
+  /** Longer note for the "Which fill?" section: what it is made of and the plain character of those materials. */
+  story:
+    f.id === "living-wool-latex"
+      ? "A core of organic Dunlop latex (GOLS certified) wrapped in shredded Living Wool (GOTS organic). Latex springs back and keeps its shape; wool is breathable."
+      : f.id === "living-wool-horse-hair"
+        ? "Living Wool (GOTS organic) blended with horsehair, the same two fibers that sit in the top of the Ashbury. Both are natural, springy fibers that breathe."
+        : "Filled with organic cotton and nothing else: no foam, no synthetics. A soft, plant-based pillow and our most accessible price.",
 }));
+
+/** Cover-color photos for the standalone pillow page. Flint has no photo yet (falls back to the covers shot). */
+export const PILLOW_COVER_PHOTOS = {
+  natural: { photo: "pillow-fleece", alt: "Two Fleece cream pillows stacked on a travertine ledge" },
+  mocha: { photo: "pillow-sorrel", alt: "Two Sorrel terracotta pillows stacked on a travertine ledge" },
+  safari: { photo: "pillow-flax", alt: "Two Flax sand-colored pillows stacked on a travertine ledge" },
+  dove: { photo: "pillow-covers", alt: "Cream pillows beside folded removable covers in Sorrel, Fleece, Flint and Flax" },
+} as const;
 
 /** Pillow returns (Tessa, 03/11). */
 export const PILLOW_RETURNS = {
