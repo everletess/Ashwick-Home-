@@ -40,16 +40,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
               n.callMethod.apply(n,arguments):n.queue.push(arguments)};
               if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-              n.queue=[];t=b.createElement(e);t.async=!0;
+              n.queue=[];
+              // The stub above queues every fbq() call; the library itself downloads after the page has loaded, so it
+              // doesn't compete with the hero photo. Nothing is dropped: the queue is replayed when it arrives.
+              var load=function(){t=b.createElement(e);t.async=!0;
               t.src=v;s=b.getElementsByTagName(e)[0];
-              s.parentNode.insertBefore(t,s)}(window,document,'script',
+              s.parentNode.insertBefore(t,s)};
+              if(b.readyState==='complete')setTimeout(load,0);else f.addEventListener('load',function(){setTimeout(load,0)})}(window,document,'script',
               'https://connect.facebook.net/en_US/fbevents.js');
               fbq('init', '1118741870615996');
               fbq('track', 'PageView');
             `,
           }}
         />
-        <Script src="https://www.googletagmanager.com/gtag/js?id=G-DF7TVX6FPJ" strategy="afterInteractive" />
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-DF7TVX6FPJ" strategy="lazyOnload" />
         <Script
           id="ga4"
           strategy="afterInteractive"
@@ -65,7 +69,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <Script
           id="ms-clarity-tag"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
               if (/(^|\\.)ashwickhome\\.com$/.test(location.hostname)) (function(c,l,a,r,i,t,y){
