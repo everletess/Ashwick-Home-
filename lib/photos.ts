@@ -9,6 +9,8 @@ import burfordHero from "@/assets/photos/burford-hero.jpg";
 import cchairC from "@/assets/photos/cchair-c.jpg";
 import cchairStudio from "@/assets/photos/cchair-studio.jpg";
 import chatsworthS1 from "@/assets/photos/chatsworth-s1.jpg";
+// The Chatsworth hero (Nov 2026): leads its gallery and cards. Untagged, so choosing a color moves to the recolorable chatsworth-s1.
+import chatsworthHero from "@/assets/photos/chatsworth-hero.jpg";
 import cliftonS1 from "@/assets/photos/clifton-s1.jpg";
 import cliftonS2 from "@/assets/photos/clifton-s2.jpg";
 import csofaA from "@/assets/photos/csofa-a.jpg";
@@ -17,6 +19,8 @@ import csofaC from "@/assets/photos/csofa-c.jpg";
 import csofaD from "@/assets/photos/csofa-d.jpg";
 import csofaHero from "@/assets/photos/csofa-hero.jpg";
 import csofaHeroSquare from "@/assets/photos/csofa-hero-square.jpg";
+// The Cotswold hero (Nov 2026): leads its gallery and cards. Untagged, so choosing a color moves to the recolorable csofa-hero.
+import csofaHero2 from "@/assets/photos/csofa-hero-2.jpg";
 import csofaStudio from "@/assets/photos/csofa-studio.jpg";
 import csofaLifestyle from "@/assets/photos/csofa-lifestyle.jpg";
 import mattressMeadow from "@/assets/photos/mattress-meadow.jpg";
@@ -200,6 +204,7 @@ export const PHOTOS = {
   "cchair-c": cchairC,
   "cchair-studio": cchairStudio,
   "chatsworth-s1": chatsworthS1,
+  "chatsworth-hero": chatsworthHero,
   "clifton-s1": cliftonS1,
   "clifton-s2": cliftonS2,
   "csofa-a": csofaA,
@@ -208,6 +213,7 @@ export const PHOTOS = {
   "csofa-d": csofaD,
   "csofa-hero": csofaHero,
   "csofa-hero-square": csofaHeroSquare,
+  "csofa-hero-2": csofaHero2,
   "csofa-studio": csofaStudio,
   "csofa-lifestyle": csofaLifestyle,
   "mattress-meadow": mattressMeadow,
