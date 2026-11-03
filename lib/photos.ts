@@ -35,6 +35,12 @@ import bundleHero from "@/assets/photos/bundle-hero.jpg";
 import sleepSuiteHero from "@/assets/photos/sleep-suite-hero.jpg";
 import sleepSuiteThumb from "@/assets/photos/sleep-suite-thumb.jpg";
 import pillowHero from "@/assets/photos/pillow-hero.jpg";
+import pillowSorrel from "@/assets/photos/pillow-sorrel.jpg";
+import pillowFlint from "@/assets/photos/pillow-flint.jpg";
+import pillowFlax from "@/assets/photos/pillow-flax.jpg";
+import pillowFleece from "@/assets/photos/pillow-fleece.jpg";
+import pillowCovers from "@/assets/photos/pillow-covers.jpg";
+import pillowCoversWide from "@/assets/photos/pillow-covers-wide.jpg";
 import hero from "@/assets/photos/hero.jpg";
 import heroFamily from "@/assets/photos/hero-family.jpg";
 import heroBedroom from "@/assets/photos/hero-bedroom.jpg";
@@ -236,6 +242,12 @@ export const PHOTOS = {
   "sleep-suite-hero": sleepSuiteHero,
   "sleep-suite-thumb": sleepSuiteThumb,
   "pillow-hero": pillowHero,
+  "pillow-sorrel": pillowSorrel,
+  "pillow-flint": pillowFlint,
+  "pillow-flax": pillowFlax,
+  "pillow-fleece": pillowFleece,
+  "pillow-covers": pillowCovers,
+  "pillow-covers-wide": pillowCoversWide,
   "nook-olive-sizes": nookOliveSizes,
   "nook-oat": nookOat,
   "nook-olive": nookOlive,
