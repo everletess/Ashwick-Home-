@@ -26,12 +26,6 @@ export default function PillowsPage() {
         <h1 className="h1">Pillows</h1>
         <p className="body">Three fills, one pillow. Handmade to order in the USA, with a removable organic cotton cover in Fleece, Flint, Flax or Sorrel. Fast, free delivery, shipping within 1–2 business days.</p>
       </section>
-      <section className="wrap pillows-hero">
-        <div className="pillows-hero-grid">
-          <div className="pillows-hero-img"><Photo src="pillow-stack-ledge" label="Four pillows stacked on a travertine ledge in Fleece, Flax, Sorrel and Flint, beside a bowl of raw fill" fill sizes="(max-width: 960px) 100vw, 640px" preload /></div>
-          <div className="pillows-hero-img"><Photo src="pillow-stack-meadow" label="Four pillows stacked in a sunlit meadow in Fleece, Flax, Sorrel and Flint" fill sizes="(max-width: 960px) 100vw, 640px" /></div>
-        </div>
-      </section>
       <section className="wrap" style={{ paddingBottom: 140 }}>
         <div className="grid3 pillows-grid coll-grid">
           {PILLOW_STANDALONE_FILLS.map((f) => {
