@@ -44,6 +44,10 @@ import pillowFlax from "@/assets/photos/pillow-flax.jpg";
 import pillowFleece from "@/assets/photos/pillow-fleece.jpg";
 import pillowCovers from "@/assets/photos/pillow-covers.jpg";
 import pillowCoversWide from "@/assets/photos/pillow-covers-wide.jpg";
+import pillowInsideLatex from "@/assets/photos/pillow-inside-latex.jpg";
+import pillowInsideHorsehair from "@/assets/photos/pillow-inside-horsehair.jpg";
+import pillowInsideCover from "@/assets/photos/pillow-inside-cover.jpg";
+import pillowInsideCotton from "@/assets/photos/pillow-inside-cotton.jpg";
 import pillowStackLedge from "@/assets/photos/pillow-stack-ledge.jpg";
 import pillowStackMeadow from "@/assets/photos/pillow-stack-meadow.jpg";
 import hero from "@/assets/photos/hero.jpg";
@@ -255,6 +259,10 @@ export const PHOTOS = {
   "pillow-fleece": pillowFleece,
   "pillow-covers": pillowCovers,
   "pillow-covers-wide": pillowCoversWide,
+  "pillow-inside-latex": pillowInsideLatex,
+  "pillow-inside-horsehair": pillowInsideHorsehair,
+  "pillow-inside-cover": pillowInsideCover,
+  "pillow-inside-cotton": pillowInsideCotton,
   "pillow-stack-ledge": pillowStackLedge,
   "pillow-stack-meadow": pillowStackMeadow,
   "nook-olive-sizes": nookOliveSizes,

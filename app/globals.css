@@ -1545,3 +1545,10 @@ button.chip{cursor:pointer}
 .pillows-hero-img{aspect-ratio:1/1!important}
 .pillows-hero-img img{object-position:50% 50%!important}
 @media (max-width:640px){.pillows-hero-grid{grid-template-columns:minmax(0,1fr);gap:0}.pillows-hero-grid .pillows-hero-img+.pillows-hero-img{display:none}}
+
+.pinside{padding:72px 0 24px}
+.pinside .eyebrow{margin-bottom:24px}
+.pinside-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;max-width:880px}
+.pinside-img{position:relative;aspect-ratio:1/1;overflow:hidden;background:var(--linen)}
+.pinside-img img{object-fit:cover}
+@media (max-width:640px){.pinside{padding:48px 0 16px}.pinside-grid{grid-template-columns:minmax(0,1fr);gap:16px}}

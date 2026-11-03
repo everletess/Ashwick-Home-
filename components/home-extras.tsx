@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CatalogCard } from "@/components/catalog-card";
+import { Photo } from "@/components/photo";
 import { Stars } from "@/components/reviews";
 import { CATALOG } from "@/lib/catalog";
 import { REVIEWS } from "@/lib/reviews";
@@ -63,6 +64,29 @@ export function FarmBand() {
       <div className="wrap">
         <div className="eyebrow">From our farm</div>
         <div className="farm-ph" role="img" aria-label="Photography placeholder: from our farm">Photography · From our farm</div>
+      </div>
+    </section>
+  );
+}
+
+const INSIDE: Record<string, { photo: "pillow-inside-latex" | "pillow-inside-horsehair" | "pillow-inside-cotton"; alt: string }> = {
+  "living-wool-latex": { photo: "pillow-inside-latex", alt: "A block of organic latex on a travertine ledge, with a sprig of leaves" },
+  "living-wool-horse-hair": { photo: "pillow-inside-horsehair", alt: "Horsehair fill in a dark leather-handled basket" },
+  "organic-cotton": { photo: "pillow-inside-cotton", alt: "Organic cotton bolls on a folded cotton cloth" },
+};
+
+/** What's inside a pillow: its own fill photo, then the washable cover (shared by all three). */
+export function PillowInside({ fillId }: { fillId: string }) {
+  const fill = INSIDE[fillId];
+  if (!fill) return null;
+  return (
+    <section className="sec pinside">
+      <div className="wrap">
+        <div className="eyebrow">What&rsquo;s inside</div>
+        <div className="pinside-grid">
+          <div className="pinside-img"><Photo src={fill.photo} label={fill.alt} fill sizes="(max-width: 640px) 100vw, 420px" /></div>
+          <div className="pinside-img"><Photo src="pillow-inside-cover" label="A folded organic cotton pillow cover with an Ashwick Home label" fill sizes="(max-width: 640px) 100vw, 420px" /></div>
+        </div>
       </div>
     </section>
   );
