@@ -36,7 +36,7 @@ const product = (p: (typeof PRODUCTS)[number]) => {
     `- ${p.name} (${p.type}), ${from ? "from " : ""}${fmt(price)}. ${p.line}`,
     `  Materials: ${p.materials}.`,
     `  Fabrics: ${p.fabrics.map(fabric(p)).join("; ")}.${p.wood ? " Plinth in solid red oak." : ""}`,
-    p.dimensions ? `  Size: ${p.dimensions.overall}.` : "",
+    p.dimensions ? `  Size: ${p.dimensions.overall}. ${p.dimensions.rows.map(([k, v]) => `${k}: ${v}`).join("; ")}.` : "",
     p.delivery ? `  ${p.delivery.label}: ${fmt(p.delivery.price)} per order (one flat charge, however many pieces).` : "",
     p.preorder ? "  Available to pre-order; we confirm the order and estimated ship date by email." : `  ${p.leadTime ?? LEAD_TIMES}`,
     `  Page: ${SITE}/products/${p.id}`,
