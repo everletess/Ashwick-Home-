@@ -1124,3 +1124,15 @@ button.chip{cursor:pointer}
   .pillow-pdp .pillow-fill-p{font-size:17px}
   .pillow-covers .chip{width:44px;height:44px}
 }
+
+/* Pillows: one page per fill; gallery stays beside the buy box on desktop */
+@media (min-width:961px){.pillow-pdp .gal{position:sticky;top:120px;align-self:start}}
+.pillow-others{display:flex;flex-direction:column;margin-top:8px}
+.pillow-others .eyebrow{margin:0 0 6px}
+.pillow-other{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-top:1px solid var(--hair);font:400 15px var(--sans);color:var(--ink);text-decoration:none}
+.pillow-other .price-was{font-size:.8em;margin-right:8px;color:var(--walnut)}
+.pillow-others .ulink{align-self:flex-start;margin-top:14px}
+.pillows-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:960px){.pillows-grid{grid-template-columns:minmax(0,1fr);gap:48px}}
+.pillow-compare{margin-top:96px}
+.pillow-compare h2{font:300 clamp(28px,3vw,40px)/1.1 var(--serif);margin:0 0 28px}

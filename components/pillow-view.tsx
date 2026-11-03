@@ -11,19 +11,20 @@ import { Price, SaleNote } from "@/components/sale";
 import { PHOTOS } from "@/lib/photos";
 import { fmt } from "@/lib/products";
 import { PILLOW_HERO, SALE, salePrice } from "@/lib/sale";
-import { PILLOW_COVERS, PILLOW_COVER_PHOTOS, PILLOW_FAQ, PILLOW_ID, PILLOW_RETURNS, PILLOW_SIZES, PILLOW_STANDALONE_FILLS } from "@/lib/pillow";
+import Link from "next/link";
+import { PILLOW_COVERS, PILLOW_COVER_PHOTOS, PILLOW_FAQ, PILLOW_ID, PILLOW_PATH, PILLOW_RETURNS, PILLOW_SIZES, PILLOW_STANDALONE_FILLS } from "@/lib/pillow";
 import type { PhotoKey } from "@/lib/photos";
 
 const FILLS = PILLOW_STANDALONE_FILLS;
 
-/** Standalone Ashwick Pillow, mobile first: price and the three fills sit right under the photo; details fold away. */
-export function PillowView() {
+/** One pillow (one fill) as its own product page; size and cover color are the options. Mobile first. */
+export function PillowView({ fillId }: { fillId: string }) {
   const cart = useCart();
   const buyRef = useRef<HTMLButtonElement>(null);
-  const [fillId, setFill] = useState<string>(FILLS[0].id);
   const [sizeId, setSize] = useState<string>(PILLOW_SIZES[0].id);
   const [coverId, setCover] = useState<string>("mocha");
   const fill = FILLS.find((f) => f.id === fillId) ?? FILLS[0];
+  const others = FILLS.filter((f) => f.id !== fill.id);
   const size = PILLOW_SIZES.find((s) => s.id === sizeId) ?? PILLOW_SIZES[0];
   const cover = PILLOW_COVERS.find((c) => c.id === coverId) ?? PILLOW_COVERS[0];
   // The gallery: the chosen color first, then the other shots. Picking a cover swaps the main photo.
@@ -50,12 +51,8 @@ export function PillowView() {
     [
       "Materials",
       <>
-        <p>The cover is 100% organic cotton twill, in the same colors as the Ashbury, and it removes from the pillow. Every pillow is handmade to order in the USA.</p>
-        <ul className="pillow-list">
-          {FILLS.map((f) => (
-            <li key={f.id}><strong>{f.label}.</strong> {f.story}</li>
-          ))}
-        </ul>
+        <p>{fill.story}</p>
+        <p>The cover is 100% organic cotton twill, in the same colors as the Ashbury, and it removes from the pillow. Handmade to order in the USA.</p>
       </>,
     ],
     [
@@ -106,33 +103,13 @@ export function PillowView() {
       </div>
       <div className="info">
         <div className="pillow-head">
-          <div className="eyebrow">Pillow · Made to order</div>
-          <h1 className="pdp-name">The Ashwick Pillow</h1>
+          <div className="eyebrow">The Ashwick Pillow · Made to order</div>
+          <h1 className="pdp-name">{fill.label} Pillow</h1>
           <div className="pdp-price"><Price price={fill.price} /></div>
           <SaleNote />
+          <p className="body">{fill.story}</p>
         </div>
         <div className="choices" id={BUY_OPTIONS_ID}>
-          <OptGroup label="Fill" value={fill.label}>
-            <div className="pillow-fills" role="radiogroup" aria-label="Fill">
-              {FILLS.map((f) => (
-                <button
-                  key={f.id}
-                  type="button"
-                  role="radio"
-                  aria-checked={fillId === f.id}
-                  className={"pillow-fill" + (fillId === f.id ? " on" : "")}
-                  onClick={() => setFill(f.id)}
-                >
-                  <span className="pillow-fill-t">{f.label}</span>
-                  <span className="pillow-fill-d">{f.blurb}</span>
-                  <span className="pillow-fill-p">
-                    {SALE.active && <s className="price-was">{fmt(f.price)}</s>}
-                    {fmt(salePrice(f.price))}
-                  </span>
-                </button>
-              ))}
-            </div>
-          </OptGroup>
           <OptGroup label="Size" value={size.label}>
             <Pills options={PILLOW_SIZES.map((s) => ({ id: s.id as string, label: s.label }))} value={sizeId} onChange={setSize} />
           </OptGroup>
@@ -160,6 +137,16 @@ export function PillowView() {
           <StickyBuy watch={buyRef} photo={main.photo} name="The Ashwick Pillow" summary={`${fill.label} · ${size.label} · ${cover.label}`} price={salePrice(fill.price)} cta="Add to cart" onAdd={add} />
         </div>
         <Accordion items={details} />
+        <div className="pillow-others">
+          <p className="eyebrow">Other fills</p>
+          {others.map((f) => (
+            <Link key={f.id} href={f.path} className="pillow-other">
+              <span>{f.label}</span>
+              <span>{SALE.active && <s className="price-was">{fmt(f.price)}</s>}{fmt(salePrice(f.price))}</span>
+            </Link>
+          ))}
+          <Link href={PILLOW_PATH} className="ulink">Compare all three pillows</Link>
+        </div>
       </div>
     </section>
   );

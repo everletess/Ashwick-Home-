@@ -35,7 +35,6 @@ const MATERIAL_LINKS: [string, string, string][] = [
 
 const MATTRESS_LINKS: [string, string, string][] = [
   ["The Ashbury", "Organic mattress, made in color", "/products/luxury-organic-mattress"],
-  ["Pillows", "The Ashwick Pillow, in three fills", "/products/ashwick-pillow"],
   ["Dog Beds", "The Ashbury and The Nook", "/collections/dog-beds"],
 ];
 
@@ -248,6 +247,7 @@ export function Header() {
           <Link href="/collections/sofas">Sofas</Link>
           <Link href="/collections/chairs">Chairs</Link>
           <NavMenu label="Mattress" id="mattress-menu" links={MATTRESS_LINKS} align="left" />
+          <Link href="/collections/pillows">Pillows</Link>
           <Link href="/pages/bespoke">Bespoke</Link>
           <Link href="/pages/trade" className="nav-trade">Trade</Link>
         </nav>
@@ -285,6 +285,7 @@ export function Header() {
             <Link href="/collections/chairs">Chairs</Link>
             <Link href="/products/luxury-organic-mattress">Mattress</Link>
             {MATTRESS_LINKS.map(([t, , href]) => <Link key={href} href={href} className="mmenu-child">{t}</Link>)}
+            <Link href="/collections/pillows">Pillows</Link>
             <Link href="/pages/bespoke">Bespoke</Link>
             <Link href="/pages/trade">Trade</Link>
           </nav>
