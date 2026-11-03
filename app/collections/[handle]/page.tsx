@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { FilterSort } from "@/components/filter-sort";
 import { ProductGrid } from "@/components/sections";
 import { COLLECTIONS, productsIn, showsMattress, type CollectionHandle } from "@/lib/products";
 
@@ -38,6 +39,7 @@ export default async function CollectionPage({ params }: Props) {
           </Link>
         ))}
       </nav>
+      <FilterSort current={handle} />
       <section className="wrap" style={{ paddingBottom: 140 }}>
         <ProductGrid products={productsIn(handle)} mattress={showsMattress(handle)} />
       </section>

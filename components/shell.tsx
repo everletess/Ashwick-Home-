@@ -19,7 +19,9 @@ function useScrollLock(locked: boolean) {
 }
 import { bundleIdOf, useCart, type CartLine } from "@/components/cart";
 import { BUNDLE_CONFIG, NO_WAS_PRICE, bundlePhotoFor, bundleTitleFor, SALE, bundlePrice, deliveryFor, isFurnitureLine, orderDelivery, salePrice } from "@/lib/sale";
-import { STUDIO_PHONE } from "@/lib/site";
+import { STUDIO_EMAIL, STUDIO_PHONE } from "@/lib/site";
+import { PRODUCTS } from "@/lib/products";
+import type { PhotoKey } from "@/lib/photos";
 import { SHOW_SIGNUP_EVENT } from "@/components/email-popup";
 import { SUBSCRIBED_EVENT, SUBSCRIBED_KEY } from "@/lib/subscribe";
 import { trackThen } from "@/lib/pixel";
@@ -32,6 +34,45 @@ const MATERIAL_LINKS: [string, string, string][] = [
   ["The Ashbury", "Inside the mattress", ASHBURY_PATH],
   ["Furniture", "Frames, fills and fabrics", FURNITURE_MATERIALS_PATH],
 ];
+
+const MENU_SLEEP: [string, string, PhotoKey][] = [
+  ["The Ashbury", "/products/luxury-organic-mattress", "mattress-mocha-room"],
+  ["Pillows", "/collections/pillows", "pillow-sorrel"],
+  ["Dog Beds", "/collections/dog-beds", "dog-bed-sorrel-room-golden"],
+];
+const MENU_LIVING: [string, string, PhotoKey][] = [
+  ["Sofas", "/collections/sofas", PRODUCTS.find((p) => p.id === "marlowe")!.photos[0] as PhotoKey],
+  ["Chairs", "/collections/chairs", PRODUCTS.find((p) => p.id === "pembroke")!.photos[0] as PhotoKey],
+];
+/** What the menu search looks through: product and page names. */
+const SEARCH_INDEX: [string, string][] = [
+  ["The Ashbury mattress", "/products/luxury-organic-mattress"],
+  ["Pillow: Living Wool + Organic Latex", "/products/pillow-living-wool-latex"],
+  ["Pillow: Living Wool + Horsehair", "/products/pillow-living-wool-horsehair"],
+  ["Pillow: 100% Organic Cotton", "/products/pillow-organic-cotton"],
+  ["Pillows", "/collections/pillows"],
+  ["The Ashbury Dog Bed", "/products/organic-dog-bed"],
+  ["The Nook Dog Bed", "/products/nook-dog-bed"],
+  ...PRODUCTS.map((p): [string, string] => [p.name, "/products/" + p.id]),
+  ["Bespoke", "/pages/bespoke"], ["Trade", "/pages/trade"], ["Delivery", "/pages/delivery"], ["Care", "/pages/care"],
+  ["FAQs", "/pages/faqs"], ["Returns and terms", "/pages/terms#returns"], ["Black Friday", "/black-friday"], ["Our story", "/pages/our-story"],
+];
+
+function MenuSearch() {
+  const [q, setQ] = useState("");
+  const term = q.trim().toLowerCase();
+  const hits = term ? SEARCH_INDEX.filter(([n]) => n.toLowerCase().includes(term)).slice(0, 6) : [];
+  return (
+    <div className="mmenu-search">
+      <input type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search products and pages" aria-label="Search products and pages" autoComplete="off" />
+      {term && (
+        <ul className="mmenu-hits">
+          {hits.length ? hits.map(([n, href]) => <li key={href + n}><Link href={href}>{n}</Link></li>) : <li className="none">Nothing found. Email {STUDIO_EMAIL} and we'll help.</li>}
+        </ul>
+      )}
+    </div>
+  );
+}
 
 const MATTRESS_LINKS: [string, string, string][] = [
   ["The Ashbury", "Organic mattress, made in color", "/products/luxury-organic-mattress"],
@@ -278,21 +319,31 @@ export function Header() {
             <Wordmark tagline={false} />
             <button className="x" aria-label="Close" onClick={() => setMenu(false)}>×</button>
           </div>
-          <nav className="mmenu-links">
-            {SALE.active && <Link href={SALE.path} className="mmenu-sale">{SALE.name}</Link>}
-            <Link href="/collections/all">Shop</Link>
-            <Link href="/collections/sofas">Sofas</Link>
-            <Link href="/collections/chairs">Chairs</Link>
-            <Link href="/products/luxury-organic-mattress">Mattress</Link>
-            {MATTRESS_LINKS.map(([t, , href]) => <Link key={href} href={href} className="mmenu-child">{t}</Link>)}
-            <Link href="/collections/pillows">Pillows</Link>
-            <Link href="/pages/bespoke">Bespoke</Link>
-            <Link href="/pages/trade">Trade</Link>
-          </nav>
+          <MenuSearch />
+          <div className="mmenu-tiles">
+            {SALE.active && <Link href={SALE.path} className="mmenu-sale-pill">{SALE.name}: {SALE.percent}% off everything</Link>}
+            <p className="mmenu-group">Sleep</p>
+            <div className="mmenu-row">
+              {MENU_SLEEP.map(([t, href, photo]) => (
+                <Link key={t} href={href} className="mmenu-tile"><Photo src={photo} label="" fill sizes="33vw" /><span>{t}</span></Link>
+              ))}
+            </div>
+            <p className="mmenu-group">Living</p>
+            <div className="mmenu-row two">
+              {MENU_LIVING.map(([t, href, photo]) => (
+                <Link key={t} href={href} className="mmenu-tile"><Photo src={photo} label="" fill sizes="50vw" /><span>{t}</span></Link>
+              ))}
+            </div>
+            <div className="mmenu-row two">
+              <Link href="/pages/bespoke" className="mmenu-tile wide"><Photo src="bespoke-hero" label="" fill sizes="50vw" /><span>Bespoke</span></Link>
+              <Link href="/pages/trade" className="mmenu-tile wide plain"><span>Trade</span></Link>
+            </div>
+          </div>
           <nav className="mmenu-sub">
             <Link href="/pages/our-story">Our story</Link>
             <Link href={MATERIALS_PATH}>Materials</Link>
-            {MATERIAL_LINKS.map(([t, , href]) => <Link key={href} href={href} className="mmenu-child">{t}</Link>)}
+            <Link href="/pages/care">Care</Link>
+            <a href={`mailto:${STUDIO_EMAIL}`}>Contact</a>
             <Link href="/account">Account</Link>
           </nav>
         </div>,
