@@ -65,13 +65,14 @@ export function StickyBuy({ watch, photo, name, summary, price, note, cta, onAdd
 
   return createPortal(
     <div className={"sticky-buy" + (show ? " on" : "")} aria-hidden={!show} inert={!show}>
-      <button type="button" className="sticky-buy-change" onClick={toOptions}>Change options</button>
       <div className="sticky-buy-in wrap">
-        {photo && <div className="sticky-buy-img"><Photo src={photo} label="" sizes="64px" /></div>}
-        <div className="sticky-buy-name">
-          <p className="sticky-buy-title">{name}</p>
-          <p className="sticky-buy-sum">{summary}</p>
-        </div>
+        <button type="button" className="sticky-buy-go" onClick={toOptions} aria-label={`Change options for ${name}`}>
+          {photo && <span className="sticky-buy-img"><Photo src={photo} label="" sizes="64px" /></span>}
+          <span className="sticky-buy-name">
+            <span className="sticky-buy-title">{name}</span>
+            <span className="sticky-buy-sum">{summary}</span>
+          </span>
+        </button>
         <div className="sticky-buy-price">
           <p className="sticky-buy-amt">{fmt(price)}</p>
           {note && <p className="sticky-buy-note">{note}</p>}

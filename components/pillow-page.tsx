@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { PillowView } from "@/components/pillow-view";
-import { PILLOW_STANDALONE_FILLS } from "@/lib/pillow";
+import { PILLOW_PRICES, PILLOW_STANDALONE_FILLS } from "@/lib/pillow";
 
 const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://ashwickhome.com";
 const fillOf = (id: string) => PILLOW_STANDALONE_FILLS.find((f) => f.id === id)!;
@@ -24,9 +24,11 @@ export function PillowProductPage({ id }: { id: string }) {
     brand: { "@type": "Brand", name: "Ashwick Home" },
     url: `${BASE}${f.path}`,
     offers: {
-      "@type": "Offer",
+      "@type": "AggregateOffer",
       priceCurrency: "USD",
-      price: f.price,
+      lowPrice: Math.min(...Object.values(PILLOW_PRICES[id])),
+      highPrice: Math.max(...Object.values(PILLOW_PRICES[id])),
+      offerCount: 3,
       availability: "https://schema.org/InStock",
       shippingDetails: {
         "@type": "OfferShippingDetails",

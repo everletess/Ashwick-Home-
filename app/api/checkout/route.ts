@@ -54,7 +54,7 @@ const ALIASES: Record<string, string[]> = {
   mocha: ["Mocha Mousse", "Mocha"],
 };
 
-const norm = (s: string) => s.trim().toLowerCase();
+const norm = (s: string) => s.trim().toLowerCase().replace(/horse\s*hair/g, "horsehair");
 
 /**
  * The Ashbury has a Shopify variant per size (and per feel and color, if those are variant options too). Pick the

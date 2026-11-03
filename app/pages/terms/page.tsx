@@ -58,6 +58,7 @@ export default function TermsPage() {
       </Block>
       <Block title="7. Returns" id="returns">
         <P><strong>The Ashbury mattress:</strong> standard sizes are covered by our 100-night guarantee (Section 8).</P>
+        <P><strong>Pillows:</strong> can be returned within <strong>14 days</strong> of delivery. An unused pillow is refunded in full to your original payment method. A used pillow carries a <strong>15% restocking fee</strong>. Email {email} with your order number to arrange a return before sending anything back.</P>
         <P><strong>The Ashbury Dog Bed:</strong> can be returned within <strong>30 days</strong> of delivery. Email us to arrange the return. Returned dog beds are donated, never resold as new. The dog bed carries a 1-year warranty against defects in materials and workmanship.</P>
         <P><strong>Furniture as designed:</strong> every piece is made to order. Pieces ordered as designed, without customization, can be returned within <strong>14 days</strong> of delivery. They must be in their original, unused condition. Refunds are reduced by the return shipping cost and a <strong>15% restocking fee</strong>. Email us to arrange a return before sending anything back.</P>
         <P><strong>Final sale, with no returns unless they arrive damaged:</strong></P>
