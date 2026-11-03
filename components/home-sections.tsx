@@ -55,7 +55,7 @@ export function BlackFridayBand() {
   const ssNow = salePrice(ssList);
   const cards = [
     { href: BUNDLE.path, photo: BUNDLE_HERO.photo, alt: BUNDLE_HERO.alt, title: BUNDLE.title, desc: "Ashbury, Ashbury Dog Bed and a bedding set.", was: bfList, now: bfNow },
-    { href: SLEEP_SUITE.path, photo: "sleep-suite-thumb" as PhotoKey, alt: SLEEP_SUITE.alt, title: SLEEP_SUITE.name, desc: "Ashbury and a bedding set.", was: ssList, now: ssNow },
+    { href: SLEEP_SUITE.path, photo: "sleep-suite-flint" as PhotoKey, alt: "The Complete Sleep Suite: an Ashbury mattress in Flint with matching pillows and a folded bedding set", title: SLEEP_SUITE.name, desc: "Ashbury and a bedding set.", was: ssList, now: ssNow },
   ];
   return (
     <section className="home-bf">
