@@ -34,6 +34,8 @@ import bfBanner from "@/assets/photos/bf-banner.jpg";
 import bundleHero from "@/assets/photos/bundle-hero.jpg";
 import sleepSuiteHero from "@/assets/photos/sleep-suite-hero.jpg";
 import sleepSuiteThumb from "@/assets/photos/sleep-suite-thumb.jpg";
+// The Sleep Suite in Flint (4:3), so the home page bundle cards are two colors.
+import sleepSuiteFlint from "@/assets/photos/sleep-suite-flint.jpg";
 import pillowHero from "@/assets/photos/pillow-hero.jpg";
 import pillowSorrel from "@/assets/photos/pillow-sorrel.jpg";
 import pillowFlint from "@/assets/photos/pillow-flint.jpg";
@@ -241,6 +243,7 @@ export const PHOTOS = {
   "bundle-hero": bundleHero,
   "sleep-suite-hero": sleepSuiteHero,
   "sleep-suite-thumb": sleepSuiteThumb,
+  "sleep-suite-flint": sleepSuiteFlint,
   "pillow-hero": pillowHero,
   "pillow-sorrel": pillowSorrel,
   "pillow-flint": pillowFlint,
