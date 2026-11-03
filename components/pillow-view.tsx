@@ -83,7 +83,7 @@ export function PillowView() {
       "Adjustable comfort",
       <p>The fill is adjustable. Add or remove fill material to set your own height and firmness and the support that suits you, whether you sleep on your back, side or stomach.</p>,
     ],
-    ["Delivery", <p>Handmade to order in the USA. Ships within 3–4 days.</p>],
+    ["Delivery", <p>Free delivery. Handmade to order in the USA, shipping within 3–4 days.</p>],
     ["Returns", <p>{PILLOW_RETURNS.full}</p>],
     ...PILLOW_FAQ.filter(([q]) => q === "Is there a smell when it arrives?").map(([q, a]): [string, React.ReactNode] => [q, <p>{a}</p>]),
   ];
@@ -155,8 +155,8 @@ export function PillowView() {
         </div>
         <div className="designed">
           <button ref={buyRef} className="btn full" onClick={add}>Add to cart · {fmt(salePrice(fill.price))}</button>
-          <ShipsFast when="3–4 days" note="Handmade to order in the USA." />
-          <TrustRow items={[["hand", "Handmade to order"], ["returns", PILLOW_RETURNS.short]]} />
+          <ShipsFast when="3–4 days" note="Free delivery. Handmade to order in the USA." />
+          <TrustRow items={[["truck", "Free delivery"], ["hand", "Handmade to order"], ["returns", PILLOW_RETURNS.short]]} />
           <StickyBuy watch={buyRef} photo={main.photo} name="The Ashwick Pillow" summary={`${fill.label} · ${size.label} · ${cover.label}`} price={salePrice(fill.price)} cta="Add to cart" onAdd={add} />
         </div>
         <Accordion items={details} />

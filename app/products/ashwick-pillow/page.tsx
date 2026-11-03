@@ -17,7 +17,7 @@ function jsonLd() {
     "@context": "https://schema.org",
     "@type": "Product",
     name: "The Ashwick Pillow",
-    description: "A handmade organic bed pillow in three fills, with a removable organic cotton cover in four colors.",
+    description: "A handmade organic bed pillow in three fills, with a removable organic cotton cover in four colors. Free delivery.",
     brand: { "@type": "Brand", name: "Ashwick Home" },
     url: `${BASE}${PILLOW_PATH}`,
     offers: {
@@ -27,6 +27,15 @@ function jsonLd() {
       highPrice: Math.max(...prices),
       offerCount: prices.length,
       availability: "https://schema.org/InStock",
+      shippingDetails: {
+        "@type": "OfferShippingDetails",
+        shippingRate: { "@type": "MonetaryAmount", value: 0, currency: "USD" },
+        shippingDestination: { "@type": "DefinedRegion", addressCountry: "US" },
+        deliveryTime: {
+          "@type": "ShippingDeliveryTime",
+          handlingTime: { "@type": "QuantitativeValue", minValue: 3, maxValue: 4, unitCode: "DAY" },
+        },
+      },
     },
   };
 }
