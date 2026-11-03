@@ -102,7 +102,7 @@ import mattressRoomKhaki from "@/assets/photos/mattress-room-khaki.jpg";
 import mattressRoomMoss from "@/assets/photos/mattress-room-moss.jpg";
 import mattressRoomHazel from "@/assets/photos/mattress-room-hazel.jpg";
 import mattressRoomFlax from "@/assets/photos/mattress-room-flax.jpg";
-import mattressRoomSorrel from "@/assets/photos/mattress-room-sorrel.jpg";
+import mattressRoomSorrel from "@/assets/photos/mattress-room-sorrel-2.jpg";
 import mattressRoomFleece from "@/assets/photos/mattress-room-fleece.jpg";
 import mattressRoomFlint from "@/assets/photos/mattress-room-flint.jpg";
 import materialsOil from "@/assets/photos/materials-oil.jpg";
