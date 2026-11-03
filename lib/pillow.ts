@@ -28,3 +28,22 @@ export const PILLOW_COVERS = [
   { id: "safari", label: "Flax", swatch: "mattress-swatch-safari" },
   { id: "mocha", label: "Sorrel", swatch: "mattress-swatch-mocha" },
 ] as const;
+
+/**
+ * Fills offered on the standalone pillow page (Tessa, 03/11): three. Kapok stays a bedding-set option only.
+ * Each line states only what the fill is made of.
+ */
+export const PILLOW_STANDALONE_FILLS = PILLOW_TYPES.filter((f) => f.id !== "kapok").map((f) => ({
+  ...f,
+  blurb:
+    f.id === "living-wool-latex" ? "Living Wool with an organic latex core."
+    : f.id === "living-wool-horse-hair" ? "Living Wool with horsehair."
+    : "Organic cotton fill throughout.",
+}));
+
+/** Pillow returns (Tessa, 03/11). */
+export const PILLOW_RETURNS = {
+  days: 14,
+  short: "14-day returns",
+  full: "Return within 14 days. Unused pillows are fully refunded. A used pillow carries a 15% restocking fee. Email hello@ashwickhome.com to arrange it first.",
+} as const;
