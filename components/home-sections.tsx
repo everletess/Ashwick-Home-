@@ -19,7 +19,7 @@ const first = (id: string): PhotoKey => {
 export function CategoryRail() {
   const tiles: { name: string; href: string; photo: PhotoKey; alt: string }[] = [
     { name: "The Ashbury", href: MATTRESS_PATH, photo: "mattress-mocha-room", alt: "The Ashbury mattress in Sorrel in a sunlit bedroom" },
-    { name: "Pillows", href: PILLOW_PATH, photo: "pillow-sorrel", alt: "Two Sorrel pillows stacked on a travertine ledge" },
+    { name: "Pillows", href: PILLOW_PATH, photo: "pillow-covers", alt: "Two cream pillows on a travertine ledge beside a stack of removable covers in Sorrel, Fleece, Flint and Flax" },
     { name: "Dog Beds", href: "/collections/dog-beds", photo: "dog-bed-sorrel-room-golden", alt: "A Sorrel Ashbury dog bed with a golden dog resting on it" },
     { name: "Sofas", href: "/collections/sofas", photo: first("marlowe"), alt: "The Marlowe sofa" },
     { name: "Chairs", href: "/collections/chairs", photo: first("pembroke"), alt: "The Pembroke chair" },
