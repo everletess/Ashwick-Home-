@@ -124,10 +124,21 @@ export function sleepSuitePrice(sizeIndexOrId: number | string = 0) {
   return { list, sale: bundlePrice(size.price) + bundlePrice(BUNDLE_CONFIG.beddingSet.price) };
 }
 
-/** The picture for a bundle in the cart and in emails: the bundle's own hero, not the separate product photos. */
-export function bundlePhotoFor(bundleName: string): PhotoKey {
-  return bundleName === SLEEP_SUITE.name ? "sleep-suite-flint" : BUNDLE_HERO.photo;
+/**
+ * The picture for a bundle in the cart and in emails: the bundle's own hero, not the separate product photos.
+ * The Sleep Suite has one in Flint and one in Sorrel; `color` (the mattress color label) picks Flint for Flint orders.
+ */
+export function bundlePhotoFor(bundleName: string, color?: string): PhotoKey {
+  if (bundleName !== SLEEP_SUITE.name) return BUNDLE_HERO.photo;
+  return color === "Flint" ? "sleep-suite-flint" : "sleep-suite-thumb";
 }
+
+/** A bundle's mattress color, from its cart lines (the mattress line's "Color" option). */
+export const bundleColorOf = (lines: { options: [string, string][] }[]) =>
+  lines.map((l) => l.options.find(([k]) => k === "Color")?.[1]).find(Boolean);
+
+/** What the Sleep Suite calls the shared bedding set (its Shopify product is named for the Best Friends Bundle). */
+export const SLEEP_SUITE_BEDDING_NAME = "Bedding Set";
 
 /** Products whose list price was raised before they sold at the old price: show only the sale price, no struck-through "was". */
 export const NO_WAS_PRICE = new Set<string>([]);

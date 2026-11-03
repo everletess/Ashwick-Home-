@@ -18,7 +18,7 @@ function useScrollLock(locked: boolean) {
   }, [locked]);
 }
 import { bundleIdOf, useCart, type CartLine } from "@/components/cart";
-import { BUNDLE_CONFIG, NO_WAS_PRICE, bundlePhotoFor, bundleTitleFor, SALE, bundlePrice, deliveryFor, isFurnitureLine, orderDelivery, salePrice } from "@/lib/sale";
+import { BUNDLE_CONFIG, NO_WAS_PRICE, SLEEP_SUITE, SLEEP_SUITE_BEDDING_NAME, bundleColorOf, bundlePhotoFor, bundleTitleFor, SALE, bundlePrice, deliveryFor, isFurnitureLine, orderDelivery, salePrice } from "@/lib/sale";
 import { STUDIO_EMAIL, STUDIO_PHONE } from "@/lib/site";
 import { PRODUCTS } from "@/lib/products";
 import type { PhotoKey } from "@/lib/photos";
@@ -477,7 +477,7 @@ export function CartDrawer() {
             g.bundle ? (
               <div className="line bundle-line" key={g.lines[0].lineId}>
                 <div className="bundle-pics">
-                  <Photo src={bundlePhotoFor(g.lines[0].options.find(([k]) => k === "_Bundle")?.[1] ?? "")} label={bundleTitleFor(g.lines[0].options.find(([k]) => k === "_Bundle")?.[1] ?? "")} className="line-img" sizes="96px" preload />
+                  <Photo src={bundlePhotoFor(g.lines[0].options.find(([k]) => k === "_Bundle")?.[1] ?? "", bundleColorOf(g.lines))} label={bundleTitleFor(g.lines[0].options.find(([k]) => k === "_Bundle")?.[1] ?? "")} className="line-img" sizes="96px" preload />
                 </div>
                 <div>
                   <div className="line-top">
@@ -490,7 +490,7 @@ export function CartDrawer() {
                   <div className="line-mode">{SALE.percent}% off{BUNDLE_CONFIG.whiteGloveIncluded ? " · Free white glove" : ""}</div>
                   {g.lines.map((i) => (
                     <div className="line-opt bundle-item" key={i.lineId}>
-                      <strong>{i.name}</strong>{" "}
+                      <strong>{i.id === BUNDLE_CONFIG.beddingSet.handle && i.options.some(([k, v]) => k === "_Bundle" && v === SLEEP_SUITE.name) ? SLEEP_SUITE_BEDDING_NAME : i.name}</strong>{" "}
                       {i.id === BUNDLE_CONFIG.beddingSet.handle
                         ? (() => { const o = (k: string) => i.options.find(([key]) => key === k)?.[1] ?? ""; return `${o("Mattress size")} · ${o("Pillow")} pillows, ${o("Pillow size")} in · ${o("Cover color")} covers · Mattress Protector`; })()
                         : i.options.filter(([k]) => !k.startsWith("_") && k !== "Feel").map(([, v]) => v).join(" · ")}
