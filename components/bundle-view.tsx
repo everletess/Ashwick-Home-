@@ -11,7 +11,7 @@ import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
 import { DOG_BED } from "@/lib/dog-bed";
 import { PHOTOS } from "@/lib/photos";
 import { fmt } from "@/lib/products";
-import { BUNDLE, BUNDLE_CONFIG, SALE, SLEEP_SUITE, sleepSuitePrice, bundleMattressDelivery, bundlePrice, pillowSizeFor, pillowSizeNameFor, BUNDLE_PILLOWS, BUNDLE_COVER_BY_MATTRESS_COLOR } from "@/lib/sale";
+import { BUNDLE, BUNDLE_CONFIG, SALE, SLEEP_SUITE, SLEEP_SUITE_BEDDING_NAME, sleepSuitePrice, bundleMattressDelivery, bundlePrice, pillowSizeFor, pillowSizeNameFor, BUNDLE_PILLOWS, BUNDLE_COVER_BY_MATTRESS_COLOR } from "@/lib/sale";
 
 /** Ties the three cart lines of one bundle together (and the pair on the order). */
 const newBundleId = () => `${BUNDLE.name}-${Math.random().toString(36).slice(2, 8)}`;
@@ -178,7 +178,7 @@ export function BundleBuilder() {
   );
 }
 
-/** The Complete Sleep Suite: an Ashbury plus the Best Friends Bedding Set (no dog bed). Compact: pickers, live total and one button. */
+/** The Complete Sleep Suite: an Ashbury plus the bedding set (no dog bed). Compact: pickers, live total and one button. */
 export function SleepSuiteBuilder() {
   const cart = useCart();
   const buyRef = useRef<HTMLButtonElement>(null);
@@ -211,7 +211,7 @@ export function SleepSuiteBuilder() {
       },
       {
         id: BUNDLE_CONFIG.beddingSet.handle,
-        name: BUNDLE_CONFIG.beddingSet.name,
+        name: SLEEP_SUITE_BEDDING_NAME,
         photo: mc.photos[0] ?? mc.swatch,
         price: bed,
         qty: 1,
@@ -244,11 +244,11 @@ export function SleepSuiteBuilder() {
             <Pills options={BUNDLE_PILLOWS.map((x) => ({ id: x.id as string, label: x.label }))} value={pillow} onChange={setPillow} />
           </OptGroup>
         </div>
-        <p className="fine" style={{ marginTop: 0 }}>{pil.desc} Two {pil.label} pillows ({pillowSize} in) with {coverColor} removable covers, and a Mattress Protector, in the {BUNDLE_CONFIG.beddingSet.name} ({fmt(bed)}).</p>
+        <p className="fine" style={{ marginTop: 0 }}>{pil.desc} Two {pil.label} pillows ({pillowSize} in) with {coverColor} removable covers, and a Mattress Protector, in the {SLEEP_SUITE_BEDDING_NAME} ({fmt(bed)}).</p>
 
         <div className="bundle-sum">
           <div className="bundle-sum-row"><span>{M.title}, {m.label}</span><span>{fmt(m.price)}</span></div>
-          <div className="bundle-sum-row"><span>{BUNDLE_CONFIG.beddingSet.name}</span><span>{fmt(bed)}</span></div>
+          <div className="bundle-sum-row"><span>{SLEEP_SUITE_BEDDING_NAME}</span><span>{fmt(bed)}</span></div>
           {SALE.active && <div className="bundle-sum-row save"><span>{SALE.percent}% off the bundle</span><span>−{fmt(list - now)}</span></div>}
           <div className="bundle-sum-total">
             <span className="eyebrow">The suite</span>
