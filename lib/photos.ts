@@ -36,6 +36,7 @@ import sleepSuiteHero from "@/assets/photos/sleep-suite-hero.jpg";
 import sleepSuiteThumb from "@/assets/photos/sleep-suite-thumb.jpg";
 // The Sleep Suite in Flint (4:3), so the home page bundle cards are two colors.
 import sleepSuiteFlint from "@/assets/photos/sleep-suite-flint.jpg";
+import sleepSuiteFlintTall from "@/assets/photos/sleep-suite-flint-tall.jpg";
 import pillowHero from "@/assets/photos/pillow-hero.jpg";
 import pillowSorrel from "@/assets/photos/pillow-sorrel.jpg";
 import pillowFlint from "@/assets/photos/pillow-flint.jpg";
@@ -43,6 +44,15 @@ import pillowFlax from "@/assets/photos/pillow-flax.jpg";
 import pillowFleece from "@/assets/photos/pillow-fleece.jpg";
 import pillowCovers from "@/assets/photos/pillow-covers.jpg";
 import pillowCoversWide from "@/assets/photos/pillow-covers-wide.jpg";
+import pillowInsideLatex from "@/assets/photos/pillow-inside-latex.jpg";
+import pillowInsideHorsehair from "@/assets/photos/pillow-inside-horsehair.jpg";
+import pillowInsideCover from "@/assets/photos/pillow-inside-cover.jpg";
+import pillowInsideCotton from "@/assets/photos/pillow-inside-cotton.jpg";
+import pillowFillCotton from "@/assets/photos/pillow-fill-cotton.jpg";
+import pillowFillHorsehair from "@/assets/photos/pillow-fill-horsehair.jpg";
+import pillowFillLatex from "@/assets/photos/pillow-fill-latex.jpg";
+import pillowStackLedge from "@/assets/photos/pillow-stack-ledge.jpg";
+import pillowStackMeadow from "@/assets/photos/pillow-stack-meadow.jpg";
 import hero from "@/assets/photos/hero.jpg";
 import heroFamily from "@/assets/photos/hero-family.jpg";
 import heroBedroom from "@/assets/photos/hero-bedroom.jpg";
@@ -244,6 +254,7 @@ export const PHOTOS = {
   "sleep-suite-hero": sleepSuiteHero,
   "sleep-suite-thumb": sleepSuiteThumb,
   "sleep-suite-flint": sleepSuiteFlint,
+  "sleep-suite-flint-tall": sleepSuiteFlintTall,
   "pillow-hero": pillowHero,
   "pillow-sorrel": pillowSorrel,
   "pillow-flint": pillowFlint,
@@ -251,6 +262,15 @@ export const PHOTOS = {
   "pillow-fleece": pillowFleece,
   "pillow-covers": pillowCovers,
   "pillow-covers-wide": pillowCoversWide,
+  "pillow-inside-latex": pillowInsideLatex,
+  "pillow-inside-horsehair": pillowInsideHorsehair,
+  "pillow-inside-cover": pillowInsideCover,
+  "pillow-inside-cotton": pillowInsideCotton,
+  "pillow-fill-cotton": pillowFillCotton,
+  "pillow-fill-horsehair": pillowFillHorsehair,
+  "pillow-fill-latex": pillowFillLatex,
+  "pillow-stack-ledge": pillowStackLedge,
+  "pillow-stack-meadow": pillowStackMeadow,
   "nook-olive-sizes": nookOliveSizes,
   "nook-oat": nookOat,
   "nook-olive": nookOlive,

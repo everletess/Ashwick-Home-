@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
 type Sort = "featured" | "low" | "high";
-const TABS: [string, string][] = [["All pieces", "/collections/all"], ["Sofas", "/collections/sofas"], ["Chairs", "/collections/chairs"], ["Mattress", "/collections/mattress"], ["Pillows", "/collections/pillows"], ["Dog beds", "/collections/dog-beds"]];
+const TABS: [string, string][] = [["All", "/collections/all"], ["Bedroom", "/collections/bedroom"], ["Pillows", "/collections/pillows"], ["Dog Beds", "/collections/dog-beds"], ["Sofas", "/collections/sofas"], ["Chairs", "/collections/chairs"], ["Bundles", "/collections/bundles"]];
 
 /**
  * A sticky "Filter · Sort" pill that opens a bottom sheet: category, sort by price, and "Ships fast" (made to order and shipped
@@ -20,13 +20,13 @@ export function FilterSort({ current }: { current: string }) {
   useEffect(() => { setMounted(true); }, []);
 
   useEffect(() => {
-    const grid = document.querySelector<HTMLElement>("[data-grid]");
-    if (!grid) return;
-    const cards = [...grid.querySelectorAll<HTMLElement>(".card")];
-    const order = [...cards].sort((a, b) => sort === "low" ? +a.dataset.price! - +b.dataset.price! : sort === "high" ? +b.dataset.price! - +a.dataset.price! : 0);
-    cards.forEach((c) => {
-      c.style.order = sort === "featured" ? "" : String(order.indexOf(c));
-      c.style.display = fast && !c.dataset.fast ? "none" : "";
+    document.querySelectorAll<HTMLElement>("[data-grid]").forEach((grid) => {
+      const cards = [...grid.querySelectorAll<HTMLElement>(".cc")];
+      const order = [...cards].sort((x, y) => sort === "low" ? +x.dataset.price! - +y.dataset.price! : sort === "high" ? +y.dataset.price! - +x.dataset.price! : 0);
+      cards.forEach((c) => {
+        c.style.order = sort === "featured" ? "" : String(order.indexOf(c));
+        c.style.display = fast && !c.dataset.fast ? "none" : "";
+      });
     });
   }, [sort, fast]);
 

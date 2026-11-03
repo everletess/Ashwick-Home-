@@ -1381,3 +1381,174 @@ button.chip{cursor:pointer}
 
 .home-bf .price-now,.home-bf-p strong{color:var(--alabaster)}
 .home-bf-p s,.home-bf .price-was{color:var(--alabaster)}
+
+/* ===== Round 2: product cards (4:5, four across) ===== */
+.cc-page{padding-bottom:120px}
+.cc-sec+.cc-sec{margin-top:72px}
+.cc-sec-h{font:400 12px var(--sans);letter-spacing:.28em;text-transform:uppercase;color:var(--walnut);margin:0 0 24px;padding-bottom:14px;border-bottom:1px solid var(--hair)}
+.cc-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:48px 24px}
+.cc{display:flex;flex-direction:column;min-width:0;position:relative}
+.cc-link{display:flex;flex-direction:column;color:var(--ink);flex:1}
+.cc-link:hover{color:var(--ink)}
+.cc-img{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--linen)}
+.cc-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.6,.2,1),opacity .6s}
+.cc-img .alt{opacity:0}
+@media (hover:hover){.cc:hover .cc-img .alt{opacity:1}.cc:hover .cc-img img{transform:scale(1.025)}}
+.cc-badge{position:absolute;left:12px;top:12px;z-index:2;background:var(--alabaster);color:var(--ink);padding:6px 10px;font:500 12px var(--sans);letter-spacing:.12em;text-transform:uppercase}
+.cc-name{font:300 24px/1.15 var(--serif);margin:16px 0 0;min-height:2.3em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cc-price{display:flex;flex-direction:column;gap:2px;margin-top:6px;font:400 16px var(--sans);color:var(--ink)}
+.cc-was{font:300 14px var(--sans);color:var(--walnut);opacity:.85}
+.cc-stars{min-height:22px;margin-top:6px;display:flex;align-items:center;gap:8px;font:400 14px var(--sans);color:var(--walnut)}
+.cc-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;min-height:44px}
+.cc-dots{list-style:none;margin:0;padding:0;display:flex;gap:2px}
+.cc-dots button{width:44px;height:44px;border:0;background:none;padding:0;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.cc-dots button span{display:block;width:22px;height:22px;border-radius:50%;overflow:hidden;border:1px solid var(--hair);position:relative}
+.cc-dots button span img{width:100%;height:100%;object-fit:cover}
+.cc-dots button.on span{outline:1px solid var(--ink);outline-offset:2px}
+.cc-add{min-height:44px;padding:0 16px;border:1px solid var(--ink);background:transparent;color:var(--ink);font:500 14px var(--sans);cursor:pointer}
+.cc-add:hover{background:var(--ink);color:var(--alabaster)}
+/* Quick add sheet */
+.qa-scrim{position:fixed;inset:0;background:rgba(42,37,31,.5);z-index:95;display:flex;align-items:center;justify-content:center}
+.qa-sheet{width:min(460px,100%);max-height:86dvh;overflow:auto;background:var(--alabaster);padding:24px;display:flex;flex-direction:column;gap:6px}
+.qa-head{display:flex;justify-content:space-between;align-items:center;font:300 24px var(--serif)}
+.qa-l{margin:14px 0 4px;font:400 12px var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--walnut)}
+.qa-opts{display:flex;flex-wrap:wrap;gap:8px}
+.qa-opts button{min-height:44px;padding:0 14px;border:1px solid var(--hair);background:transparent;color:var(--ink);font:400 15px var(--sans);cursor:pointer;text-align:left}
+.qa-opts button.on{background:var(--ink);color:var(--alabaster);border-color:var(--ink)}
+.qa-go{margin-top:18px;min-height:48px}
+.qa-more{align-self:center;margin-top:6px}
+@media (max-width:1180px){.cc-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:860px){.cc-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){
+  .cc-grid{gap:28px 12px}
+  .cc-name{font-size:19px;margin-top:12px}
+  .cc-price{font-size:15px}
+  .qa-scrim{align-items:flex-end}
+  .qa-sheet{padding:20px 20px calc(24px + env(safe-area-inset-bottom))}
+  .cc-sec+.cc-sec{margin-top:48px}
+  .cc-page{padding-bottom:72px}
+}
+/* ===== Round 2: desktop content width and rhythm ===== */
+:root{--max-content:1280px}
+@media (min-width:1181px){
+  .wrap{max-width:var(--max-content)}
+  .hero .wrap,.fibers .wrap,.home-bf .wrap,.nav-wrap,.hdr .wrap{max-width:1440px}
+  .sec{padding:120px 0}
+  .home-row{padding:96px 0 24px}
+  .home-row+.home-row{padding-top:72px;padding-bottom:120px}
+}
+
+/* Mega menus */
+.nav-dd-panel.mega{display:flex;min-width:560px;padding:0;left:-20px;right:auto}
+.nav-dd-panel.mega .nav-dd-links{flex:1;padding:10px 0;min-width:260px}
+.nav-dd-feat{position:relative;display:block;width:280px;min-height:300px;overflow:hidden;background:var(--linen);color:#fff}
+.nav-dd-feat img{object-fit:cover}
+.nav-dd-feat::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(42,37,31,0) 55%,rgba(42,37,31,.55));pointer-events:none}
+.nav-dd-feat span{position:absolute;left:16px;bottom:14px;z-index:1;font:300 22px/1.1 var(--serif)}
+.nav-dd-links .nav-dd-item{min-height:44px}
+
+.fixed-opt{margin:0;font:400 16px var(--sans);color:var(--ink)}
+.fixed-opt span{font:400 12px var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--walnut);margin-right:10px}
+
+/* ===== Round 2: desktop product page, buy box on the first screen at 1440x900 ===== */
+@media (min-width:961px){
+  .pdp{gap:56px;padding-bottom:96px}
+  .info{top:96px;gap:16px;max-height:calc(100vh - 112px);overflow-y:auto;scrollbar-width:none;padding-bottom:8px}
+  .info::-webkit-scrollbar{display:none}
+  .pdp-name{font-size:clamp(34px,3.2vw,48px);margin:-4px 0 0}
+  .pdp-collection{margin-top:4px;font-size:20px}
+  .pdp-price{font-size:26px;margin-top:-4px}
+  .opt-l{margin-bottom:8px}
+  .opt-c{gap:10px}
+  .info .custom-req{margin-top:8px}
+  .buy-promise{margin-top:12px;padding:14px 16px}
+  .pdp>.gal{align-self:start}
+  /* Pillow gallery: photos in a two-column grid instead of one big photo and thumbnails */
+  .sgal-stage{background:none}
+  .sgal-track{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;overflow:visible;scroll-snap-type:none}
+  .sgal-slide{flex:none;aspect-ratio:4/5;cursor:zoom-in}
+  .sgal-slide:first-child{grid-column:1/-1;aspect-ratio:5/4}
+  .sgal-arrow,.sgal-dots,.sgal-thumbs{display:none!important}
+}
+@media (min-width:961px){.pillow-pdp .gal{position:static}}
+/* 48px chat icon on desktop too */
+@media (min-width:961px){
+  .asst-fab{width:48px;height:48px;padding:0;border-radius:50%;right:20px;bottom:20px}
+  .asst-fab-t{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .has-sticky-buy .asst-fab{display:none}
+}
+
+@media (min-width:961px){
+  .info>.body{font-size:15px;line-height:1.55;max-width:none}
+  .info .fine{font-size:14px;line-height:1.45}
+  .info .price-assure{margin-bottom:0}
+  .info .choices{gap:14px}
+  .info .rv-link{margin-top:0}
+  .opt-c button,.opt-c .pill{min-height:40px}
+}
+
+/* Desktop: the description moves below the buy button so size, feel, color and Add to cart fit on the first screen */
+@media (min-width:961px){
+  .info>.body{order:1}
+}
+
+@media (min-width:961px){
+  .crumb{padding-top:14px;padding-bottom:14px}
+  .info .choices{gap:10px}
+  .info .delivery{margin-top:-10px}
+  .info .sale-note{margin-top:-8px}
+  .info>.eyebrow+.pdp-name{margin-top:-8px}
+  .info .rv-link{margin-top:-4px}
+  .info .pdp-collection{margin-top:0}
+}
+
+@media (min-width:961px){.info{gap:13px}.info>.body{font-size:14.5px;line-height:1.5}.hdr-in{padding-top:14px;padding-bottom:14px}}
+
+.cc-name{min-height:0}
+@media (min-width:1181px){.home-cats-rail{max-width:var(--max-content);padding:0}.home-cats .wrap{max-width:var(--max-content)}}
+.split-head .ulink{align-self:flex-end;white-space:nowrap}
+
+/* The Ashbury room photos carry a small "shown in <color>" caption along the bottom edge; cards crop it out of frame. */
+.cc-img.crop-cap img:not(.alt){transform:scale(1.12);transform-origin:50% 0}
+@media (hover:hover){.cc:hover .cc-img.crop-cap img:not(.alt){transform:scale(1.12)}}
+
+/* Complete the bed, reviews row, farm band */
+.cbed-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.rvrow-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:40px}
+.rvrow-card{background:var(--alabaster);padding:28px;display:flex;flex-direction:column;gap:12px}
+.rvrow-body{margin:0;font:300 17px/1.6 var(--sans);color:var(--ink);display:-webkit-box;-webkit-line-clamp:7;-webkit-box-orient:vertical;overflow:hidden}
+.rvrow-by{margin:auto 0 0;font:400 14px var(--sans);color:var(--walnut)}
+.farm-ph{margin-top:24px;aspect-ratio:21/9;background:var(--linen);display:flex;align-items:center;justify-content:center;font:400 12px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--walnut)}
+@media (max-width:860px){.cbed-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cbed-grid .cc:nth-child(3){display:none}}
+@media (max-width:640px){
+  .rvrow-list{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:28px -20px 0;padding:0 20px 8px;scroll-padding:0 20px;scrollbar-width:none}
+  .rvrow-list::-webkit-scrollbar{display:none}
+  .rvrow-card{flex:0 0 82vw;max-width:340px;scroll-snap-align:start}
+}
+
+@media (max-width:640px){
+  .cc-foot{flex-wrap:wrap;gap:0 6px;min-height:44px;align-items:center}
+  .cc-dots{flex:1 1 100%}
+  .cc-dots button{width:36px;height:44px}
+  .cc-add{flex:1 1 100%;margin-bottom:6px}
+  .cc-dots+.cc-add{margin-top:0}
+}
+
+@media (max-width:1180px){.cc-name{min-height:2.3em}}
+
+.pillows-hero{padding-bottom:56px}
+.pillows-hero-img{position:relative;aspect-ratio:16/7;overflow:hidden;background:var(--linen)}
+.pillows-hero-img img{object-fit:cover;object-position:50% 55%}
+@media (max-width:640px){.pillows-hero{padding-bottom:32px;padding-left:0;padding-right:0}.pillows-hero-img{aspect-ratio:1/1}}
+
+.pillows-hero-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.pillows-hero-img{aspect-ratio:1/1!important}
+.pillows-hero-img img{object-position:50% 50%!important}
+@media (max-width:640px){.pillows-hero-grid{grid-template-columns:minmax(0,1fr);gap:0}.pillows-hero-grid .pillows-hero-img+.pillows-hero-img{display:none}}
+
+.pinside{padding:72px 0 24px}
+.pinside .eyebrow{margin-bottom:24px}
+.pinside-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;max-width:880px}
+.pinside-img{position:relative;aspect-ratio:1/1;overflow:hidden;background:var(--linen)}
+.pinside-img img{object-fit:cover}
+@media (max-width:640px){.pinside{padding:48px 0 16px}.pinside-grid{grid-template-columns:minmax(0,1fr);gap:16px}}

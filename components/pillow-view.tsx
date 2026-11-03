@@ -16,6 +16,12 @@ import { PILLOW_COVERS, PILLOW_COVER_PHOTOS, PILLOW_FAQ, PILLOW_ID, PILLOW_PATH,
 import type { PhotoKey } from "@/lib/photos";
 
 const FILLS = PILLOW_STANDALONE_FILLS;
+/** Each fill's own photo: the pillow with the fill in bowls beside it. */
+const FILL_SHOT: Record<string, { photo: PhotoKey; alt: string }> = {
+  "organic-cotton": { photo: "pillow-fill-cotton", alt: "A cream pillow with a bowl of organic cotton fill beside it" },
+  "living-wool-horse-hair": { photo: "pillow-fill-horsehair", alt: "A cream pillow with bowls of Living Wool and horsehair fill beside it" },
+  "living-wool-latex": { photo: "pillow-fill-latex", alt: "A cream pillow with bowls of Living Wool and shredded organic latex fill beside it" },
+};
 
 /** One pillow (one fill) as its own product page; size and cover color are the options. Mobile first. */
 export function PillowView({ fillId }: { fillId: string }) {
@@ -31,6 +37,8 @@ export function PillowView({ fillId }: { fillId: string }) {
   // The gallery: the chosen color first, then the other shots. Picking a cover swaps the main photo.
   const gallery = ([
     PILLOW_COVER_PHOTOS[coverId as keyof typeof PILLOW_COVER_PHOTOS] ?? PILLOW_COVER_PHOTOS.natural,
+    FILL_SHOT[fillId],
+    { photo: "pillow-stack-meadow", alt: "Four pillows stacked in a sunlit meadow in Fleece, Flax, Sorrel and Flint" },
     { photo: "pillow-covers", alt: "Cream pillows beside folded removable covers in Sorrel, Fleece, Flint and Flax" },
     { photo: "pillow-covers-wide", alt: "Two cream pillows on a travertine ledge beside a stack of four removable covers in different colors" },
   ] as { photo: PhotoKey; alt: string }[]).filter((g, i, a) => a.findIndex((x) => x.photo === g.photo) === i);

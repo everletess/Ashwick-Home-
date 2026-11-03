@@ -26,7 +26,7 @@ import { SHOW_SIGNUP_EVENT } from "@/components/email-popup";
 import { SUBSCRIBED_EVENT, SUBSCRIBED_KEY } from "@/lib/subscribe";
 import { trackThen } from "@/lib/pixel";
 import { saveCart, normalizePhone } from "@/lib/subscribe";
-import { MATTRESS } from "@/lib/mattress";
+import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
 import { DOG_BED_ID, NOOK } from "@/lib/dog-bed";
 import { ASHBURY_PATH, FURNITURE_MATERIALS_PATH, MATERIALS_PATH } from "@/lib/materials";
 
@@ -39,6 +39,7 @@ const MENU_SLEEP: [string, string, PhotoKey][] = [
   ["The Ashbury", "/products/luxury-organic-mattress", "mattress-mocha-room"],
   ["Pillows", "/collections/pillows", "pillow-sorrel"],
   ["Dog Beds", "/collections/dog-beds", "dog-bed-sorrel-room-golden"],
+  ["Bundles", "/collections/bundles", "sleep-suite-thumb"],
 ];
 const MENU_LIVING: [string, string, PhotoKey][] = [
   ["Sofas", "/collections/sofas", PRODUCTS.find((p) => p.id === "marlowe")!.photos[0] as PhotoKey],
@@ -74,13 +75,31 @@ function MenuSearch() {
   );
 }
 
+const SLEEP_LINKS: [string, string, string][] = [
+  ["The Ashbury", "Organic mattress, made in color", "/products/luxury-organic-mattress"],
+  ["Pillows", "Three fills, four cover colors", "/collections/pillows"],
+  ["Dog Beds", "The Ashbury Dog Bed and The Nook", "/collections/dog-beds"],
+  ["Bundles", "Complete Sleep Suite, Best Friends", "/collections/bundles"],
+];
+const LIVING_LINKS: [string, string, string][] = [
+  ["Sofas", "Sofas and a loveseat", "/collections/sofas"],
+  ["Chairs", "Chairs and an ottoman", "/collections/chairs"],
+];
+const STORY_LINKS: [string, string, string][] = [
+  ["Our story", "Why we make what we make", "/pages/our-story"],
+  ["Materials", "What goes into everything", MATERIALS_PATH],
+  ["The Ashbury", "Inside the mattress", ASHBURY_PATH],
+  ["Furniture materials", "Frames, fills and fabrics", FURNITURE_MATERIALS_PATH],
+];
+const MARLOWE_PHOTO = PRODUCTS.find((p) => p.id === "marlowe")!.photos[0] as PhotoKey;
+
 const MATTRESS_LINKS: [string, string, string][] = [
   ["The Ashbury", "Organic mattress, made in color", "/products/luxury-organic-mattress"],
   ["Dog Beds", "The Ashbury and The Nook", "/collections/dog-beds"],
 ];
 
 /** A header link that opens a small menu on hover or click (Mattress, Materials). */
-function NavMenu({ label, id, links, all, align = "right" }: { label: string; id: string; links: [string, string, string][]; all?: [string, string]; align?: "left" | "right" }) {
+function NavMenu({ label, id, links, all, align = "right", feature, labelHref }: { label: string; id: string; links: [string, string, string][]; all?: [string, string]; align?: "left" | "right"; feature?: { photo: PhotoKey; alt: string; href: string; caption: string }; labelHref?: string }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
@@ -107,14 +126,22 @@ function NavMenu({ label, id, links, all, align = "right" }: { label: string; id
         {label}<span className="nav-dd-caret" aria-hidden="true" />
       </button>
       {open && (
-        <div className={"nav-dd-panel" + (align === "left" ? " left" : "")} id={id}>
-          {links.map(([t, d, href]) => (
-            <Link key={href} href={href} className="nav-dd-item">
-              <span className="nav-dd-t">{t}</span>
-              <span className="nav-dd-d">{d}</span>
+        <div className={"nav-dd-panel" + (align === "left" ? " left" : "") + (feature ? " mega" : "")} id={id}>
+          <div className="nav-dd-links">
+            {links.map(([t, d, href]) => (
+              <Link key={href} href={href} className="nav-dd-item">
+                <span className="nav-dd-t">{t}</span>
+                <span className="nav-dd-d">{d}</span>
+              </Link>
+            ))}
+            {all && <Link href={all[1]} className="nav-dd-all">{all[0]}</Link>}
+          </div>
+          {feature && (
+            <Link href={feature.href} className="nav-dd-feat" aria-label={feature.caption}>
+              <Photo src={feature.photo} label={feature.alt} fill sizes="320px" />
+              <span>{feature.caption}</span>
             </Link>
-          ))}
-          {all && <Link href={all[1]} className="nav-dd-all">{all[0]}</Link>}
+          )}
         </div>
       )}
     </div>
@@ -285,12 +312,10 @@ export function Header() {
       <div className="hdr-in">
         <nav className="nav" aria-label="Shop">
           <Link href="/collections/all">Shop</Link>
-          <Link href="/collections/sofas">Sofas</Link>
-          <Link href="/collections/chairs">Chairs</Link>
-          <NavMenu label="Mattress" id="mattress-menu" links={MATTRESS_LINKS} align="left" />
-          <Link href="/collections/pillows">Pillows</Link>
+          <NavMenu label="Sleep" id="sleep-menu" links={SLEEP_LINKS} all={["Shop the bedroom", "/collections/bedroom"]} align="left" feature={{ photo: "mattress-room-sorrel", alt: "The Ashbury in Sorrel in a sunlit bedroom", href: MATTRESS_PATH, caption: "The Ashbury in Sorrel" }} />
+          <NavMenu label="Living" id="living-menu" links={LIVING_LINKS} all={["Shop the living room", "/collections/sofas"]} align="left" feature={{ photo: MARLOWE_PHOTO, alt: "The Marlowe sofa", href: "/products/marlowe", caption: "The Marlowe" }} />
           <Link href="/pages/bespoke">Bespoke</Link>
-          <Link href="/pages/trade" className="nav-trade">Trade</Link>
+          <NavMenu label="Our story" id="story-menu" links={STORY_LINKS} align="left" />
         </nav>
         <button className="burger" aria-label="Menu" aria-expanded={menu} onClick={() => setMenu(true)}>
           <span></span>
@@ -298,8 +323,7 @@ export function Header() {
         </button>
         <Wordmark />
         <nav className="nav r" aria-label="Ashwick">
-          <Link href="/pages/our-story">Our story</Link>
-          <NavMenu label="Materials" id="materials-menu" links={MATERIAL_LINKS} all={["All materials", MATERIALS_PATH]} />
+          <Link href="/pages/trade" className="nav-trade">Trade</Link>
           <Link href="/account">Account</Link>
           <button type="button" className="linkbtn" onClick={openCart}>{cartLabel}</button>
         </nav>
@@ -323,9 +347,9 @@ export function Header() {
           <div className="mmenu-tiles">
             {SALE.active && <Link href={SALE.path} className="mmenu-sale-pill">{SALE.name}: {SALE.percent}% off everything</Link>}
             <p className="mmenu-group">Sleep</p>
-            <div className="mmenu-row">
+            <div className="mmenu-row two">
               {MENU_SLEEP.map(([t, href, photo]) => (
-                <Link key={t} href={href} className="mmenu-tile"><Photo src={photo} label="" fill sizes="33vw" /><span>{t}</span></Link>
+                <Link key={t} href={href} className="mmenu-tile"><Photo src={photo} label="" fill sizes="50vw" /><span>{t}</span></Link>
               ))}
             </div>
             <p className="mmenu-group">Living</p>

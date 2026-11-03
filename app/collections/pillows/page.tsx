@@ -13,9 +13,9 @@ export const metadata: Metadata = {
 };
 
 const PHOTO = {
-  "living-wool-latex": ["pillow-fleece", "pillow-covers"],
-  "living-wool-horse-hair": ["pillow-sorrel", "pillow-covers"],
-  "organic-cotton": ["pillow-flax", "pillow-covers"],
+  "living-wool-latex": ["pillow-fill-latex", "pillow-fleece"],
+  "living-wool-horse-hair": ["pillow-fill-horsehair", "pillow-sorrel"],
+  "organic-cotton": ["pillow-fill-cotton", "pillow-flax"],
 } as const;
 
 export default function PillowsPage() {

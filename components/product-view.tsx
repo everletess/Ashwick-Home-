@@ -268,7 +268,9 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
             </OptGroup>
           )}
           {selFabric.detail && <p className="fine">{selFabric.label}: {selFabric.detail}</p>}
-          {p.wood && <OptGroup label="Wood" value={lab(WOODS, wood)}><Pills options={WOODS} value={wood} onChange={setWood} /></OptGroup>}
+          {p.wood && (WOODS.length > 1
+            ? <OptGroup label="Wood" value={lab(WOODS, wood)}><Pills options={WOODS} value={wood} onChange={setWood} /></OptGroup>
+            : <p className="fixed-opt"><span>Base</span> {lab(WOODS, wood)}</p>)}
         </div>
 
         <div className="mode" role="tablist">
