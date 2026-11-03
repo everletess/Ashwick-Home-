@@ -266,7 +266,7 @@ const ALL_PRODUCTS: Product[] = [
     id: "chatsworth", name: "The Chatsworth", type: "Sofa", category: "sofas", price: 10500,
     preorder: true,
     line: "A sculptural curved sofa, in Irish Linen, Organic Cotton or Belgian Linen.",
-    photos: ["chatsworth-s1"],
+    photos: ["chatsworth-hero", "chatsworth-s1"],
     photoTags: { "chatsworth-s1": { fabric: "irish", color: "ivory" } },
     fabrics: ["irish", "cotton", "belgian"], designedFabric: "irish",
     fabricColors: { irish: ["ivory", "sand", "coco", "dove", "white", "cream", "flax", "oatmeal"] },
