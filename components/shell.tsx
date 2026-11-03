@@ -18,7 +18,7 @@ function useScrollLock(locked: boolean) {
   }, [locked]);
 }
 import { bundleIdOf, useCart, type CartLine } from "@/components/cart";
-import { BUNDLE_CONFIG, bundleTitleFor, SALE, bundlePrice, deliveryFor, isFurnitureLine, orderDelivery, salePrice } from "@/lib/sale";
+import { BUNDLE_CONFIG, bundlePhotoFor, bundleTitleFor, SALE, bundlePrice, deliveryFor, isFurnitureLine, orderDelivery, salePrice } from "@/lib/sale";
 import { STUDIO_PHONE } from "@/lib/site";
 import { SHOW_SIGNUP_EVENT } from "@/components/email-popup";
 import { SUBSCRIBED_EVENT, SUBSCRIBED_KEY } from "@/lib/subscribe";
@@ -90,7 +90,7 @@ const isDogBed = (id: string) => id === DOG_BED_ID || id === NOOK.id;
 /** The line under the cart subtotal: delivery (white glove for furniture and the mattress, free for dog beds), ship time and payment. */
 function cartNote(items: { id: string; delivery?: { label: string; price: number } }[]) {
   const sale = SALE.active ? `${SALE.name}: ${SALE.percent}% off is applied automatically at checkout. ` : "";
-  if (!items.every((i) => i.delivery || isDogBed(i.id))) return sale + "Paid in full at checkout. Taxes and shipping calculated at checkout.";
+  if (!items.every((i) => i.delivery || isDogBed(i.id))) return sale + "Pay in full at checkout, or over time with Shop Pay Installments, subject to approval. Taxes and shipping calculated at checkout.";
   const mattress = items.some((i) => i.id === MATTRESS.id);
   const dogBeds = items.some((i) => isDogBed(i.id));
   return sale + [
@@ -98,7 +98,7 @@ function cartNote(items: { id: string; delivery?: { label: string; price: number
     dogBeds && "Dog beds ship free.",
     (mattress || dogBeds) && "Ships within 3–4 days.",
     mattress && "Our delivery team will contact you to schedule your mattress delivery.",
-    mattress ? "Pay in full at checkout, or over time with Shop Pay Installments, subject to approval." : "Paid in full at checkout.",
+    "Pay in full at checkout, or over time with Shop Pay Installments, subject to approval.",
     "Taxes calculated at checkout.",
   ].filter(Boolean).join(" ");
 }
@@ -347,7 +347,7 @@ export function CartDrawer() {
     try {
       await saveCart(
         saveEmail,
-        cart.items.map((i) => ({ productId: i.id, name: i.name, qty: i.qty, price: i.price, options: i.options })),
+        cart.items.map((i) => ({ productId: i.id, name: i.name, qty: i.qty, price: i.price, options: i.options, photo: i.photo })),
         cart.subtotal,
         phone,
       );
@@ -424,7 +424,7 @@ export function CartDrawer() {
             g.bundle ? (
               <div className="line bundle-line" key={g.lines[0].lineId}>
                 <div className="bundle-pics">
-                  {g.lines.map((i) => <Photo key={i.lineId} src={i.photo} label={i.name} className="line-img" sizes="96px" preload />)}
+                  <Photo src={bundlePhotoFor(g.lines[0].options.find(([k]) => k === "_Bundle")?.[1] ?? "")} label={bundleTitleFor(g.lines[0].options.find(([k]) => k === "_Bundle")?.[1] ?? "")} className="line-img" sizes="96px" preload />
                 </div>
                 <div>
                   <div className="line-top">
@@ -502,7 +502,7 @@ export function CartDrawer() {
             ) : (
               <form onSubmit={save} className="save-cart">
                 <button type="button" className="save-cart-toggle" aria-expanded={offerOpen} aria-controls="save-cart-body" onClick={() => setOfferOpen((o) => !o)}>
-                  <span>Not ready? Email me this cart, plus 15% off.</span>
+                  <span>{SALE.active ? "Not ready? Email me this cart." : "Not ready? Email me this cart, plus 15% off."}</span>
                   <span aria-hidden="true">{offerOpen ? "−" : "+"}</span>
                 </button>
                 {offerOpen && (

@@ -303,8 +303,10 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
           </div>
         )}
 
+        <p className="fine" style={{ marginTop: 14 }}>14-day returns on pieces as designed. <Link href="/pages/ordering" className="ulink">Details</Link></p>
+        <p className="fine">Questions? Call or text <a href="tel:+17735979629" className="ulink">(773) 597-9629</a></p>
         <div className="assure">
-          <span>Made to order</span><span>Handmade in the USA</span><span>Paid in full at checkout</span>
+          <span>Made to order</span><span>Handmade in the USA</span><span>Pay over time with Shop Pay Installments</span>
         </div>
         <Link href={`/pages/fabric-swatches?fabric=${fabric}${color ? `&color=${color}` : ""}`} className="ulink">Order fabric swatches</Link>
       </div>

@@ -2,6 +2,9 @@
 // Adds the email to the Klaviyo list (which starts the welcome flow with ASHWICK15) using Klaviyo's public
 // client API, so only the public company ID is used, never a secret key. Also notifies the studio (best effort).
 
+import { PHOTOS, type PhotoKey } from "@/lib/photos";
+import { bundlePhotoFor } from "@/lib/sale";
+
 const KLAVIYO_COMPANY_ID = process.env.NEXT_PUBLIC_KLAVIYO_COMPANY_ID ?? "";
 const KLAVIYO_LIST_ID = process.env.NEXT_PUBLIC_KLAVIYO_LIST_ID ?? "";
 export const SUBSCRIBED_KEY = "aw-popup-dismissed";
@@ -89,7 +92,33 @@ export async function subscribeEmail(email: string, source: string): Promise<Sub
   return { klaviyo: k };
 }
 
-export type SavedCartLine = { productId: string; name: string; qty: number; price: number | null; options: [string, string][] };
+export type SavedCartLine = { productId: string; name: string; qty: number; price: number | null; options: [string, string][]; photo?: PhotoKey };
+
+/**
+ * One cart line as the saved-cart and abandoned-cart emails read it: the shopper's own photo (absolute URL, resized),
+ * and only the options a shopper chose. Internal tags such as _Bundle and _Bundle ID start with an underscore and stay out.
+ */
+const emailImage = (key?: PhotoKey) => {
+  const src = key ? PHOTOS[key]?.src : undefined;
+  return src ? `https://ashwickhome.com/_next/image?url=${encodeURIComponent(src)}&w=640&q=75` : "";
+};
+
+/** The email's hero: a bundle's own picture if the cart holds a bundle, else the first item's photo. */
+function heroImage(lines: SavedCartLine[]) {
+  const b = lines.map((l) => l.options.find(([k]) => k === "_Bundle")?.[1]).find(Boolean);
+  return b ? emailImage(bundlePhotoFor(b)) : emailImage(lines[0]?.photo);
+}
+
+function emailItem(l: SavedCartLine) {
+  const src = l.photo ? PHOTOS[l.photo]?.src : undefined;
+  return {
+    name: l.name,
+    qty: l.qty,
+    price: l.price,
+    image: src ? `https://ashwickhome.com/_next/image?url=${encodeURIComponent(src)}&w=640&q=75` : "",
+    options: l.options.filter(([k]) => !k.startsWith("_")).map(([k, v]) => `${k}: ${v}`).join(" · "),
+  };
+}
 
 /**
  * "Email me my cart": subscribes the address (so the welcome series and ASHWICK15 follow), then records a
@@ -145,7 +174,8 @@ export async function saveCart(email: string, lines: SavedCartLine[], total: num
           properties: {
             CheckoutURL: checkoutUrl,
             ItemNames: lines.map((l) => l.name),
-            Items: lines.map((l) => ({ name: l.name, qty: l.qty, price: l.price, options: l.options.map(([k, v]) => `${k}: ${v}`).join(" · ") })),
+            Items: lines.map(emailItem),
+            HeroImage: heroImage(lines),
             Total: total,
           },
         },
@@ -184,7 +214,8 @@ async function sendAddedToCart(email: string, lines: SavedCartLine[], total: num
           properties: {
             CheckoutURL: checkoutUrl,
             ItemNames: lines.map((l) => l.name),
-            Items: lines.map((l) => ({ name: l.name, qty: l.qty, price: l.price, options: l.options.map(([k, v]) => `${k}: ${v}`).join(" · ") })),
+            Items: lines.map(emailItem),
+            HeroImage: heroImage(lines),
             Total: total,
           },
         },
@@ -213,9 +244,9 @@ async function trackExistingCart(email: string): Promise<void> {
     if (!KLAVIYO_COMPANY_ID) return;
     const raw = localStorage.getItem("ashwick-cart");
     if (!raw) return;
-    const items = JSON.parse(raw) as { id: string; name: string; qty: number; price: number | null; options: [string, string][]; delivery?: { price: number } }[];
+    const items = JSON.parse(raw) as { id: string; name: string; qty: number; price: number | null; options: [string, string][]; photo?: PhotoKey; delivery?: { price: number } }[];
     if (!Array.isArray(items) || items.length === 0) return;
-    const lines = items.map((i) => ({ productId: i.id, name: i.name, qty: i.qty, price: i.price, options: i.options ?? [] }));
+    const lines = items.map((i) => ({ productId: i.id, name: i.name, qty: i.qty, price: i.price, options: i.options ?? [], photo: i.photo }));
     const unpriced = items.some((i) => i.price == null);
     const total = unpriced ? null : items.reduce((t, i) => t + ((i.price ?? 0) + (i.id === "natural-mattress" ? (i.delivery?.price ?? 0) : 0)) * i.qty, 0) + (items.some((i) => i.delivery && i.id !== "natural-mattress") ? 450 : 0);
     await sendAddedToCart(email, lines, total);

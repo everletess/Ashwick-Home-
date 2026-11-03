@@ -68,7 +68,7 @@ export default function BlackFridayPage() {
     ["When will it ship?", "Mattresses and dog beds ship within 3\u20134 days of your order. Furniture as designed ships within 3\u20134 weeks; customized furniture within 8\u201312 weeks."],
     ["What is the return policy?", "Mattress: a 100-night trial, with a 30-night minimum before you request a return. Dog beds: 30 days from delivery. Furniture as designed: 14 days from delivery, unused, less return shipping and a 15% restocking fee. Customized furniture is final sale."],
     ["What does white glove delivery cost?", `$${BUNDLE_CONFIG.whiteGloveValue} per mattress and a flat $450 per order for furniture, however many pieces. It is free for the mattress in a bundle.`],
-    ["Can I pay in installments?", "Yes. Shop Pay Installments is available at checkout, subject to approval."],
+    ["Can I pay in installments?", "Yes. Shop Pay Installments is offered at checkout on the mattress and on furniture, subject to approval."],
   ];
 
   return (
@@ -92,7 +92,7 @@ export default function BlackFridayPage() {
       </section>
 
       <div className="bf-m bf-rs">
-        <div className="bf-rs-top"><Stars rating={avg} /> <strong>{avg.toFixed(1)}</strong> <span>from {rvCount} customer reviews</span></div>
+        <div className="bf-rs-top"><Stars rating={avg} /> <strong>{avg.toFixed(1)}</strong> <span>average of {rvCount} customer reviews across all products</span></div>
         <ul className="bf-rs-q">
           {quotes.map((q) => <li key={q.by}>&ldquo;{q.t}&rdquo; <span>{q.by}</span></li>)}
         </ul>

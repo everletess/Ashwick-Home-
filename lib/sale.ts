@@ -123,3 +123,8 @@ export function sleepSuitePrice(sizeIndexOrId: number | string = 0) {
   const list = size.price + BUNDLE_CONFIG.beddingSet.price;
   return { list, sale: bundlePrice(size.price) + bundlePrice(BUNDLE_CONFIG.beddingSet.price) };
 }
+
+/** The picture for a bundle in the cart and in emails: the bundle's own hero, not the separate product photos. */
+export function bundlePhotoFor(bundleName: string): PhotoKey {
+  return bundleName === SLEEP_SUITE.name ? "sleep-suite-thumb" : BUNDLE_HERO.photo;
+}

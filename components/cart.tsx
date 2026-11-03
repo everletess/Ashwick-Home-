@@ -80,7 +80,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     });
     // Tell Klaviyo (known subscribers only) so the abandoned-cart flow can follow up.
     void trackAddedToCart(
-      [{ productId: line.id, name: line.name, qty: line.qty, price: line.price, options: line.options }],
+      [{ productId: line.id, name: line.name, qty: line.qty, price: line.price, options: line.options, photo: line.photo }],
       line.price == null ? null : unitTotal(line) * line.qty + (isFurnitureLine(line) ? orderDelivery([line]) : 0),
     );
     setOpen(true);
@@ -95,7 +95,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       value: lines.reduce((s, l) => s + unitTotal(l) * l.qty, 0) + orderDelivery(lines),
     });
     void trackAddedToCart(
-      lines.map((l) => ({ productId: l.id, name: l.name, qty: l.qty, price: l.price, options: l.options })),
+      lines.map((l) => ({ productId: l.id, name: l.name, qty: l.qty, price: l.price, options: l.options, photo: l.photo })),
       lines.reduce((s, l) => s + unitTotal(l) * l.qty, 0) + orderDelivery(lines),
     );
     setOpen(true);

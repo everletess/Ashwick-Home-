@@ -39,7 +39,7 @@ export default function TermsPage() {
         <P>Our pieces are sold for personal use, not resale. Interior designers and trade professionals buy under our separate <Link href="/pages/trade-terms" className="inl">Trade Terms</Link>.</P>
       </Block>
       <Block title="4. Prices and payment">
-        <P>Prices are in US dollars. Taxes and any delivery fees are shown at checkout. Unless stated otherwise, orders are paid in full at checkout. Where we offer financing through Affirm, it&apos;s provided by Affirm under its own terms, and approval is up to Affirm.</P>
+        <P>Prices are in US dollars. Taxes and any delivery fees are shown at checkout. Unless stated otherwise, orders are paid in full at checkout. Where Shop Pay Installments is offered at checkout, it is provided by Shop Pay under its own terms, and approval is up to Shop Pay.</P>
         <P>If a piece is listed at an incorrect price because of an error, we&apos;ll contact you before shipping. You can choose to pay the correct price or cancel for a full refund.</P>
       </Block>
       <Block title="5. Made to order">
@@ -105,7 +105,7 @@ export default function TermsPage() {
         <P>We may suspend or end access to our site for anyone who breaks these terms.</P>
       </Block>
       <Block title="15. Third-party services and links">
-        <P>Our site uses third-party services, such as Shopify, payment processors, Affirm and delivery partners. Each is governed by its own terms. We&apos;re not responsible for third-party websites we link to.</P>
+        <P>Our site uses third-party services, such as Shopify, payment processors, Shop Pay and delivery partners. Each is governed by its own terms. We&apos;re not responsible for third-party websites we link to.</P>
       </Block>
       <Block title="16. Limitation of liability">
         <P>To the fullest extent permitted by law, Ashwick Home, LLC is not liable for indirect, incidental, special or consequential damages arising from your use of our site or products. Our total liability for any claim is limited to the amount you paid for the product involved. Some states don&apos;t allow these limitations, so they may not apply to you.</P>
