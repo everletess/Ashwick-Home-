@@ -79,6 +79,10 @@ export function PillowView() {
       "Care",
       <p>Do not machine wash the pillow. Air it out in the sun to refresh it. The removable cover washes in cold water and should be line dried.</p>,
     ],
+    [
+      "Adjustable comfort",
+      <p>The fill is adjustable. Add or remove fill material to set your own height and firmness and the support that suits you, whether you sleep on your back, side or stomach.</p>,
+    ],
     ["Delivery", <p>Handmade to order in the USA. Ships within 3–4 days.</p>],
     ["Returns", <p>{PILLOW_RETURNS.full}</p>],
     ...PILLOW_FAQ.filter(([q]) => q === "Is there a smell when it arrives?").map(([q, a]): [string, React.ReactNode] => [q, <p>{a}</p>]),

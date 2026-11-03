@@ -36,16 +36,16 @@ export const PILLOW_COVERS = [
 export const PILLOW_STANDALONE_FILLS = PILLOW_TYPES.filter((f) => f.id !== "kapok").map((f) => ({
   ...f,
   blurb:
-    f.id === "living-wool-latex" ? "Living Wool around an organic latex core."
-    : f.id === "living-wool-horse-hair" ? "Living Wool with horsehair."
+    f.id === "living-wool-latex" ? "Organic Living Wool around an organic latex core."
+    : f.id === "living-wool-horse-hair" ? "Organic Living Wool with horsehair."
     : "Organic cotton fill throughout.",
   /** Longer note for the "Which fill?" section: what it is made of and the plain character of those materials. */
   story:
     f.id === "living-wool-latex"
-      ? "Shredded organic latex (GOLS certified) with Living Wool (GOTS organic). Latex is breathable and naturally resistant to dust mites and mold, and it does not off-gas. Wool regulates temperature and wicks away moisture. Medium-firm."
+      ? "Shredded organic latex (GOLS certified) with organic Living Wool (GOTS). Latex is breathable and naturally resistant to dust mites and mold, and it does not off-gas. Wool regulates temperature, wicks away moisture and is naturally flame resistant. Medium-firm."
       : f.id === "living-wool-horse-hair"
-        ? "Three layers of OEKO-TEX certified horsehair wrapped in organic Living Wool. The hollow hair strands let air move through and wick away moisture, so it stays dry and regulates temperature. Horsehair holds its structure for years. Medium-firm."
-        : "Certified organic cotton from the stuffing to the case, with no synthetics and no chemicals. Naturally breathable, soft, and resistant to dust mites, mold and mildew. Medium-firm.",
+        ? "Three layers of OEKO-TEX certified horsehair wrapped in organic Living Wool (GOTS), in an organic cotton barrier case. The hollow hair strands let air move through and wick away moisture, so it stays dry and regulates temperature. Hypoallergenic, mold, mildew and dust mite resistant, and naturally flame resistant. Horsehair holds its structure for years. Medium-firm."
+        : "Certified organic cotton (USDA organic) from the stuffing to the case, with no synthetics and no chemicals. Naturally breathable and soft, hypoallergenic, and resistant to dust mites, mold and mildew. Medium-firm.",
 }));
 
 /** Cover-color photos for the standalone pillow page. Flint has no photo yet (falls back to the covers shot). */
@@ -66,8 +66,9 @@ export const PILLOW_RETURNS = {
 /** Pillow FAQ, drawn from The Futon Shop's own product pages (they make the pillows; Tessa 03/11). */
 export const PILLOW_FAQ: [string, string][] = [
   ["Is there a smell when it arrives?", "You may notice a slight, natural odor when you first unpack a new pillow. It is harmless and fades on its own within about a week, or a few extra days in a humid climate."],
-  ["How firm is it?", "Medium-firm."],
+  ["How firm is it?", "Medium-firm. The fill is adjustable, so you can add or remove fill material to set your own height and firmness, whether you sleep on your back, side or stomach."],
+  ["Can I adjust the fill?", "Yes. Add or remove fill to find your level of support. Adjustable pillows adapt to your needs by changing their height and firmness."],
   ["How do I wash it?", "Do not machine wash the pillow itself. Air it out in the sun to refresh it. The removable cover washes in cold water and should be line dried."],
-  ["What is it made of?", "A removable cover in 100% organic cotton twill, over your choice of fill: Living Wool with organic latex, Living Wool with horsehair, or 100% organic cotton. No synthetic fills."],
+  ["What is it made of?", "A removable cover in 100% organic cotton twill, over your choice of fill: organic Living Wool with organic latex, organic Living Wool with horsehair, or 100% organic cotton. No synthetic fills."],
   ["What are the sizes?", "Standard 20 × 26 in, Queen 20 × 30 in and King 20 × 36 in."],
 ];
