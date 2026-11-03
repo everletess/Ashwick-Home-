@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { Reviews } from "@/components/reviews";
+import { CompleteTheBed } from "@/components/home-extras";
 import { Accordion, Construction, Feels, Recovery } from "@/components/mattress";
 import { MattressView, MattressViewFromURL } from "@/components/mattress-view";
 import { Photo } from "@/components/photo";
@@ -201,6 +202,7 @@ export default function MattressPage() {
         <div className="wrap"><Recovery /></div>
       </section>
 
+      <CompleteTheBed skip="natural-mattress" />
       <Reviews product="ashbury" name="Ashbury" />
 
       <section className="sec linen">

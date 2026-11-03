@@ -4,6 +4,7 @@ import { Fibers } from "@/components/fibers";
 import { MattressFeature } from "@/components/mattress-feature";
 import { Photo } from "@/components/photo";
 import { BlackFridayBand, CategoryRail, Favorites } from "@/components/home-sections";
+import { FarmBand, ReviewsRow } from "@/components/home-extras";
 import { MATTRESS_PATH } from "@/lib/mattress";
 import { SALE } from "@/lib/sale";
 
@@ -37,8 +38,10 @@ export default function HomePage() {
       <CategoryRail />
       <BlackFridayBand />
       <MattressFeature />
+      <FarmBand />
       <Favorites />
       <Fibers />
+      <ReviewsRow />
       <Newsletter />
     </main>
   );

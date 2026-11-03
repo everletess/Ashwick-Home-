@@ -32,7 +32,7 @@ const LIVING_WOOL_BODY =
 /** Furniture Materials. Kapok and leather are left out for now (Tessa, Oct 16–17); restore their entries here to bring them back. */
 export const FURNITURE_GROUPS: MaterialGroup[] = [
   {
-    id: "frame", eyebrow: "The Frame", title: "What holds it up.", photo: "marlowe-sofa-walnut-linen", alt: "The hand-fluted solid walnut plinth of the Marlowe sofa",
+    id: "frame", eyebrow: "The Frame", title: "What holds it up.", photo: "marlowe-sofa-walnut-linen", alt: "The hand-fluted solid red oak plinth of the Marlowe sofa",
     materials: [
       {
         id: "hardwood", short: "Hardwood", name: "Solid hardwood", descriptor: "Built to be inherited.",

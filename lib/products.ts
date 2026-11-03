@@ -62,7 +62,7 @@ export const FABRICS: Record<FabricId, Fabric> = {
 export const WOODS: Option[] = [
   { id: "red-oak", label: "Red Oak" },
 ];
-/** Woods some photos still show (walnut and white oak are no longer offered), for "Photo shows the walnut plinth". */
+/** Woods some older photos still show (walnut and white oak are no longer offered), for "Photo shows the walnut plinth". */
 export const PHOTO_WOODS: Option[] = [...WOODS, { id: "walnut", label: "Walnut" }, { id: "oak", label: "Oak" }];
 export const SWATCH_ORDER: FabricId[] = ["irish", "cotton", "belgian"];
 
@@ -214,7 +214,7 @@ export const LEAD_TIMES = "Ships within 3–4 weeks as designed, or 8–12 weeks
 const ALL_PRODUCTS: Product[] = [
   {
     id: "marlowe", name: "The Marlowe Sofa", type: "Sofa", category: "sofas", price: 9800,
-    line: "A deep sofa on a hand-fluted solid wood plinth, in Irish Linen.",
+    line: "A deep sofa on a hand-fluted solid red oak plinth, in Irish Linen.",
     photos: [
       // White linen studio and room shots (Oct 2026). The walnut/oak plinth renders were removed from this gallery (files kept).
       "marlowe-studio-linen", "marlowe-room-linen",
@@ -253,7 +253,7 @@ const ALL_PRODUCTS: Product[] = [
   },
   {
     id: "marlowe-loveseat", name: "The Marlowe Loveseat", type: "Loveseat", category: "sofas", price: 6500,
-    line: "The Marlowe as a two-seat loveseat, on the same hand-fluted solid wood plinth, in Irish Linen.",
+    line: "The Marlowe as a two-seat loveseat, on the same hand-fluted solid red oak plinth, in Irish Linen.",
     photos: ["marlowe-loveseat-walnut-linen"], hideInNames: true,
     cardPhoto: "marlowe-loveseat-card",
     photoTags: { "marlowe-loveseat-walnut-linen": { wood: "walnut", fabric: "irish", color: "white" } },
@@ -356,7 +356,7 @@ const ALL_PRODUCTS: Product[] = [
   },
   {
     id: "marlowe-chair", name: "The Marlowe Chair", type: "Chair", category: "chairs", price: 4500,
-    line: "A deep lounge chair on a hand-fluted solid wood plinth, made to sit beside the Marlowe sofa. In Irish Linen.",
+    line: "A deep lounge chair on a hand-fluted solid red oak plinth, made to sit beside the Marlowe sofa. In Irish Linen.",
     photos: ["marlowe-chair-walnut-linen"], hideInNames: true,
     cardPhoto: "marlowe-chair-card",
     photoTags: { "marlowe-chair-walnut-linen": { wood: "walnut", fabric: "irish", color: "white" } },
@@ -367,7 +367,7 @@ const ALL_PRODUCTS: Product[] = [
   },
   {
     id: "marlowe-ottoman", name: "The Marlowe Ottoman", type: "Ottoman", category: "chairs", price: 2500,
-    line: "An ottoman on a hand-fluted solid wood plinth, to pair with the Marlowe sofa or chair. In Irish Linen.",
+    line: "An ottoman on a hand-fluted solid red oak plinth, to pair with the Marlowe sofa or chair. In Irish Linen.",
     photos: ["marlowe-ottoman-walnut-linen"], hideInNames: true,
     cardPhoto: "marlowe-ottoman-card",
     photoTags: { "marlowe-ottoman-walnut-linen": { wood: "walnut", fabric: "irish", color: "white" } },

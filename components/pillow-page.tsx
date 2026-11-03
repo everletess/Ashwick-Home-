@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PillowView } from "@/components/pillow-view";
+import { CompleteTheBed } from "@/components/home-extras";
 import { PILLOW_PRICES, PILLOW_STANDALONE_FILLS } from "@/lib/pillow";
 
 const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://ashwickhome.com";
@@ -42,6 +43,7 @@ export function PillowProductPage({ id }: { id: string }) {
     <main>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }} />
       <PillowView fillId={id} />
+      <CompleteTheBed skip="pillow" />
     </main>
   );
 }
