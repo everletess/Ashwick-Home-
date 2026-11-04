@@ -65,6 +65,8 @@ import nookToffeeCard from "@/assets/photos/nook-toffee-card.jpg";
 import bfShare from "@/assets/photos/bf-share.jpg";
 import pillowStackLedge from "@/assets/photos/pillow-stack-ledge.jpg";
 import pillowStackMeadow from "@/assets/photos/pillow-stack-meadow.jpg";
+// The Pillows page hero (Nov 2026): four pillows stacked on a wooden stool in warm light.
+import pillowsHero from "@/assets/photos/pillows-hero.jpg";
 import hero from "@/assets/photos/hero.jpg";
 import heroFamily from "@/assets/photos/hero-family.jpg";
 import heroBedroom from "@/assets/photos/hero-bedroom.jpg";
@@ -192,6 +194,8 @@ import mattressColors from "@/assets/photos/mattress-colors.jpg";
 import mattressMochaBedroom from "@/assets/photos/mattress-mocha-bedroom.jpg";
 import mattressSwatchKhaki from "@/assets/photos/mattress-swatch-khaki.jpg";
 import pembroke1 from "@/assets/photos/pembroke-1.jpg";
+// The Pembroke hero (Nov 2026): leads its gallery and cards. Untagged, so choosing a color moves to that color's photo.
+import pembrokeHero from "@/assets/photos/pembroke-hero.jpg";
 import pembroke2 from "@/assets/photos/pembroke-2.jpg";
 import pembrokeBlendDove from "@/assets/photos/pembroke-blend-dove.jpg";
 import pembrokeBlendIvory from "@/assets/photos/pembroke-blend-ivory.jpg";
@@ -293,6 +297,7 @@ export const PHOTOS = {
   "bf-share": bfShare,
   "pillow-stack-ledge": pillowStackLedge,
   "pillow-stack-meadow": pillowStackMeadow,
+  "pillows-hero": pillowsHero,
   "nook-olive-sizes": nookOliveSizes,
   "nook-oat": nookOat,
   "nook-olive": nookOlive,
@@ -390,6 +395,7 @@ export const PHOTOS = {
   "mattress-mocha-bedroom": mattressMochaBedroom,
   "mattress-swatch-khaki": mattressSwatchKhaki,
   "pembroke-1": pembroke1,
+  "pembroke-hero": pembrokeHero,
   "pembroke-2": pembroke2,
   "pembroke-blend-ivory": pembrokeBlendIvory,
   "pembroke-blend-dove": pembrokeBlendDove,
