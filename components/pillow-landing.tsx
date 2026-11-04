@@ -101,14 +101,15 @@ function useAddPillow() {
 
 /* 1 · Hero */
 
-/** Hero photo: Tessa's stone-wall meadow shot when it arrives; until then the four pillows stacked in the meadow. */
-const HERO: { photo: PhotoKey; alt: string } = { photo: "pillow-stack-meadow", alt: "Four Ashwick pillows in Fleece, Flax, Sorrel and Flint stacked in a sunlit meadow" };
+/** Hero photo (Tessa, 04/11): the four cover colors stacked on a wooden stool in warm light. */
+const HERO: { photo: PhotoKey; alt: string } = { photo: "pillows-hero", alt: "Four Ashwick pillows in Fleece, Flax, Sorrel and Flint stacked on a rustic wooden stool in warm sunlight" };
 
 export function PillowHero() {
   return (
     <>
       <section className="pl-hero">
-        <Photo src={HERO.photo} label={HERO.alt} className="pl-hero-img" fill preload sizes="100vw" />
+        {/* Phones: the photo, then the words on a dark band below it. Desktop: the words over the photo, on the left. */}
+        <div className="pl-hero-media"><Photo src={HERO.photo} label={HERO.alt} className="pl-hero-img" fill preload sizes="100vw" /></div>
         <div className="pl-hero-scrim" />
         <div className="pl-hero-txt">
           <div className="eyebrow">The Ashwick Pillow</div>

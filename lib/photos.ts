@@ -65,6 +65,8 @@ import nookToffeeCard from "@/assets/photos/nook-toffee-card.jpg";
 import bfShare from "@/assets/photos/bf-share.jpg";
 import pillowStackLedge from "@/assets/photos/pillow-stack-ledge.jpg";
 import pillowStackMeadow from "@/assets/photos/pillow-stack-meadow.jpg";
+// The Pillows page hero (Nov 2026): four pillows stacked on a wooden stool in warm light.
+import pillowsHero from "@/assets/photos/pillows-hero.jpg";
 import hero from "@/assets/photos/hero.jpg";
 import heroFamily from "@/assets/photos/hero-family.jpg";
 import heroBedroom from "@/assets/photos/hero-bedroom.jpg";
@@ -293,6 +295,7 @@ export const PHOTOS = {
   "bf-share": bfShare,
   "pillow-stack-ledge": pillowStackLedge,
   "pillow-stack-meadow": pillowStackMeadow,
+  "pillows-hero": pillowsHero,
   "nook-olive-sizes": nookOliveSizes,
   "nook-oat": nookOat,
   "nook-olive": nookOlive,
