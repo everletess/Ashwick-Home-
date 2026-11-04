@@ -14,7 +14,7 @@ import type { ProductKey } from "@/lib/reviews";
 export type Section = "sleep" | "living";
 export type Group = "bundles" | "ashbury" | "pillows" | "dog-beds" | "sofas" | "chairs";
 export type Dot = { id: string; label: string; swatch: PhotoKey; photo: PhotoKey };
-export type QuickAdd = { kind: "pillow" | "dog-bed"; href: string };
+export type QuickAdd = { kind: "pillow" | "dog-bed" | "nook" | "mattress"; href: string };
 
 export type CatalogItem = {
   id: string;
@@ -69,6 +69,7 @@ export const CATALOG: CatalogItem[] = [
     photo: MATTRESS.colors.find((c) => c.id === MATTRESS.defaultColor)!.photos[0], hover: MATTRESS.colors.find((c) => c.id === MATTRESS.defaultColor)!.photos[1],
     review: "ashbury", fast: true,
     dots: MATTRESS.colors.map((c) => ({ id: c.id, label: c.label, swatch: c.swatch, photo: c.photos[0] })),
+    quick: { kind: "mattress", href: MATTRESS_PATH },
   },
   {
     id: "pillow", name: "The Ashwick Pillow", href: PILLOW_PATH, section: "sleep", group: "pillows", price: pillowFromPrice("organic-cotton"), from: true,
@@ -85,6 +86,7 @@ export const CATALOG: CatalogItem[] = [
   {
     id: NOOK.id, name: NOOK.title, href: NOOK.path, section: "sleep", group: "dog-beds", price: Math.min(...NOOK.sizes.map((z) => z.price)), from: true,
     photo: "nook-olive-card", review: "nook", fast: true,
+    quick: { kind: "nook", href: NOOK.path },
     dots: NOOK.colors.map((c) => ({ id: c.id, label: c.label, swatch: c.swatch, photo: (c.photos[0] + "-card") as PhotoKey })),
   },
   // Living

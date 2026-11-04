@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { BundleCard, BundleTile, MiniCard, SLEEP_SUITE_PATH, SwipeCard } from "@/components/black-friday";
 import { BfStickyCta } from "@/components/bf-mobile";
 import { Photo } from "@/components/photo";
+import { PHOTOS } from "@/lib/photos";
 import { DOG_BED, NOOK } from "@/lib/dog-bed";
 import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
 import { Stars } from "@/components/reviews";
@@ -15,6 +16,14 @@ export const metadata: Metadata = {
   title: "Black Friday at Ashwick: 20% off everything",
   description: "20% off the whole collection, mattresses included. Plus two bundles with free white glove delivery for the mattress: the Best Friends Bundle and the Complete Sleep Suite.",
   alternates: { canonical: SALE.path },
+  openGraph: {
+    type: "website",
+    siteName: "Ashwick Home",
+    title: "Black Friday at Ashwick: 20% off everything",
+    description: "20% off the whole collection, mattresses included. Plus two bundles with free white glove delivery for the mattress: the Best Friends Bundle and the Complete Sleep Suite.",
+    images: [{ url: PHOTOS["bf-share"].src, width: 1200, height: 630, alt: "A terracotta Ashbury mattress, a boucle chair and a cream sofa on a rug in an autumn hillside landscape" }],
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 const minPrice = (sizes: { price: number }[]) => Math.min(...sizes.map((z) => z.price));
