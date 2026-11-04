@@ -102,8 +102,8 @@ export type SleepPosition = "back" | "side" | "stomach";
 
 /**
  * The Pillows page story (Tessa's brief, round 2, 04/11). `desc` is each pillow's full description, word for word.
- * Feel (1 soft – 5 firm), temperature (1 warm – 5 cool) and "best for" are the brief's suggested values and are
- * marked [confirm] there: change them here once Tessa confirms. Nothing here adds a claim the site doesn't already make.
+ * Feel (1 soft – 5 firm), temperature (1 warm – 5 cool) and "best for" confirmed by Tessa (04/11).
+ * Nothing here adds a claim the site doesn't already make.
  */
 export const PILLOW_STORY: Record<string, {
   personality: string;
@@ -193,5 +193,8 @@ export const PILLOW_MATERIALS: { id: string; name: string; headline: string; cop
   },
 ];
 
-/** "Not sure? Order two fills and keep the one you love." Off until Tessa confirms it (brief, section 2). */
+/**
+ * "Not sure? Order two fills and keep the one you love." Off: a used pillow carries a 15% restocking fee (PILLOW_RETURNS),
+ * so a free try-both would need the returns terms to change first.
+ */
 export const PILLOW_TRY_TWO = false;
