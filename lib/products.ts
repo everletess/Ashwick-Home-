@@ -299,6 +299,7 @@ const ALL_PRODUCTS: Product[] = [
     id: "pembroke", name: "The Pembroke", type: "Chair", category: "chairs", price: 5000,
     line: "A sculptural wingback lounge chair on a swivel base, in Irish Linen, Organic Cotton or Belgian Linen.",
     photos: [
+      "pembroke-hero",
       "pembroke-blend-ivory", "pembroke-blend-sand", "pembroke-blend-coco", "pembroke-blend-dove",
       "pembroke-cotton-cream", "pembroke-cotton-natural", "pembroke-cotton-khaki",
       "pembroke-belgian-coco", "pembroke-belgian-ivory", "pembroke-belgian-moss",

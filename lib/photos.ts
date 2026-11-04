@@ -194,6 +194,8 @@ import mattressColors from "@/assets/photos/mattress-colors.jpg";
 import mattressMochaBedroom from "@/assets/photos/mattress-mocha-bedroom.jpg";
 import mattressSwatchKhaki from "@/assets/photos/mattress-swatch-khaki.jpg";
 import pembroke1 from "@/assets/photos/pembroke-1.jpg";
+// The Pembroke hero (Nov 2026): leads its gallery and cards. Untagged, so choosing a color moves to that color's photo.
+import pembrokeHero from "@/assets/photos/pembroke-hero.jpg";
 import pembroke2 from "@/assets/photos/pembroke-2.jpg";
 import pembrokeBlendDove from "@/assets/photos/pembroke-blend-dove.jpg";
 import pembrokeBlendIvory from "@/assets/photos/pembroke-blend-ivory.jpg";
@@ -393,6 +395,7 @@ export const PHOTOS = {
   "mattress-mocha-bedroom": mattressMochaBedroom,
   "mattress-swatch-khaki": mattressSwatchKhaki,
   "pembroke-1": pembroke1,
+  "pembroke-hero": pembrokeHero,
   "pembroke-2": pembroke2,
   "pembroke-blend-ivory": pembrokeBlendIvory,
   "pembroke-blend-dove": pembrokeBlendDove,
