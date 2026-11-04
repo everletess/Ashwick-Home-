@@ -66,12 +66,13 @@ export function CatalogCard({ item, priority }: { item: CatalogItem; priority?: 
 
 type QuickKind = "pillow" | "dog-bed" | "nook" | "mattress";
 
-function QuickAddSheet({ kind, href, onClose }: { kind: QuickKind; href: string; onClose: () => void }) {
+/** Choose size and color (and fill, for a pillow) without leaving the grid. `fill` preselects a pillow fill. */
+export function QuickAddSheet({ kind, href, onClose, fill: startFill }: { kind: QuickKind; href: string; onClose: () => void; fill?: string }) {
   const cart = useCart();
   const isPillow = kind === "pillow";
   const isMattress = kind === "mattress";
   const bed = kind === "nook" ? NOOK : DOG_BED;
-  const [fillId, setFill] = useState<string>(PILLOW_STANDALONE_FILLS[2]?.id ?? PILLOW_STANDALONE_FILLS[0].id);
+  const [fillId, setFill] = useState<string>(startFill ?? PILLOW_STANDALONE_FILLS[2]?.id ?? PILLOW_STANDALONE_FILLS[0].id);
   const [sizeId, setSize] = useState<string>(isPillow ? PILLOW_SIZES[0].id : isMattress ? MATTRESS.defaultSize : bed.sizes[0].id);
   const [feelId, setFeel] = useState<string>(MATTRESS.feels[0].id);
   const [colorId, setColor] = useState<string>(isMattress ? MATTRESS.defaultColor : "mocha");

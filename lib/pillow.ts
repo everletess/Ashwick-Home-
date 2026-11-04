@@ -1,3 +1,5 @@
+import type { PhotoKey } from "@/lib/photos";
+
 /**
  * The Ashwick Pillow (standalone). Shopify product `ashwick-pillow`: options Fill / Size / Cover color, flat price per
  * fill across sizes. NOT linked from navigation or collections until the owner approves; the direct URL works.
@@ -95,9 +97,104 @@ export const PILLOW_FAQ: [string, string][] = [
   ["What are the sizes?", "Standard 20 × 26 in, Queen 20 × 30 in and King 20 × 36 in."],
 ];
 
-/** Side-by-side facts for the pillows collection page, from The Futon Shop's pages for the same pillows. */
-export const PILLOW_COMPARE: Record<string, { fill: string; feel: string; notes: string }> = {
-  "living-wool-latex": { fill: "Shredded organic latex (GOLS) with organic Living Wool (GOTS)", feel: "Medium-firm", notes: "Breathable, no off-gassing, naturally resistant to dust mites and mold, flame resistant." },
-  "living-wool-horse-hair": { fill: "Three layers of OEKO-TEX certified horsehair wrapped in organic Living Wool (GOTS)", feel: "Medium-firm", notes: "Hollow strands move air and wick moisture, regulates temperature, holds its structure for years, flame resistant." },
-  "organic-cotton": { fill: "Certified organic cotton (USDA organic), stuffing to case", feel: "Medium-firm", notes: "Soft and breathable, hypoallergenic, resistant to dust mites, mold and mildew." },
+/** Sleep positions, for the "Best for" icons. */
+export type SleepPosition = "back" | "side" | "stomach";
+
+/**
+ * The Pillows page story (Tessa's brief, round 2, 04/11). `desc` is each pillow's full description, word for word.
+ * Feel (1 soft – 5 firm), temperature (1 warm – 5 cool) and "best for" confirmed by Tessa (04/11).
+ * Nothing here adds a claim the site doesn't already make.
+ */
+export const PILLOW_STORY: Record<string, {
+  personality: string;
+  bestFor: SleepPosition[];
+  feel: number;
+  feelLabel: string;
+  feelsLike: string;
+  temp: number;
+  tempLabel: string;
+  goodToKnow: string;
+  certs: string[];
+  desc: string;
+  /** Card photo: its own cover color, so the three cards look different. Swap for the fill close-ups when they exist. */
+  card: PhotoKey;
+  cardAlt: string;
+  /** Hover: the pillow with its fill in bowls. */
+  hover: PhotoKey;
+  cover: string;
+}> = {
+  "living-wool-horse-hair": {
+    personality: "Our most breathable pillow. Wool and Swedish horsehair, layered by hand.",
+    bestFor: ["back", "side"],
+    feel: 4, feelLabel: "Medium-firm",
+    feelsLike: "Holds its shape",
+    temp: 5, tempLabel: "Coolest",
+    goodToKnow: "Hollow strands move air and wick moisture; holds its structure for years; flame resistant.",
+    certs: ["GOTS", "OEKO-TEX"],
+    desc: "Three layers of OEKO-TEX certified horsehair wrapped in organic Living Wool (GOTS). Hollow strands move air and wick moisture, regulates temperature, holds its structure for years, flame resistant.",
+    card: "pillow-sorrel", cardAlt: "Two Sorrel pillows stacked on a travertine ledge", hover: "pillow-fill-horsehair", cover: "mocha",
+  },
+  "living-wool-latex": {
+    personality: "Buoyant support that springs back all night.",
+    bestFor: ["side"],
+    feel: 3, feelLabel: "Medium",
+    feelsLike: "Cool and springy",
+    temp: 4, tempLabel: "Cool",
+    goodToKnow: "Breathable, no off-gassing, naturally resistant to dust mites and mold; flame resistant.",
+    certs: ["GOTS", "GOLS"],
+    desc: "Shredded organic latex (GOLS certified) with organic Living Wool (GOTS). Latex is breathable and naturally resistant to dust mites and mold, and it does not off-gas. Wool regulates temperature, wicks away moisture and is naturally flame resistant.",
+    card: "pillow-flint", cardAlt: "Two Flint grey pillows stacked on a travertine ledge", hover: "pillow-fill-latex", cover: "dove",
+  },
+  "organic-cotton": {
+    personality: "Pure, simple, and soft. Organic cotton, stuffing to case.",
+    bestFor: ["stomach", "back"],
+    feel: 2, feelLabel: "Medium-soft",
+    feelsLike: "Soft and light",
+    temp: 3, tempLabel: "Neutral",
+    goodToKnow: "Soft and breathable, hypoallergenic, resistant to dust mites, mold and mildew.",
+    certs: ["USDA organic"],
+    desc: "Certified organic cotton (USDA organic), stuffing to case. Soft and breathable, hypoallergenic, resistant to dust mites, mold and mildew.",
+    card: "pillow-fleece", cardAlt: "Two Fleece cream pillows stacked on a travertine ledge", hover: "pillow-fill-cotton", cover: "natural",
+  },
 };
+
+/** "Back & side sleepers" from a list of positions. */
+export const bestForText = (p: SleepPosition[]) =>
+  p.map((x, i) => (i === 0 ? x[0].toUpperCase() + x.slice(1) : x)).join(" & ") + " sleepers";
+
+/**
+ * "What's inside": one panel per material (brief section 4). `in` lists the fills it's in; "cover" means every cover.
+ * Photos are stand-ins until Tessa's sheep-pasture, horsehair-basket, latex and cotton images arrive.
+ */
+export const PILLOW_MATERIALS: { id: string; name: string; headline: string; copy: string; cert: string; in: string[]; photo: PhotoKey; alt: string; inset?: PhotoKey; insetAlt?: string }[] = [
+  {
+    id: "wool", name: "Living Wool", headline: "It starts in the pasture.",
+    copy: "Our Living Wool is GOTS-certified organic wool from Lanas Trinidad in Uruguay. It keeps an even temperature, wicks away moisture and is naturally flame resistant.",
+    cert: "GOTS", in: ["living-wool-horse-hair", "living-wool-latex"],
+    photo: "materials-sheep", alt: "Sheep grazing on a green pasture", inset: "materials-wool", insetAlt: "A close-up of raw cream wool",
+  },
+  {
+    id: "horsehair", name: "Swedish horsehair", headline: "Nature’s spring.",
+    copy: "From tail clippings, so no horse is harmed. Each curled strand acts like a tiny spring, letting air move and holding its shape for years.",
+    cert: "OEKO-TEX", in: ["living-wool-horse-hair"],
+    photo: "materials-horsehair", alt: "A close-up of curled dark horsehair",
+  },
+  {
+    id: "latex", name: "Organic latex", headline: "Tapped from the tree.",
+    copy: "Shredded organic latex (GOLS certified), breathable and buoyant, naturally resistant to dust mites and mold, with no off-gassing.",
+    cert: "GOLS", in: ["living-wool-latex"],
+    photo: "pillow-fill-latex", alt: "A cream pillow with bowls of Living Wool and shredded organic latex beside it",
+  },
+  {
+    id: "cotton", name: "Organic cotton", headline: "Soft by nature.",
+    copy: "Certified organic cotton (USDA organic), soft and breathable, hypoallergenic, resistant to dust mites, mold and mildew.",
+    cert: "USDA organic", in: ["organic-cotton", "cover"],
+    photo: "pillow-fill-cotton", alt: "A cream pillow with a bowl of organic cotton fill beside it",
+  },
+];
+
+/**
+ * "Not sure? Order two fills and keep the one you love." Off: a used pillow carries a 15% restocking fee (PILLOW_RETURNS),
+ * so a free try-both would need the returns terms to change first.
+ */
+export const PILLOW_TRY_TWO = false;
