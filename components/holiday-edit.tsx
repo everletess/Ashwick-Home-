@@ -20,10 +20,10 @@ import { PILLOW_STANDALONE_FILLS, PILLOW_STORY } from "@/lib/pillow";
 import { getProduct } from "@/lib/products";
 import { BUNDLE, BUNDLE_PILLOWS, SALE, SLEEP_SUITE, countdownFrom, saleEndShort, salePrice, sleepSuiteLines } from "@/lib/sale";
 
-/** The page's photographs. Stand-ins until the seasonal photography (image prompts A–D) is in: change these keys only. */
+/** The page's photographs: the hero and the Sleep Suite are Tessa's (05/11); Best Friends and Gifts are stand-ins for now. */
 export const HOLIDAY_PHOTOS: Record<"hero" | "suite" | "bestFriends" | "gifts", { photo: PhotoKey; alt: string }> = {
-  hero: { photo: "holiday-hero", alt: "A living room in winter light: a cream sofa, a lit stone fireplace and an olive garland on the mantel" },
-  suite: { photo: "holiday-suite", alt: "The Ashbury in Sorrel on a light oak bed, made up with two pillows and a wool throw" },
+  hero: { photo: "holiday-hero", alt: "The Marlowe Sofa in white linen on its fluted oak plinth, in a sunlit living room with a marble fireplace and a travertine coffee table" },
+  suite: { photo: "holiday-suite", alt: "The Ashbury in Sorrel made up with matching pillows and a throw, in a winter bedroom with snow outside the window and a wreath" },
   bestFriends: { photo: "holiday-best-friends", alt: "The Ashbury Dog Bed in Sorrel with a dog curled up asleep on it, beside the bed" },
   gifts: { photo: "holiday-gifts", alt: "A stack of Ashwick pillows in cream, oat, sorrel and grey" },
 };

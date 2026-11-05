@@ -201,6 +201,9 @@ import mattressRoomFlintClean from "@/assets/photos/mattress-room-flint-clean.jp
 import mattressRoomFleeceClean from "@/assets/photos/mattress-room-fleece-clean.jpg";
 import mattressRoomFlaxClean from "@/assets/photos/mattress-room-flax-clean.jpg";
 import mattressRoomSorrelClean from "@/assets/photos/mattress-room-sorrel-clean.jpg";
+// The Holiday Edit (/black-friday): Tessa's photos (05/11).
+import holidayHero from "@/assets/photos/holiday-hero.jpg";
+import holidaySuite from "@/assets/photos/holiday-suite.jpg";
 import mattressSwatchKhaki from "@/assets/photos/mattress-swatch-khaki.jpg";
 import pembroke1 from "@/assets/photos/pembroke-1.jpg";
 // The Pembroke hero (Nov 2026): leads its gallery and cards. Untagged, so choosing a color moves to that color's photo.
@@ -408,9 +411,9 @@ export const PHOTOS = {
   "mattress-room-fleece-clean": mattressRoomFleeceClean,
   "mattress-room-flax-clean": mattressRoomFlaxClean,
   "mattress-room-sorrel-clean": mattressRoomSorrelClean,
-  // The Holiday Edit (/black-friday). Stand-ins until the seasonal photography arrives: point these at the new files.
-  "holiday-hero": hero,
-  "holiday-suite": mattressMochaBedroom,
+  // The Holiday Edit (/black-friday): the hero and the Sleep Suite are Tessa's photos; the other two are stand-ins.
+  "holiday-hero": holidayHero,
+  "holiday-suite": holidaySuite,
   "holiday-best-friends": dogBedSorrelRoom,
   "holiday-gifts": pillowsHero,
   "mattress-swatch-khaki": mattressSwatchKhaki,
