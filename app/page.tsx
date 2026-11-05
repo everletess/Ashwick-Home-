@@ -2,7 +2,6 @@ import Link from "next/link";
 import { Fibers } from "@/components/fibers";
 import { HeroSlides } from "@/components/hero-slides";
 import { Photo } from "@/components/photo";
-import { Newsletter } from "@/components/forms";
 import { Bedroom, HandedDown, LivingRoom, ShopTheHome } from "@/components/home-editorial";
 import { OfferBand, SaleHero, StickySuite } from "@/components/bf-push";
 import { MATTRESS_PATH } from "@/lib/mattress";
@@ -38,9 +37,8 @@ export default function HomePage() {
       <Fibers />
       <ShopTheHome />
       <LivingRoom />
-      <Bedroom />
       <HandedDown />
-      <Newsletter />
+      <Bedroom />
       <StickySuite />
     </main>
   );
