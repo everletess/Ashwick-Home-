@@ -7,6 +7,7 @@ import { BESPOKE_PATH } from "@/lib/bespoke";
 import { STUDIO_EMAIL } from "@/lib/site";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/pages/delivery" },
   title: "Delivery",
   description: "How and when your Ashwick furniture and Ashbury mattress arrive.",
 };

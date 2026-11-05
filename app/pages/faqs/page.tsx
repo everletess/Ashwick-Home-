@@ -9,6 +9,7 @@ import { STUDIO_EMAIL, STUDIO_PHONE, STUDIO_PHONE_HREF } from "@/lib/site";
 import { TRADE_TERMS, WARRANTY_PATH } from "@/lib/trade-terms";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/pages/faqs" },
   title: "FAQs",
   description: "Answers to common questions about Ashwick furniture, the Ashbury mattress, delivery, returns and Bespoke.",
 };

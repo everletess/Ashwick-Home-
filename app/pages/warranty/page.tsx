@@ -5,6 +5,7 @@ import { STUDIO_EMAIL } from "@/lib/site";
 import { TRADE_TERMS } from "@/lib/trade-terms";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/pages/warranty" },
   title: "Furniture warranty",
   description: "Every piece of Ashwick furniture is warranted against defects in materials and workmanship for as long as the original purchaser owns it.",
 };

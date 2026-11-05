@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { PRODUCTS } from "@/lib/products";
 import { PILLOW_STANDALONE_FILLS } from "@/lib/pillow";
 import { BUNDLE, SALE, SLEEP_SUITE } from "@/lib/sale";
+import { DOG_BED_PATH, NOOK_PATH } from "@/lib/dog-bed";
 
 const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://ashwickhome.com";
 
@@ -18,6 +19,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/collections/sofas`, priority: 0.8 },
     { url: `${BASE}/collections/chairs`, priority: 0.8 },
     { url: `${BASE}/collections/dog-beds`, priority: 0.8 },
+    { url: `${BASE}${DOG_BED_PATH}`, priority: 0.8 },
+    { url: `${BASE}${NOOK_PATH}`, priority: 0.8 },
     { url: `${BASE}/pages/our-story`, priority: 0.7 },
     { url: `${BASE}/pages/materials`, priority: 0.7 },
     { url: `${BASE}/pages/furniture-materials`, priority: 0.7 },

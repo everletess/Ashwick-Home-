@@ -6,6 +6,7 @@ import { STUDIO_EMAIL } from "@/lib/site";
 import { WARRANTY_PATH } from "@/lib/trade-terms";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/pages/care" },
   title: "Care",
   description: "Caring for your Ashbury mattress, topper and Ashwick furniture: wood, linen, wool upholstery and natural-fill cushions.",
 };

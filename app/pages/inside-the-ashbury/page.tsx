@@ -10,6 +10,7 @@ import { ASHBURY_GROUPS, FURNITURE_MATERIALS_PATH, MATERIALS_PATH } from "@/lib/
 const M = MATTRESS;
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/pages/inside-the-ashbury" },
   title: "Inside the Ashbury",
   description: "An all-natural mattress made from nature's finest materials: Living Wool, Swedish horsehair and organic cotton, hand-tufted and made in color.",
 };

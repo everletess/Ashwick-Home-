@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Fibers } from "@/components/fibers";
 import { HeroSlides } from "@/components/hero-slides";
@@ -7,6 +8,21 @@ import { Bedroom, Favorites, HandedDown, LivingRoom, ShopTheHome } from "@/compo
 import { OfferBand, SaleHero, StickySuite } from "@/components/bf-push";
 import { MATTRESS_PATH } from "@/lib/mattress";
 import { SALE } from "@/lib/sale";
+import { INSTAGRAM_URL, PINTEREST_URL, STUDIO_EMAIL } from "@/lib/site";
+
+export const metadata: Metadata = { alternates: { canonical: "/" } };
+
+const ORG_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Ashwick Home",
+  url: "https://ashwickhome.com",
+  email: STUDIO_EMAIL,
+  telephone: "+1-773-597-9629",
+  address: { "@type": "PostalAddress", streetAddress: "2150 Cesar Chavez St", addressLocality: "San Francisco", addressRegion: "CA", postalCode: "94124", addressCountry: "US" },
+  sameAs: [INSTAGRAM_URL, PINTEREST_URL],
+};
+
 
 function HomeHero() {
   return (
@@ -31,6 +47,8 @@ function HomeHero() {
 
 export default function HomePage() {
   return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ORG_JSON_LD) }} />
     <main className="home-main">
       {/* During the sale the page opens on the Black Friday brand hero; the usual hero comes back on its own when it ends. */}
       {SALE.active ? <SaleHero /> : <HomeHero />}
@@ -44,5 +62,6 @@ export default function HomePage() {
       <Newsletter />
       <StickySuite />
     </main>
+    </>
   );
 }

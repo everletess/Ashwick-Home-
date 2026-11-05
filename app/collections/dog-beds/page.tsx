@@ -5,6 +5,7 @@ import { itemsFor } from "@/lib/catalog";
 
 export const metadata: Metadata = {
   title: "Dog Beds",
+  alternates: { canonical: "/collections/dog-beds" },
   description: "Organic dog beds, handmade to order in the USA: the Ashbury Dog Bed and The Nook.",
 };
 

@@ -7,6 +7,7 @@ import { SWATCH_PRICE, fmt } from "@/lib/products";
 import { STUDIO_EMAIL } from "@/lib/site";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/pages/ordering" },
   title: "Ordering",
   description: "How to order from Ashwick Home: made to order, customizing a piece, swatches, payment and Bespoke.",
 };

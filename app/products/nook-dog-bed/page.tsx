@@ -44,6 +44,7 @@ function productJsonLd() {
 }
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/products/nook-dog-bed" },
   title: NOOK.title,
   description: `${NOOK.soonLede} From Ashwick Home.`,
   // Out of search until it launches.

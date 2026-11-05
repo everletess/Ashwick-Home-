@@ -4,7 +4,7 @@ import { CompareFills, CompleteBedPair, CoverSection, FieldStrip, PillowCards, P
 import { PILLOW_PATH } from "@/lib/pillow";
 
 export const metadata: Metadata = {
-  title: "Pillows | The Ashwick Pillow",
+  title: "Organic Pillows: Living Wool, Horsehair & Cotton",
   description:
     "Three organic bed pillows handmade in the USA: organic Living Wool with latex, organic Living Wool with horsehair, or 100% organic cotton. Removable organic cotton cover in four colors. Fast, free delivery.",
   alternates: { canonical: PILLOW_PATH },

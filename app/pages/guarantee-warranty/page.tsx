@@ -7,6 +7,7 @@ import { WARRANTY_PATH } from "@/lib/trade-terms";
 const M = MATTRESS;
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/pages/guarantee-warranty" },
   title: "Guarantee & warranty",
   description: "A hundred nights to be sure. A lifetime to keep it. The Ashbury guarantee and warranty.",
 };

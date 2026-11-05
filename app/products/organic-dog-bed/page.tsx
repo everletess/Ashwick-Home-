@@ -11,6 +11,7 @@ import { reviewsFor } from "@/lib/reviews";
 const D = DOG_BED;
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/products/organic-dog-bed" },
   title: D.collection,
   description: `${D.tagline} Organic dog beds from Ashwick Home, made to match the Ashbury.`,
   // Out of search until it launches.

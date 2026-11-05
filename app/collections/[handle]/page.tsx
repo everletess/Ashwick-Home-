@@ -11,8 +11,8 @@ const META: Record<string, { title: string; description: string }> = {
   all: { title: "Shop all", description: "Bundles, the Ashbury mattress, pillows, dog beds, sofas and chairs. Everything handmade to order in the USA." },
   bedroom: { title: "For the bedroom", description: "The Ashbury, pillows, dog beds and bundles, handmade to order in the USA." },
   bundles: { title: "Bundles", description: "The Complete Sleep Suite and the Best Friends Bundle." },
-  sofas: { title: "Sofas", description: "Sofas and a loveseat, each made to order by hand." },
-  chairs: { title: "Chairs", description: "Chairs and an ottoman, each made to order by hand." },
+  sofas: { title: "Sofas", description: "Organic sofas and a loveseat in linen, wool and cotton on solid hardwood frames, each made to order by hand in the USA." },
+  chairs: { title: "Chairs", description: "Organic lounge chairs and an ottoman in linen, wool and cotton on solid hardwood frames, each made to order by hand in the USA." },
   mattress: { title: "Mattress", description: "The Ashbury: an all-natural mattress, hand-tufted and made in color." },
 };
 
@@ -23,7 +23,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { handle } = await params;
-  return META[handle] ? { title: META[handle].title, description: META[handle].description } : {};
+  return META[handle] ? { title: META[handle].title, description: META[handle].description, alternates: { canonical: `/collections/${handle}` } } : {};
 }
 
 export default async function CollectionPage({ params }: Props) {

@@ -6,6 +6,7 @@ import { PageHero } from "@/components/sections";
 import { ASHBURY_PATH, FURNITURE_MATERIALS_PATH } from "@/lib/materials";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/pages/materials" },
   title: "Our Materials",
   description: "Every Ashwick piece is built from materials you'd recognize: wool, cotton, linen, horsehair and solid wood.",
 };
