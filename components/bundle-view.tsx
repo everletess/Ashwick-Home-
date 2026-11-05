@@ -230,6 +230,7 @@ export function SleepSuiteBuilder() {
   const shots: GalleryShot[] = [
     { photo: room, alt: `The Ashbury in ${mc.label} on a light oak bed, made up with two pillows` },
     { photo: "pillow-hero", alt: "The Ashwick Pillow" },
+    { photo: "mattress-protector", alt: "The Mattress Protector fitted over an Ashbury in Sorrel, with a folded spare beside it" },
     { photo: mc.photos[1] ?? mc.cutaway, alt: `The Ashbury in ${mc.label}, hand-tufted` },
     { photo: mc.cutaway, alt: `Inside the Ashbury in ${mc.label}` },
   ];
