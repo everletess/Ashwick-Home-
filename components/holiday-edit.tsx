@@ -28,8 +28,15 @@ export const HOLIDAY_PHOTOS: Record<"hero" | "suite" | "bestFriends" | "gifts", 
   gifts: { photo: "holiday-gifts", alt: "A stack of Ashwick pillows in cream, oat, sorrel and grey" },
 };
 
-/** Holiday delivery: the last order date for delivery before Christmas. Tessa to confirm; while null the band shows no date. */
-export const HOLIDAY_ORDER_BY: string | null = null;
+/**
+ * Holiday delivery: the last day to order for delivery before Christmas, by category (Tessa, 05/11). Each line drops
+ * off on its own once its day has passed (end of day, Pacific).
+ */
+export const HOLIDAY_ORDER_BY: { what: string; by: string }[] = [
+  { what: "Furniture", by: "2026-11-23T23:59:59-08:00" },
+  { what: "Mattresses and dog beds", by: "2026-12-10T23:59:59-08:00" },
+  { what: "Pillows", by: "2026-12-19T23:59:59-08:00" },
+];
 
 const money = (n: number) => fmtWhole(n);
 function PriceLine({ list, sale, big }: { list: number; sale: number; big?: boolean }) {
@@ -295,7 +302,7 @@ export function GiftsDeal({ prices }: { prices: LivePrices }) {
   const minOf = (r: Record<string, number>) => Math.min(...Object.values(r));
   const dogs: Gift[] = [
     { key: "dog", name: DOG_BED.title, href: DOG_BED.path, photo: "dog-bed-sorrel-card", list: minOf(prices.dogBed), quick: { kind: "dog-bed" } },
-    { key: "nook", name: NOOK.title, href: NOOK.path, photo: "nook-olive-card", list: minOf(prices.nook), quick: { kind: "nook" } },
+    { key: "nook", name: NOOK.title, href: NOOK.path, photo: "holiday-nook", list: minOf(prices.nook), quick: { kind: "nook" } },
   ];
   const gifts = [pillow, ...dogs].filter((g) => salePrice(g.list) < 300);
   return (
@@ -313,10 +320,19 @@ export function GiftsDeal({ prices }: { prices: LivePrices }) {
 /* ---------- 8 · Holiday delivery ---------- */
 
 export function HolidayDelivery() {
+  // Before the clock starts (server render and first paint) every line shows; then passed dates drop off.
+  const now = useNow();
+  const lines = HOLIDAY_ORDER_BY.filter((l) => now == null || Date.parse(l.by) >= now);
+  const day = (iso: string) => new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "America/Los_Angeles" });
   return (
-    <section className="hx-deliv" aria-label="Holiday delivery">
+    <section className="hx-deliv" aria-labelledby="hx-deliv-h">
       <div className="wrap hx-deliv-in">
-        <p className="hx-deliv-h">{HOLIDAY_ORDER_BY ? `Order by ${HOLIDAY_ORDER_BY} for delivery before Christmas.` : "Holiday delivery"}</p>
+        <p className="hx-deliv-h" id="hx-deliv-h">{lines.length ? "Order by these dates for delivery before Christmas" : "Holiday delivery"}</p>
+        {lines.length > 0 && (
+          <ul className="hx-deliv-dates">
+            {lines.map((l) => <li key={l.what}><span>{l.what}</span><strong>{day(l.by)}</strong></li>)}
+          </ul>
+        )}
         <p className="hx-deliv-s">Mattresses and dog beds ship in 3–4 days. Pillows ship in 1–2 business days. Custom pieces take 8–12 weeks.</p>
         <Link href="/pages/delivery" className="hx-deliv-l">Delivery details →</Link>
       </div>
