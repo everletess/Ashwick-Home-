@@ -2004,3 +2004,4 @@ button.chip{cursor:pointer}
 .ob-t{font:300 clamp(24px,6.6vw,34px)/1.15 var(--serif);color:var(--alabaster)}
 @media (max-width:860px){.sh{height:max(480px,calc(100svh - var(--sh-top,104px) - 84px))}}
 @media (min-width:861px){.sh{height:max(560px,min(760px,calc(100vh - 146px - 96px)))}}
+@media (min-width:861px){.mrail{max-width:1280px}}

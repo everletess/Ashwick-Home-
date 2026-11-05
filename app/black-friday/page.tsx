@@ -39,8 +39,8 @@ export default function BlackFridayPage() {
     {
       id: "dog-beds", title: "Dog beds",
       items: [
-        { key: "dog", href: DOG_BED.path, photo: "dog-bed-sorrel-room-golden", alt: DOG_BED.title, name: DOG_BED.title, from: minPrice(DOG_BED.sizes), quick: { kind: "dog-bed" } },
-        { key: "nook", href: NOOK.path, photo: "nook-olive-room", alt: NOOK.title, name: NOOK.title, from: minPrice(NOOK.sizes), quick: { kind: "nook" } },
+        { key: "dog", href: DOG_BED.path, photo: "dog-bed-sorrel-card", alt: DOG_BED.title, name: DOG_BED.title, from: minPrice(DOG_BED.sizes), quick: { kind: "dog-bed" } },
+        { key: "nook", href: NOOK.path, photo: "nook-olive-card", alt: NOOK.title, name: NOOK.title, from: minPrice(NOOK.sizes), quick: { kind: "nook" } },
       ],
     },
     { id: "sofas", title: "Sofas", items: furniture("sofas") },

@@ -117,8 +117,8 @@ const PILLOW_MINIS: Mini[] = [...PILLOW_STANDALONE_FILLS]
   .map((f) => ({ key: f.id, name: f.label, href: f.path, photo: PILLOW_STORY[f.id].card, alt: PILLOW_STORY[f.id].cardAlt, from: pillowFromPrice(f.id), quick: { kind: "pillow", fill: f.id }, isNew: true }));
 const minSize = (sizes: { price: number }[]) => Math.min(...sizes.map((s) => s.price));
 const DOG_MINIS: Mini[] = [
-  { key: DOG_BED.id, name: DOG_BED.title, href: DOG_BED.path, photo: (DOG_BED.colors.find((c) => c.id === DOG_BED.defaultColor) ?? DOG_BED.colors[0]).photos[0], alt: DOG_BED.title, from: minSize(DOG_BED.sizes), quick: { kind: "dog-bed" } },
-  { key: NOOK.id, name: NOOK.title, href: NOOK.path, photo: (NOOK.colors.find((c) => c.id === NOOK.defaultColor) ?? NOOK.colors[0]).photos[0], alt: NOOK.title, from: minSize(NOOK.sizes), quick: { kind: "nook" } },
+  { key: DOG_BED.id, name: DOG_BED.title, href: DOG_BED.path, photo: "dog-bed-sorrel-card", alt: "The Ashbury Dog Bed in Sorrel", from: minSize(DOG_BED.sizes), quick: { kind: "dog-bed" } },
+  { key: NOOK.id, name: NOOK.title, href: NOOK.path, photo: "nook-olive-card", alt: "The Nook Dog Bed in Olive", from: minSize(NOOK.sizes), quick: { kind: "nook" } },
 ];
 
 export function MiniCard({ it }: { it: Mini }) {
