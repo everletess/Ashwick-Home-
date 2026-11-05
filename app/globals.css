@@ -2033,3 +2033,134 @@ button.chip{cursor:pointer}
   .ob-s{border-left:1px solid rgba(246,242,236,.55);padding-left:28px;font-size:13px}
 }
 @media (max-width:860px){.sh-img{object-position:66% 50%}.ob-lead{display:none}}
+
+/* ===== Homepage below the offer band (05/11): editorial sections in the palette ===== */
+.he{padding:72px 0}
+.he-walnut{background:var(--ink);color:var(--alabaster)}
+.he-oat{background:var(--linen)}
+.he-alabaster{background:var(--alabaster)}
+.he-sage{background:var(--sage);color:var(--alabaster)}
+.he .h2{margin:12px 0 0}
+.he .ulink{margin-top:28px}
+.he-sage .eyebrow,.he-walnut .eyebrow{color:var(--alabaster);opacity:.85}
+/* 3 · Materials, straight after the offer band: tall 3:4 photos, swipeable, one- or two-word labels */
+.fibers{padding:72px 0}
+.fibers .fibers-grid{display:grid;grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:320px;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;margin:40px 0 0;padding:0 var(--gut) 8px;scroll-padding-inline:var(--gut);scrollbar-width:none;max-width:none}
+.fibers .fibers-grid::-webkit-scrollbar{display:none}
+.fibers .fibers-grid .fiber{flex:none;max-width:none;scroll-snap-align:start;text-align:left}
+.fibers .fiber-img{aspect-ratio:3/4}
+.fibers .fiber-n{font-size:12px;margin-top:14px;letter-spacing:.22em}
+.fibers .wrap:has(.fibers-grid){max-width:none;padding-left:0;padding-right:0}
+.fibers .center-head,.fibers .fibers-cta{max-width:1440px;margin-left:auto;margin-right:auto;padding:0 var(--gut)}
+@media (min-width:1500px){.fibers .fibers-grid{justify-content:center}}
+@media (max-width:860px){.fibers .fibers-grid{grid-auto-columns:75vw;gap:12px;margin-top:28px}.fibers{padding:56px 0}}
+/* 4 · Shop the home: four rooms, 2×2 on desktop, stacked 4:5 on a phone */
+.he-eyebrow{margin:0 0 24px}
+.he-rooms-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.he-room{display:block;color:var(--ink)}
+.he-room:hover{color:var(--ink)}
+.he-room-img{position:relative;display:block;height:640px;overflow:hidden;background:var(--oat)}
+.he-room-img img{object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.6,.2,1)}
+.he-room:hover .he-room-img img{transform:scale(1.03)}
+.he-room-img img.he-pos-right{object-position:78% 50%}
+.he-room-name{display:block;margin-top:14px;font:300 30px/1.1 var(--serif)}
+@media (max-width:860px){
+  .he{padding:56px 0}
+  .he-rooms-grid{grid-template-columns:minmax(0,1fr);gap:28px}
+  .he-rooms .wrap{padding-left:0;padding-right:0}
+  .he-eyebrow{padding:0 var(--gut)}
+  .he-room-img{height:auto;aspect-ratio:4/5}
+  .he-room-name{padding:0 var(--gut);font-size:28px}
+}
+/* 5 · The Living Room: a large photo beside the four pieces */
+.he-living{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;padding:0}
+.he-living-img{position:relative;min-height:860px;height:100%}
+.he-living-img img{object-fit:cover}
+.he-living-t{padding:72px var(--gut) 72px 64px;min-width:0}
+.he-cards{list-style:none;margin:36px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 20px}
+.he-card a{display:block;color:var(--ink)}
+.he-card a:hover{color:var(--ink)}
+.he-card-img{position:relative;display:block;aspect-ratio:4/5;overflow:hidden;background:var(--linen)}
+.he-card-img img{object-fit:cover}
+.he-card-name{display:block;margin-top:12px;font:300 21px/1.15 var(--serif)}
+.he-card-price{display:block;margin-top:4px;font:400 15px var(--sans)}
+.he-card-price .price-was{color:var(--walnut);font-size:13px}
+@media (min-width:1280px){.he-cards{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}.he-living{grid-template-columns:minmax(0,5fr) minmax(0,6fr)}.he-living-img{min-height:760px}}
+@media (max-width:860px){
+  .he-living{grid-template-columns:minmax(0,1fr)}
+  .he-living-img{min-height:0;height:auto;aspect-ratio:4/5}
+  .he-living-t{padding:40px 0 56px}
+  .he-living-t>.eyebrow,.he-living-t>.h2,.he-living-t>.ulink{margin-left:var(--gut);margin-right:var(--gut)}
+  .he-cards{display:grid;grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:64%;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 var(--gut);scroll-padding-inline:var(--gut);scrollbar-width:none;margin-top:28px}
+  .he-cards::-webkit-scrollbar{display:none}
+  .he-card{scroll-snap-align:start}
+}
+/* 6 · The Bedroom on sage: the Ashbury in color */
+.he-bed{display:grid;grid-template-columns:minmax(0,11fr) minmax(0,9fr);align-items:center;padding:0}
+.he-bed-img{position:relative;min-height:820px;height:100%;overflow:hidden}
+.he-bed-img img{object-fit:cover;opacity:0;transition:opacity .5s ease}
+.he-bed-img img.on{opacity:1}
+.he-bed-t{padding:72px var(--gut) 72px 72px}
+.he-bed .h2{color:var(--alabaster)}
+.he-dots{list-style:none;margin:28px 0 0;padding:0;display:flex;gap:6px}
+.he-dots button{width:44px;height:44px;border:0;background:none;padding:0;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative}
+.he-dots button img{width:30px !important;height:30px !important;border-radius:50%;object-fit:cover;border:1px solid rgba(246,242,236,.6);position:static !important}
+.he-dots button.on img{outline:1px solid var(--alabaster);outline-offset:3px}
+.he-sage .ulink,.he-walnut .ulink{color:var(--alabaster)}
+@media (max-width:860px){
+  .he-bed{grid-template-columns:minmax(0,1fr)}
+  .he-bed-img{min-height:0;height:auto;aspect-ratio:4/5}
+  .he-bed-t{padding:40px var(--gut) 56px}
+}
+/* 7 · Built to be handed down: full-bleed workshop photo, words over it */
+.he-hand{position:relative;padding:0;min-height:min(86vh,780px);display:flex;align-items:flex-end}
+.he-hand-img{position:absolute;inset:0}
+.he-hand-img img{object-fit:cover}
+.he-hand::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(42,37,31,.9) 0%,rgba(42,37,31,.45) 45%,rgba(42,37,31,.05) 75%)}
+.he-hand-t{position:relative;z-index:1;width:100%;max-width:1440px;margin:0 auto;padding:0 var(--gut) 72px}
+.he-hand .h2{color:var(--alabaster);max-width:14ch}
+.he-line{margin:16px 0 0;font:300 18px/1.5 var(--sans);color:var(--alabaster);max-width:44ch}
+@media (max-width:860px){.he-hand{min-height:0;display:block}.he-hand-img{position:relative;inset:auto;aspect-ratio:4/5}.he-hand::after{display:none}.he-hand-t{padding:36px var(--gut) 56px}.he-line{font-size:16px}}
+/* 8 · The Ashwick Letter on oat */
+.home-main .nl{background:var(--linen);border-top:0;padding:88px 0}
+@media (max-width:860px){.home-main .nl{padding:56px 0}}
+/* Living Room on desktop: the four pieces as large cards, two by two, beside the photo */
+@media (min-width:861px){.he-living{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.he-cards{grid-template-columns:repeat(2,minmax(0,260px));gap:32px 24px}.he-living-img{min-height:0;height:100%}}
+@media (min-width:1280px){.he-living{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.he-cards{grid-template-columns:repeat(2,minmax(0,260px))}.he-living-img{min-height:0}}
+.he-hand-img img{object-position:50% 18%}
+/* ===== Shopping back on the homepage (05/11) ===== */
+/* Black Friday favorites: 4 visible with arrows on desktop, ~1.6 on a phone */
+.he-fav-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
+.he-arrows{display:flex;gap:8px}
+.he-arrows button{width:48px;height:48px;border:1px solid var(--hair);background:transparent;color:var(--ink);font:300 20px/1 var(--sans);cursor:pointer}
+.he-arrows button:hover{background:var(--ink);color:var(--alabaster)}
+.he-rail{list-style:none;margin:32px auto 0;padding:0 var(--gut);max-width:1440px;display:grid;grid-auto-flow:column;grid-auto-columns:calc((min(100vw,1440px) - 2 * var(--gut) - 3 * 24px) / 4);gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gut);scrollbar-width:none}
+.he-rail::-webkit-scrollbar{display:none}
+.he-rail .he-card{scroll-snap-align:start}
+@media (max-width:860px){
+  .he-arrows{display:none}
+  .he-rail{grid-auto-columns:58vw;gap:12px;margin-top:24px}
+}
+/* Shop the home: 2×2 on a phone too */
+@media (max-width:860px){
+  .he-rooms .wrap{padding-left:var(--gut);padding-right:var(--gut)}
+  .he-eyebrow{padding:0}
+  .he-rooms-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px}
+  .he-room-img{aspect-ratio:4/5}
+  .he-room-name{padding:0;margin-top:10px;font-size:22px}
+}
+/* The Bedroom: the four pieces on the sage panel */
+.he-cards-bed{margin-top:32px}
+.he-sage .he-card a,.he-sage .he-card a:hover{color:var(--alabaster)}
+.he-sage .he-card-price .price-now{color:var(--alabaster)}
+.he-sage .he-card-price .price-was{color:var(--alabaster);opacity:.75}
+.he-sage .he-card-img{background:rgba(246,242,236,.15)}
+@media (min-width:861px){.he-cards-bed{grid-template-columns:repeat(2,minmax(0,220px));gap:28px 20px}.he-bed .ulink{margin-top:32px}.he-bed-img{min-height:0}}
+@media (max-width:860px){
+  .he-bed-t{padding:40px 0 56px}
+  .he-bed-t>.eyebrow,.he-bed-t>.h2,.he-bed-t>.he-dots,.he-bed-t>.ulink{margin-left:var(--gut);margin-right:var(--gut)}
+}
+/* Sticky bar: walnut, thin on a phone */
+.ss-bar{background:var(--ink)}
+@media (max-width:860px){.ss-bar{padding-top:6px;padding-bottom:calc(6px + env(safe-area-inset-bottom))}.ss-bar .ss-btn{min-height:40px}}
+@media (min-width:861px){.he-rail{max-width:1280px;grid-auto-columns:calc((min(100vw,1280px) - 2 * var(--gut) - 3 * 24px) / 4)}}

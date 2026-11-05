@@ -184,7 +184,7 @@ export function EmailPopup() {
             <p className="ep-eyebrow eyebrow">Welcome</p>
             <p className="ep-h h3" id="ep-title">You&apos;re on the list.</p>
             <p className="ep-body body small" id="ep-desc">
-              {SALE.active ? <>Thank you for joining. The first Ashwick Letter will land in your inbox soon.</> : <>Here&apos;s 15% off your first order.{emailed && <> We&apos;ve sent it to your inbox too.</>} The first Ashwick Letter will land in your inbox soon.</>}
+              {SALE.active ? <>Thank you for joining. Watch your inbox for deals throughout the month.</> : <>Here&apos;s 15% off your first order.{emailed && <> We&apos;ve sent it to your inbox too.</>} The first Ashwick Letter will land in your inbox soon.</>}
             </p>
             {!SALE.active && <><p className="ep-code">{DISCOUNT_CODE}</p>
             <p className="fine">Enter it at checkout. One use per customer.</p></>}
@@ -196,12 +196,12 @@ export function EmailPopup() {
             <p className="ep-eyebrow eyebrow">The Ashwick Letter</p>
             {/* Phones get the short version (ep-short), a compact card that leaves the page visible. */}
             <p className="ep-h h3" id="ep-title">
-              <span className="ep-long">Built to be inherited.</span>
-              <span className="ep-short">{SALE.active ? "Sign up for our newsletter" : "15% off your first order"}</span>
+              <span className="ep-long">{SALE.active ? "Deals all month long." : "Built to be inherited."}</span>
+              <span className="ep-short">{SALE.active ? "Deals all month long" : "15% off your first order"}</span>
             </p>
             <p className="ep-body body small" id="ep-desc">
-              <span className="ep-long">Join our exclusive organic design newsletter: material stories, natural interiors, and first access to new pieces.{!SALE.active && " Plus 15% off your first order."}</span>
-              <span className="ep-short">{SALE.active ? "Material stories, natural interiors and first access to new pieces." : "Join the Ashwick Letter for material stories, new pieces and your code."}</span>
+              <span className="ep-long">{SALE.active ? "Join the Ashwick Letter for deals throughout the month, plus material stories and first access to new pieces." : "Join our exclusive organic design newsletter: material stories, natural interiors, and first access to new pieces. Plus 15% off your first order."}</span>
+              <span className="ep-short">{SALE.active ? "Join the Ashwick Letter for deals throughout the month." : "Join the Ashwick Letter for material stories, new pieces and your code."}</span>
             </p>
 
             <div className="ep-row">
@@ -230,7 +230,7 @@ export function EmailPopup() {
             >
               {status === "loading" ? "One moment…" : (
                 <>
-                  <span className="ep-long">Get 15% off + the newsletter</span>
+                  <span className="ep-long">{SALE.active ? "Join the newsletter" : "Get 15% off + the newsletter"}</span>
                   <span className="ep-short">Submit</span>
                 </>
               )}
@@ -268,10 +268,10 @@ export function FooterSignup() {
     <div className="ftr-nl">
       <div className="fcol-t">The Ashwick Letter</div>
       {status === "done" ? (
-        <p className="ftr-nl-done" role="status">{SALE.active ? "You&apos;re on the list." : <>You&apos;re on the list. Your 15% code is on its way: {DISCOUNT_CODE}</>}</p>
+        <p className="ftr-nl-done" role="status">{SALE.active ? "You’re on the list." : <>You&apos;re on the list. Your 15% code is on its way: {DISCOUNT_CODE}</>}</p>
       ) : (
         <>
-          <p className="ftr-nl-copy">Material stories and natural interiors, weekly.{!SALE.active && " 15% off your first order."}</p>
+          <p className="ftr-nl-copy">{SALE.active ? "Deals throughout the month, material stories and natural interiors." : "Material stories and natural interiors, weekly. 15% off your first order."}</p>
           <form className="nl-form ftr-nl-form" onSubmit={submit} noValidate>
             <input type="email" required placeholder="Email address" aria-label="Email address" value={email} onChange={(e) => { setEmail(e.target.value); setStatus("idle"); }} autoComplete="email" />
             <button type="submit" disabled={status === "loading"}>{status === "loading" ? "…" : "Join"}</button>
