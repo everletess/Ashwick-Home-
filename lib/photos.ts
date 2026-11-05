@@ -196,6 +196,11 @@ import mattressStudioDove from "@/assets/photos/mattress-studio-dove.jpg";
 import mattressSwatchNatural from "@/assets/photos/mattress-swatch-natural.jpg";
 import mattressColors from "@/assets/photos/mattress-colors.jpg";
 import mattressMochaBedroom from "@/assets/photos/mattress-mocha-bedroom.jpg";
+// The four Ashbury room photos with the printed "shown in …" caption cut off (homepage, 05/11).
+import mattressRoomFlintClean from "@/assets/photos/mattress-room-flint-clean.jpg";
+import mattressRoomFleeceClean from "@/assets/photos/mattress-room-fleece-clean.jpg";
+import mattressRoomFlaxClean from "@/assets/photos/mattress-room-flax-clean.jpg";
+import mattressRoomSorrelClean from "@/assets/photos/mattress-room-sorrel-clean.jpg";
 import mattressSwatchKhaki from "@/assets/photos/mattress-swatch-khaki.jpg";
 import pembroke1 from "@/assets/photos/pembroke-1.jpg";
 // The Pembroke hero (Nov 2026): leads its gallery and cards. Untagged, so choosing a color moves to that color's photo.
@@ -399,6 +404,10 @@ export const PHOTOS = {
   "mattress-swatch-natural": mattressSwatchNatural,
   "mattress-colors": mattressColors,
   "mattress-mocha-bedroom": mattressMochaBedroom,
+  "mattress-room-flint-clean": mattressRoomFlintClean,
+  "mattress-room-fleece-clean": mattressRoomFleeceClean,
+  "mattress-room-flax-clean": mattressRoomFlaxClean,
+  "mattress-room-sorrel-clean": mattressRoomSorrelClean,
   "mattress-swatch-khaki": mattressSwatchKhaki,
   "pembroke-1": pembroke1,
   "pembroke-hero": pembrokeHero,
