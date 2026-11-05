@@ -28,6 +28,9 @@ export const HOLIDAY_PHOTOS: Record<"hero" | "suite" | "bestFriends" | "gifts", 
   gifts: { photo: "holiday-gifts", alt: "A stack of Ashwick pillows in cream, oat, sorrel and grey" },
 };
 
+/** The Sleep Suite's first photo by mattress color id (ids keep the old names: natural = Fleece, dove = Flint, safari = Flax, mocha = Sorrel). */
+const SUITE_ROOM_BY_COLOR: Record<string, PhotoKey> = { natural: "holiday-suite-fleece", dove: "holiday-suite-flint", safari: "holiday-suite-flax", mocha: "holiday-suite" };
+
 /**
  * Holiday delivery: the last day to order for delivery before Christmas, by category (Tessa, 05/11). Each line drops
  * off on its own once its day has passed (end of day, Pacific).
@@ -140,8 +143,11 @@ export function SuiteDeal({ prices }: { prices: LivePrices }) {
   const list = m + prices.bedding;
   const sale = salePrice(m) + salePrice(prices.bedding);
   const ashburyAlone = salePrice(m) + MATTRESS.delivery.price;
+  // The first photo follows the color swatch (Tessa's winter bedroom in each colorway); Sorrel is HOLIDAY_PHOTOS.suite.
+  const colorLabel = MATTRESS.colors.find((c) => c.id === color)?.label ?? "";
+  const roomPhoto = SUITE_ROOM_BY_COLOR[color] ?? HOLIDAY_PHOTOS.suite.photo;
   const shots: GalleryShot[] = [
-    { photo: HOLIDAY_PHOTOS.suite.photo, alt: HOLIDAY_PHOTOS.suite.alt },
+    { photo: roomPhoto, alt: `The Ashbury in ${colorLabel} made up with matching pillows and a throw, in a winter bedroom with a wreath in the window` },
     { photo: "pillow-hero", alt: "The Ashwick Pillow" },
     { photo: "mattress-protector", alt: "The Mattress Protector fitted over an Ashbury in Sorrel, with a folded spare beside it" },
   ];
@@ -164,7 +170,7 @@ export function SuiteDeal({ prices }: { prices: LivePrices }) {
         <SizeChips sizes={MATTRESS.sizes} value={size} onChange={(s) => { setSize(s); setAdded(false); }} label="Mattress size" />
         <div className="hx-colors" role="radiogroup" aria-label="Color">
           {MATTRESS.colors.map((c) => (
-            <button key={c.id} type="button" role="radio" aria-checked={color === c.id} aria-label={c.label} title={c.label} className={color === c.id ? "on" : undefined} onClick={() => { setColor(c.id); setAdded(false); }}>
+            <button key={c.id} type="button" role="radio" aria-checked={color === c.id} aria-label={c.label} title={c.label} className={color === c.id ? "on" : undefined} onClick={() => { setColor(c.id); setAdded(false); setShot(0); }}>
               <Photo src={c.swatch} label="" sizes="32px" />
             </button>
           ))}
