@@ -2302,3 +2302,7 @@ button.chip{cursor:pointer}
 @media (min-width:861px){.hx-gal .sgal-slide,.hx-gal .sgal-slide:first-child{aspect-ratio:auto !important;height:min(86vh,860px)}.hx-gal .sgal-arrow{display:block !important}.hx-gal .sgal-dots{display:flex !important;position:absolute;left:0;right:0;bottom:8px}.hx-gal .sgal-dots button span{background:rgba(246,242,236,.6)}.hx-gal .sgal-dots button.on span{background:var(--alabaster)}}
 .hx-gal .sgal-thumbs{display:none !important}
 @media (max-width:860px){.hx-hero{aspect-ratio:auto;width:100%;min-height:0;height:max(560px,125vw)}}
+/* Gifts: three cards (the pillows, then the two dog beds), three across on desktop */
+@media (min-width:861px){.hx-gifts .hx-rail{grid-auto-columns:calc((min(100vw,1280px) - 2 * var(--gut) - 2 * 24px) / 3)}}
+.hx-gift a.hx-add{display:inline-flex;align-items:center;white-space:nowrap}
+@media (max-width:860px){.hx-gift-row{flex-direction:column;align-items:stretch;gap:10px}.hx-gift-row .hx-price{flex-wrap:nowrap}.hx-gift .hx-add{width:100%;justify-content:center;display:inline-flex;align-items:center}}

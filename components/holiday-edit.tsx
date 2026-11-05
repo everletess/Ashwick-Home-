@@ -16,7 +16,7 @@ import type { LivePrices } from "@/lib/live-prices";
 import { DOG_BED, NOOK } from "@/lib/dog-bed";
 import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
 import type { PhotoKey } from "@/lib/photos";
-import { PILLOW_STANDALONE_FILLS, PILLOW_STORY } from "@/lib/pillow";
+import { PILLOW_PATH } from "@/lib/pillow";
 import { getProduct } from "@/lib/products";
 import { BUNDLE, BUNDLE_PILLOWS, SALE, SLEEP_SUITE, countdownFrom, saleEndShort, salePrice, sleepSuiteLines } from "@/lib/sale";
 
@@ -270,7 +270,7 @@ export function FurnitureDeal({ prices }: { prices: LivePrices }) {
 
 /* ---------- 7 · Gifts under $300 ---------- */
 
-type Gift = { key: string; name: string; href: string; photo: PhotoKey; list: number; quick: { kind: "pillow" | "dog-bed" | "nook"; fill?: string }; isNew?: boolean };
+type Gift = { key: string; name: string; href: string; photo: PhotoKey; list: number; quick?: { kind: "pillow" | "dog-bed" | "nook"; fill?: string }; isNew?: boolean };
 
 function GiftCard({ g }: { g: Gift }) {
   const [open, setOpen] = useState(false);
@@ -280,23 +280,24 @@ function GiftCard({ g }: { g: Gift }) {
       <Link href={g.href} className="hx-gift-name">{g.isNew && <span className="hx-new">New</span>}{g.name}</Link>
       <div className="hx-gift-row">
         <PriceLine list={g.list} sale={salePrice(g.list)} />
-        <button type="button" className="hx-add" onClick={() => setOpen(true)} aria-label={`Add ${g.name}`}>Add</button>
+        {g.quick
+          ? <button type="button" className="hx-add" onClick={() => setOpen(true)} aria-label={`Add ${g.name}`}>Add</button>
+          : <Link href={g.href} className="hx-add">Shop pillows</Link>}
       </div>
-      {open && <QuickAddSheet kind={g.quick.kind} href={g.href} fill={g.quick.fill} onClose={() => setOpen(false)} />}
+      {open && g.quick && <QuickAddSheet kind={g.quick.kind} href={g.href} fill={g.quick.fill} onClose={() => setOpen(false)} />}
     </li>
   );
 }
 
 export function GiftsDeal({ prices }: { prices: LivePrices }) {
-  const order = ["living-wool-horse-hair", "living-wool-latex", "organic-cotton"];
-  const pillows: Gift[] = [...PILLOW_STANDALONE_FILLS].sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id))
-    .map((f) => ({ key: f.id, name: f.label, href: f.path, photo: PILLOW_STORY[f.id].card, list: prices.pillow[f.id], quick: { kind: "pillow", fill: f.id }, isNew: true }));
+  // One card for the pillows (three fills, chosen on the pillows page), then the two dog beds (Tessa, 05/11).
+  const pillow: Gift = { key: "pillows", name: "The Ashwick Pillow", href: PILLOW_PATH, photo: "holiday-pillows", list: Math.min(...Object.values(prices.pillow)), isNew: true };
   const minOf = (r: Record<string, number>) => Math.min(...Object.values(r));
   const dogs: Gift[] = [
     { key: "dog", name: DOG_BED.title, href: DOG_BED.path, photo: "dog-bed-sorrel-card", list: minOf(prices.dogBed), quick: { kind: "dog-bed" } },
     { key: "nook", name: NOOK.title, href: NOOK.path, photo: "nook-olive-card", list: minOf(prices.nook), quick: { kind: "nook" } },
   ];
-  const gifts = [...pillows, ...dogs].filter((g) => salePrice(g.list) < 300);
+  const gifts = [pillow, ...dogs].filter((g) => salePrice(g.list) < 300);
   return (
     <section className="hx-gifts hx-oat" id="gifts" aria-labelledby="hx-gifts-h">
       <div className="hx-gifts-band"><Photo src={HOLIDAY_PHOTOS.gifts.photo} label={HOLIDAY_PHOTOS.gifts.alt} fill sizes="100vw" /></div>
