@@ -20,11 +20,11 @@ import { PILLOW_PATH } from "@/lib/pillow";
 import { getProduct } from "@/lib/products";
 import { BUNDLE, BUNDLE_PILLOWS, SALE, SLEEP_SUITE, countdownFrom, saleEndShort, salePrice, sleepSuiteLines } from "@/lib/sale";
 
-/** The page's photographs: the hero and the Sleep Suite are Tessa's (05/11); Best Friends and Gifts are stand-ins for now. */
+/** The page's photographs: Tessa's (05/11), except the Gifts band, a stand-in for now. */
 export const HOLIDAY_PHOTOS: Record<"hero" | "suite" | "bestFriends" | "gifts", { photo: PhotoKey; alt: string }> = {
   hero: { photo: "holiday-hero", alt: "The Marlowe Sofa in white linen on its fluted oak plinth, in a sunlit living room with a marble fireplace and a travertine coffee table" },
   suite: { photo: "holiday-suite", alt: "The Ashbury in Sorrel made up with matching pillows and a throw, in a winter bedroom with snow outside the window and a wreath" },
-  bestFriends: { photo: "holiday-best-friends", alt: "The Ashbury Dog Bed in Sorrel with a dog curled up asleep on it, beside the bed" },
+  bestFriends: { photo: "holiday-best-friends", alt: "The Ashbury in Flint with a matching Ashbury Dog Bed beside it, a dog asleep on it by a frosty window" },
   gifts: { photo: "holiday-gifts", alt: "A stack of Ashwick pillows in cream, oat, sorrel and grey" },
 };
 
@@ -193,7 +193,7 @@ export function BestFriendsDeal({ prices }: { prices: LivePrices }) {
   const sale = salePrice(m) + salePrice(d) + salePrice(prices.bedding);
   return (
     <section className="hx-deal hx-evergreen hx-mirror" id="best-friends" aria-labelledby="hx-bf-h">
-      <div className="hx-deal-img"><Photo src={HOLIDAY_PHOTOS.bestFriends.photo} label={HOLIDAY_PHOTOS.bestFriends.alt} fill sizes="(max-width: 860px) 100vw, 55vw" /></div>
+      <div className="hx-deal-img"><Photo src={HOLIDAY_PHOTOS.bestFriends.photo} label={HOLIDAY_PHOTOS.bestFriends.alt} fill sizes="(max-width: 860px) 170vw, 55vw" /></div>
       <div className="hx-deal-t">
         <p className="hx-no"><em>No. 2</em> · {BUNDLE.title}</p>
         <h2 className="hx-h2" id="hx-bf-h">One for you. One for them.</h2>

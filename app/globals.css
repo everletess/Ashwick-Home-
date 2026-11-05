@@ -2314,3 +2314,4 @@ button.chip{cursor:pointer}
 .hx-deliv-dates span{font:400 11px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--oat)}
 .hx-deliv-dates strong{font:300 30px/1.1 var(--serif)}
 @media (max-width:860px){.hx-deliv-dates{flex-direction:column;gap:14px;width:100%}.hx-deliv-dates li{border-left:0;padding:0}.hx-deliv-dates strong{font-size:26px}}
+@media (max-width:860px){#best-friends .hx-deal-img>img{object-position:96% 50%}}

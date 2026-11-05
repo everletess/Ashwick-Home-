@@ -1,5 +1,7 @@
 // Meta Pixel helpers. The base pixel (PageView) is loaded in app/layout.tsx.
 // Purchase is sent by Shopify's own Meta integration from the hosted checkout.
+// Every event also goes to Meta from our server (Conversions API, app/api/meta-events) with the same event ID, so Meta
+// keeps one of each pair and still gets the events the browser pixel loses.
 
 type Fbq = (...args: unknown[]) => void;
 
@@ -10,6 +12,39 @@ function fbq(): Fbq | null {
 }
 
 export type PixelEvent = "ViewContent" | "AddToCart" | "InitiateCheckout" | "Lead" | "Contact";
+
+/** A fresh ID shared by the browser event and its server copy. */
+export function newEventId(prefix = "ev") {
+  const r = typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : Math.random().toString(36).slice(2) + Date.now().toString(36);
+  return `${prefix}-${r}`;
+}
+
+async function sha256(s: string) {
+  if (typeof crypto === "undefined" || !crypto.subtle) return undefined;
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s.trim().toLowerCase()));
+  return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+/**
+ * The server copy of a pixel event (Conversions API). sendBeacon survives the redirect to
+ * checkout. The email, when we have one (a subscriber, or the Lead itself), is hashed here before it is sent.
+ */
+export function sendServerEvent(name: string, eventId: string, customData: Record<string, unknown> = {}, email?: string) {
+  if (typeof window === "undefined") return; // The server decides whether to send (live site, or a test code on previews).
+  void (async () => {
+    let em: string | undefined;
+    try {
+      const e = email ?? localStorage.getItem("aw-subscriber-email") ?? ""; // lib/subscribe.ts SUBSCRIBER_EMAIL_KEY
+      if (e.includes("@")) em = await sha256(e);
+    } catch {}
+    const body = JSON.stringify({ event_name: name, event_id: eventId, event_source_url: location.href, custom_data: customData, em });
+    try {
+      if (!navigator.sendBeacon?.("/api/meta-events", new Blob([body], { type: "application/json" }))) {
+        await fetch("/api/meta-events", { method: "POST", headers: { "Content-Type": "application/json" }, body, keepalive: true });
+      }
+    } catch {}
+  })();
+}
 
 /**
  * Site product id → Shopify product id. Meta's catalog is synced from Shopify, where every size/colour variant
@@ -77,9 +112,16 @@ function gtagEvent(event: PixelEvent, params: Record<string, unknown>) {
   });
 }
 
-export function track(event: PixelEvent, params: Record<string, unknown> = {}) {
+export function track(event: PixelEvent, params: Record<string, unknown> = {}, email?: string) {
+  const eventID = newEventId();
+  const data = { currency: "USD", ...forCatalog(params) };
   try {
-    fbq()?.("track", event, { currency: "USD", ...forCatalog(params) });
+    fbq()?.("track", event, data, { eventID });
+  } catch {
+    // Never let tracking break the site.
+  }
+  try {
+    sendServerEvent(event, eventID, data, email);
   } catch {
     // Never let tracking break the site.
   }
@@ -102,8 +144,10 @@ export function trackThen(event: PixelEvent, params: Record<string, unknown>, th
 
 /** A custom event (Meta trackCustom, and the same name to Google), e.g. SwitchToSleepSuite. Never throws. */
 export function trackCustom(name: string, params: Record<string, unknown> = {}) {
+  const eventID = newEventId();
   try {
-    fbq()?.("trackCustom", name, { currency: "USD", ...params });
+    fbq()?.("trackCustom", name, { currency: "USD", ...params }, { eventID });
+    sendServerEvent(name, eventID, { currency: "USD", ...params });
   } catch {
     // Never let tracking break the site.
   }
