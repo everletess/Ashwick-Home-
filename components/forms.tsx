@@ -89,9 +89,9 @@ export function Newsletter() {
     <section className="sec nl">
       <div className="wrap center-head">
         <h2 className="h2">The Ashwick Letter.</h2>
-        <p className="body" style={{ marginTop: 20 }}>Our organic design newsletter: material stories, natural interiors, and first access to new pieces.{!SALE.active && " Plus 15% off your first order."}</p>
+        <p className="body" style={{ marginTop: 20 }}>{SALE.active ? "Deals throughout the month, material stories and first access to new pieces." : "Our organic design newsletter: material stories, natural interiors, and first access to new pieces. Plus 15% off your first order."}</p>
         {sent ? (
-          <p className="nl-done" role="status">Thank you. You&apos;re on the list. {SALE.active ? "" : "Your 15% code, ASHWICK15, is on its way."}</p>
+          <p className="nl-done" role="status">Thank you. You&apos;re on the list. {SALE.active ? "Watch your inbox for deals throughout the month." : "Your 15% code, ASHWICK15, is on its way."}</p>
         ) : (
           <>
             <form className="nl-form" onSubmit={onSubmit}>
