@@ -1995,7 +1995,7 @@ button.chip{cursor:pointer}
 .sh-scrim{background:linear-gradient(to top,rgba(20,16,12,.78) 0%,rgba(20,16,12,.5) 34%,rgba(20,16,12,.12) 58%,rgba(20,16,12,0) 72%)}
 @media (min-width:861px){.sh{height:min(82vh,760px);min-height:560px}}
 /* The mattress-room photos carry a small "shown in …" caption at the bottom; crop it off wherever they appear in cards, tiles and galleries */
-:is(.mc-img,.home-cat-img,.m-feature-img,.ssp-gal,.cc-img) img[src*="mattress-room"]{transform:scale(1.12);transform-origin:50% 0}
+:is(.mc-img,.home-cat-img,.m-feature-img,.ssp-gal,.cc-img,.bundle-shot) img[src*="mattress-room"]{transform:scale(1.12);transform-origin:50% 0}
 @media (min-width:861px){.sh-txt{max-width:600px}.sh-btns .btn{white-space:nowrap;padding:0 28px}}
 /* Offer band in our palette (sage, Cormorant), peeking into the first screen under the hero on a phone */
 .ob{background:var(--sage);color:var(--alabaster);padding:14px 20px 16px}

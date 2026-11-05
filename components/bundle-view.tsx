@@ -114,7 +114,7 @@ export function BundleBuilder() {
         </div>
         <div className="bundle-plus" aria-hidden="true">+</div>
         <div className="bundle-shot">
-          <Photo src={dc.photos[0]} label={`${D.title} in ${dc.label}`} sizes="(max-width: 960px) 100vw, 28vw" preload />
+          <Photo src={(PHOTOS[`${dc.photos[0]}-card` as keyof typeof PHOTOS] ? `${dc.photos[0]}-card` : dc.photos[0]) as keyof typeof PHOTOS} label={`${D.title} in ${dc.label}`} sizes="(max-width: 960px) 100vw, 28vw" preload />
           <span className="bundle-cap">{D.title} · {dc.label}</span>
         </div>
       </div>
