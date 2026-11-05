@@ -39,6 +39,9 @@ export const metadata: Metadata = {
 };
 
 // Matches the header, so the mobile browser chrome blends into the page.
+/** Regenerate pages every five minutes, so the sale (SALE.endsAt) and the NEW badges switch off on their own. */
+export const revalidate = 300;
+
 export const viewport: Viewport = { themeColor: "#F6F2EC" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

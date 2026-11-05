@@ -4,7 +4,8 @@ import { Fibers } from "@/components/fibers";
 import { MattressFeature } from "@/components/mattress-feature";
 import { HeroSlides } from "@/components/hero-slides";
 import { Photo } from "@/components/photo";
-import { BlackFridayBand, CategoryRail, Favorites } from "@/components/home-sections";
+import { CategoryRail, Favorites } from "@/components/home-sections";
+import { BundlesBand, GiftsRow, PillowStrip, StickySuite, SuiteHero } from "@/components/bf-push";
 import { FarmBand, ReviewsRow } from "@/components/home-extras";
 import { MATTRESS_PATH } from "@/lib/mattress";
 import { SALE } from "@/lib/sale";
@@ -33,15 +34,19 @@ function HomeHero() {
 export default function HomePage() {
   return (
     <main>
-      <HomeHero />
+      {/* During the sale the page opens on the Sleep Suite; the brand hero comes back on its own when it ends. */}
+      {SALE.active ? <SuiteHero /> : <HomeHero />}
+      <PillowStrip />
+      <GiftsRow />
+      <BundlesBand />
       <CategoryRail />
-      <BlackFridayBand />
       <MattressFeature />
       <FarmBand />
       <Favorites />
       <Fibers />
       <ReviewsRow />
       <Newsletter />
+      <StickySuite />
     </main>
   );
 }

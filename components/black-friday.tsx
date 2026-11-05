@@ -51,12 +51,13 @@ export function BundleTile({ href, photo, alt, title, desc, was, now }: { href: 
 }
 
 /** Small square product tile for the dense sale grid. */
-export function MiniCard({ href, photo, name, price, from }: { href: string; photo: Parameters<typeof Photo>[0]["src"]; name: string; price: number; from?: boolean }) {
+export function MiniCard({ href, photo, name, price, from, badge }: { href: string; photo: Parameters<typeof Photo>[0]["src"]; name: string; price: number; from?: boolean; badge?: React.ReactNode }) {
   return (
     <Link href={href} className="bf-mini">
       <div className="bf-mini-img">
         <Photo src={photo} label={name} fill sizes="(max-width: 620px) 50vw, (max-width: 1180px) 33vw, 300px" />
         <span className="sale-tag">{SALE.percent}% off</span>
+        {badge && <span className="bf-mini-badge">{badge}</span>}
       </div>
       <div className="bf-mini-name">{name}</div>
       <div className="bf-mini-price">{from ? "From " : ""}<s className="price-was">{fmt(price)}</s> <span className="price-now">{fmt(salePrice(price))}</span></div>

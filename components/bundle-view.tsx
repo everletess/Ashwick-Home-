@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useCart } from "@/components/cart";
 import { Photo } from "@/components/photo";
 import { OptGroup, Pills } from "@/components/product-view";
@@ -11,7 +11,7 @@ import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
 import { DOG_BED } from "@/lib/dog-bed";
 import { PHOTOS } from "@/lib/photos";
 import { fmt } from "@/lib/products";
-import { BUNDLE, BUNDLE_CONFIG, SALE, SLEEP_SUITE, SLEEP_SUITE_BEDDING_NAME, sleepSuitePrice, bundleMattressDelivery, bundlePrice, pillowSizeFor, pillowSizeNameFor, BUNDLE_PILLOWS, BUNDLE_COVER_BY_MATTRESS_COLOR } from "@/lib/sale";
+import { BUNDLE, BUNDLE_CONFIG, SALE, SLEEP_SUITE, SLEEP_SUITE_BEDDING_NAME, sleepSuitePrice, sleepSuiteLines, bundleMattressDelivery, bundlePrice, pillowSizeFor, pillowSizeNameFor, BUNDLE_PILLOWS, BUNDLE_COVER_BY_MATTRESS_COLOR } from "@/lib/sale";
 
 /** Ties the three cart lines of one bundle together (and the pair on the order). */
 const newBundleId = () => `${BUNDLE.name}-${Math.random().toString(36).slice(2, 8)}`;
@@ -186,6 +186,16 @@ export function SleepSuiteBuilder() {
   const [feel, setFeel] = useState(M.feels[0].id);
   const [mColor, setMColor] = useState(M.defaultColor);
   const [pillow, setPillow] = useState<string>(BUNDLE_PILLOWS[0].id as string);
+  // "Switch to the Sleep Suite" links here with ?size=&feel=&color=, so the shopper keeps what they chose.
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search);
+    const size = q.get("size"), f = q.get("feel"), c = q.get("color");
+    /* eslint-disable react-hooks/set-state-in-effect -- read once from the address after mount */
+    if (size && M.sizes.some((z) => z.id === size)) setMSize(size);
+    if (f && M.feels.some((z) => z.id === f)) setFeel(f);
+    if (c && M.colors.some((z) => z.id === c)) setMColor(c);
+    /* eslint-enable react-hooks/set-state-in-effect */
+  }, []);
 
   const m = M.sizes.find((s) => s.id === mSize) ?? M.sizes[0];
   const bed = BUNDLE_CONFIG.beddingSet.price;
@@ -196,30 +206,7 @@ export function SleepSuiteBuilder() {
   const coverColor = BUNDLE_COVER_BY_MATTRESS_COLOR[mc.id] ?? mc.label;
   const feelLabel = M.feels.find((f) => f.id === feel)!.label;
 
-  const add = () => {
-    const tag: [string, string][] = [["_Bundle", SLEEP_SUITE.name], ["_Bundle ID", `sleep-suite-${Math.random().toString(36).slice(2, 8)}`]];
-    cart.addMany([
-      {
-        id: M.id,
-        name: M.title,
-        photo: mc.photos[0] ?? mc.swatch,
-        price: m.price,
-        qty: 1,
-        mode: "As designed",
-        options: [["Size", `${m.label} (${m.dims})`], ["Feel", feelLabel], ["Color", mc.label], ...tag],
-        delivery: bundleMattressDelivery(),
-      },
-      {
-        id: BUNDLE_CONFIG.beddingSet.handle,
-        name: SLEEP_SUITE_BEDDING_NAME,
-        photo: mc.photos[0] ?? mc.swatch,
-        price: bed,
-        qty: 1,
-        mode: "As designed",
-        options: [["Mattress size", m.label], ["Pillow", pil.label], ["Pillow size", pillowSize], ["Cover color", coverColor], ["Includes", "Two pillows and a Mattress Protector"], ...tag],
-      },
-    ]);
-  };
+  const add = () => cart.addMany(sleepSuiteLines({ sizeId: m.id, feelId: feel, colorId: mc.id, pillowId: pil.id }));
 
   return (
     <section className="bundle-build wrap" style={{ gap: 40, paddingBottom: 72 }}>

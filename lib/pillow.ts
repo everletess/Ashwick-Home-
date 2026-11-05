@@ -183,7 +183,7 @@ export const PILLOW_MATERIALS: { id: string; name: string; headline: string; cop
     id: "latex", name: "Organic latex", headline: "Tapped from the tree.",
     copy: "Shredded organic latex (GOLS certified), breathable and buoyant, naturally resistant to dust mites and mold, with no off-gassing.",
     cert: "GOLS", in: ["living-wool-latex"],
-    photo: "pillow-fill-latex", alt: "A cream pillow with bowls of Living Wool and shredded organic latex beside it",
+    photo: "materials-latex-tap", alt: "Milky latex sap dripping from a cut in a rubber tree's bark into a coconut-shell cup",
   },
   {
     id: "cotton", name: "Organic cotton", headline: "Soft by nature.",

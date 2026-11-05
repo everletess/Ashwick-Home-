@@ -40,6 +40,8 @@ import sleepSuiteHero from "@/assets/photos/sleep-suite-hero.jpg";
 import sleepSuiteThumb from "@/assets/photos/sleep-suite-thumb.jpg";
 // The Sleep Suite in Flint (4:3), so the home page bundle cards are two colors.
 import sleepSuiteFlint from "@/assets/photos/sleep-suite-flint.jpg";
+// The Sleep Suite hero (Tessa, 05/11): Sorrel Ashbury with its title, "20% OFF" and labels in the image (4:3, shown uncropped).
+import sleepSuiteLabeled from "@/assets/photos/sleep-suite-labeled.jpg";
 import sleepSuiteFlintTall from "@/assets/photos/sleep-suite-flint-tall.jpg";
 import pillowHero from "@/assets/photos/pillow-hero.jpg";
 import pillowSorrel from "@/assets/photos/pillow-sorrel.jpg";
@@ -55,6 +57,8 @@ import pillowInsideCotton from "@/assets/photos/pillow-inside-cotton.jpg";
 import pillowFillCotton from "@/assets/photos/pillow-fill-cotton.jpg";
 import pillowFillHorsehair from "@/assets/photos/pillow-fill-horsehair.jpg";
 import pillowFillLatex from "@/assets/photos/pillow-fill-latex.jpg";
+// Organic latex: milky sap tapped from a rubber tree into a coconut-shell cup (the latex materials panel).
+import materialsLatexTap from "@/assets/photos/materials-latex-tap.jpg";
 import dogBedFleeceCard from "@/assets/photos/dog-bed-fleece-card.jpg";
 import dogBedFlintCard from "@/assets/photos/dog-bed-flint-card.jpg";
 import dogBedFlaxCard from "@/assets/photos/dog-bed-flax-card.jpg";
@@ -272,6 +276,7 @@ export const PHOTOS = {
   "sleep-suite-hero": sleepSuiteHero,
   "sleep-suite-thumb": sleepSuiteThumb,
   "sleep-suite-flint": sleepSuiteFlint,
+  "sleep-suite-labeled": sleepSuiteLabeled,
   "sleep-suite-flint-tall": sleepSuiteFlintTall,
   "pillow-hero": pillowHero,
   "pillow-sorrel": pillowSorrel,
@@ -287,6 +292,7 @@ export const PHOTOS = {
   "pillow-fill-cotton": pillowFillCotton,
   "pillow-fill-horsehair": pillowFillHorsehair,
   "pillow-fill-latex": pillowFillLatex,
+  "materials-latex-tap": materialsLatexTap,
   "dog-bed-fleece-card": dogBedFleeceCard,
   "dog-bed-flint-card": dogBedFlintCard,
   "dog-bed-flax-card": dogBedFlaxCard,

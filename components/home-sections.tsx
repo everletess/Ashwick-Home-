@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { NewBadge } from "@/components/bf-push";
 import { Photo } from "@/components/photo";
 import { CatalogCard } from "@/components/catalog-card";
 import { homeRows, type CatalogItem } from "@/lib/catalog";
@@ -35,7 +36,7 @@ export function CategoryRail() {
           <li key={t.name}>
             <Link href={t.href} className="home-cat">
               <span className="home-cat-img"><Photo src={t.photo} label={t.alt} fill sizes="(max-width: 640px) 44vw, (max-width: 1180px) 22vw, 220px" /></span>
-              <span className="home-cat-name">{t.name}</span>
+              <span className="home-cat-name">{t.name}{t.name === "Pillows" && <NewBadge />}</span>
             </Link>
           </li>
         ))}

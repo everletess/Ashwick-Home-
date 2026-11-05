@@ -27,6 +27,7 @@ import { SUBSCRIBED_EVENT, SUBSCRIBED_KEY } from "@/lib/subscribe";
 import { trackThen } from "@/lib/pixel";
 import { saveCart, normalizePhone } from "@/lib/subscribe";
 import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
+import { CountdownShort, NewBadge, useNow } from "@/components/bf-push";
 import { DOG_BED_ID, NOOK } from "@/lib/dog-bed";
 import { ASHBURY_PATH, FURNITURE_MATERIALS_PATH, MATERIALS_PATH } from "@/lib/materials";
 
@@ -130,7 +131,7 @@ function NavMenu({ label, id, links, all, align = "right", feature, labelHref }:
           <div className="nav-dd-links">
             {links.map(([t, d, href]) => (
               <Link key={href} href={href} className="nav-dd-item">
-                <span className="nav-dd-t">{t}</span>
+                <span className="nav-dd-t">{t}{t === "Pillows" && <NewBadge />}</span>
                 <span className="nav-dd-d">{d}</span>
               </Link>
             ))}
@@ -149,7 +150,7 @@ function NavMenu({ label, id, links, all, align = "right", feature, labelHref }:
 }
 
 import { Photo } from "@/components/photo";
-import { CartUpsell } from "@/components/cart-upsell";
+import { CartUpgrade, CartUpsell } from "@/components/cart-upsell";
 import upsell from "@/components/cart-upsell.module.css";
 import { fmt } from "@/lib/products";
 
@@ -215,6 +216,8 @@ const SALE_BAR_KEY = "ashwick-sale-bar-dismissed";
  * first line. Pauses while hovered or focused.
  */
 export function AnnouncementBar() {
+  // Re-renders every 30 seconds, so the countdown moves and the bar switches back the moment the sale ends.
+  useNow();
   const [offer, setOffer] = useState(false);
   const [dismissed, setDismissed] = useState(false);
   useEffect(() => {
@@ -250,8 +253,9 @@ export function AnnouncementBar() {
     return (
       <div className="announce announce-sale">
         <Link href={SALE.path} className="announce-link">
-          <span className="announce-long">{SALE.name} at Ashwick: {SALE.percent}% off everything, free white glove with our bundles.</span>
-          <span className="announce-short">{SALE.percent}% off everything · Free white glove with bundles</span>
+          <span className="announce-long">{SALE.name} · {SALE.percent}% off everything · Free white glove with the Sleep Suite</span>
+          <span className="announce-short">{SALE.percent}% off · Free white glove on the Sleep Suite</span>
+          <CountdownShort />
         </Link>
         <button
           type="button"
@@ -270,7 +274,7 @@ export function AnnouncementBar() {
 
   return (
     <div className="announce" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocus={() => setPaused(true)} onBlur={() => setPaused(false)}>
-      <span className={showOffer ? "announce-msg" : "announce-msg on"} aria-hidden={showOffer}>Handmade to order in the USA · Nothing synthetic</span>
+      <span className={showOffer ? "announce-msg" : "announce-msg on"} aria-hidden={showOffer}>Free shipping on pillows · {MATTRESS.guaranteeNights}-night trial on the Ashbury</span>
       {offer && (
         <button
           type="button"
@@ -348,7 +352,7 @@ export function Header() {
             {SALE.active && <Link href={SALE.path} className="mmenu-sale">{SALE.name}: {SALE.percent}% off</Link>}
             <Link href="/collections/all">Shop all</Link>
             <p className="mmenu-group">Sleep</p>
-            {MENU_SLEEP.map(([t, href]) => <Link key={t} href={href}>{t}</Link>)}
+            {MENU_SLEEP.map(([t, href]) => <Link key={t} href={href}>{t}{t === "Pillows" && <NewBadge />}</Link>)}
             <p className="mmenu-group">Living</p>
             {MENU_LIVING.map(([t, href]) => <Link key={t} href={href}>{t}</Link>)}
             <p className="mmenu-group">More</p>
@@ -483,6 +487,7 @@ export function CartDrawer() {
           <button className="x" aria-label="Close cart" onClick={close}>×</button>
         </div>
         <div className="drawer-b">
+          <CartUpgrade />
           {cart.items.length === 0 && (
             <div className="empty">
               <p className="body">Your cart is empty.</p>
