@@ -55,6 +55,8 @@ import pillowInsideCotton from "@/assets/photos/pillow-inside-cotton.jpg";
 import pillowFillCotton from "@/assets/photos/pillow-fill-cotton.jpg";
 import pillowFillHorsehair from "@/assets/photos/pillow-fill-horsehair.jpg";
 import pillowFillLatex from "@/assets/photos/pillow-fill-latex.jpg";
+// Organic latex: milky sap tapped from a rubber tree into a coconut-shell cup (the latex materials panel).
+import materialsLatexTap from "@/assets/photos/materials-latex-tap.jpg";
 import dogBedFleeceCard from "@/assets/photos/dog-bed-fleece-card.jpg";
 import dogBedFlintCard from "@/assets/photos/dog-bed-flint-card.jpg";
 import dogBedFlaxCard from "@/assets/photos/dog-bed-flax-card.jpg";
@@ -287,6 +289,7 @@ export const PHOTOS = {
   "pillow-fill-cotton": pillowFillCotton,
   "pillow-fill-horsehair": pillowFillHorsehair,
   "pillow-fill-latex": pillowFillLatex,
+  "materials-latex-tap": materialsLatexTap,
   "dog-bed-fleece-card": dogBedFleeceCard,
   "dog-bed-flint-card": dogBedFlintCard,
   "dog-bed-flax-card": dogBedFlaxCard,
