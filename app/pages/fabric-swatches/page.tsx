@@ -4,6 +4,7 @@ import { SwatchOrder } from "@/components/swatch-order";
 import { PRODUCTS, SWATCH_PRICE, fmt, type FabricId } from "@/lib/products";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/pages/fabric-swatches" },
   title: "Fabric swatches",
   description: "Order swatches of our fabrics before you choose.",
 };

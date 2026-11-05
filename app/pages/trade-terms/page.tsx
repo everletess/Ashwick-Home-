@@ -3,6 +3,7 @@ import Link from "next/link";
 import { TradeTerms } from "@/components/trade-terms";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/pages/trade-terms" },
   title: "Trade terms",
   description: "Pricing, ordering, delivery and returns for members of the Ashwick Trade Program.",
 };

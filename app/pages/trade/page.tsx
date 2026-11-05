@@ -9,6 +9,7 @@ import { SWATCH_PRICE, fmt } from "@/lib/products";
 import type { PhotoKey } from "@/lib/photos";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/pages/trade" },
   title: "Trade",
   description: "Organic furniture for designers, architects and hospitality, handmade to order in the USA.",
 };

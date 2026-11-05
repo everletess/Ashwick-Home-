@@ -4,6 +4,7 @@ import { Block, InfoPage } from "@/components/info-page";
 import { STUDIO_EMAIL, STUDIO_PHONE, STUDIO_PHONE_HREF } from "@/lib/site";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/pages/terms" },
   title: "Terms of Service",
   description: "The terms that apply to ashwickhome.com and every purchase from Ashwick Home: orders, cancellations, returns, the Ashbury guarantee, delivery, Bespoke and warranty.",
 };

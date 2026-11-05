@@ -7,6 +7,7 @@ import { PageHero } from "@/components/sections";
 import { ASHBURY_PATH, FURNITURE_GROUPS, MATERIALS_PATH } from "@/lib/materials";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/pages/furniture-materials" },
   title: "Furniture Materials",
   description: "Solid hardwood frames, natural fills and woven fabrics, made to order by hand in the USA.",
 };

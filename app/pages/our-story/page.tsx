@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/pages/our-story" },
   title: "Our story",
   description: "Most furniture is built to be replaced. We build ours to be inherited.",
 };
@@ -9,7 +10,7 @@ export default function StoryPage() {
   return (
     <main>
       <section className="statement tall">
-        <div className="eyebrow light">Our story</div>
+        <h1 className="eyebrow light" style={{ margin: 0, fontWeight: "inherit" }}>Our story</h1>
         <p>Most furniture is built to be replaced.</p>
         <div className="gap"></div>
         <p>We build ours to be inherited.</p>

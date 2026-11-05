@@ -11,6 +11,7 @@ import type { PhotoKey } from "@/lib/photos";
 import { PRODUCTS } from "@/lib/products";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/pages/bespoke" },
   title: { absolute: "Ashwick Bespoke — Natural furniture and mattresses, made to your imagination." },
   description: "Commission a sofa, chair, mattress or bench made by hand from natural materials, or tailor a piece from the collection.",
 };
