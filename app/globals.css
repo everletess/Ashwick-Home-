@@ -1997,3 +1997,10 @@ button.chip{cursor:pointer}
 /* The mattress-room photos carry a small "shown in …" caption at the bottom; crop it off wherever they appear in cards, tiles and galleries */
 :is(.mc-img,.home-cat-img,.m-feature-img,.ssp-gal,.cc-img) img[src*="mattress-room"]{transform:scale(1.12);transform-origin:50% 0}
 @media (min-width:861px){.sh-txt{max-width:600px}.sh-btns .btn{white-space:nowrap;padding:0 28px}}
+/* Offer band in our palette (sage, Cormorant), peeking into the first screen under the hero on a phone */
+.ob{background:var(--sage);color:var(--alabaster);padding:14px 20px 16px}
+.ob-s{margin:0 0 4px;color:var(--alabaster);opacity:.9}
+.ob-clock{color:var(--alabaster);opacity:1;font-weight:500}
+.ob-t{font:300 clamp(24px,6.6vw,34px)/1.15 var(--serif);color:var(--alabaster)}
+@media (max-width:860px){.sh{height:max(480px,calc(100svh - var(--sh-top,104px) - 84px))}}
+@media (min-width:861px){.sh{height:max(560px,min(760px,calc(100vh - 146px - 96px)))}}

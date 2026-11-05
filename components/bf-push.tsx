@@ -88,8 +88,8 @@ export function OfferBand() {
   }
   return (
     <div className="ob">
-      <p className="ob-t">{SALE.percent}% off everything · No code needed</p>
-      {live ? <p className="ob-s ob-clock" role="timer">{clock}</p> : saleEndShort() && <p className="ob-s">{saleEndShort()}</p>}
+      <p className="ob-s">{live ? <span className="ob-clock" role="timer">{clock}</span> : saleEndShort()}{(live || saleEndShort()) && " · "}No code needed</p>
+      <p className="ob-t">{SALE.percent}% off everything</p>
     </div>
   );
 }
