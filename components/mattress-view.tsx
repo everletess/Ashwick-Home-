@@ -9,6 +9,7 @@ import { DogBedTeaser } from "@/components/dog-bed";
 import { BuyBoxEmail } from "@/components/buy-box-email";
 import { BUY_OPTIONS_ID, StickyBuy } from "@/components/sticky-buy";
 import { Photo } from "@/components/photo";
+import { PillowAddRow, SuiteUpsell } from "@/components/bf-push";
 import { Lightbox } from "@/components/lightbox";
 import { RatingLink } from "@/components/reviews";
 import { OptGroup, Pills } from "@/components/product-view";
@@ -192,9 +193,11 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
           <ShipsFast when="3–4 days" note={`Handmade to order in the USA. ${M.shipping}`} />
           {M.available ? (
             <>
+              <SuiteUpsell sizeId={size} feelId={feel} colorId={color} />
               <button ref={buyRef} className="btn full" onClick={buyNow} disabled={buying}>{buying ? "Taking you to checkout\u2026" : `Buy now \u00b7 ${fmt(salePrice(sz.price))}`}</button>
               <button className="btn full btn-ghost" onClick={add} disabled={buying}>Add to cart</button>
               {buyError && <p className="fine" role="alert" style={{ color: "var(--err, #b00)", textAlign: "center" }}>{buyError}</p>}
+              <PillowAddRow />
               <p className="fine buy-direct">Goes straight to secure checkout. + {fmt(M.delivery.price)} {M.delivery.label.toLowerCase()}, {M.guaranteeNights}-night trial.</p>
               <BuyBoxEmail />
               <TrustRow items={[["hand", "Handmade to order"], ["truck", "White glove delivery"], ["moon", `${M.guaranteeNights}-night trial`]]} />

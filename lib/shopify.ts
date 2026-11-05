@@ -106,3 +106,17 @@ export async function fetchShopPolicy(kind: PolicyKind): Promise<ShopPolicy | nu
     return null;
   }
 }
+
+export type PricedVariant = { handle: string; title: string; price: number };
+
+/** Every variant's price (USD) on the website's sales channel, for /api/price-check. */
+export async function fetchVariantPrices(): Promise<PricedVariant[]> {
+  const data = await storefrontFetch(
+    `{ products(first: 250) { edges { node { handle variants(first: 100) { edges { node { title price { amount } } } } } } } }`
+  );
+  const out: PricedVariant[] = [];
+  for (const { node: p } of data.products.edges) {
+    for (const { node: v } of p.variants.edges) out.push({ handle: p.handle, title: v.title, price: Number(v.price.amount) });
+  }
+  return out;
+}

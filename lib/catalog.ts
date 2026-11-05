@@ -7,7 +7,7 @@ import { DOG_BED, NOOK } from "@/lib/dog-bed";
 import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
 import { PILLOW_COVERS, PILLOW_COVER_PHOTOS, PILLOW_PATH, pillowFromPrice } from "@/lib/pillow";
 import { PRODUCTS, cardPrice, type Product } from "@/lib/products";
-import { BUNDLE, BUNDLE_CONFIG, BUNDLE_HERO, SLEEP_SUITE, SALE, bundlePrice, salePrice } from "@/lib/sale";
+import { BUNDLE, BUNDLE_CONFIG, BUNDLE_HERO, SLEEP_SUITE, SALE, bundlePrice, pillowsAreNew, salePrice } from "@/lib/sale";
 import type { PhotoKey } from "@/lib/photos";
 import type { ProductKey } from "@/lib/reviews";
 
@@ -58,11 +58,11 @@ export const CATALOG: CatalogItem[] = [
   // Sleep
   {
     id: "sleep-suite", name: SLEEP_SUITE.name, href: SLEEP_SUITE.path, section: "sleep", group: "bundles", price: m0 + 200, from: true,
-    nowPrice: salePrice(m0 + 200), photo: "sleep-suite-flint-tall", badge: "Free white glove", fast: true,
+    get nowPrice() { return salePrice(m0 + 200); }, photo: "sleep-suite-flint-tall", badge: "Free white glove", fast: true,
   },
   {
     id: "best-friends", name: BUNDLE.title, href: BUNDLE.path, section: "sleep", group: "bundles", price: m0 + bed0 + bedding, from: true,
-    nowPrice: bundlePrice(m0) + bundlePrice(bed0) + bundlePrice(bedding), photo: BUNDLE_HERO.photo, badge: "Free white glove", fast: true,
+    get nowPrice() { return bundlePrice(m0) + bundlePrice(bed0) + bundlePrice(bedding); }, photo: BUNDLE_HERO.photo, badge: "Free white glove", fast: true,
   },
   {
     id: MATTRESS.id, name: MATTRESS.title, href: MATTRESS_PATH, section: "sleep", group: "ashbury", price: Math.min(...MATTRESS.sizes.map((s) => s.price)), from: true,
@@ -73,7 +73,7 @@ export const CATALOG: CatalogItem[] = [
   },
   {
     id: "pillow", name: "The Ashwick Pillow", href: PILLOW_PATH, section: "sleep", group: "pillows", price: pillowFromPrice("organic-cotton"), from: true,
-    photo: "pillow-stack-ledge", hover: "pillow-stack-meadow", badge: "New", fast: true,
+    photo: "pillow-stack-ledge", hover: "pillow-stack-meadow", get badge() { return pillowsAreNew() ? "New" : undefined; }, fast: true,
     dots: PILLOW_COVERS.map((c) => ({ id: c.id, label: c.label, swatch: c.swatch, photo: PILLOW_COVER_PHOTOS[c.id].photo })),
     quick: { kind: "pillow", href: PILLOW_PATH },
   },

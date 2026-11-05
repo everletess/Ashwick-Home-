@@ -14,6 +14,7 @@ import { PILLOW_HERO, SALE, salePrice } from "@/lib/sale";
 import Link from "next/link";
 import { PILLOW_COVERS, PILLOW_COVER_PHOTOS, PILLOW_FAQ, PILLOW_ID, PILLOW_PATH, PILLOW_RETURNS, PILLOW_SIZES, PILLOW_STANDALONE_FILLS, PILLOW_STORY, bestForText, pillowFromPrice, pillowPrice } from "@/lib/pillow";
 import { SleepIcon } from "@/components/pillow-landing";
+import { NewBadge } from "@/components/bf-push";
 import type { PhotoKey } from "@/lib/photos";
 
 const FILLS = PILLOW_STANDALONE_FILLS;
@@ -101,7 +102,7 @@ export function PillowView({ fillId }: { fillId: string }) {
       <SwipeGallery shots={gallery} index={Math.min(shot, gallery.length - 1)} onIndex={setShot} aspect="1/1" />
       <div className="info">
         <div className="pillow-head">
-          <div className="eyebrow">The Ashwick Pillow · Made to order</div>
+          <div className="eyebrow">The Ashwick Pillow · Made to order <NewBadge /></div>
           <h1 className="pdp-name">{fill.label} Pillow</h1>
           <div className="pdp-price"><Price price={price} /></div>
           <SaleNote />

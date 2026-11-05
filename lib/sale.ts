@@ -34,12 +34,35 @@ export const BUNDLE_PILLOWS = PILLOW_TYPES;
 /** Bedding cover colors (Shopify option "Cover color"). The Ashbury's four colors map one to one by id, so the cover follows the mattress color. */
 export const BUNDLE_COVER_BY_MATTRESS_COLOR: Record<string, string> = { natural: "Fleece", dove: "Flint", safari: "Flax", mocha: "Sorrel" };
 
+/**
+ * The ONE place the sale's end is set. ISO time with its offset, e.g. "2026-12-01T23:59:59-08:00". While null the sale
+ * runs with no countdown. Once it passes, `active` turns false on its own: the server pages regenerate within five
+ * minutes (revalidate in app/layout.tsx) and the bar, hero and countdown switch in the browser at the second.
+ */
+const SALE_ENDS_AT: string | null = null;
+
 export const SALE = {
-  active: true,
+  /** Master switch: false takes the whole event off the site now, whatever the end date. */
+  enabled: true,
   percent: 20,
   name: "Black Friday",
   path: "/black-friday",
+  endsAt: SALE_ENDS_AT,
+  /** On while enabled and before the end time. Read fresh on every render. */
+  get active() {
+    return this.enabled && (!this.endsAt || Date.now() < Date.parse(this.endsAt));
+  },
 };
+
+/** "Ends Mon, Dec 1" (in Pacific time), or "" with no end date set. */
+export const saleEndLabel = () =>
+  SALE.endsAt ? "Ends " + new Date(SALE.endsAt).toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", timeZone: "America/Los_Angeles" }) : "";
+
+/** Pillows carry a NEW badge through the end of this date (Pacific). */
+export const PILLOWS_NEW_UNTIL = "2026-12-31T23:59:59-08:00";
+export const pillowsAreNew = () => Date.now() < Date.parse(PILLOWS_NEW_UNTIL);
+/** The gifts row stays, as "Gifts", through the same date once the sale is over. */
+export const giftsShowing = () => SALE.active || pillowsAreNew();
 
 /**
  * Best Friends Bundle (approved): an Ashbury, an Ashbury Dog Bed and a Best Friends Bedding Set (two pillows and a
@@ -142,3 +165,41 @@ export const SLEEP_SUITE_BEDDING_NAME = "Bedding Set";
 
 /** Products whose list price was raised before they sold at the old price: show only the sale price, no struck-through "was". */
 export const NO_WAS_PRICE = new Set<string>([]);
+
+/**
+ * The Sleep Suite's two cart lines (the mattress and the bedding set), for a size, feel, color and pillow. The Suite
+ * page and the cart's one-tap upgrade both add exactly these.
+ */
+export function sleepSuiteLines(o: { sizeId: string; feelId: string; colorId: string; pillowId?: string }) {
+  const m = MATTRESS.sizes.find((s) => s.id === o.sizeId) ?? MATTRESS.sizes[0];
+  const mc = MATTRESS.colors.find((c) => c.id === o.colorId) ?? MATTRESS.colors[0];
+  const feel = MATTRESS.feels.find((f) => f.id === o.feelId) ?? MATTRESS.feels[0];
+  const pil = BUNDLE_PILLOWS.find((x) => x.id === o.pillowId) ?? BUNDLE_PILLOWS[0];
+  const tag: [string, string][] = [["_Bundle", SLEEP_SUITE.name], ["_Bundle ID", `sleep-suite-${Math.random().toString(36).slice(2, 8)}`]];
+  return [
+    {
+      id: MATTRESS.id, name: MATTRESS.title, photo: mc.photos[0] ?? mc.swatch, price: m.price, qty: 1, mode: "As designed" as const,
+      options: [["Size", `${m.label} (${m.dims})`], ["Feel", feel.label], ["Color", mc.label], ...tag] as [string, string][],
+      delivery: bundleMattressDelivery(),
+    },
+    {
+      id: BUNDLE_CONFIG.beddingSet.handle, name: SLEEP_SUITE_BEDDING_NAME, photo: mc.photos[0] ?? mc.swatch, price: BUNDLE_CONFIG.beddingSet.price, qty: 1, mode: "As designed" as const,
+      options: [["Mattress size", m.label], ["Pillow", pil.label], ["Pillow size", `${pillowSizeNameFor(m.id)} ${pillowSizeFor(m.id).replace("×", "x")}`], ["Cover color", BUNDLE_COVER_BY_MATTRESS_COLOR[mc.id] ?? mc.label], ["Includes", "Two pillows and a Mattress Protector"], ...tag] as [string, string][],
+    },
+  ];
+}
+
+/**
+ * The Sleep Suite against a standalone Ashbury of the same size with its paid white glove delivery, at today's prices.
+ * `diff` < 0: the Suite costs less (save); > 0: it costs that much more; 0: the same.
+ */
+export function suiteVsAshbury(sizeId: string) {
+  const m = MATTRESS.sizes.find((s) => s.id === sizeId) ?? MATTRESS.sizes[0];
+  const suite = sleepSuitePrice(m.id).sale;
+  const ashbury = salePrice(m.price) + MATTRESS.delivery.price;
+  return { size: m, suite, ashbury, diff: Math.round((suite - ashbury) * 100) / 100 };
+}
+
+/** Link to the Suite with a size, feel and color already chosen. */
+export const suiteHref = (o: { sizeId?: string; feelId?: string; colorId?: string }) =>
+  `${SLEEP_SUITE.path}?${new URLSearchParams(Object.entries({ size: o.sizeId, feel: o.feelId, color: o.colorId }).filter(([, v]) => v) as [string, string][])}`;

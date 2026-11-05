@@ -99,3 +99,17 @@ export function trackThen(event: PixelEvent, params: Record<string, unknown>, th
   track(event, params);
   window.setTimeout(then, fbq() || (window as unknown as { gtag?: unknown }).gtag ? waitMs : 0);
 }
+
+/** A custom event (Meta trackCustom, and the same name to Google), e.g. SwitchToSleepSuite. Never throws. */
+export function trackCustom(name: string, params: Record<string, unknown> = {}) {
+  try {
+    fbq()?.("trackCustom", name, { currency: "USD", ...params });
+  } catch {
+    // Never let tracking break the site.
+  }
+  try {
+    (window as unknown as { gtag?: (...a: unknown[]) => void }).gtag?.("event", name, params);
+  } catch {
+    // Never let tracking break the site.
+  }
+}
