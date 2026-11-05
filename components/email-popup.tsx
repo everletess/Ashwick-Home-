@@ -249,6 +249,8 @@ export function EmailPopup() {
 
 /** Compact sign-up for the footer: same list, same 15% welcome code. */
 export function FooterSignup() {
+  // The homepage has its own full Ashwick Letter block just above the footer: one sign-up per page.
+  const onHome = usePathname() === "/";
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "done" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
@@ -264,6 +266,7 @@ export function FooterSignup() {
       setStatus("error");
     }
   }
+  if (onHome) return null;
   return (
     <div className="ftr-nl">
       <div className="fcol-t">The Ashwick Letter</div>
