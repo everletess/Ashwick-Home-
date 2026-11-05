@@ -3,6 +3,7 @@
 // client API, so only the public company ID is used, never a secret key. Also notifies the studio (best effort).
 
 import { PHOTOS, type PhotoKey } from "@/lib/photos";
+import { track } from "@/lib/pixel";
 import { bundleColorOf, bundlePhotoFor } from "@/lib/sale";
 
 const KLAVIYO_COMPANY_ID = process.env.NEXT_PUBLIC_KLAVIYO_COMPANY_ID ?? "";
@@ -81,8 +82,8 @@ export async function subscribeEmail(email: string, source: string): Promise<Sub
   })().catch(() => false);
   const [k, s] = await Promise.all([klaviyo, studio]);
   if (!k && !s) throw new Error("We couldn't sign you up just now. Please try again.");
-  const fbq = (window as unknown as { fbq?: (...args: unknown[]) => void }).fbq;
-  if (typeof fbq === "function") fbq("track", "Lead", { content_name: source });
+  // Pixel + server (Conversions API) Lead, with the email hashed in the browser for matching.
+  track("Lead", { content_name: source }, value);
   try {
     localStorage.setItem(SUBSCRIBED_KEY, "subscribed"); // subscribers never see the pop-up or tab again
     localStorage.setItem(SUBSCRIBER_EMAIL_KEY, value);

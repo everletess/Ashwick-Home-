@@ -66,7 +66,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               if(b.readyState==='complete')setTimeout(load,0);else f.addEventListener('load',function(){setTimeout(load,0)})}(window,document,'script',
               'https://connect.facebook.net/en_US/fbevents.js');
               fbq('init', '1118741870615996');
-              fbq('track', 'PageView');
+              // PageView with an event ID; the same event goes to Meta from our server (app/api/meta-events decides when).
+              var pv='pv-'+(window.crypto&&crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2));
+              fbq('track', 'PageView', {}, {eventID: pv});
+              try {
+                var em=null;try{em=localStorage.getItem('aw-subscriber-email')}catch(e){}
+                var send=function(h){var b=JSON.stringify({event_name:'PageView',event_id:pv,event_source_url:location.href,em:h});
+                  if(!(navigator.sendBeacon&&navigator.sendBeacon('/api/meta-events',new Blob([b],{type:'application/json'}))))fetch('/api/meta-events',{method:'POST',headers:{'Content-Type':'application/json'},body:b,keepalive:true})};
+                if(em&&em.indexOf('@')>0&&window.crypto&&crypto.subtle)crypto.subtle.digest('SHA-256',new TextEncoder().encode(em.trim().toLowerCase())).then(function(d){send(Array.from(new Uint8Array(d)).map(function(x){return x.toString(16).padStart(2,'0')}).join(''))},function(){send()});else send();
+              } catch(e) {}
             `,
           }}
         />
