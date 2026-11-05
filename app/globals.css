@@ -2128,3 +2128,39 @@ button.chip{cursor:pointer}
 @media (min-width:861px){.he-living{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.he-cards{grid-template-columns:repeat(2,minmax(0,260px));gap:32px 24px}.he-living-img{min-height:0;height:100%}}
 @media (min-width:1280px){.he-living{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.he-cards{grid-template-columns:repeat(2,minmax(0,260px))}.he-living-img{min-height:0}}
 .he-hand-img img{object-position:50% 18%}
+/* ===== Shopping back on the homepage (05/11) ===== */
+/* Black Friday favorites: 4 visible with arrows on desktop, ~1.6 on a phone */
+.he-fav-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
+.he-arrows{display:flex;gap:8px}
+.he-arrows button{width:48px;height:48px;border:1px solid var(--hair);background:transparent;color:var(--ink);font:300 20px/1 var(--sans);cursor:pointer}
+.he-arrows button:hover{background:var(--ink);color:var(--alabaster)}
+.he-rail{list-style:none;margin:32px auto 0;padding:0 var(--gut);max-width:1440px;display:grid;grid-auto-flow:column;grid-auto-columns:calc((min(100vw,1440px) - 2 * var(--gut) - 3 * 24px) / 4);gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gut);scrollbar-width:none}
+.he-rail::-webkit-scrollbar{display:none}
+.he-rail .he-card{scroll-snap-align:start}
+@media (max-width:860px){
+  .he-arrows{display:none}
+  .he-rail{grid-auto-columns:58vw;gap:12px;margin-top:24px}
+}
+/* Shop the home: 2×2 on a phone too */
+@media (max-width:860px){
+  .he-rooms .wrap{padding-left:var(--gut);padding-right:var(--gut)}
+  .he-eyebrow{padding:0}
+  .he-rooms-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px}
+  .he-room-img{aspect-ratio:4/5}
+  .he-room-name{padding:0;margin-top:10px;font-size:22px}
+}
+/* The Bedroom: the four pieces on the sage panel */
+.he-cards-bed{margin-top:32px}
+.he-sage .he-card a,.he-sage .he-card a:hover{color:var(--alabaster)}
+.he-sage .he-card-price .price-now{color:var(--alabaster)}
+.he-sage .he-card-price .price-was{color:var(--alabaster);opacity:.75}
+.he-sage .he-card-img{background:rgba(246,242,236,.15)}
+@media (min-width:861px){.he-cards-bed{grid-template-columns:repeat(2,minmax(0,220px));gap:28px 20px}.he-bed .ulink{margin-top:32px}.he-bed-img{min-height:0}}
+@media (max-width:860px){
+  .he-bed-t{padding:40px 0 56px}
+  .he-bed-t>.eyebrow,.he-bed-t>.h2,.he-bed-t>.he-dots,.he-bed-t>.ulink{margin-left:var(--gut);margin-right:var(--gut)}
+}
+/* Sticky bar: walnut, thin on a phone */
+.ss-bar{background:var(--ink)}
+@media (max-width:860px){.ss-bar{padding-top:6px;padding-bottom:calc(6px + env(safe-area-inset-bottom))}.ss-bar .ss-btn{min-height:40px}}
+@media (min-width:861px){.he-rail{max-width:1280px;grid-auto-columns:calc((min(100vw,1280px) - 2 * var(--gut) - 3 * 24px) / 4)}}

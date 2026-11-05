@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Fibers } from "@/components/fibers";
 import { HeroSlides } from "@/components/hero-slides";
 import { Photo } from "@/components/photo";
-import { Bedroom, HandedDown, LivingRoom, ShopTheHome } from "@/components/home-editorial";
+import { Bedroom, Favorites, HandedDown, LivingRoom, ShopTheHome } from "@/components/home-editorial";
 import { OfferBand, SaleHero, StickySuite } from "@/components/bf-push";
 import { MATTRESS_PATH } from "@/lib/mattress";
 import { SALE } from "@/lib/sale";
@@ -31,14 +31,15 @@ function HomeHero() {
 export default function HomePage() {
   return (
     <main className="home-main">
-      {/* During the sale the page opens on the Sleep Suite; the brand hero comes back on its own when it ends. */}
+      {/* During the sale the page opens on the Black Friday brand hero; the usual hero comes back on its own when it ends. */}
       {SALE.active ? <SaleHero /> : <HomeHero />}
       <OfferBand />
+      <Favorites />
       <Fibers />
       <ShopTheHome />
       <LivingRoom />
-      <HandedDown />
       <Bedroom />
+      <HandedDown />
       <StickySuite />
     </main>
   );
