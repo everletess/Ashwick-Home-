@@ -54,19 +54,24 @@ export function IncIcon({ k }: { k: "mattress" | "pillows" | "protector" | "glov
 /** A clean photo (no words in the image): the Ashbury in Sorrel on the light oak base, with two pillows and a throw. */
 export const SUITE_HERO: { photo: PhotoKey; alt: string } = { photo: "mattress-mocha-bedroom", alt: "The Ashbury in Sorrel on a light oak bed, made up with two pillows and a cream throw, in a sunlit bedroom" };
 
-export function SuiteHero({ as = "h1" }: { as?: "h1" | "h2" }) {
-  const H = as;
+/**
+ * The sale hero, laid out like a brand campaign (Tessa, 05/11: "we are an organic furniture brand"): the home leads, the
+ * event sits above the headline. Homepage: the family on the Cotswold sofa. /black-friday: the same, with the offer.
+ */
+export function SaleHero({ page = "home" }: { page?: "home" | "sale" }) {
+  const home = page === "home";
   return (
     <section className="sh">
-      <Photo src={SUITE_HERO.photo} label={SUITE_HERO.alt} className="sh-img" fill preload sizes="100vw" />
+      <Photo src="hero-family" label="A mother and daughter reading on the Cotswold sofa beside the Cotswold chair, a spaniel asleep beside them, in a sunlit living room" className="sh-img" fill preload sizes="100vw" />
       <div className="sh-scrim" />
       <div className="sh-txt">
         <p className="sh-eyebrow">{SALE.name}</p>
-        <H className="sh-h">The Sleep Suite</H>
-        <p className="sh-sub">Mattress, pillows &amp; protector. Free white glove.</p>
+        <h1 className="sh-h">{home ? "Built by nature" : `${SALE.percent}% off everything`}</h1>
+        <p className="sh-sub">{home ? "Organic furniture, handmade to be handed down." : "Organic furniture, handmade to be handed down. No code needed."}</p>
         <div className="sh-btns">
-          <Link href={SLEEP_SUITE.path} className="btn light">Shop the Sleep Suite</Link>
-          <Link href={SALE.path} className="btn outline-light">Shop {SALE.name}</Link>
+          {home
+            ? <><Link href={SALE.path} className="btn light">Shop {SALE.name}</Link><Link href="/collections/all" className="btn light">Shop the collection</Link></>
+            : <><a href="#sofas" className="btn light">Shop furniture</a><a href="#sleep-suite" className="btn light">Shop the Sleep Suite</a></>}
         </div>
       </div>
     </section>
@@ -88,8 +93,9 @@ export function OfferBand() {
   }
   return (
     <div className="ob">
-      <p className="ob-s">{live ? <span className="ob-clock" role="timer">{clock}</span> : saleEndShort()}{(live || saleEndShort()) && " · "}No code needed</p>
+      <p className="ob-lead">{SALE.name}</p>
       <p className="ob-t">{SALE.percent}% off everything</p>
+      <p className="ob-s">{live ? <span className="ob-clock" role="timer">{clock}</span> : saleEndShort()}{(live || saleEndShort()) && " · "}No code needed</p>
     </div>
   );
 }
@@ -117,8 +123,8 @@ const PILLOW_MINIS: Mini[] = [...PILLOW_STANDALONE_FILLS]
   .map((f) => ({ key: f.id, name: f.label, href: f.path, photo: PILLOW_STORY[f.id].card, alt: PILLOW_STORY[f.id].cardAlt, from: pillowFromPrice(f.id), quick: { kind: "pillow", fill: f.id }, isNew: true }));
 const minSize = (sizes: { price: number }[]) => Math.min(...sizes.map((s) => s.price));
 const DOG_MINIS: Mini[] = [
-  { key: DOG_BED.id, name: DOG_BED.title, href: DOG_BED.path, photo: (DOG_BED.colors.find((c) => c.id === DOG_BED.defaultColor) ?? DOG_BED.colors[0]).photos[0], alt: DOG_BED.title, from: minSize(DOG_BED.sizes), quick: { kind: "dog-bed" } },
-  { key: NOOK.id, name: NOOK.title, href: NOOK.path, photo: (NOOK.colors.find((c) => c.id === NOOK.defaultColor) ?? NOOK.colors[0]).photos[0], alt: NOOK.title, from: minSize(NOOK.sizes), quick: { kind: "nook" } },
+  { key: DOG_BED.id, name: DOG_BED.title, href: DOG_BED.path, photo: "dog-bed-sorrel-card", alt: "The Ashbury Dog Bed in Sorrel", from: minSize(DOG_BED.sizes), quick: { kind: "dog-bed" } },
+  { key: NOOK.id, name: NOOK.title, href: NOOK.path, photo: "nook-olive-card", alt: "The Nook Dog Bed in Olive", from: minSize(NOOK.sizes), quick: { kind: "nook" } },
 ];
 
 export function MiniCard({ it }: { it: Mini }) {
@@ -185,7 +191,7 @@ export function SuiteUpsell({ sizeId, feelId, colorId }: { sizeId: string; feelI
 /* ---------- Sticky "Shop" bar on the homepage and Black Friday page ---------- */
 
 /** Shows once `.sh` (the hero) has scrolled away and hides at the footer; hides the chat button while it shows. */
-export function StickySuite() {
+export function StickySuite({ page = "home" }: { page?: "home" | "sale" }) {
   const [on, setOn] = useState(false);
   const heroGone = useRef(false), atFooter = useRef(false);
   useEffect(() => {
@@ -204,8 +210,10 @@ export function StickySuite() {
   if (!SALE.active) return null;
   return (
     <div className={"ss-bar" + (on ? " on" : "")} aria-hidden={!on}>
-      <span className="ss-t"><strong>Sleep Suite</strong> · from {fmtWhole(sleepSuitePrice(0).sale)}</span>
-      <Link href={SLEEP_SUITE.path} className="btn light ss-btn" tabIndex={on ? 0 : -1}>Shop</Link>
+      {page === "home"
+        ? <span className="ss-t"><strong>{SALE.name}</strong> · {SALE.percent}% off everything</span>
+        : <span className="ss-t"><strong>Sleep Suite</strong> · from {fmtWhole(sleepSuitePrice(0).sale)}</span>}
+      <Link href={page === "home" ? SALE.path : SLEEP_SUITE.path} className="btn light ss-btn" tabIndex={on ? 0 : -1}>Shop</Link>
     </div>
   );
 }

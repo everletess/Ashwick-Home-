@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { GiftsRow, MiniGroup, NewBadge, OfferBand, StickySuite, SuiteHero, type Mini } from "@/components/bf-push";
+import { GiftsRow, MiniGroup, NewBadge, OfferBand, SaleHero, StickySuite, type Mini } from "@/components/bf-push";
 import { PHOTOS } from "@/lib/photos";
 import { DOG_BED, NOOK } from "@/lib/dog-bed";
 import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
@@ -39,8 +39,8 @@ export default function BlackFridayPage() {
     {
       id: "dog-beds", title: "Dog beds",
       items: [
-        { key: "dog", href: DOG_BED.path, photo: "dog-bed-sorrel-room-golden", alt: DOG_BED.title, name: DOG_BED.title, from: minPrice(DOG_BED.sizes), quick: { kind: "dog-bed" } },
-        { key: "nook", href: NOOK.path, photo: "nook-olive-room", alt: NOOK.title, name: NOOK.title, from: minPrice(NOOK.sizes), quick: { kind: "nook" } },
+        { key: "dog", href: DOG_BED.path, photo: "dog-bed-sorrel-card", alt: DOG_BED.title, name: DOG_BED.title, from: minPrice(DOG_BED.sizes), quick: { kind: "dog-bed" } },
+        { key: "nook", href: NOOK.path, photo: "nook-olive-card", alt: NOOK.title, name: NOOK.title, from: minPrice(NOOK.sizes), quick: { kind: "nook" } },
       ],
     },
     { id: "sofas", title: "Sofas", items: furniture("sofas") },
@@ -65,7 +65,7 @@ export default function BlackFridayPage() {
 
   return (
     <main className="bf2" id="top">
-      <SuiteHero />
+      <SaleHero page="sale" />
       <OfferBand />
 
       <nav className="bf2-chips" aria-label="Jump to a section">
@@ -86,7 +86,7 @@ export default function BlackFridayPage() {
         <div className="bf-faq">{faq.map(([q, a]) => <details key={q}><summary>{q}</summary><p>{a}</p></details>)}</div>
         <p className="bf-fine">Discount applied automatically at checkout. Taxes calculated at checkout. <Link href="/collections/all">All products</Link></p>
       </section>
-      <StickySuite />
+      <StickySuite page="sale" />
     </main>
   );
 }

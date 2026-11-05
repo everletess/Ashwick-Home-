@@ -4,7 +4,7 @@ import { MattressFeature } from "@/components/mattress-feature";
 import { HeroSlides } from "@/components/hero-slides";
 import { Photo } from "@/components/photo";
 import { CategoryRail, Favorites } from "@/components/home-sections";
-import { GiftsRow, OfferBand, PillowSlim, StickySuite, SuiteHero } from "@/components/bf-push";
+import { GiftsRow, OfferBand, PillowSlim, SaleHero, StickySuite } from "@/components/bf-push";
 import { MATTRESS_PATH } from "@/lib/mattress";
 import { SALE } from "@/lib/sale";
 
@@ -33,13 +33,13 @@ export default function HomePage() {
   return (
     <main>
       {/* During the sale the page opens on the Sleep Suite; the brand hero comes back on its own when it ends. */}
-      {SALE.active ? <SuiteHero /> : <HomeHero />}
+      {SALE.active ? <SaleHero /> : <HomeHero />}
       <OfferBand />
-      <PillowSlim />
       <CategoryRail />
-      <GiftsRow />
-      <MattressFeature />
       <Favorites />
+      <GiftsRow />
+      <PillowSlim />
+      <MattressFeature />
       <Fibers />
       <StickySuite />
     </main>

@@ -1995,7 +1995,7 @@ button.chip{cursor:pointer}
 .sh-scrim{background:linear-gradient(to top,rgba(20,16,12,.78) 0%,rgba(20,16,12,.5) 34%,rgba(20,16,12,.12) 58%,rgba(20,16,12,0) 72%)}
 @media (min-width:861px){.sh{height:min(82vh,760px);min-height:560px}}
 /* The mattress-room photos carry a small "shown in …" caption at the bottom; crop it off wherever they appear in cards, tiles and galleries */
-:is(.mc-img,.home-cat-img,.m-feature-img,.ssp-gal,.cc-img) img[src*="mattress-room"]{transform:scale(1.12);transform-origin:50% 0}
+:is(.mc-img,.home-cat-img,.m-feature-img,.ssp-gal,.cc-img,.bundle-shot) img[src*="mattress-room"]{transform:scale(1.12);transform-origin:50% 0}
 @media (min-width:861px){.sh-txt{max-width:600px}.sh-btns .btn{white-space:nowrap;padding:0 28px}}
 /* Offer band in our palette (sage, Cormorant), peeking into the first screen under the hero on a phone */
 .ob{background:var(--sage);color:var(--alabaster);padding:14px 20px 16px}
@@ -2004,3 +2004,32 @@ button.chip{cursor:pointer}
 .ob-t{font:300 clamp(24px,6.6vw,34px)/1.15 var(--serif);color:var(--alabaster)}
 @media (max-width:860px){.sh{height:max(480px,calc(100svh - var(--sh-top,104px) - 84px))}}
 @media (min-width:861px){.sh{height:max(560px,min(760px,calc(100vh - 146px - 96px)))}}
+@media (min-width:861px){.mrail{max-width:1280px}}
+/* Sale hero as a brand campaign (05/11): the home leads; words centred over a soft, even scrim; two solid buttons */
+.sh-img{object-position:50% 55%}
+.sh-scrim{background:linear-gradient(to bottom,rgba(20,16,12,.12) 0%,rgba(20,16,12,.34) 45%,rgba(20,16,12,.5) 100%)}
+.sh-txt{top:0;bottom:0;justify-content:center;align-items:center;text-align:center;padding:0 24px;gap:10px}
+.sh-eyebrow{font-size:24px}
+.sh-h{font-size:clamp(42px,12vw,52px);line-height:1}
+.sh-sub{max-width:30ch}
+.sh-btns{width:100%;max-width:300px;margin-top:16px}
+.sh-btns .btn{min-height:52px}
+@media (min-width:861px){
+  .sh-txt{left:0;right:0;bottom:0;max-width:none;padding:0 56px;gap:14px}
+  .sh-eyebrow{font-size:30px}
+  .sh-h{font-size:clamp(64px,7vw,104px)}
+  .sh-sub{font-size:19px;max-width:none}
+  .sh-btns{flex-direction:row;justify-content:center;max-width:none;width:auto;gap:16px;margin-top:20px}
+  .sh-btns .btn{width:auto;flex:none;min-width:220px}
+}
+/* Offer band: italic lead · the offer · end date. Stacked on a phone, one line on desktop */
+.ob-lead{margin:0;font:italic 300 18px/1.2 var(--serif);color:var(--alabaster)}
+.ob-t{margin:2px 0}
+.ob-s{margin:0}
+@media (min-width:861px){
+  .ob{display:flex;align-items:center;justify-content:center;gap:28px;padding:20px 32px}
+  .ob-lead{font-size:28px}
+  .ob-t{font-size:34px;margin:0}
+  .ob-s{border-left:1px solid rgba(246,242,236,.55);padding-left:28px;font-size:13px}
+}
+@media (max-width:860px){.sh-img{object-position:66% 50%}.ob-lead{display:none}}
