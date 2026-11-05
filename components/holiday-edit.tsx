@@ -23,7 +23,7 @@ import { BUNDLE, BUNDLE_PILLOWS, SALE, SLEEP_SUITE, countdownFrom, saleEndShort,
 /** The page's photographs: Tessa's (05/11), except the Gifts band, a stand-in for now. */
 export const HOLIDAY_PHOTOS: Record<"hero" | "suite" | "bestFriends" | "gifts", { photo: PhotoKey; alt: string }> = {
   hero: { photo: "holiday-hero", alt: "The Marlowe Sofa in white linen on its fluted oak plinth, in a sunlit living room with a marble fireplace and a travertine coffee table" },
-  suite: { photo: "holiday-suite", alt: "The Ashbury in Sorrel made up with matching pillows and a throw, in a winter bedroom with snow outside the window and a wreath" },
+  suite: { photo: "holiday-suite", alt: "The Ashbury in Sorrel made up with matching pillows and a throw, in a winter bedroom with a wreath in the window" },
   bestFriends: { photo: "holiday-best-friends", alt: "The Ashbury in Flint with a matching Ashbury Dog Bed beside it, a dog asleep on it by a frosty window" },
   gifts: { photo: "holiday-gifts", alt: "A stack of Ashwick pillows in cream, oat, sorrel and grey" },
 };
@@ -143,7 +143,7 @@ export function SuiteDeal({ prices }: { prices: LivePrices }) {
   const shots: GalleryShot[] = [
     { photo: HOLIDAY_PHOTOS.suite.photo, alt: HOLIDAY_PHOTOS.suite.alt },
     { photo: "pillow-hero", alt: "The Ashwick Pillow" },
-    { photo: "mattress-room-flint-clean", alt: "The Ashbury in Flint on a light oak bed" },
+    { photo: "mattress-protector", alt: "The Mattress Protector fitted over an Ashbury in Sorrel, with a folded spare beside it" },
   ];
   const add = () => {
     cart.addMany(sleepSuiteLines({ sizeId: size, feelId: MATTRESS.feels[0].id, colorId: color, pillowId: BUNDLE_PILLOWS[0].id as string }));

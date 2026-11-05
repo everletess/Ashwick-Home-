@@ -207,6 +207,7 @@ import holidaySuite from "@/assets/photos/holiday-suite.jpg";
 import holidayPillows from "@/assets/photos/holiday-pillows.jpg";
 import holidayNook from "@/assets/photos/holiday-nook.jpg";
 import holidayBestFriends from "@/assets/photos/holiday-best-friends.jpg";
+import mattressProtector from "@/assets/photos/mattress-protector.jpg";
 import mattressSwatchKhaki from "@/assets/photos/mattress-swatch-khaki.jpg";
 import pembroke1 from "@/assets/photos/pembroke-1.jpg";
 // The Pembroke hero (Nov 2026): leads its gallery and cards. Untagged, so choosing a color moves to that color's photo.
@@ -420,6 +421,7 @@ export const PHOTOS = {
   "holiday-pillows": holidayPillows,
   "holiday-nook": holidayNook,
   "holiday-best-friends": holidayBestFriends,
+  "mattress-protector": mattressProtector,
   "holiday-gifts": pillowsHero,
   "mattress-swatch-khaki": mattressSwatchKhaki,
   "pembroke-1": pembroke1,
