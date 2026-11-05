@@ -302,7 +302,7 @@ export function GiftsDeal({ prices }: { prices: LivePrices }) {
       <div className="hx-gifts-band"><Photo src={HOLIDAY_PHOTOS.gifts.photo} label={HOLIDAY_PHOTOS.gifts.alt} fill sizes="100vw" /></div>
       <div className="wrap hx-gifts-head">
         <h2 className="hx-h2" id="hx-gifts-h">Gifts under $300</h2>
-        <p className="hx-line">Ships in 3–4 days.</p>
+        <p className="hx-line">Pillows ship in 1–2 business days. Dog beds in 3–4 days.</p>
       </div>
       <ul className="hx-rail">{gifts.map((g) => <GiftCard key={g.key} g={g} />)}</ul>
     </section>
@@ -316,7 +316,7 @@ export function HolidayDelivery() {
     <section className="hx-deliv" aria-label="Holiday delivery">
       <div className="wrap hx-deliv-in">
         <p className="hx-deliv-h">{HOLIDAY_ORDER_BY ? `Order by ${HOLIDAY_ORDER_BY} for delivery before Christmas.` : "Holiday delivery"}</p>
-        <p className="hx-deliv-s">In-stock pieces ship in 3–4 days. Custom pieces take 8–12 weeks.</p>
+        <p className="hx-deliv-s">Mattresses and dog beds ship in 3–4 days. Pillows ship in 1–2 business days. Custom pieces take 8–12 weeks.</p>
         <Link href="/pages/delivery" className="hx-deliv-l">Delivery details →</Link>
       </div>
     </section>
