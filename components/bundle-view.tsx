@@ -7,6 +7,12 @@ import { Photo } from "@/components/photo";
 import { OptGroup, Pills } from "@/components/product-view";
 import { ShipsFast, TrustRow } from "@/components/buy-icons";
 import { StickyBuy } from "@/components/sticky-buy";
+import { SwipeGallery, type GalleryShot } from "@/components/swipe-gallery";
+import { Stars } from "@/components/reviews";
+import { IncIcon } from "@/components/bf-push";
+import { fmtWhole } from "@/components/sale";
+import { reviewsFor } from "@/lib/reviews";
+import type { PhotoKey } from "@/lib/photos";
 import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
 import { DOG_BED } from "@/lib/dog-bed";
 import { PHOTOS } from "@/lib/photos";
@@ -178,7 +184,10 @@ export function BundleBuilder() {
   );
 }
 
-/** The Complete Sleep Suite: an Ashbury plus the bedding set (no dog bed). Compact: pickers, live total and one button. */
+/**
+ * The Sleep Suite page (Tessa's brief, 05/11): a full-bleed swipeable gallery, a one-line title, the price row, size,
+ * feel and color, a full-width Add to cart, a row of what's included, then closed accordions.
+ */
 export function SleepSuiteBuilder() {
   const cart = useCart();
   const buyRef = useRef<HTMLButtonElement>(null);
@@ -186,6 +195,7 @@ export function SleepSuiteBuilder() {
   const [feel, setFeel] = useState(M.feels[0].id);
   const [mColor, setMColor] = useState(M.defaultColor);
   const [pillow, setPillow] = useState<string>(BUNDLE_PILLOWS[0].id as string);
+  const [shot, setShot] = useState(0);
   // "Switch to the Sleep Suite" links here with ?size=&feel=&color=, so the shopper keeps what they chose.
   useEffect(() => {
     const q = new URLSearchParams(window.location.search);
@@ -205,55 +215,82 @@ export function SleepSuiteBuilder() {
   const pillowSize = `${pillowSizeNameFor(m.id)} ${pillowSizeFor(m.id).replace("×", "x")}`;
   const coverColor = BUNDLE_COVER_BY_MATTRESS_COLOR[mc.id] ?? mc.label;
   const feelLabel = M.feels.find((f) => f.id === feel)!.label;
+  const rv = reviewsFor("ashbury");
+  // Clean photos only (no words in the picture), light oak base: the room shot for the chosen color, pillows, studio, cutaway.
+  const room: PhotoKey = mc.id === "mocha" ? "mattress-mocha-bedroom" : mc.photos[0];
+  const shots: GalleryShot[] = [
+    { photo: room, alt: `The Ashbury in ${mc.label} on a light oak bed, made up with two pillows` },
+    { photo: "pillow-hero", alt: "The Ashwick Pillow" },
+    { photo: mc.photos[1] ?? mc.cutaway, alt: `The Ashbury in ${mc.label}, hand-tufted` },
+    { photo: mc.cutaway, alt: `Inside the Ashbury in ${mc.label}` },
+  ];
 
   const add = () => cart.addMany(sleepSuiteLines({ sizeId: m.id, feelId: feel, colorId: mc.id, pillowId: pil.id }));
+  const pickColor = (id: string) => { setMColor(id); setShot(0); };
 
   return (
-    <section className="bundle-build wrap" style={{ gap: 40, paddingBottom: 72 }}>
-      <div style={{ position: "sticky", top: 96 }}>
-        <div style={{ position: "relative", aspectRatio: "4 / 3", maxHeight: "min(60vh, 45vh)", width: "100%", overflow: "hidden", background: "var(--linen)" }} className="sleep-hero">
-          <Photo src={SLEEP_SUITE.photo} label={SLEEP_SUITE.alt} fill sizes="(max-width: 960px) 100vw, 600px" preload />
-        </div>
-      </div>
+    <section className="ssp">
+      <div className="ssp-gal"><SwipeGallery shots={shots} index={Math.min(shot, shots.length - 1)} onIndex={setShot} aspect="4/5" /></div>
 
-      <div className="bundle-opts">
+      <div className="ssp-buy">
+        <h1 className="ssp-h">{SLEEP_SUITE.name}</h1>
+        <p className="ssp-price">
+          <span className="price-now">{fmtWhole(now)}</span>
+          {SALE.active && <> <s className="price-was">{fmtWhole(list)}</s></>}
+          {rv.count > 0 && <> <span className="ssp-dot">·</span> <Stars rating={rv.average} /></>}
+        </p>
+
         <div className="choices">
-          <OptGroup label="Mattress size" value={`${m.label} · ${m.dims}`}>
+          <OptGroup label="Size" value={`${m.label} · ${m.dims}`}>
             <Pills options={M.sizes} value={mSize} onChange={setMSize} />
           </OptGroup>
           <OptGroup label="Feel" value={feelLabel}>
             <Pills options={M.feels} value={feel} onChange={setFeel} />
           </OptGroup>
-          <OptGroup label="Mattress color" value={`${mc.label} · bedding cover ${coverColor}`}>
-            <Colors colors={M.colors} value={mColor} onChange={setMColor} label="Mattress" />
+          <OptGroup label="Color" value={mc.label}>
+            <Colors colors={M.colors} value={mColor} onChange={pickColor} label="Mattress" />
           </OptGroup>
           <OptGroup label="Pillow" value={pil.label}>
             <Pills options={BUNDLE_PILLOWS.map((x) => ({ id: x.id as string, label: x.label }))} value={pillow} onChange={setPillow} />
           </OptGroup>
         </div>
-        <p className="fine" style={{ marginTop: 0 }}>{pil.desc} Two {pil.label} pillows ({pillowSize} in) with {coverColor} removable covers, and a Mattress Protector, in the {SLEEP_SUITE_BEDDING_NAME} ({fmt(bed)}).</p>
 
-        <div className="bundle-sum">
-          <div className="bundle-sum-row"><span>{M.title}, {m.label}</span><span>{fmt(m.price)}</span></div>
-          <div className="bundle-sum-row"><span>{SLEEP_SUITE_BEDDING_NAME}</span><span>{fmt(bed)}</span></div>
-          {SALE.active && <div className="bundle-sum-row save"><span>{SALE.percent}% off the bundle</span><span>−{fmt(list - now)}</span></div>}
-          <div className="bundle-sum-total">
-            <span className="eyebrow">The suite</span>
-            <span className="bundle-price">
-              {SALE.active && <s className="price-was">{fmt(list)}</s>}
-              {fmt(now)}
-            </span>
-          </div>
+        <button ref={buyRef} className="btn full ssp-add" onClick={add}>Add to cart</button>
+        <StickyBuy watch={buyRef} name={SLEEP_SUITE.name} summary={`${m.label} · ${mc.label}`} price={now} cta="Add to cart" onAdd={add} />
+
+        <ul className="inc-row" aria-label="Included">
+          <li><IncIcon k="mattress" /><span>Ashbury mattress</span></li>
+          <li><IncIcon k="pillows" /><span>2 pillows</span></li>
+          <li><IncIcon k="protector" /><span>Mattress protector</span></li>
+          <li><IncIcon k="glove" /><span>Free white glove</span></li>
+        </ul>
+
+        <div className="ssp-acc">
+          <details>
+            <summary>What&rsquo;s inside</summary>
+            <p>{M.title}, {m.label} ({m.dims}), {feelLabel}, in {mc.label}: {fmt(m.price)}.</p>
+            <p>{pil.desc} Two {pil.label} pillows ({pillowSize} in) with {coverColor} removable covers, and a Mattress Protector, in the {SLEEP_SUITE_BEDDING_NAME} ({fmt(bed)}).</p>
+            <p>Each is also sold on its own: <Link href={MATTRESS_PATH} className="ulink-inline">the Ashbury</Link>.</p>
+          </details>
+          <details>
+            <summary>Delivery</summary>
+            <p>Free white glove delivery for the mattress is included with this bundle; on its own it is {fmt(M.delivery.price)}.</p>
+            <p>Ships in 3–4 days. Handmade to order in the USA. Our delivery team will contact you to schedule the mattress once it is made.</p>
+          </details>
+          <details>
+            <summary>{M.guaranteeNights}-night trial</summary>
+            <p>Mattress: a {M.guaranteeNights}-night trial, with a 30-night minimum before you request a return.</p>
+          </details>
+          <details>
+            <summary>Pay over time</summary>
+            <p>Shop Pay Installments is offered at checkout on the mattress and on furniture, subject to approval.</p>
+          </details>
+          <details>
+            <summary>FAQs</summary>
+            <p><strong>Is the discount automatic?</strong> {SALE.active ? `Yes. ${SALE.percent}% off is applied automatically at checkout.` : "Prices shown are the prices at checkout."} Taxes calculated at checkout.</p>
+            <p><strong>Can I change the pillow?</strong> Yes: choose {BUNDLE_PILLOWS.map((x) => x.label).join(" or ")} above.</p>
+          </details>
         </div>
-
-        <button ref={buyRef} className="btn full" onClick={add}>Add the suite to cart · {fmt(now)}</button>
-        <StickyBuy watch={buyRef} name="The Complete Sleep Suite" summary="Mattress and bedding set" price={now} cta="Add to cart" onAdd={add} />
-        <p className="fine">Free white glove delivery for the mattress is included with this bundle; on its own it is {fmt(M.delivery.price)}. {SALE.active ? `${SALE.percent}% off is applied automatically at checkout. ` : ""}Taxes calculated at checkout.</p>
-        <ShipsFast when="3–4 days" note="Handmade to order in the USA. Our delivery team will contact you to schedule the mattress once it is made." />
-        <TrustRow items={[["hand", "Handmade to order"], ["truck", "White glove, mattress"], ["moon", `${M.guaranteeNights}-night trial`]]} />
-        <p className="fine">
-          Each is also sold on its own: <Link href={MATTRESS_PATH} className="ulink-inline">the Ashbury</Link>.
-        </p>
       </div>
     </section>
   );

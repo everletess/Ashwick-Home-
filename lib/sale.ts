@@ -54,6 +54,12 @@ export const SALE = {
   },
 };
 
+/** The live countdown shows only in the final 72 hours (from this time); before it, the offer band says "Ends Dec 1". */
+export const countdownFrom = () => (SALE.endsAt ? Date.parse(SALE.endsAt) - 72 * 3600_000 : Infinity);
+/** "Ends Dec 1" (Pacific), or "" with no end date set. */
+export const saleEndShort = () =>
+  SALE.endsAt ? "Ends " + new Date(SALE.endsAt).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "America/Los_Angeles" }) : "";
+
 /** "Ends Mon, Dec 1" (in Pacific time), or "" with no end date set. */
 export const saleEndLabel = () =>
   SALE.endsAt ? "Ends " + new Date(SALE.endsAt).toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", timeZone: "America/Los_Angeles" }) : "";

@@ -13,11 +13,6 @@ export default function SleepSuitePage() {
   if (!SALE.active) notFound();
   return (
     <main>
-      <section className="page-head wrap" style={{ paddingBottom: 12 }}>
-        <div className="eyebrow">{SALE.name} at Ashwick</div>
-        <h1 className="h1" style={{ marginBottom: 8 }}>{SLEEP_SUITE.name}</h1>
-        <p className="body" style={{ margin: 0 }}>An Ashbury organic mattress with two pillows and a Mattress Protector. {SALE.percent}% off the bundle.</p>
-      </section>
       <SleepSuiteBuilder />
     </main>
   );

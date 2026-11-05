@@ -58,11 +58,11 @@ export const CATALOG: CatalogItem[] = [
   // Sleep
   {
     id: "sleep-suite", name: SLEEP_SUITE.name, href: SLEEP_SUITE.path, section: "sleep", group: "bundles", price: m0 + 200, from: true,
-    get nowPrice() { return salePrice(m0 + 200); }, photo: "sleep-suite-flint-tall", badge: "Free white glove", fast: true,
+    get nowPrice() { return salePrice(m0 + 200); }, photo: "mattress-mocha-bedroom", badge: "Best value", fast: true,
   },
   {
     id: "best-friends", name: BUNDLE.title, href: BUNDLE.path, section: "sleep", group: "bundles", price: m0 + bed0 + bedding, from: true,
-    get nowPrice() { return bundlePrice(m0) + bundlePrice(bed0) + bundlePrice(bedding); }, photo: BUNDLE_HERO.photo, badge: "Free white glove", fast: true,
+    get nowPrice() { return bundlePrice(m0) + bundlePrice(bed0) + bundlePrice(bedding); }, photo: BUNDLE_HERO.photo, fast: true,
   },
   {
     id: MATTRESS.id, name: MATTRESS.title, href: MATTRESS_PATH, section: "sleep", group: "ashbury", price: Math.min(...MATTRESS.sizes.map((s) => s.price)), from: true,

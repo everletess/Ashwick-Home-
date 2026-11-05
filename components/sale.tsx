@@ -1,14 +1,21 @@
 import { SALE, salePrice } from "@/lib/sale";
 import { fmt } from "@/lib/products";
 
-/** A price: the sale price with the original struck through while the sale is on, otherwise just the price. */
-export function Price({ price, from, was = true }: { price: number; from?: boolean; was?: boolean }) {
-  if (!SALE.active) return <>{from ? "From " : ""}{fmt(price)}</>;
+/** Whole dollars, rounded down ($103, not $103.20): for cards and banners. Exact cents stay in the cart and checkout. */
+export const fmtWhole = (n: number) => "$" + Math.floor(n + 1e-9).toLocaleString("en-US");
+
+/**
+ * A price: the sale price, then the original struck through, while the sale is on ("$4,000 $5,000"); otherwise just
+ * the price. `whole` rounds down to dollars (cards and banners).
+ */
+export function Price({ price, from, was = true, whole }: { price: number; from?: boolean; was?: boolean; whole?: boolean }) {
+  const f = whole ? fmtWhole : fmt;
+  if (!SALE.active) return <>{from ? "From " : ""}{f(price)}</>;
   return (
     <>
       {from ? "From " : ""}
-      {was && <s className="price-was" aria-label={`Original price ${fmt(price)}`}>{fmt(price)}</s>}
-      <span className="price-now" aria-label={`Sale price ${fmt(salePrice(price))}`}>{fmt(salePrice(price))}</span>
+      <span className="price-now" aria-label={`Sale price ${f(salePrice(price))}`}>{f(salePrice(price))}</span>
+      {was && <> <s className="price-was" aria-label={`Original price ${f(price)}`}>{f(price)}</s></>}
     </>
   );
 }

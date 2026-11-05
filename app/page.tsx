@@ -1,12 +1,10 @@
 import Link from "next/link";
-import { Newsletter } from "@/components/forms";
 import { Fibers } from "@/components/fibers";
 import { MattressFeature } from "@/components/mattress-feature";
 import { HeroSlides } from "@/components/hero-slides";
 import { Photo } from "@/components/photo";
 import { CategoryRail, Favorites } from "@/components/home-sections";
-import { BundlesBand, GiftsRow, PillowStrip, StickySuite, SuiteHero } from "@/components/bf-push";
-import { FarmBand, ReviewsRow } from "@/components/home-extras";
+import { GiftsRow, OfferBand, PillowSlim, StickySuite, SuiteHero } from "@/components/bf-push";
 import { MATTRESS_PATH } from "@/lib/mattress";
 import { SALE } from "@/lib/sale";
 
@@ -36,16 +34,13 @@ export default function HomePage() {
     <main>
       {/* During the sale the page opens on the Sleep Suite; the brand hero comes back on its own when it ends. */}
       {SALE.active ? <SuiteHero /> : <HomeHero />}
-      <PillowStrip />
-      <GiftsRow />
-      <BundlesBand />
+      <OfferBand />
+      <PillowSlim />
       <CategoryRail />
+      <GiftsRow />
       <MattressFeature />
-      <FarmBand />
       <Favorites />
       <Fibers />
-      <ReviewsRow />
-      <Newsletter />
       <StickySuite />
     </main>
   );
