@@ -193,6 +193,19 @@ export function BundleBuilder() {
   );
 }
 
+/** A numbered step on the Sleep Suite page: "1  Choose your size", the current choice on the right. */
+function Step({ n, title, value, children }: { n: number; title: string; value?: React.ReactNode; children: React.ReactNode }) {
+  return (
+    <div className="opt ssp-step" role="group" aria-label={`Step ${n}: ${title}`}>
+      <div className="opt-l">
+        <span className="ssp-step-h"><span className="ssp-step-n" aria-hidden="true">{n}</span>{title}</span>
+        <span className="opt-v">{value}</span>
+      </div>
+      <div className="opt-c">{children}</div>
+    </div>
+  );
+}
+
 /**
  * The Sleep Suite page (Tessa's brief, 05/11): a full-bleed swipeable gallery, a one-line title, the price row, size,
  * feel and color, a full-width Add to cart, a row of what's included, then closed accordions.
@@ -250,19 +263,29 @@ export function SleepSuiteBuilder() {
           {rv.count > 0 && <> <span className="ssp-dot">·</span> <Stars rating={rv.average} /></>}
         </p>
 
-        <div className="choices">
-          <OptGroup label="Size" value={`${m.label} · ${m.dims}`}>
+        {/* Four numbered steps (Tessa, 05/11): the pillows are a bonus with real choices, so they get their own step. */}
+        <div className="choices ssp-steps">
+          <Step n={1} title="Choose your size" value={`${m.label} · ${m.dims}`}>
             <Pills options={M.sizes} value={mSize} onChange={setMSize} />
-          </OptGroup>
-          <OptGroup label="Feel" value={feelLabel}>
+          </Step>
+          <Step n={2} title="Choose your firmness" value={feelLabel}>
             <Pills options={M.feels} value={feel} onChange={setFeel} />
-          </OptGroup>
-          <OptGroup label="Color" value={mc.label}>
+          </Step>
+          <Step n={3} title="Choose your color" value={mc.label}>
             <Colors colors={M.colors} value={mColor} onChange={pickColor} label="Mattress" />
-          </OptGroup>
-          <OptGroup label="Pillow" value={pil.label}>
-            <Pills options={BUNDLE_PILLOWS.map((x) => ({ id: x.id as string, label: x.label }))} value={pillow} onChange={setPillow} />
-          </OptGroup>
+          </Step>
+          <Step n={4} title="Choose your matching pillow set" value={<span className="ssp-incl">Included</span>}>
+            <p className="ssp-step-note">Two {pillowSize.replace(/ .*/, "")} pillows with removable covers in {coverColor}, to match your mattress.</p>
+            <div className="ssp-pillows" role="radiogroup" aria-label="Pillow set">
+              {BUNDLE_PILLOWS.map((x) => (
+                <button key={x.id} type="button" role="radio" aria-checked={pillow === x.id} className={"ssp-pillow" + (pillow === x.id ? " on" : "")} onClick={() => setPillow(x.id as string)}>
+                  <span className="ssp-pillow-dot" aria-hidden="true" />
+                  <span className="ssp-pillow-t">{x.label}</span>
+                  <span className="ssp-pillow-d">{x.desc.split(". ")[0]}.</span>
+                </button>
+              ))}
+            </div>
+          </Step>
         </div>
 
         <button ref={buyRef} className="btn full ssp-add" onClick={add}>Add to cart</button>
