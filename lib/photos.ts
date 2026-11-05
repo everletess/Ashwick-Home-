@@ -40,6 +40,8 @@ import sleepSuiteHero from "@/assets/photos/sleep-suite-hero.jpg";
 import sleepSuiteThumb from "@/assets/photos/sleep-suite-thumb.jpg";
 // The Sleep Suite in Flint (4:3), so the home page bundle cards are two colors.
 import sleepSuiteFlint from "@/assets/photos/sleep-suite-flint.jpg";
+// The Sleep Suite hero (Tessa, 05/11): Sorrel Ashbury with its title, "20% OFF" and labels in the image (4:3, shown uncropped).
+import sleepSuiteLabeled from "@/assets/photos/sleep-suite-labeled.jpg";
 import sleepSuiteFlintTall from "@/assets/photos/sleep-suite-flint-tall.jpg";
 import pillowHero from "@/assets/photos/pillow-hero.jpg";
 import pillowSorrel from "@/assets/photos/pillow-sorrel.jpg";
@@ -274,6 +276,7 @@ export const PHOTOS = {
   "sleep-suite-hero": sleepSuiteHero,
   "sleep-suite-thumb": sleepSuiteThumb,
   "sleep-suite-flint": sleepSuiteFlint,
+  "sleep-suite-labeled": sleepSuiteLabeled,
   "sleep-suite-flint-tall": sleepSuiteFlintTall,
   "pillow-hero": pillowHero,
   "pillow-sorrel": pillowSorrel,

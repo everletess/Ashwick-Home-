@@ -1729,8 +1729,8 @@ button.chip{cursor:pointer}
 .cd-large strong{font:300 32px/1.1 var(--serif);color:var(--ink)}
 /* 2a Sleep Suite hero: photo 4:5 on a phone with the words on a solid band below; side by side on desktop */
 .sh{background:#3a2a1e;color:var(--alabaster)}
-.sh-media{position:relative;aspect-ratio:4/5;max-height:30svh;width:100%;overflow:hidden;background:var(--linen)}
-.sh-media img{object-fit:cover;object-position:50% 72%}
+.sh-media{position:relative;aspect-ratio:4/3;width:100%;overflow:hidden;background:var(--linen)}
+.sh-media img{object-fit:cover;object-position:50% 50%}
 .sh-txt{padding:14px 20px 20px;display:flex;flex-direction:column;gap:6px}
 .sh-eyebrow{margin:0;font:400 12px/1.3 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--oat)}
 .sh-h{margin:0;font:300 clamp(29px,7.6vw,64px)/1.05 var(--serif)}
@@ -1874,3 +1874,8 @@ button.chip{cursor:pointer}
 .bf2-faq .bf-faq details[open] summary::after{content:"\2212"}
 .bf2-faq .bf-faq p{font:300 16px/1.55 var(--sans);margin:0 0 16px}
 .bf2-faq .bf-fine{text-align:left;margin-top:16px}
+
+/* The Suite hero image shows its own title, so the headline is for screen readers only (no doubled title; saves the first screen on a phone). */
+.sh-h{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (min-width:861px){.sh{min-height:0;align-items:center}.sh-media{aspect-ratio:4/3;height:auto}.sh-media img{object-position:50% 50%}}
+@media (max-width:370px){.announce-sale{letter-spacing:-.01em}}

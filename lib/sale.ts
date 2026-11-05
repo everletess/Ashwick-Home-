@@ -39,7 +39,7 @@ export const BUNDLE_COVER_BY_MATTRESS_COLOR: Record<string, string> = { natural:
  * runs with no countdown. Once it passes, `active` turns false on its own: the server pages regenerate within five
  * minutes (revalidate in app/layout.tsx) and the bar, hero and countdown switch in the browser at the second.
  */
-const SALE_ENDS_AT: string | null = null;
+const SALE_ENDS_AT: string | null = "2026-12-01T23:59:59-08:00";
 
 export const SALE = {
   /** Master switch: false takes the whole event off the site now, whatever the end date. */

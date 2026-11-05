@@ -85,8 +85,11 @@ function IncIcon({ k }: { k: "mattress" | "pillows" | "protector" | "glove" | "d
 /* ---------- 2a · The Sleep Suite hero ---------- */
 
 const QUEEN = MATTRESS.sizes.find((s) => s.id === "queen") ?? MATTRESS.sizes[0];
-/** Hero image: the Ashbury made up in Sorrel in a sunlit bedroom (stand-in until Tessa's final Suite hero). */
-export const SUITE_HERO: { photo: PhotoKey; alt: string } = { photo: "mattress-mocha-bedroom", alt: "The Ashbury in Sorrel, made up with two pillows and a cream throw, in a sunlit bedroom" };
+/**
+ * Hero image (Tessa, 05/11). It carries the title, "20% OFF" and labels in the picture, so it is shown whole (4:3,
+ * never cropped) and, on a phone, the headline is read out but not repeated on screen.
+ */
+export const SUITE_HERO: { photo: PhotoKey; alt: string } = { photo: "sleep-suite-labeled", alt: "The Complete Sleep Suite, 20% off: the Ashbury mattress in Sorrel with two matching pillows and a folded Mattress Protector on a stool" };
 
 export function SuiteHero({ as = "h1" }: { as?: "h1" | "h2" }) {
   const q = sleepSuitePrice(QUEEN.id);
@@ -250,7 +253,7 @@ export function BundleDetail({ which }: { which: "suite" | "bf" }) {
   const href = which === "suite" ? suiteHref({ sizeId }) : BUNDLE.path;
   return (
     <section className={"bd" + (which === "suite" ? " best" : "")} id={which === "suite" ? "suite" : "best-friends"} aria-labelledby={`bd-${which}`}>
-      <div className="bd-img"><Photo src={which === "suite" ? SUITE_HERO.photo : BUNDLE_HERO.photo} label={which === "suite" ? SUITE_HERO.alt : BUNDLE_HERO.alt} fill sizes="(max-width: 860px) 100vw, 560px" />{which === "suite" && <span className="bb-best">Best value</span>}</div>
+      <div className="bd-img"><Photo src={which === "suite" ? "sleep-suite-flint" : BUNDLE_HERO.photo} label={which === "suite" ? "The Complete Sleep Suite: an Ashbury mattress in Flint with matching pillows and a folded bedding set" : BUNDLE_HERO.alt} fill sizes="(max-width: 860px) 100vw, 560px" />{which === "suite" && <span className="bb-best">Best value</span>}</div>
       <div className="bd-t">
         <h2 className="bd-h" id={`bd-${which}`}>{title}</h2>
         <p className="bd-l">Mattress size</p>
