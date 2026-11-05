@@ -191,11 +191,11 @@ export function SuiteUpsell({ sizeId, feelId, colorId }: { sizeId: string; feelI
 /* ---------- Sticky "Shop" bar on the homepage and Black Friday page ---------- */
 
 /** Shows once `.sh` (the hero) has scrolled away and hides at the footer; hides the chat button while it shows. */
-export function StickySuite({ page = "home" }: { page?: "home" | "sale" }) {
+export function StickySuite({ page = "home" }: { page?: "home" | "sale" | "deals" }) {
   const [on, setOn] = useState(false);
   const heroGone = useRef(false), atFooter = useRef(false);
   useEffect(() => {
-    const hero = document.querySelector(".sh");
+    const hero = document.querySelector(".sh, .hx-hero");
     const footer = document.querySelector("footer");
     const update = () => setOn(heroGone.current && !atFooter.current);
     const os: IntersectionObserver[] = [];
@@ -210,10 +210,14 @@ export function StickySuite({ page = "home" }: { page?: "home" | "sale" }) {
   if (!SALE.active) return null;
   return (
     <div className={"ss-bar" + (on ? " on" : "")} aria-hidden={!on}>
-      {page === "home"
-        ? <span className="ss-t"><strong>{SALE.name}</strong> · {SALE.percent}% off everything</span>
-        : <span className="ss-t"><strong>Sleep Suite</strong> · from {fmtWhole(sleepSuitePrice(0).sale)}</span>}
-      <Link href={page === "home" ? SALE.path : SLEEP_SUITE.path} className="btn light ss-btn" tabIndex={on ? 0 : -1}>Shop</Link>
+      {page === "deals"
+        ? <span className="ss-t"><strong>{saleEndShort()}</strong></span>
+        : page === "home"
+          ? <span className="ss-t"><strong>{SALE.name}</strong> · {SALE.percent}% off everything</span>
+          : <span className="ss-t"><strong>Sleep Suite</strong> · from {fmtWhole(sleepSuitePrice(0).sale)}</span>}
+      {page === "deals"
+        ? <a href="#deals" className="btn light ss-btn" tabIndex={on ? 0 : -1}>Shop the deals</a>
+        : <Link href={page === "home" ? SALE.path : SLEEP_SUITE.path} className="btn light ss-btn" tabIndex={on ? 0 : -1}>Shop</Link>}
     </div>
   );
 }
