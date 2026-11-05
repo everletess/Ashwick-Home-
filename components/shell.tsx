@@ -27,7 +27,7 @@ import { SUBSCRIBED_EVENT, SUBSCRIBED_KEY } from "@/lib/subscribe";
 import { trackThen } from "@/lib/pixel";
 import { saveCart, normalizePhone } from "@/lib/subscribe";
 import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
-import { CountdownShort, NewBadge, useNow } from "@/components/bf-push";
+import { NewBadge, useNow } from "@/components/bf-push";
 import { DOG_BED_ID, NOOK } from "@/lib/dog-bed";
 import { ASHBURY_PATH, FURNITURE_MATERIALS_PATH, MATERIALS_PATH } from "@/lib/materials";
 
@@ -253,9 +253,7 @@ export function AnnouncementBar() {
     return (
       <div className="announce announce-sale">
         <Link href={SALE.path} className="announce-link">
-          <span className="announce-long">{SALE.name} · {SALE.percent}% off everything · Free white glove with the Sleep Suite</span>
-          <span className="announce-short">{SALE.percent}% off · Free white glove on the Sleep Suite</span>
-          <CountdownShort />
+          <span>{SALE.name} · {SALE.percent}% off everything</span>
         </Link>
         <button
           type="button"

@@ -9,56 +9,49 @@ import { Stars } from "@/components/reviews";
 import { SALE, mattressDelivery, salePrice } from "@/lib/sale";
 import { DOG_BED, NOOK } from "@/lib/dog-bed";
 import { MATTRESS, colorById, sizeById } from "@/lib/mattress";
-import { PILLOW_COVERS, PILLOW_COVER_PHOTOS, PILLOW_ID, PILLOW_SIZES, PILLOW_STANDALONE_FILLS, pillowPrice } from "@/lib/pillow";
+import { PILLOW_COVERS, PILLOW_ID, PILLOW_SIZES, PILLOW_STANDALONE_FILLS, pillowPrice } from "@/lib/pillow";
 import { reviewsFor } from "@/lib/reviews";
 import type { CatalogItem } from "@/lib/catalog";
-import type { PhotoKey } from "@/lib/photos";
 
 const whole = (n: number) => "$" + (Number.isInteger(n) ? n.toLocaleString("en-US") : n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
 
-/** Price line: "From $199" with the original struck through beneath only while the sale runs. */
+const floorUsd = (n: number) => "$" + Math.floor(n + 1e-9).toLocaleString("en-US");
+const BADGES = new Set(["New", "Best value"]);
+
+/** Price line: sale price, then the original struck through; whole dollars on cards (cents only in the cart). */
 function CardPrice({ item }: { item: CatalogItem }) {
   const now = item.nowPrice ?? salePrice(item.price);
   const sale = SALE.active && now !== item.price;
   return (
     <div className="cc-price">
-      <span className="cc-now">{item.from ? "From " : ""}{whole(now)}</span>
-      {sale && <s className="cc-was">{whole(item.price)}</s>}
+      <span className="cc-now">{floorUsd(sale ? now : item.price)}</span>
+      {sale && <s className="cc-was">{floorUsd(item.price)}</s>}
     </div>
   );
 }
 
-/** One product card, used by every grid. 4:5 photo, name, price, stars row (always reserves its height), color dots, quick add. */
+/** One product card, used by every grid: 4:5 photo (a small + on it opens Quick add), name, price, and small stars where reviews exist. */
 export function CatalogCard({ item, priority }: { item: CatalogItem; priority?: boolean }) {
-  const [photo, setPhoto] = useState<PhotoKey>(item.photo);
   const [quick, setQuick] = useState(false);
   const rv = item.review ? reviewsFor(item.review) : null;
+  const badge = item.badge && BADGES.has(item.badge) ? item.badge : null;
   return (
-    <div className="cc" data-price={item.nowPrice ? item.price : item.price} data-name={item.name} data-group={item.group} data-fast={item.fast ? "1" : undefined}>
-      <Link href={item.href} className="cc-link" aria-label={item.name}>
-        <div className={"cc-img" + (String(photo).startsWith("mattress-room") ? " crop-cap" : "")}>
-          <Photo src={photo} label={item.name} fill sizes="(max-width: 640px) 50vw, (max-width: 1180px) 33vw, 310px" preload={priority} />
-          {item.hover && photo === item.photo && <Photo src={item.hover} label="" className="alt" fill sizes="(max-width: 640px) 50vw, 310px" />}
-          {item.badge && <span className="cc-badge">{item.badge}</span>}
-        </div>
+    <div className="cc" data-price={item.price} data-name={item.name} data-group={item.group} data-fast={item.fast ? "1" : undefined}>
+      <div className="cc-media">
+        <Link href={item.href} className="cc-link" aria-label={item.name} tabIndex={-1}>
+          <div className={"cc-img" + (String(item.photo).startsWith("mattress-room") ? " crop-cap" : "")}>
+            <Photo src={item.photo} label={item.name} fill sizes="(max-width: 640px) 50vw, (max-width: 1180px) 33vw, 310px" preload={priority} />
+            {item.hover && <Photo src={item.hover} label="" className="alt" fill sizes="(max-width: 640px) 50vw, 310px" />}
+          </div>
+        </Link>
+        {badge && <span className="cc-badge">{badge}</span>}
+        {item.quick && <button type="button" className="cc-plus" aria-label={`Quick add: ${item.name}`} onClick={() => setQuick(true)}>+</button>}
+      </div>
+      <Link href={item.href} className="cc-link">
         <h3 className="cc-name">{item.name}</h3>
         <CardPrice item={item} />
-        <div className="cc-stars">{rv && rv.count > 0 ? <><Stars rating={rv.average} /><span>{rv.average.toFixed(1)} · {rv.count}</span></> : null}</div>
+        {rv && rv.count > 0 && <div className="cc-stars"><Stars rating={rv.average} /><span>{rv.count}</span></div>}
       </Link>
-      <div className="cc-foot">
-        {item.dots ? (
-          <ul className="cc-dots" aria-label="Colors">
-            {item.dots.map((d) => (
-              <li key={d.id}>
-                <button type="button" title={d.label} aria-label={d.label} aria-pressed={photo === d.photo} className={photo === d.photo ? "on" : ""} onClick={() => setPhoto(d.photo)}>
-                  <span><Photo src={d.swatch} label="" sizes="22px" /></span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        ) : <span />}
-        {item.quick && <button type="button" className="cc-add" onClick={() => setQuick(true)}>+ Add</button>}
-      </div>
       {quick && item.quick && <QuickAddSheet kind={item.quick.kind} href={item.quick.href} onClose={() => setQuick(false)} />}
     </div>
   );

@@ -1,28 +1,25 @@
 "use client";
 
-// Black Friday mobile push (Tessa's brief, 05/11): the countdown, the Sleep Suite hero, the pillow strip, gifts under
-// $300, the bundles band, the Suite's value breakdown, the Ashbury upsell and the sticky "Shop" bar. Every number is
-// worked out from the catalog prices (lib/mattress, lib/pillow, lib/dog-bed, lib/sale), which must match Shopify; the
-// /api/price-check route compares them. The sale's end is SALE.endsAt in lib/sale.ts, nowhere else.
+// Black Friday on the homepage and /black-friday, simplified to one message per screen (Tessa's brief, 05/11):
+// a full-bleed hero, a one-line offer band (the ONLY countdown, in the final 72 hours), a slim NEW pillow band,
+// name-and-price cards, the Ashbury upsell and the sticky "Shop" bar. Prices come from the catalog (lib/*), which
+// /api/price-check compares with Shopify; cards and banners show whole dollars. The sale's end is SALE.endsAt.
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { QuickAddSheet } from "@/components/catalog-card";
 import { Photo } from "@/components/photo";
-import { Price } from "@/components/sale";
+import { Price, fmtWhole } from "@/components/sale";
 import { DOG_BED, NOOK } from "@/lib/dog-bed";
 import { MATTRESS } from "@/lib/mattress";
 import { PILLOW_PATH, PILLOW_STANDALONE_FILLS, PILLOW_STORY, pillowFromPrice } from "@/lib/pillow";
 import { fmt } from "@/lib/products";
 import type { PhotoKey } from "@/lib/photos";
 import { trackCustom } from "@/lib/pixel";
-import {
-  BUNDLE, BUNDLE_CONFIG, BUNDLE_HERO, SALE, SLEEP_SUITE, bundlePrice, giftsShowing, pillowsAreNew, saleEndLabel, salePrice,
-  sleepSuitePrice, suiteHref, suiteVsAshbury,
-} from "@/lib/sale";
+import { SALE, SLEEP_SUITE, countdownFrom, giftsShowing, pillowsAreNew, saleEndShort, salePrice, sleepSuitePrice, suiteHref, suiteVsAshbury } from "@/lib/sale";
 
 /* ---------- Time ---------- */
 
-/** Ticks every 30 seconds once mounted (null before), so countdowns and the sale switch-off happen in the browser. */
+/** Ticks every 30 seconds once mounted (null before), so the countdown moves and the sale switches off in the browser. */
 export function useNow(every = 30_000) {
   const [now, setNow] = useState<number | null>(null);
   useEffect(() => {
@@ -34,36 +31,6 @@ export function useNow(every = 30_000) {
   return now;
 }
 
-/** Time left in the sale: { d, h, m }, or null with no end date (or before mount, or once it's over). */
-export function useSaleLeft() {
-  const now = useNow();
-  if (!now || !SALE.endsAt) return null;
-  const ms = Date.parse(SALE.endsAt) - now;
-  if (ms <= 0) return null;
-  const mins = Math.floor(ms / 60_000);
-  return { d: Math.floor(mins / 1440), h: Math.floor((mins % 1440) / 60), m: mins % 60 };
-}
-
-/** "3d 14h" (or "14h 22m" on the last day). */
-export function CountdownShort() {
-  const l = useSaleLeft();
-  if (!l) return null;
-  return <span className="cd-short">Ends in {l.d > 0 ? `${l.d}d ${l.h}h` : `${l.h}h ${l.m}m`}</span>;
-}
-
-/** "Ends in 3 days 14 hours", large. */
-export function CountdownLarge() {
-  const l = useSaleLeft();
-  if (!l) return null;
-  const p = (n: number, w: string) => `${n} ${w}${n === 1 ? "" : "s"}`;
-  return (
-    <div className="cd-large" role="timer" aria-live="off">
-      <span className="eyebrow">{SALE.name} ends in</span>
-      <strong>{l.d > 0 ? `${p(l.d, "day")} ${p(l.h, "hour")}` : `${p(l.h, "hour")} ${p(l.m, "minute")}`}</strong>
-    </div>
-  );
-}
-
 /* ---------- Small pieces ---------- */
 
 export function NewBadge({ className = "" }: { className?: string }) {
@@ -71,7 +38,7 @@ export function NewBadge({ className = "" }: { className?: string }) {
 }
 
 /** Line icons for what a bundle includes. */
-function IncIcon({ k }: { k: "mattress" | "pillows" | "protector" | "glove" | "dog" }) {
+export function IncIcon({ k }: { k: "mattress" | "pillows" | "protector" | "glove" | "dog" }) {
   const P: Record<string, React.ReactNode> = {
     mattress: <><rect x="2.5" y="9" width="19" height="7" rx="1.5" /><path d="M2.5 12.5h19M5 16v2M19 16v2" /></>,
     pillows: <><path d="M4 9.5c3-2 13-2 16 0-1 2.2-1 3.8 0 6-3 2-13 2-16 0 1-2.2 1-3.8 0-6z" /></>,
@@ -79,203 +46,124 @@ function IncIcon({ k }: { k: "mattress" | "pillows" | "protector" | "glove" | "d
     glove: <><rect x="2" y="7" width="12" height="9" /><path d="M14 10h4l3 3v3h-7M6 19.5a1.5 1.5 0 1 0 0 .01M17 19.5a1.5 1.5 0 1 0 0 .01" /></>,
     dog: <><circle cx="7" cy="9" r="1.6" /><circle cx="11" cy="6.5" r="1.6" /><circle cx="15" cy="7" r="1.6" /><circle cx="18" cy="10.5" r="1.6" /><path d="M8.5 16.5c0-3 2-5 4.5-5s4.5 2.5 4 5c-.4 2-2.4 2.3-4 1.6-1.4-.6-2.4.4-3.4 0-.8-.3-1.1-.9-1.1-1.6z" /></>,
   };
-  return <svg className="inc-ico" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{P[k]}</svg>;
+  return <svg className="inc-ico" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{P[k]}</svg>;
 }
 
-/* ---------- 2a · The Sleep Suite hero ---------- */
+/* ---------- 1b · Hero: full-bleed photo, words over it ---------- */
 
-const QUEEN = MATTRESS.sizes.find((s) => s.id === "queen") ?? MATTRESS.sizes[0];
-/**
- * Hero image (Tessa, 05/11). It carries the title, "20% OFF" and labels in the picture, so it is shown whole (4:3,
- * never cropped) and, on a phone, the headline is read out but not repeated on screen.
- */
-export const SUITE_HERO: { photo: PhotoKey; alt: string } = { photo: "sleep-suite-labeled", alt: "The Complete Sleep Suite, 20% off: the Ashbury mattress in Sorrel with two matching pillows and a folded Mattress Protector on a stool" };
+/** A clean photo (no words in the image): the Ashbury in Sorrel on the light oak base, with two pillows and a throw. */
+export const SUITE_HERO: { photo: PhotoKey; alt: string } = { photo: "mattress-mocha-bedroom", alt: "The Ashbury in Sorrel on a light oak bed, made up with two pillows and a cream throw, in a sunlit bedroom" };
 
 export function SuiteHero({ as = "h1" }: { as?: "h1" | "h2" }) {
-  const q = sleepSuitePrice(QUEEN.id);
-  const from = sleepSuitePrice(0);
   const H = as;
   return (
     <section className="sh">
-      <div className="sh-media"><Photo src={SUITE_HERO.photo} label={SUITE_HERO.alt} fill preload sizes="(max-width: 860px) 100vw, 55vw" /></div>
+      <Photo src={SUITE_HERO.photo} label={SUITE_HERO.alt} className="sh-img" fill preload sizes="100vw" />
+      <div className="sh-scrim" />
       <div className="sh-txt">
-        <p className="sh-eyebrow">{SALE.name}{saleEndLabel() ? ` · ${saleEndLabel()}` : ` · ${SALE.percent}% off everything`}</p>
-        <H className="sh-h">{SLEEP_SUITE.name}</H>
-        <p className="sh-sub">The Ashbury, two pillows and a Mattress Protector, with free white glove delivery.</p>
-        <p className="sh-price">
-          <strong>{QUEEN.label} {fmt(q.sale)}</strong>
-          {q.sale !== q.list && <s>{fmt(q.list)}</s>}
-          <span>plus free white glove ({fmt(BUNDLE_CONFIG.whiteGloveValue)} value)</span>
-        </p>
-        <p className="sh-from">From {fmt(from.sale)} ({MATTRESS.sizes[0].label})</p>
+        <p className="sh-eyebrow">{SALE.name}</p>
+        <H className="sh-h">The Sleep Suite</H>
+        <p className="sh-sub">Mattress, pillows &amp; protector. Free white glove.</p>
         <div className="sh-btns">
           <Link href={SLEEP_SUITE.path} className="btn light">Shop the Sleep Suite</Link>
-          <Link href={SALE.path} className="sh-link">Shop all {SALE.name} →</Link>
+          <Link href={SALE.path} className="btn outline-light">Shop {SALE.name}</Link>
         </div>
-        <p className="sh-trust">{MATTRESS.guaranteeNights}-night trial · Ships in 3–4 days · Pay over time with Shop Pay</p>
       </div>
     </section>
   );
 }
 
-/* ---------- Cards for pillows and dog beds (with Quick add) ---------- */
+/* ---------- 1c · Offer band: the one place with a countdown ---------- */
 
-type Mini = { key: string; name: string; href: string; photo: PhotoKey; alt: string; from: number; quick: { kind: "pillow" | "dog-bed" | "nook"; fill?: string }; badge?: string; isNew?: boolean };
+export function OfferBand() {
+  const now = useNow();
+  if (!SALE.active) return null;
+  const end = SALE.endsAt ? Date.parse(SALE.endsAt) : null;
+  const live = now != null && end != null && now >= countdownFrom() && now < end;
+  let clock = "";
+  if (live) {
+    const mins = Math.floor((end - now) / 60_000);
+    const p = (n: number) => String(n).padStart(2, "0");
+    clock = `${p(Math.floor(mins / 1440))}D : ${p(Math.floor((mins % 1440) / 60))}H : ${p(mins % 60)}M`;
+  }
+  return (
+    <div className="ob">
+      <p className="ob-s">{live ? <span className="ob-clock" role="timer">{clock}</span> : saleEndShort()}{(live || saleEndShort()) && " · "}No code needed</p>
+      <p className="ob-t">{SALE.percent}% off everything</p>
+    </div>
+  );
+}
+
+/* ---------- 1d · NEW: the Ashwick Pillow (one slim band) ---------- */
+
+export function PillowSlim() {
+  if (!pillowsAreNew()) return null;
+  return (
+    <Link href={PILLOW_PATH} className="ps">
+      <span className="ps-img"><Photo src="pillow-sorrel" label="" fill sizes="48px" /></span>
+      <span className="ps-t"><NewBadge /> The Ashwick Pillow</span>
+      <span className="ps-go">Shop pillows →</span>
+    </Link>
+  );
+}
+
+/* ---------- Cards: image, name, price. A small + on the image opens Quick add. ---------- */
+
+export type Mini = { key: string; name: string; href: string; photo: PhotoKey; alt: string; from: number; quick?: { kind: "pillow" | "dog-bed" | "nook" | "mattress"; fill?: string }; isNew?: boolean; badge?: string; now?: number };
 
 const FILL_ORDER = ["living-wool-horse-hair", "living-wool-latex", "organic-cotton"];
 const PILLOW_MINIS: Mini[] = [...PILLOW_STANDALONE_FILLS]
   .sort((a, b) => FILL_ORDER.indexOf(a.id) - FILL_ORDER.indexOf(b.id))
-  .map((f) => ({
-    key: f.id, name: f.label, href: f.path, photo: PILLOW_STORY[f.id].card, alt: PILLOW_STORY[f.id].cardAlt, from: pillowFromPrice(f.id),
-    quick: { kind: "pillow", fill: f.id }, isNew: true,
-  }));
+  .map((f) => ({ key: f.id, name: f.label, href: f.path, photo: PILLOW_STORY[f.id].card, alt: PILLOW_STORY[f.id].cardAlt, from: pillowFromPrice(f.id), quick: { kind: "pillow", fill: f.id }, isNew: true }));
 const minSize = (sizes: { price: number }[]) => Math.min(...sizes.map((s) => s.price));
 const DOG_MINIS: Mini[] = [
   { key: DOG_BED.id, name: DOG_BED.title, href: DOG_BED.path, photo: (DOG_BED.colors.find((c) => c.id === DOG_BED.defaultColor) ?? DOG_BED.colors[0]).photos[0], alt: DOG_BED.title, from: minSize(DOG_BED.sizes), quick: { kind: "dog-bed" } },
   { key: NOOK.id, name: NOOK.title, href: NOOK.path, photo: (NOOK.colors.find((c) => c.id === NOOK.defaultColor) ?? NOOK.colors[0]).photos[0], alt: NOOK.title, from: minSize(NOOK.sizes), quick: { kind: "nook" } },
 ];
 
-function MiniCard({ it, badge }: { it: Mini; badge?: string }) {
+export function MiniCard({ it }: { it: Mini }) {
   const [open, setOpen] = useState(false);
   return (
     <div className="mc">
-      <Link href={it.href} className="mc-img" aria-label={it.name}>
-        <Photo src={it.photo} label={it.alt} fill sizes="(max-width: 640px) 62vw, 260px" />
-        <span className="mc-badges">{it.isNew && <NewBadge />}{badge && <span className="mc-badge">{badge}</span>}</span>
-      </Link>
+      <div className="mc-img">
+        <Link href={it.href} aria-label={it.name}><Photo src={it.photo} label={it.alt} fill sizes="(max-width: 640px) 46vw, 280px" /></Link>
+        {it.isNew ? <span className="mc-badge"><NewBadge /></span> : it.badge && <span className="mc-badge"><span className="new-badge">{it.badge}</span></span>}
+        {it.quick && <button type="button" className="mc-add" aria-label={`Quick add: ${it.name}`} onClick={() => setOpen(true)}>+</button>}
+      </div>
       <Link href={it.href} className="mc-name">{it.name}</Link>
-      <span className="mc-price"><Price price={it.from} from /></span>
-      <button type="button" className="mc-add" onClick={() => setOpen(true)}>Quick add</button>
-      {open && <QuickAddSheet kind={it.quick.kind} href={it.href} fill={it.quick.fill} onClose={() => setOpen(false)} />}
+      <span className="mc-price">{it.now != null && SALE.active ? <><span className="price-now">{fmtWhole(it.now)}</span> <s className="price-was">{fmtWhole(it.from)}</s></> : <Price price={it.from} whole />}</span>
+      {open && it.quick && <QuickAddSheet kind={it.quick.kind} href={it.href} fill={it.quick.fill} onClose={() => setOpen(false)} />}
     </div>
   );
 }
 
-/* ---------- 2b · New: the Ashwick Pillow ---------- */
-
-export function PillowStrip() {
-  if (!pillowsAreNew()) return null;
+/** A titled row of cards (Black Friday page). `pillows` fills it with the three pillow fills. */
+export function MiniGroup({ id, title, items = [], pillows }: { id: string; title: React.ReactNode; items?: Mini[]; pillows?: boolean }) {
   return (
-    <section className="pstrip">
-      <div className="wrap pstrip-head">
-        <p className="pstrip-t"><NewBadge /> Just launched: the Ashwick Pillow. Three natural fills, from {fmt(salePrice(Math.min(...PILLOW_MINIS.map((p) => p.from))))}.</p>
-        <Link href={PILLOW_PATH} className="ulink">Shop pillows →</Link>
-      </div>
-      <div className="mrail">{PILLOW_MINIS.map((it) => <MiniCard key={it.key} it={{ ...it, isNew: false }} />)}</div>
+    <section className="bf2-group" id={id}>
+      <h2 className="wrap bf2-gh">{title}</h2>
+      <div className="mrail">{(pillows ? PILLOW_MINIS : items).map((it) => <MiniCard key={it.key} it={it} />)}</div>
     </section>
   );
 }
 
-/* ---------- 2c / 3.6 · Gifts under $300 ---------- */
+/* ---------- Gifts under $300 ---------- */
 
-export function GiftsRow({ id, heading = "h2" }: { id?: string; heading?: "h2" | "h3" }) {
+export function GiftsRow({ id }: { id?: string }) {
   if (!giftsShowing()) return null;
-  const H = heading;
   const gifts = [...PILLOW_MINIS, ...DOG_MINIS].filter((g) => salePrice(g.from) < 300);
   return (
     <section className="gifts" id={id}>
       <div className="wrap gifts-head">
-        <div>
-          <H className="gifts-h">{SALE.active ? "Gifts under $300" : "Gifts"}</H>
-          <p className="gifts-sub">Ships in 1–2 days, in time for the holidays.</p>
-        </div>
-        {id !== "gifts" && <Link href={`${SALE.active ? SALE.path : PILLOW_PATH}${SALE.active ? "#gifts" : ""}`} className="ulink">Shop all gifts →</Link>}
+        <h2 className="gifts-h">{SALE.active ? "Gifts under $300" : "Gifts"}</h2>
+        <p className="gifts-sub">Ships in 1–2 days.</p>
       </div>
-      <div className="mrail">{gifts.map((it) => <MiniCard key={it.key} it={it} badge="Gift" />)}</div>
+      <div className="mrail">{gifts.map((it) => <MiniCard key={it.key} it={it} />)}</div>
     </section>
   );
 }
 
-/* ---------- 2d · The bundles ---------- */
-
-type Bundle = { key: string; title: string; href: string; photo: PhotoKey; alt: string; inc: [Parameters<typeof IncIcon>[0]["k"], string][]; list: number; sale: number; best?: boolean };
-
-function bundles(): Bundle[] {
-  const m0 = MATTRESS.sizes[0].price;
-  const bed = BUNDLE_CONFIG.beddingSet.price;
-  const dog0 = DOG_BED.sizes[0].price;
-  const ss = sleepSuitePrice(0);
-  const glove = BUNDLE_CONFIG.whiteGloveIncluded ? BUNDLE_CONFIG.whiteGloveValue : 0;
-  return [
-    {
-      key: "suite", title: SLEEP_SUITE.name, href: SLEEP_SUITE.path, photo: "sleep-suite-flint", alt: "The Complete Sleep Suite: an Ashbury mattress in Flint with matching pillows and a folded bedding set",
-      inc: [["mattress", "The Ashbury"], ["pillows", "2 pillows"], ["protector", "Mattress Protector"], ["glove", "Free white glove"]],
-      list: ss.list + glove, sale: ss.sale, best: true,
-    },
-    {
-      key: "bf", title: BUNDLE.title, href: BUNDLE.path, photo: BUNDLE_HERO.photo, alt: BUNDLE_HERO.alt,
-      inc: [["mattress", "The Ashbury"], ["dog", "Ashbury Dog Bed"], ["pillows", "2 pillows"], ["protector", "Mattress Protector"], ["glove", "Free white glove"]],
-      list: m0 + dog0 + bed + glove, sale: bundlePrice(m0) + bundlePrice(dog0) + bundlePrice(bed),
-    },
-  ];
-}
-
-export function BundlesBand() {
-  if (!SALE.active) return null;
-  return (
-    <section className="bb">
-      <div className="wrap">
-        <p className="eyebrow">{SALE.name} bundles</p>
-        <h2 className="bb-h">The best value of the year.</h2>
-        <div className="bb-grid">
-          {bundles().map((b) => (
-            <Link key={b.key} href={b.href} className={"bb-card" + (b.best ? " best" : "")}>
-              <span className="bb-img"><Photo src={b.photo} label={b.alt} fill sizes="(max-width: 860px) 100vw, 640px" />{b.best && <span className="bb-best">Best value</span>}</span>
-              <span className="bb-t">{b.title}</span>
-              <ul className="bb-inc">{b.inc.map(([k, t]) => <li key={t}><IncIcon k={k} />{t}</li>)}</ul>
-              <span className="bb-price">From <strong>{fmt(b.sale)}</strong> <s>{fmt(b.list)}</s></span>
-              <span className="bb-save">You save {fmt(Math.round((b.list - b.sale) * 100) / 100)}</span>
-              <span className="btn full">{b.best ? "Shop the Sleep Suite" : "Shop the bundle"}</span>
-            </Link>
-          ))}
-        </div>
-        <p className="bb-fine">From prices are for a {MATTRESS.sizes[0].label}, and include the {fmt(BUNDLE_CONFIG.whiteGloveValue)} white glove delivery the bundles get free.</p>
-      </div>
-    </section>
-  );
-}
-
-/* ---------- 3.4 / 3.5 · What's included, with a size picker ---------- */
-
-export function BundleDetail({ which }: { which: "suite" | "bf" }) {
-  const [sizeId, setSize] = useState<string>("queen");
-  const m = MATTRESS.sizes.find((s) => s.id === sizeId) ?? MATTRESS.sizes[0];
-  const bed = BUNDLE_CONFIG.beddingSet.price;
-  const glove = BUNDLE_CONFIG.whiteGloveValue;
-  const dog = DOG_BED.sizes[0];
-  const rows: [string, number][] = which === "suite"
-    ? [[`The Ashbury, ${m.label}`, m.price], ["Two pillows + Mattress Protector", bed]]
-    : [[`The Ashbury, ${m.label}`, m.price], [`${DOG_BED.title}, ${dog.label}`, dog.price], ["Two pillows + Mattress Protector", bed]];
-  const goods = rows.reduce((t, [, p]) => t + p, 0);
-  const price = rows.reduce((t, [, p]) => t + bundlePrice(p), 0);
-  const total = goods + glove;
-  const title = which === "suite" ? SLEEP_SUITE.name : BUNDLE.title;
-  const href = which === "suite" ? suiteHref({ sizeId }) : BUNDLE.path;
-  return (
-    <section className={"bd" + (which === "suite" ? " best" : "")} id={which === "suite" ? "suite" : "best-friends"} aria-labelledby={`bd-${which}`}>
-      <div className="bd-img"><Photo src={which === "suite" ? "sleep-suite-flint" : BUNDLE_HERO.photo} label={which === "suite" ? "The Complete Sleep Suite: an Ashbury mattress in Flint with matching pillows and a folded bedding set" : BUNDLE_HERO.alt} fill sizes="(max-width: 860px) 100vw, 560px" />{which === "suite" && <span className="bb-best">Best value</span>}</div>
-      <div className="bd-t">
-        <h2 className="bd-h" id={`bd-${which}`}>{title}</h2>
-        <p className="bd-l">Mattress size</p>
-        <div className="bd-sizes" role="group" aria-label="Mattress size">
-          {MATTRESS.sizes.map((z) => <button key={z.id} type="button" className={sizeId === z.id ? "on" : ""} aria-pressed={sizeId === z.id} onClick={() => setSize(z.id)}>{z.label}</button>)}
-        </div>
-        <table className="bd-table">
-          <tbody>
-            {rows.map(([n, p]) => <tr key={n}><th scope="row">{n}</th><td>{fmt(p)}</td></tr>)}
-            <tr><th scope="row">White glove delivery</th><td><s>{fmt(glove)}</s> Free</td></tr>
-            <tr className="bd-total"><th scope="row">Total value</th><td><s>{fmt(total)}</s></td></tr>
-            <tr className="bd-now"><th scope="row">{SALE.active ? `${SALE.name} price` : "Your price"}</th><td>{fmt(price)}</td></tr>
-          </tbody>
-        </table>
-        <p className="bd-save">You save {fmt(Math.round((total - price) * 100) / 100)}{which === "bf" ? ` (with a ${dog.label} dog bed; choose its size on the next page)` : ""}</p>
-        <Link href={href} className="btn full">{which === "suite" ? "Shop the Sleep Suite" : "Shop the bundle"}</Link>
-      </div>
-    </section>
-  );
-}
-
-/* ---------- 4 · On the Ashbury page: switch to the Suite ---------- */
+/* ---------- On the Ashbury page: switch to the Suite ---------- */
 
 export function SuiteUpsell({ sizeId, feelId, colorId }: { sizeId: string; feelId: string; colorId: string }) {
   const { diff } = suiteVsAshbury(sizeId);
@@ -294,7 +182,7 @@ export function SuiteUpsell({ sizeId, feelId, colorId }: { sizeId: string; feelI
   );
 }
 
-/* ---------- 6 · Sticky "Shop" bar on the homepage and Black Friday page ---------- */
+/* ---------- Sticky "Shop" bar on the homepage and Black Friday page ---------- */
 
 /** Shows once `.sh` (the hero) has scrolled away and hides at the footer; hides the chat button while it shows. */
 export function StickySuite() {
@@ -316,22 +204,22 @@ export function StickySuite() {
   if (!SALE.active) return null;
   return (
     <div className={"ss-bar" + (on ? " on" : "")} aria-hidden={!on}>
-      <span className="ss-t"><strong>Sleep Suite</strong> · from {fmt(sleepSuitePrice(0).sale)}</span>
+      <span className="ss-t"><strong>Sleep Suite</strong> · from {fmtWhole(sleepSuitePrice(0).sale)}</span>
       <Link href={SLEEP_SUITE.path} className="btn light ss-btn" tabIndex={on ? 0 : -1}>Shop</Link>
     </div>
   );
 }
 
-/* ---------- 5 · "Complete the bed: add pillows" (Ashbury page) and extra pillows (cart) ---------- */
+/* ---------- "Complete the bed: add pillows" (Ashbury page) ---------- */
 
-function PillowAddLine({ it, onAdded }: { it: Mini; onAdded?: () => void }) {
+function PillowAddLine({ it }: { it: Mini }) {
   const [open, setOpen] = useState(false);
   return (
     <li className="pa-line">
       <Link href={it.href} className="pa-img" aria-label={it.name}><Photo src={it.photo} label={it.alt} fill sizes="56px" /></Link>
-      <span className="pa-t"><Link href={it.href}>{it.name}</Link><small><Price price={it.from} from /></small></span>
+      <span className="pa-t"><Link href={it.href}>{it.name}</Link><small><Price price={it.from} from whole /></small></span>
       <button type="button" className="pa-add" onClick={() => setOpen(true)}>Quick add</button>
-      {open && <QuickAddSheet kind="pillow" href={it.href} fill={it.quick.fill} onClose={() => { setOpen(false); onAdded?.(); }} />}
+      {open && <QuickAddSheet kind="pillow" href={it.href} fill={it.quick?.fill} onClose={() => setOpen(false)} />}
     </li>
   );
 }
@@ -345,5 +233,5 @@ export function PillowAddRow({ title = "Complete the bed: add pillows" }: { titl
   );
 }
 
-/** Pillow fills, cheapest sale "from" price, for "from $103" lines. */
-export const pillowsFrom = () => salePrice(Math.min(...PILLOW_MINIS.map((p) => p.from)));
+/** Pillow fills, cheapest sale "from" price, whole dollars, for "from $103" lines. */
+export const pillowsFrom = () => Math.floor(salePrice(Math.min(...PILLOW_MINIS.map((p) => p.from))));
