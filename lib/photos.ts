@@ -408,6 +408,11 @@ export const PHOTOS = {
   "mattress-room-fleece-clean": mattressRoomFleeceClean,
   "mattress-room-flax-clean": mattressRoomFlaxClean,
   "mattress-room-sorrel-clean": mattressRoomSorrelClean,
+  // The Holiday Edit (/black-friday). Stand-ins until the seasonal photography arrives: point these at the new files.
+  "holiday-hero": hero,
+  "holiday-suite": mattressMochaBedroom,
+  "holiday-best-friends": dogBedSorrelRoom,
+  "holiday-gifts": pillowsHero,
   "mattress-swatch-khaki": mattressSwatchKhaki,
   "pembroke-1": pembroke1,
   "pembroke-hero": pembrokeHero,

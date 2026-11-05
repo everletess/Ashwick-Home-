@@ -58,6 +58,15 @@ export function BundleBuilder() {
   const [feel, setFeel] = useState(M.feels[0].id);
   const [mColor, setMColor] = useState(M.defaultColor);
   const [dSize, setDSize] = useState("medium");
+  // The Holiday Edit links here with ?size=&dog=, so the shopper keeps the sizes they priced.
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search);
+    const size = q.get("size"), dog = q.get("dog");
+    /* eslint-disable react-hooks/set-state-in-effect -- read once from the address after mount */
+    if (size && M.sizes.some((z) => z.id === size)) setMSize(size);
+    if (dog && D.sizes.some((z) => z.id === dog)) setDSize(dog);
+    /* eslint-enable react-hooks/set-state-in-effect */
+  }, []);
   const [dColor, setDColor] = useState(D.defaultColor);
   const [pillow, setPillow] = useState<string>(BUNDLE_PILLOWS[0].id as string);
 
