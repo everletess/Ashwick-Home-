@@ -2306,3 +2306,11 @@ button.chip{cursor:pointer}
 @media (min-width:861px){.hx-gifts .hx-rail{grid-auto-columns:calc((min(100vw,1280px) - 2 * var(--gut) - 2 * 24px) / 3)}}
 .hx-gift a.hx-add{display:inline-flex;align-items:center;white-space:nowrap}
 @media (max-width:860px){.hx-gift-row{flex-direction:column;align-items:stretch;gap:10px}.hx-gift-row .hx-price{flex-wrap:nowrap}.hx-gift .hx-add{width:100%;justify-content:center;display:inline-flex;align-items:center}}
+/* Holiday delivery: order-by dates by category */
+.hx-deliv-in{flex-direction:column;gap:12px;padding-top:36px;padding-bottom:36px}
+.hx-deliv-dates{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:10px 0}
+.hx-deliv-dates li{display:flex;flex-direction:column;align-items:center;gap:4px;padding:0 32px;border-left:1px solid rgba(246,242,236,.3)}
+.hx-deliv-dates li:first-child{border-left:0}
+.hx-deliv-dates span{font:400 11px var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--oat)}
+.hx-deliv-dates strong{font:300 30px/1.1 var(--serif)}
+@media (max-width:860px){.hx-deliv-dates{flex-direction:column;gap:14px;width:100%}.hx-deliv-dates li{border-left:0;padding:0}.hx-deliv-dates strong{font-size:26px}}
