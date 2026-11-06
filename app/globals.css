@@ -2342,3 +2342,10 @@ button.chip{cursor:pointer}
 .ssp-pillow-t{font:400 15px/1.3 var(--sans)}
 .ssp-pillow-d{font:300 13px/1.4 var(--sans);color:var(--walnut)}
 @media (max-width:640px){.ssp-pillows{grid-template-columns:minmax(0,1fr)}.ssp-step-h{font-size:12px;letter-spacing:.12em}}
+/* Sleep Suite deal: Choose your options (to the bundle page) leads; Quick add to cart is secondary and says what it adds */
+.hx-h2-link{color:inherit}
+.hx-h2-link:hover{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:8px}
+.hx-quick{min-height:52px;padding:0 24px;border:1px solid var(--ink);background:transparent;color:var(--ink);font:500 11px var(--sans);letter-spacing:.26em;text-transform:uppercase;cursor:pointer}
+.hx-quick:hover{background:var(--ink);color:var(--alabaster)}
+.hx-quick-note{margin:10px 0 0;font:300 13px/1.5 var(--sans);color:var(--walnut)}
+@media (max-width:860px){.hx-quick{width:100%}}
