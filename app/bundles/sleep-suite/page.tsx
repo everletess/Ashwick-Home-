@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { SleepSuiteBuilder } from "@/components/bundle-view";
+import { Reviews } from "@/components/reviews";
 import { SALE, SLEEP_SUITE } from "@/lib/sale";
 
 export const metadata: Metadata = {
@@ -14,6 +15,7 @@ export default function SleepSuitePage() {
   return (
     <main>
       <SleepSuiteBuilder />
+      <Reviews product="ashbury" name="Ashbury" />
     </main>
   );
 }

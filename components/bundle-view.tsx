@@ -239,9 +239,10 @@ export function SleepSuiteBuilder() {
   const feelLabel = M.feels.find((f) => f.id === feel)!.label;
   const rv = reviewsFor("ashbury");
   // Clean photos only (no words in the picture), light oak base: the room shot for the chosen color, pillows, studio, cutaway.
-  const room: PhotoKey = mc.id === "mocha" ? "mattress-mocha-bedroom" : mc.photos[0];
+  // The holiday set (Tessa's winter bedroom in each colorway), the same photos as the Black Friday page's Sleep Suite deal.
+  const room: PhotoKey = ({ natural: "holiday-suite-fleece", dove: "holiday-suite-flint", safari: "holiday-suite-flax", mocha: "holiday-suite" } as Record<string, PhotoKey>)[mc.id] ?? mc.photos[0];
   const shots: GalleryShot[] = [
-    { photo: room, alt: `The Ashbury in ${mc.label} on a light oak bed, made up with two pillows` },
+    { photo: room, alt: `The Ashbury in ${mc.label} made up with matching pillows and a throw, in a winter bedroom with a wreath in the window` },
     { photo: "pillow-hero", alt: "The Ashwick Pillow" },
     { photo: "mattress-protector", alt: "The Mattress Protector fitted over an Ashbury in Sorrel, with a folded spare beside it" },
     { photo: mc.photos[1] ?? mc.cutaway, alt: `The Ashbury in ${mc.label}, hand-tufted` },

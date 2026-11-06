@@ -22,6 +22,21 @@ export type Review = {
 };
 
 export const REVIEWS: Review[] = [
+  // Sent by Tessa (06/11). Star ratings not stated; shown as 5.
+  {
+    product: "ashbury",
+    rating: 5,
+    body: "The Ashbury has been the best mattress I\u2019ve had. The same materials as the Hastens, at a fraction of a cost. And the team is super helpful, love the personalized service. Thanks Ashwick!",
+    author: "Jody R.",
+    verified: false,
+  },
+  {
+    product: "ashbury",
+    rating: 5,
+    body: "Got a message from the founder as I was looking, excellent customer service. I will be back.",
+    author: "Lincoln S.",
+    verified: false,
+  },
   {
     product: "ashbury",
     rating: 5,
