@@ -2315,3 +2315,30 @@ button.chip{cursor:pointer}
 .hx-deliv-dates strong{font:300 30px/1.1 var(--serif)}
 @media (max-width:860px){.hx-deliv-dates{flex-direction:column;gap:14px;width:100%}.hx-deliv-dates li{border-left:0;padding:0}.hx-deliv-dates strong{font-size:26px}}
 @media (max-width:860px){#best-friends .hx-deal-img>img{object-position:96% 50%}}
+/* Cart: everything but the subtotal and Check out scrolls with the items, so a phone always has room to see the cart */
+.drawer-more{display:flex;flex-direction:column;gap:12px;padding:20px 0 24px;margin-top:4px;border-top:1px solid var(--hair)}
+.drawer-more .fine{margin:0}
+.drawer-more .save-cart{margin-top:0}
+.drawer-f{gap:12px}
+.drawer-f .sub{margin:0}
+@media (max-width:640px){
+  .drawer{max-height:88dvh}
+  .drawer-f{padding:12px 20px calc(14px + env(safe-area-inset-bottom));gap:10px}
+  .drawer-more{padding:16px 0 20px}
+}
+.drawer-more{border-top:0;margin-top:0;padding-top:12px}
+/* Sleep Suite page: four numbered steps; the pillow set as clear choices */
+.ssp-steps{gap:28px}
+.ssp-step .opt-l{align-items:center}
+.ssp-step-h{display:inline-flex;align-items:center;gap:12px;font:400 13px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--ink)}
+.ssp-step-n{flex:none;width:28px;height:28px;border-radius:50%;background:var(--ink);color:var(--alabaster);display:inline-flex;align-items:center;justify-content:center;font:400 13px/1 var(--sans);letter-spacing:0}
+.ssp-incl{font:500 11px var(--sans);letter-spacing:.18em;text-transform:uppercase;font-style:normal;color:var(--alabaster);background:var(--sage);padding:5px 10px}
+.ssp-step-note{margin:0 0 12px;font:300 15px/1.5 var(--sans);color:var(--walnut)}
+.ssp-pillows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;width:100%}
+.ssp-pillow{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-height:44px;padding:14px 14px 14px 44px;border:1px solid var(--hair);background:#fff;color:var(--ink);text-align:left;cursor:pointer}
+.ssp-pillow.on{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.ssp-pillow-dot{position:absolute;left:14px;top:16px;width:18px;height:18px;border-radius:50%;border:1px solid var(--walnut)}
+.ssp-pillow.on .ssp-pillow-dot{border-color:var(--ink);box-shadow:inset 0 0 0 4px #fff;background:var(--ink)}
+.ssp-pillow-t{font:400 15px/1.3 var(--sans)}
+.ssp-pillow-d{font:300 13px/1.4 var(--sans);color:var(--walnut)}
+@media (max-width:640px){.ssp-pillows{grid-template-columns:minmax(0,1fr)}.ssp-step-h{font-size:12px;letter-spacing:.12em}}

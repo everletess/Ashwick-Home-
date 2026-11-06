@@ -545,27 +545,13 @@ export function CartDrawer() {
               })
             ),
           )}
-        </div>
-        {cart.items.length > 0 && (
-          <div className="drawer-f">
+          {cart.items.length > 0 && (
+          // Scrolls with the items: only the subtotal and Check out stay pinned (a phone keeps room for the cart).
+          <div className="drawer-more">
             <CartUpsell items={cart.items} onNavigate={close} />
-            {orderDelivery(cart.items) > 0 && (
-              <div className="sub" style={{ marginBottom: 4 }}>
-                <span className="eyebrow">White glove delivery, furniture (one flat charge per order)</span>
-                <span className="sub-v">{fmt(orderDelivery(cart.items))}</span>
-              </div>
-            )}
-            <div className="sub">
-              <span className="eyebrow">Subtotal</span>
-              <span className="sub-v">{fmt(cart.subtotal)}</span>
-            </div>
             <p className="fine">
               {cartNote(cart.items)}
             </p>
-            {checkoutError && <p className="fine" style={{ color: "var(--err, #b00)" }}>{checkoutError}</p>}
-            <button className="btn full" onClick={checkout} disabled={checking}>
-              {checking ? "Redirecting…" : "Check out"}
-            </button>
             <p className="fine" style={{ textAlign: "center" }}>
               Questions? Call or text <a href={`tel:${STUDIO_PHONE.replace(/\D/g, "")}`} style={{ textDecoration: "underline" }}>{STUDIO_PHONE}</a>
             </p>
@@ -593,6 +579,25 @@ export function CartDrawer() {
                 )}
               </form>
             )}
+          </div>
+        )}
+        </div>
+        {cart.items.length > 0 && (
+          <div className="drawer-f">
+            {orderDelivery(cart.items) > 0 && (
+              <div className="sub" style={{ marginBottom: 4 }}>
+                <span className="eyebrow">White glove delivery, furniture (one flat charge per order)</span>
+                <span className="sub-v">{fmt(orderDelivery(cart.items))}</span>
+              </div>
+            )}
+            <div className="sub">
+              <span className="eyebrow">Subtotal</span>
+              <span className="sub-v">{fmt(cart.subtotal)}</span>
+            </div>
+            {checkoutError && <p className="fine" style={{ color: "var(--err, #b00)" }}>{checkoutError}</p>}
+            <button className="btn full" onClick={checkout} disabled={checking}>
+              {checking ? "Redirecting…" : "Check out"}
+            </button>
           </div>
         )}
       </aside>
