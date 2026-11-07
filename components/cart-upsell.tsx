@@ -35,7 +35,7 @@ export function CartUpgrade() {
   const line = loose[0];
   const { size, feel, color } = ashburyChoice(line);
   const { diff } = suiteVsAshbury(size.id);
-  const what = "two pillows, a Mattress Protector and free white glove delivery";
+  const what = "two pillows and a Mattress Protector";
   const lead = !SALE.active || diff === 0
     ? <><strong>Complete your bed with the Sleep Suite:</strong> {what}.</>
     : diff < 0

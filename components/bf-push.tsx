@@ -174,7 +174,7 @@ export function GiftsRow({ id }: { id?: string }) {
 export function SuiteUpsell({ sizeId, feelId, colorId }: { sizeId: string; feelId: string; colorId: string }) {
   const { diff } = suiteVsAshbury(sizeId);
   const href = suiteHref({ sizeId, feelId, colorId });
-  const what = "two pillows, a Mattress Protector and free white glove delivery";
+  const what = "two pillows and a Mattress Protector";
   const lead = !SALE.active || diff === 0
     ? <><strong>Complete your bed with the Sleep Suite:</strong> {what}.</>
     : diff < 0

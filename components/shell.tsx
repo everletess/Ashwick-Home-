@@ -164,6 +164,7 @@ function cartNote(items: { id: string; delivery?: { label: string; price: number
   const dogBeds = items.some((i) => isDogBed(i.id));
   return sale + [
     items.some((i) => deliveryFor(i)?.price) && "Includes white glove delivery.",
+    items.some((i) => i.id === MATTRESS.id) && !items.some((i) => deliveryFor(i)?.price) && "White glove delivery is free during the sale.",
     dogBeds && "Dog beds ship free.",
     (mattress || dogBeds) && "Ships within 3–4 days.",
     mattress && "Our delivery team will contact you to schedule your mattress delivery.",

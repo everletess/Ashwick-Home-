@@ -132,7 +132,8 @@ export const salePrice = (n: number) => (SALE.active ? Math.round(n * (100 - SAL
 export const bundlePrice = salePrice;
 
 /** Standalone mattresses always keep the usual white glove charge; the bundle's mattress line carries a free one. */
-export const mattressDelivery = () => MATTRESS.delivery;
+/** While the sale runs, white glove on the standalone mattress is free too; it goes back to the usual charge when the sale ends. */
+export const mattressDelivery = () => ({ label: MATTRESS.delivery.label, price: SALE.active ? 0 : MATTRESS.delivery.price });
 export const bundleMattressDelivery = () => ({ label: MATTRESS.delivery.label, price: BUNDLE_CONFIG.whiteGloveIncluded ? 0 : MATTRESS.delivery.price });
 
 /** A cart line's delivery as stored. */
@@ -202,7 +203,7 @@ export function sleepSuiteLines(o: { sizeId: string; feelId: string; colorId: st
 export function suiteVsAshbury(sizeId: string) {
   const m = MATTRESS.sizes.find((s) => s.id === sizeId) ?? MATTRESS.sizes[0];
   const suite = sleepSuitePrice(m.id).sale;
-  const ashbury = salePrice(m.price) + MATTRESS.delivery.price;
+  const ashbury = salePrice(m.price) + mattressDelivery().price;
   return { size: m, suite, ashbury, diff: Math.round((suite - ashbury) * 100) / 100 };
 }
 

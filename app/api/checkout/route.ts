@@ -14,7 +14,7 @@ import { NextResponse } from "next/server";
 import { createCheckout, fetchProductVariants, type ShopifyVariant } from "@/lib/shopify";
 import { MATTRESS } from "@/lib/mattress";
 import { DOG_BED_ID, NOOK } from "@/lib/dog-bed";
-import { BUNDLE_CONFIG } from "@/lib/sale";
+import { BUNDLE_CONFIG, SALE } from "@/lib/sale";
 import { PILLOW_ID } from "@/lib/pillow";
 
 export type CheckoutRequestLine = {
@@ -183,7 +183,7 @@ export async function POST(req: Request) {
         };
       }
       if (line.productId === MATTRESS.id) {
-        const inBundle = line.options.some(([k]) => k === "_Bundle");
+        const inBundle = line.options.some(([k]) => k === "_Bundle") || SALE.active; // sale: every mattress rides the free white glove product
         return {
           variantId: mattressVariant(variants, line.options, inBundle).variantId,
           quantity: line.qty,
