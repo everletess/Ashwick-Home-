@@ -10,6 +10,7 @@ import { GUARANTEE_PATH, MATTRESS, MATTRESS_PATH as MATTRESS_PATH_ABS } from "@/
 import { ASHBURY_PATH } from "@/lib/materials";
 import { PHOTOS } from "@/lib/photos";
 import { fmt } from "@/lib/products";
+import { SALE } from "@/lib/sale";
 import { reviewsFor } from "@/lib/reviews";
 import { MATTRESS_DESCRIPTION, MATTRESS_TITLE, abs, mattressItems } from "@/lib/mattress-feed";
 
@@ -82,7 +83,7 @@ function productJsonLd() {
         itemCondition: "https://schema.org/NewCondition",
         shippingDetails: {
           "@type": "OfferShippingDetails",
-          shippingRate: { "@type": "MonetaryAmount", value: M.delivery.price, currency: "USD" },
+          shippingRate: { "@type": "MonetaryAmount", value: SALE.active ? 0 : M.delivery.price, currency: "USD" },
           shippingDestination: { "@type": "DefinedRegion", addressCountry: "US" },
           deliveryTime: {
             "@type": "ShippingDeliveryTime",
@@ -126,7 +127,7 @@ export default function MattressPage() {
     [
       "Delivery",
       <p className="body small" key="d">
-        Made to order and ships within 3–4 days. White glove delivery is $200; our delivery team will contact you to schedule it once your mattress is made. Every mattress arrives wrapped in biodegradable paper.
+        Made to order and ships within 3–4 days. {SALE.active ? "White glove delivery is free during the sale (otherwise $200)" : "White glove delivery is $200"}; our delivery team will contact you to schedule it once your mattress is made. Every mattress arrives wrapped in biodegradable paper.
       </p>,
     ],
     [

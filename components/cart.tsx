@@ -4,7 +4,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import { track } from "@/lib/pixel";
 import { trackAddedToCart } from "@/lib/subscribe";
 import type { PhotoKey } from "@/lib/photos";
-import { bundlePrice, bundleTitleFor, orderDelivery, salePrice } from "@/lib/sale";
+import { SALE, bundlePrice, bundleTitleFor, orderDelivery, salePrice } from "@/lib/sale";
 
 /** The bundle id a line belongs to (all lines of the bundle share it), if any. */
 export const bundleIdOf = (l: { options: [string, string][] }) =>
@@ -16,7 +16,7 @@ export const unitTotal = (l: { id: string; price: number | null; options?: [stri
 
 import { isFurnitureLine } from "@/lib/sale";
 /** A mattress line carries its own delivery per unit; furniture delivery is per order. */
-const mattressDeliveryOf = (l: { id: string; delivery?: { label: string; price: number } }) => (isFurnitureLine(l) ? 0 : (l.delivery?.price ?? 0));
+const mattressDeliveryOf = (l: { id: string; delivery?: { label: string; price: number } }) => (isFurnitureLine(l) || SALE.active ? 0 : (l.delivery?.price ?? 0));
 
 export type CartLine = {
   lineId: string;

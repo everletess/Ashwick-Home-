@@ -18,7 +18,7 @@ import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
 import type { PhotoKey } from "@/lib/photos";
 import { PILLOW_PATH } from "@/lib/pillow";
 import { getProduct } from "@/lib/products";
-import { BUNDLE, BUNDLE_PILLOWS, SALE, SLEEP_SUITE, countdownFrom, saleEndShort, salePrice, sleepSuiteLines } from "@/lib/sale";
+import { BUNDLE, BUNDLE_PILLOWS, SALE, SLEEP_SUITE, countdownFrom, mattressDelivery, saleEndShort, salePrice, sleepSuiteLines } from "@/lib/sale";
 
 /** The page's photographs: Tessa's (05/11), except the Gifts band, a stand-in for now. */
 export const HOLIDAY_PHOTOS: Record<"hero" | "suite" | "bestFriends" | "gifts", { photo: PhotoKey; alt: string }> = {
@@ -142,7 +142,7 @@ export function SuiteDeal({ prices }: { prices: LivePrices }) {
   const m = prices.mattress[size] ?? MATTRESS.sizes[0].price;
   const list = m + prices.bedding;
   const sale = salePrice(m) + salePrice(prices.bedding);
-  const ashburyAlone = salePrice(m) + MATTRESS.delivery.price;
+  const ashburyAlone = salePrice(m) + mattressDelivery().price;
   // The first photo follows the color swatch (Tessa's winter bedroom in each colorway); Sorrel is HOLIDAY_PHOTOS.suite.
   const colorLabel = MATTRESS.colors.find((c) => c.id === color)?.label ?? "";
   const roomPhoto = SUITE_ROOM_BY_COLOR[color] ?? HOLIDAY_PHOTOS.suite.photo;

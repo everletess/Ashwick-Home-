@@ -157,7 +157,7 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
         <RatingLink product="ashbury" />
         <div className="pdp-collection">{M.collection}</div>
         <div className="pdp-price"><Price price={sz.price} /></div>
-        <p className="fine delivery">+ {fmt(M.delivery.price)} {M.delivery.label.toLowerCase()}</p>
+        <p className="fine delivery">{SALE.active ? "Free white glove delivery during the sale" : `+ ${fmt(M.delivery.price)} ${M.delivery.label.toLowerCase()}`}</p>
         <SaleNote />
         <p className="fine price-assure">
           <strong>{M.guaranteeNights}-night trial</strong> with free pickup and a full refund. Or pay over time with Shop Pay Installments, subject to approval.
@@ -190,7 +190,7 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
         </div>
 
         <div className="designed">
-          <ShipsFast when="3–4 days" note={`Handmade to order in the USA. ${M.shipping}`} />
+          <ShipsFast when="3–4 days" note={`Handmade to order in the USA. ${SALE.active ? "Free white glove delivery during the sale. Our delivery team will contact you to schedule it once your mattress is made." : M.shipping}`} />
           {M.available ? (
             <>
               <SuiteUpsell sizeId={size} feelId={feel} colorId={color} />
@@ -198,7 +198,7 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
               <button className="btn full btn-ghost" onClick={add} disabled={buying}>Add to cart</button>
               {buyError && <p className="fine" role="alert" style={{ color: "var(--err, #b00)", textAlign: "center" }}>{buyError}</p>}
               <PillowAddRow />
-              <p className="fine buy-direct">Goes straight to secure checkout. + {fmt(M.delivery.price)} {M.delivery.label.toLowerCase()}, {M.guaranteeNights}-night trial.</p>
+              <p className="fine buy-direct">Goes straight to secure checkout. {SALE.active ? "Free white glove delivery during the sale" : `+ ${fmt(M.delivery.price)} ${M.delivery.label.toLowerCase()}`}, {M.guaranteeNights}-night trial.</p>
               <BuyBoxEmail />
               <TrustRow items={[["hand", "Handmade to order"], ["truck", "White glove delivery"], ["moon", `${M.guaranteeNights}-night trial`]]} />
               <StickyBuy
