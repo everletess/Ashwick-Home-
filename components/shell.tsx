@@ -159,7 +159,8 @@ const isDogBed = (id: string) => id === DOG_BED_ID || id === NOOK.id;
 /** The line under the cart subtotal: delivery (white glove for furniture and the mattress, free for dog beds), ship time and payment. */
 function cartNote(items: { id: string; delivery?: { label: string; price: number } }[]) {
   const sale = SALE.active ? `${SALE.name}: ${SALE.percent}% off is applied automatically at checkout. ` : "";
-  if (!items.every((i) => i.delivery || isDogBed(i.id))) return sale + "Pay in full at checkout, or over time with Shop Pay Installments, subject to approval. Taxes and shipping calculated at checkout.";
+  const freeGlove = SALE.active && items.some((i) => i.id === MATTRESS.id) ? "White glove delivery on the mattress is free during the sale. " : "";
+  if (!items.every((i) => i.delivery || isDogBed(i.id))) return sale + freeGlove + "Pay in full at checkout, or over time with Shop Pay Installments, subject to approval. Taxes and shipping calculated at checkout.";
   const mattress = items.some((i) => i.id === MATTRESS.id);
   const dogBeds = items.some((i) => isDogBed(i.id));
   return sale + [
