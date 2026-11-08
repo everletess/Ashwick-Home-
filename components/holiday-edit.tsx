@@ -151,6 +151,9 @@ export function SuiteDeal({ prices }: { prices: LivePrices }) {
     { photo: "pillow-hero", alt: "The Ashwick Pillow" },
     { photo: "mattress-protector", alt: "The Mattress Protector fitted over an Ashbury in Sorrel, with a folded spare beside it" },
   ];
+  const sizeLabel = MATTRESS.sizes.find((z) => z.id === size)?.label ?? "";
+  const pageHref = `${SLEEP_SUITE.path}?size=${size}&color=${color}`;
+  const quickWhat = `${sizeLabel}, ${colorLabel}, ${MATTRESS.feels[0].label.toLowerCase()} feel and ${BUNDLE_PILLOWS[0].label} pillows`;
   const add = () => {
     cart.addMany(sleepSuiteLines({ sizeId: size, feelId: MATTRESS.feels[0].id, colorId: color, pillowId: BUNDLE_PILLOWS[0].id as string }));
     setAdded(true);
@@ -160,7 +163,7 @@ export function SuiteDeal({ prices }: { prices: LivePrices }) {
       <div className="hx-deal-img hx-gal"><SwipeGallery shots={shots} index={shot} onIndex={setShot} aspect="4/5" /></div>
       <div className="hx-deal-t">
         <p className="hx-no"><em>No. 1</em> · The Sleep Suite</p>
-        <h2 className="hx-h2" id="hx-suite-h">Everything for the bed.</h2>
+        <h2 className="hx-h2" id="hx-suite-h"><Link href={pageHref} className="hx-h2-link">Everything for the bed.</Link></h2>
         <ul className="hx-inc" aria-label="What's included">
           <li><IncIcon k="mattress" /><span>Ashbury mattress</span></li>
           <li><IncIcon k="pillows" /><span>Two pillows</span></li>
@@ -174,14 +177,18 @@ export function SuiteDeal({ prices }: { prices: LivePrices }) {
               <Photo src={c.swatch} label="" sizes="32px" />
             </button>
           ))}
-          <span className="hx-colors-l">{MATTRESS.colors.find((c) => c.id === color)?.label} · {MATTRESS.feels[0].label}</span>
+          <span className="hx-colors-l">{colorLabel}</span>
         </div>
         <PriceLine list={list} sale={sale} big />
         {SALE.active && list > sale && <p className="hx-save">You save {money(Math.floor(list + 1e-9) - Math.floor(sale + 1e-9))}</p>}
+        {/* The main action opens the Sleep Suite page to choose firmness and pillows; quick add says what it adds (Tessa, 06/11). */}
         <div className="hx-cta">
-          <button type="button" className="btn" onClick={add}>{added ? "Added to cart" : "Add to cart"}</button>
-          <Link href={`${SLEEP_SUITE.path}?size=${size}&color=${color}`} className="ulink">See details →</Link>
+          <Link href={pageHref} className="btn">Choose your options</Link>
+          <button type="button" className="hx-quick" onClick={add}>{added ? "Added to cart ✓" : "Quick add to cart"}</button>
         </div>
+        <p className="hx-quick-note">
+          {added ? <>Added with {quickWhat}. <Link href={pageHref} className="ulink-inline">Change your options</Link></> : <>Quick add includes {quickWhat}.</>}
+        </p>
         {sale < ashburyAlone && <p className="hx-note">Costs less than the Ashbury plus white glove on its own.</p>}
       </div>
     </section>
