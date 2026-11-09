@@ -181,6 +181,7 @@ export function SuiteDeal({ prices }: { prices: LivePrices }) {
         </div>
         <PriceLine list={list} sale={sale} big />
         {SALE.active && list > sale && <p className="hx-save">You save {money(Math.floor(list + 1e-9) - Math.floor(sale + 1e-9))}</p>}
+        <p className="hx-pay">Or pay over time with Shop Pay Installments, subject to approval.</p>
         {/* The main action opens the Sleep Suite page to choose firmness and pillows; quick add says what it adds (Tessa, 06/11). */}
         <div className="hx-cta">
           <Link href={pageHref} className="btn">Choose your options</Link>
@@ -223,6 +224,7 @@ export function BestFriendsDeal({ prices }: { prices: LivePrices }) {
         <SizeChips sizes={DOG_BED.sizes} value={dog} onChange={setDog} label="Dog bed size" />
         <PriceLine list={list} sale={sale} big />
         {SALE.active && list > sale && <p className="hx-save">You save {money(Math.floor(list + 1e-9) - Math.floor(sale + 1e-9))}</p>}
+        <p className="hx-pay">Or pay over time with Shop Pay Installments, subject to approval.</p>
         <div className="hx-cta"><Link href={`${BUNDLE.path}?size=${size}&dog=${dog}`} className="btn light">Build your bundle</Link></div>
       </div>
     </section>

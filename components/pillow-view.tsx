@@ -1,5 +1,6 @@
 "use client";
 
+import { BuyAssure } from "@/components/buy-assure";
 import { useRef, useState } from "react";
 import { SwipeGallery } from "@/components/swipe-gallery";
 import { OptGroup, Pills } from "@/components/product-view";
@@ -136,6 +137,7 @@ export function PillowView({ fillId }: { fillId: string }) {
         </div>
         <div className="designed">
           <button ref={buyRef} className="btn full" onClick={add}>Add to cart · {fmt(salePrice(price))}</button>
+          <BuyAssure ship="pillow" price={salePrice(price)} />
           <ShipsFast when="1–2 business days" note="Fast, free delivery. Handmade to order in the USA." />
           <TrustRow items={[["truck", "Fast & free delivery"], ["hand", "Handmade to order"], ["returns", PILLOW_RETURNS.short, "/pages/terms#returns"]]} />
           <StickyBuy watch={buyRef} photo={main.photo} name={`${fill.label} Pillow`} summary={`${size.label} · ${cover.label}`} price={salePrice(price)} cta="Add to cart" onAdd={add} />

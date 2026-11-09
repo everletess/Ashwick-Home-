@@ -6,7 +6,7 @@ import { BestFriendsDeal, DealsBar, FurnitureDeal, GiftsDeal, HolidayDelivery, H
 import { Stars } from "@/components/reviews";
 import { getLivePrices } from "@/lib/live-prices";
 import { PHOTOS } from "@/lib/photos";
-import { REVIEWS, reviewsFor } from "@/lib/reviews";
+import { reviewsFor } from "@/lib/reviews";
 import { BUNDLE_CONFIG, SALE } from "@/lib/sale";
 
 export const metadata: Metadata = {
@@ -32,9 +32,8 @@ export default async function BlackFridayPage() {
   if (!SALE.active) redirect("/collections/all");
   const prices = await getLivePrices();
 
-  const rvAll = REVIEWS.filter((r) => ["ashbury", "ashbury-dog-bed", "nook"].includes(r.product));
-  const rvCount = rvAll.length;
-  const avg = Math.round((rvAll.reduce((a, r) => a + r.rating, 0) / rvCount) * 10) / 10;
+  // The quote is an Ashbury review, so the stars and count are the Ashbury's: the same figures as its page and card.
+  const { count: rvCount, average: avg } = reviewsFor("ashbury");
   const frag = "The Ashbury is not only gorgeous it’s the most comfortable mattress I’ve ever slept on";
   const rq = reviewsFor("ashbury").items.find((x) => x.body.includes(frag));
   if (!rq) throw new Error("review quote not found: " + frag);
@@ -56,7 +55,7 @@ export default async function BlackFridayPage() {
       <HolidayDelivery />
       <section className="wrap bf2-rs" aria-label="Customer reviews">
         <p className="bf2-rs-q">&ldquo;{frag}.&rdquo;</p>
-        <p className="bf2-rs-top"><Stars rating={avg} /> <span>{rq.author} · {rvCount} reviews</span></p>
+        <p className="bf2-rs-top"><Stars rating={avg} /> <span>{rq.author} · {rvCount} Ashbury reviews</span></p>
       </section>
 
       <section className="wrap bf2-faq" aria-labelledby="bf2-faq-h">

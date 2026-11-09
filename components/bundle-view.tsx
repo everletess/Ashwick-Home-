@@ -1,5 +1,6 @@
 "use client";
 
+import { BuyAssure } from "@/components/buy-assure";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useCart } from "@/components/cart";
@@ -179,6 +180,7 @@ export function BundleBuilder() {
 
         <ShipsFast when="3–4 days" note="Handmade to order in the USA. Our delivery team will contact you to schedule the mattress once it is made." />
         <button ref={buyRef} className="btn full" onClick={add}>Add the bundle to cart · {fmt(now)}</button>
+        <BuyAssure ship="days" price={now} />
         <StickyBuy watch={buyRef} name="The Best Friends Bundle" summary="Mattress, dog bed and bedding set" price={now} cta="Add to cart" onAdd={add} />
         <p className="fine">The bedding set is {fmt(bed)} ({BUNDLE_CONFIG.beddingSet.contents}) and free white glove is included, a {fmt(BUNDLE_CONFIG.whiteGloveValue)} value. Priced on its own, a Mattress Protector alone lists from {BUNDLE_CONFIG.protectorListRange}, depending on size.</p>
         <p className="fine">
@@ -290,6 +292,7 @@ export function SleepSuiteBuilder() {
         </div>
 
         <button ref={buyRef} className="btn full ssp-add" onClick={add}>Add to cart</button>
+        <BuyAssure ship="days" price={now} />
         <StickyBuy watch={buyRef} name={SLEEP_SUITE.name} summary={`${m.label} · ${mc.label}`} price={now} cta="Add to cart" onAdd={add} />
 
         <ul className="inc-row" aria-label="Included">

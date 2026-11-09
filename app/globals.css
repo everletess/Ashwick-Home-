@@ -2362,3 +2362,10 @@ button.chip{cursor:pointer}
 .drawer-page .drawer-h{padding:22px 28px}
 .drawer-page .drawer-h .h3{margin:0}
 @media (max-width:640px){.cart-page{padding:16px 0 48px}.drawer.drawer-page{border-left:0;border-right:0}.drawer-page .drawer-h{padding:18px 20px}}
+/* Under Add to cart: arrival estimate, pay over time (from $1,000), call or text */
+.buy-assure{display:flex;flex-direction:column;gap:6px;margin:12px 0 4px}
+.ba-row{display:flex;align-items:center;gap:8px;margin:0;font:400 14px/1.45 var(--sans);color:var(--ink)}
+.ba-row svg{flex:none;color:var(--walnut)}
+.ba-pay,.ba-call{font-weight:300;color:var(--walnut)}
+.ba-call a{color:var(--ink);text-decoration:underline;text-underline-offset:3px;min-height:32px;display:inline-flex;align-items:center}
+.hx-pay{margin:4px 0 0;font:300 13px/1.45 var(--sans);opacity:.85}

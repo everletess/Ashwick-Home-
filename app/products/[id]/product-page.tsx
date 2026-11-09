@@ -112,7 +112,7 @@ export async function ProductPage({ params, mode }: ProductParams & { mode: "des
             )}
             <div className="spec"><div className="eyebrow">Made</div><p>To order, by hand, in our American workshop.</p></div>
             <div className="spec"><div className="eyebrow">Lead time</div><p>{p.leadTime ?? LEAD_TIMES}</p></div>
-            <div className="spec"><div className="eyebrow">Payment</div><p>In full at checkout.</p></div>
+            <div className="spec"><div className="eyebrow">Payment</div><p>In full at checkout, or over time with Shop Pay Installments, subject to approval.</p></div>
           </div>
         </div>
       </section>
