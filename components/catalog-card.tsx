@@ -52,7 +52,7 @@ export function CatalogCard({ item, priority }: { item: CatalogItem; priority?: 
         <CardPrice item={item} />
         {rv && rv.count > 0 && <div className="cc-stars"><Stars rating={rv.average} /><span>{rv.count}</span></div>}
       </Link>
-      {quick && item.quick && <QuickAddSheet kind={item.quick.kind} href={item.quick.href} onClose={() => setQuick(false)} />}
+      {quick && item.quick && <QuickAddSheet kind={item.quick.kind} href={item.quick.href} fill={item.quick.fill} onClose={() => setQuick(false)} />}
     </div>
   );
 }

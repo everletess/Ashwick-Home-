@@ -1,5 +1,6 @@
 "use client";
 
+import { BuyAssure } from "@/components/buy-assure";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useCart } from "@/components/cart";
@@ -294,6 +295,7 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
               cta={p.preorder ? "Pre-order" : "Add to cart"}
               onAdd={add}
             />
+            <BuyAssure ship="furniture" price={salePrice(price)} />
             {p.preorder && (
               <p className="fine">This piece is available to pre-order. We&apos;ll confirm your order and estimated ship date by email.</p>
             )}
@@ -306,7 +308,6 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
         )}
 
         <p className="fine" style={{ marginTop: 14 }}>14-day returns on pieces as designed. <Link href="/pages/ordering" className="ulink">Details</Link></p>
-        <p className="fine">Questions? Call or text <a href="tel:+17735979629" className="ulink">(773) 597-9629</a></p>
         <div className="assure">
           <span>Made to order</span><span>Handmade in the USA</span><span>Pay over time with Shop Pay Installments</span>
         </div>

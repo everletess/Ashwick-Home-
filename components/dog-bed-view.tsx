@@ -1,5 +1,6 @@
 "use client";
 
+import { BuyAssure } from "@/components/buy-assure";
 import { SALE } from "@/lib/sale";
 import { useRef, useState } from "react";
 import { DogBedNotify } from "@/components/dog-bed-notify";
@@ -123,6 +124,7 @@ export function DogBedView({ bed: D = DOG_BED, children }: { bed?: DogBed; child
           <div className="designed">
             <ShipsFast when="3–4 days" note="Handmade to order in the USA. Free delivery." />
             <button ref={buyRef} className="btn full" onClick={add}>Add to cart · {fmt(salePrice(sz.price))}</button>
+            <BuyAssure ship="days" price={salePrice(sz.price)} />
             <TrustRow items={[["hand", "Handmade to order"], ["truck", "Free delivery"], ["returns", "30-day returns"]]} />
             <StickyBuy
               watch={buyRef}

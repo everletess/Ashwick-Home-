@@ -1,5 +1,6 @@
 "use client";
 
+import { BuyAssure } from "@/components/buy-assure";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -152,7 +153,7 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
       </div>
 
       <div className="info">
-        <div className="eyebrow">{M.type} · Made to order</div>
+        <div className="eyebrow">{M.type} · Handmade in the USA</div>
         <h1 className="pdp-name">{M.title}</h1>
         <RatingLink product="ashbury" />
         <div className="pdp-collection">{M.collection}</div>
@@ -196,6 +197,7 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
               <SuiteUpsell sizeId={size} feelId={feel} colorId={color} />
               <button ref={buyRef} className="btn full" onClick={buyNow} disabled={buying}>{buying ? "Taking you to checkout\u2026" : `Buy now \u00b7 ${fmt(salePrice(sz.price))}`}</button>
               <button className="btn full btn-ghost" onClick={add} disabled={buying}>Add to cart</button>
+              <BuyAssure ship="days" price={salePrice(sz.price)} />
               {buyError && <p className="fine" role="alert" style={{ color: "var(--err, #b00)", textAlign: "center" }}>{buyError}</p>}
               <PillowAddRow />
               <p className="fine buy-direct">Goes straight to secure checkout. {SALE.active ? "Free white glove delivery during the sale" : `+ ${fmt(M.delivery.price)} ${M.delivery.label.toLowerCase()}`}, {M.guaranteeNights}-night trial.</p>

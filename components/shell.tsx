@@ -17,7 +17,7 @@ function useScrollLock(locked: boolean) {
     };
   }, [locked]);
 }
-import { bundleIdOf, useCart, type CartLine } from "@/components/cart";
+import { bundleIdOf, useCart, type CartLine, CartNoticeBox } from "@/components/cart";
 import { BUNDLE_CONFIG, NO_WAS_PRICE, SLEEP_SUITE, SLEEP_SUITE_BEDDING_NAME, bundleColorOf, bundlePhotoFor, bundleTitleFor, SALE, bundlePrice, deliveryFor, isFurnitureLine, orderDelivery, salePrice } from "@/lib/sale";
 import { STUDIO_EMAIL, STUDIO_PHONE } from "@/lib/site";
 import { PRODUCTS } from "@/lib/products";
@@ -373,8 +373,10 @@ export function Header() {
   );
 }
 
-export function CartDrawer() {
+/** The cart: a drawer (bottom sheet on a phone) everywhere, or, with `page`, the same contents laid out as the /cart page. */
+export function CartDrawer({ page = false }: { page?: boolean }) {
   const cart = useCart();
+  const isOpen = page || cart.open;
   const close = () => cart.setOpen(false);
   const [checking, setChecking] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
@@ -386,8 +388,9 @@ export function CartDrawer() {
   const [offerOpen, setOfferOpen] = useState(false);
   // Phones: the email offer stays folded (one line) so the products and Check out stay visible. Desktop has room, so it opens.
   useEffect(() => {
-    if (cart.open) setOfferOpen(!window.matchMedia("(max-width: 640px)").matches);
-  }, [cart.open]);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- follows the drawer opening, and the screen width
+    if (isOpen) setOfferOpen(!window.matchMedia("(max-width: 640px)").matches);
+  }, [isOpen]);
 
   // Phones: the cart is a bottom sheet. Drag the header down, or tap outside, to close it.
   const sheetRef = useRef<HTMLElement>(null);
@@ -446,6 +449,8 @@ export function CartDrawer() {
         }),
       });
       const data = await res.json();
+      // Lines Shopify no longer sells in those options come out of the cart with a note; checkout goes ahead without them.
+      if (Array.isArray(data.skipped) && data.skipped.length) cart.drop(data.skipped.map((n: number) => cart.items[n]?.lineId).filter(Boolean));
       if (!res.ok || !data.checkoutUrl) throw new Error(data.error ?? "Checkout failed");
 
       // Meta Pixel: InitiateCheckout, then a short pause so the event is sent
@@ -469,24 +474,29 @@ export function CartDrawer() {
     }
   };
 
-  useScrollLock(cart.open);
+  useScrollLock(!page && cart.open);
   useEffect(() => {
-    if (!cart.open) return;
+    if (page || !cart.open) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && cart.setOpen(false);
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [cart]);
+  }, [cart, page]);
 
   return (
     <>
-      <div className={"scrim" + (cart.open ? " on" : "")} onClick={close}></div>
-      <aside ref={sheetRef} className={"drawer" + (cart.open ? " on" : "")} aria-hidden={!cart.open} aria-label="Cart" inert={!cart.open}>
-        <div className="drawer-h" onTouchStart={onDragStart} onTouchMove={onDragMove} onTouchEnd={onDragEnd}>
-          <span className="drawer-grab" aria-hidden="true"></span>
-          <div className="h3">Your cart</div>
-          <button className="x" aria-label="Close cart" onClick={close}>×</button>
-        </div>
+      {!page && <div className={"scrim" + (cart.open ? " on" : "")} onClick={close}></div>}
+      <aside ref={sheetRef} className={"drawer" + (page ? " drawer-page on" : cart.open ? " on" : "")} aria-hidden={!isOpen} aria-label="Cart" inert={!isOpen}>
+        {page ? (
+          <div className="drawer-h"><h1 className="h3">Your cart</h1></div>
+        ) : (
+          <div className="drawer-h" onTouchStart={onDragStart} onTouchMove={onDragMove} onTouchEnd={onDragEnd}>
+            <span className="drawer-grab" aria-hidden="true"></span>
+            <div className="h3">Your cart</div>
+            <button className="x" aria-label="Close cart" onClick={close}>×</button>
+          </div>
+        )}
         <div className="drawer-b">
+          <CartNoticeBox onNavigate={close} />
           <CartUpgrade />
           {cart.items.length === 0 && (
             <div className="empty">

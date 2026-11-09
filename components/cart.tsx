@@ -4,7 +4,8 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import { track } from "@/lib/pixel";
 import { trackAddedToCart } from "@/lib/subscribe";
 import type { PhotoKey } from "@/lib/photos";
-import { SALE, bundlePrice, bundleTitleFor, orderDelivery, salePrice } from "@/lib/sale";
+import { BUNDLES, SALE, bundlePrice, bundleTitleFor, orderDelivery, salePrice } from "@/lib/sale";
+import { isUnavailable, migrateLine, productPathOf } from "@/lib/cart-migrate";
 
 /** The bundle id a line belongs to (all lines of the bundle share it), if any. */
 export const bundleIdOf = (l: { options: [string, string][] }) =>
@@ -42,7 +43,14 @@ type Cart = {
   qty: (lineId: string, qty: number) => void;
   count: number;
   subtotal: number | null;
+  /** Items taken out because they're no longer sold in those options (old carts), with where to choose again. */
+  notice: CartNotice[];
+  dismissNotice: () => void;
+  /** Take lines out (with the rest of their bundle) and say so in `notice`. */
+  drop: (lineIds: string[]) => void;
 };
+
+export type CartNotice = { name: string; href: string };
 
 const STORAGE_KEY = "ashwick-cart";
 const CartCtx = createContext<Cart | null>(null);
@@ -52,15 +60,50 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
-  // Restore after mount so server and client render the same empty cart first.
+  const [notice, setNotice] = useState<CartNotice[]>([]);
+
+  /** Lines (and the rest of their bundles) taken out, as notices: what it was and where to choose again. */
+  const withoutLines = (list: CartLine[], ids: Set<string>) => {
+    const bundles = new Set(list.filter((i) => ids.has(i.lineId)).map(bundleIdOf).filter(Boolean));
+    const gone = list.filter((i) => ids.has(i.lineId) || (bundleIdOf(i) != null && bundles.has(bundleIdOf(i))));
+    const notes = new Map<string, CartNotice>();
+    for (const g of gone) {
+      const b = g.options.find(([k]) => k === "_Bundle")?.[1];
+      const n = b ? { name: bundleTitleFor(b), href: BUNDLES.find((x) => x.value === b)?.path ?? productPathOf(g.id) } : { name: g.name, href: productPathOf(g.id) };
+      notes.set(n.name, n);
+    }
+    return { kept: list.filter((i) => !gone.includes(i)), notes: [...notes.values()] };
+  };
+
+  // Restore after mount so server and client render the same empty cart first. Old carts are brought up to date:
+  // renamed options are migrated quietly; lines with no current equivalent come out with a note, never blocking checkout.
   useEffect(() => {
+    let restored: CartLine[] = [];
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       // Carts saved before the fabric was renamed say "Italian Linen"; it's Belgian Linen.
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time hydration from storage
-      if (saved) setItems(JSON.parse(saved.replaceAll("Italian Linen", "Belgian Linen")));
+      if (saved) restored = (JSON.parse(saved.replaceAll("Italian Linen", "Belgian Linen")) as CartLine[]).map(migrateLine);
     } catch {}
+    const { kept, notes } = withoutLines(restored, new Set(restored.filter(isUnavailable).map((i) => i.lineId)));
+    /* eslint-disable react-hooks/set-state-in-effect -- one-time hydration from storage */
+    setItems(kept);
+    if (notes.length) setNotice(notes);
     setLoaded(true);
+    /* eslint-enable react-hooks/set-state-in-effect */
+    if (!kept.length) return;
+    // Then confirm the rest against Shopify's current variants.
+    fetch("/api/cart-check", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ lines: kept.map((i) => ({ productId: i.id, qty: i.qty, options: i.options })) }) })
+      .then((r) => (r.ok ? r.json() : { bad: [] }))
+      .then(({ bad }: { bad: number[] }) => {
+        if (!bad?.length) return;
+        const ids = new Set(bad.map((n) => kept[n]?.lineId).filter(Boolean) as string[]);
+        setItems((cur) => {
+          const r = withoutLines(cur, ids);
+          setNotice((n) => [...n, ...r.notes.filter((x) => !n.some((y) => y.name === x.name))]);
+          return r.kept;
+        });
+      })
+      .catch(() => {});
   }, []);
   useEffect(() => {
     if (!loaded) return;
@@ -122,8 +165,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     const count = items.reduce((s, i) => s + i.qty, 0);
     const unpriced = items.some((i) => i.price == null);
     const subtotal = unpriced ? null : items.reduce((s, i) => s + unitTotal(i) * i.qty, 0) + orderDelivery(items);
-    return { items, open, setOpen, add, addMany, remove, qty, count, subtotal };
-  }, [items, open, add, addMany, remove, qty]);
+    const dismissNotice = () => setNotice([]);
+    const drop = (ids: string[]) => {
+      const r = withoutLines(items, new Set(ids));
+      setItems(r.kept);
+      setNotice((n) => [...n, ...r.notes.filter((x) => !n.some((y) => y.name === x.name))]);
+    };
+    return { items, open, setOpen, add, addMany, remove, qty, count, subtotal, notice, dismissNotice, drop };
+  }, [items, open, add, addMany, remove, qty, notice]);
 
   return <CartCtx.Provider value={value}>{children}</CartCtx.Provider>;
 }
@@ -132,4 +181,21 @@ export function useCart() {
   const cart = useContext(CartCtx);
   if (!cart) throw new Error("useCart must be used inside <CartProvider>");
   return cart;
+}
+
+/** The note for items an old cart held in options no longer sold, each with a link to choose again. */
+export function CartNoticeBox({ onNavigate }: { onNavigate?: () => void }) {
+  const { notice, dismissNotice } = useCart();
+  if (!notice.length) return null;
+  return (
+    <div className="cart-notice" role="status">
+      <p>
+        {notice.length === 1 ? "One item in your cart is no longer available in that size. Please choose again." : "Some items in your cart are no longer available in those sizes. Please choose again."}
+      </p>
+      <p className="cart-notice-links">
+        {notice.map((n) => <a key={n.name} href={n.href} onClick={() => { dismissNotice(); onNavigate?.(); }}>Choose again: {n.name} →</a>)}
+      </p>
+      <button type="button" className="cart-notice-x" aria-label="Dismiss" onClick={dismissNotice}>×</button>
+    </div>
+  );
 }
