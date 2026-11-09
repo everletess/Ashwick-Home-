@@ -18,10 +18,11 @@ const opt = (l: CartLine, k: string) => l.options.find(([key]) => key === k)?.[1
 
 /** A standalone Ashbury's size, feel and color ids, read back from its cart options. */
 function ashburyChoice(l: CartLine) {
-  const size = MATTRESS.sizes.find((s) => opt(l, "Size").startsWith(`${s.label} (`)) ?? MATTRESS.sizes[0];
-  const feel = MATTRESS.feels.find((f) => f.label === opt(l, "Feel")) ?? MATTRESS.feels[0];
-  const color = MATTRESS.colors.find((c) => c.label === opt(l, "Color")) ?? MATTRESS.colors[0];
-  return { size, feel, color };
+  // Read from the line itself; if any option isn't a current one, there's no upgrade to offer (never guess a size).
+  const size = MATTRESS.sizes.find((z) => opt(l, "Size").startsWith(`${z.label} (`));
+  const feel = MATTRESS.feels.find((f) => f.label === opt(l, "Feel"));
+  const color = MATTRESS.colors.find((c) => c.label === opt(l, "Color"));
+  return size && feel && color ? { size, feel, color } : null;
 }
 
 /**
@@ -33,7 +34,9 @@ export function CartUpgrade() {
   const loose = cart.items.filter((i) => i.id === MATTRESS.id && !bundleIdOf(i));
   if (loose.length !== 1 || loose[0].qty !== 1) return null;
   const line = loose[0];
-  const { size, feel, color } = ashburyChoice(line);
+  const choice = ashburyChoice(line);
+  if (!choice) return null;
+  const { size, feel, color } = choice;
   const { diff } = suiteVsAshbury(size.id);
   const what = "two pillows, a Mattress Protector and free white glove delivery";
   const lead = !SALE.active || diff === 0

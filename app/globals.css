@@ -2349,3 +2349,16 @@ button.chip{cursor:pointer}
 .hx-quick:hover{background:var(--ink);color:var(--alabaster)}
 .hx-quick-note{margin:10px 0 0;font:300 13px/1.5 var(--sans);color:var(--walnut)}
 @media (max-width:860px){.hx-quick{width:100%}}
+/* Cart note for items an old cart held in options no longer sold */
+.cart-notice{position:relative;margin:16px 0 4px;padding:14px 40px 14px 16px;background:var(--linen);border-left:3px solid var(--sorrel-deep,#8a4a33);font:300 14px/1.5 var(--sans);color:var(--ink)}
+.cart-notice p{margin:0}
+.cart-notice-links{display:flex;flex-direction:column;gap:2px;margin-top:6px!important}
+.cart-notice-links a{font-weight:400;text-decoration:underline;text-underline-offset:3px;min-height:32px;display:inline-flex;align-items:center}
+.cart-notice-x{position:absolute;top:6px;right:6px;width:36px;height:36px;border:0;background:none;font:300 22px/1 var(--sans);color:var(--walnut);cursor:pointer}
+/* /cart: the drawer's contents as a page */
+.cart-page{padding:40px var(--gut) 80px;background:var(--alabaster)}
+.drawer.drawer-page{position:static;transform:none;width:100%;max-width:720px;height:auto;max-height:none;margin:0 auto;box-shadow:none;border-radius:0;z-index:auto;border:1px solid var(--hair)}
+.drawer-page .drawer-b{overflow:visible;flex:none}
+.drawer-page .drawer-h{padding:22px 28px}
+.drawer-page .drawer-h .h3{margin:0}
+@media (max-width:640px){.cart-page{padding:16px 0 48px}.drawer.drawer-page{border-left:0;border-right:0}.drawer-page .drawer-h{padding:18px 20px}}

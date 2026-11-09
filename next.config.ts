@@ -14,6 +14,12 @@ const nextConfig: NextConfig = {
       { source: "/pages/design-your-own", destination: "/pages/bespoke", permanent: true },
       // The single pillow page became one page per fill, under a Pillows collection.
       { source: "/products/ashwick-pillow", destination: "/collections/pillows", permanent: true },
+      // Shopify links that land on our domain (abandoned-checkout emails, the Shop app, cart permalinks in ads):
+      // cart permalinks (/cart/{variant}:{qty}), cart tokens (/cart/c/…) and checkouts go to Shopify's own domain,
+      // which opens checkout with those items. /cart itself is our cart page (app/cart/page.tsx).
+      { source: "/cart/:path+", destination: "https://1j0scj-ce.myshopify.com/cart/:path+", permanent: false },
+      { source: "/checkouts/:path*", destination: "https://1j0scj-ce.myshopify.com/checkouts/:path*", permanent: false },
+      { source: "/:shop(\\d+)/checkouts/:path*", destination: "https://1j0scj-ce.myshopify.com/:shop/checkouts/:path*", permanent: false },
       // The Wren dog bed was renamed the Nook.
       { source: "/products/wren-dog-bed", destination: "/products/nook-dog-bed", permanent: true },
     ];

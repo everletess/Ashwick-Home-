@@ -5,7 +5,7 @@
  */
 import { DOG_BED, NOOK } from "@/lib/dog-bed";
 import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
-import { PILLOW_COVERS, PILLOW_COVER_PHOTOS, PILLOW_PATH, pillowFromPrice } from "@/lib/pillow";
+import { PILLOW_COVERS, PILLOW_COVER_PHOTOS, PILLOW_PATH, PILLOW_STANDALONE_FILLS, PILLOW_STORY, pillowFromPrice } from "@/lib/pillow";
 import { PRODUCTS, cardPrice, type Product } from "@/lib/products";
 import { BUNDLE, BUNDLE_CONFIG, BUNDLE_HERO, SLEEP_SUITE, SALE, bundlePrice, pillowsAreNew, salePrice } from "@/lib/sale";
 import type { PhotoKey } from "@/lib/photos";
@@ -14,7 +14,7 @@ import type { ProductKey } from "@/lib/reviews";
 export type Section = "sleep" | "living";
 export type Group = "bundles" | "ashbury" | "pillows" | "dog-beds" | "sofas" | "chairs";
 export type Dot = { id: string; label: string; swatch: PhotoKey; photo: PhotoKey };
-export type QuickAdd = { kind: "pillow" | "dog-bed" | "nook" | "mattress"; href: string };
+export type QuickAdd = { kind: "pillow" | "dog-bed" | "nook" | "mattress"; href: string; fill?: string };
 
 export type CatalogItem = {
   id: string;
@@ -77,6 +77,15 @@ export const CATALOG: CatalogItem[] = [
     dots: PILLOW_COVERS.map((c) => ({ id: c.id, label: c.label, swatch: c.swatch, photo: PILLOW_COVER_PHOTOS[c.id].photo })),
     quick: { kind: "pillow", href: PILLOW_PATH },
   },
+  // The three pillows, one card each, for the shop grids (Shop All, Bedroom). The single "pillow" card above stays for
+  // "Complete the bed" and the homepage; the grids show these instead (itemsFor).
+  ...[...PILLOW_STANDALONE_FILLS]
+    .sort((a, b) => ["living-wool-horse-hair", "living-wool-latex", "organic-cotton"].indexOf(a.id) - ["living-wool-horse-hair", "living-wool-latex", "organic-cotton"].indexOf(b.id))
+    .map((f): CatalogItem => ({
+      id: "pillow-" + f.id, name: `${f.label} Pillow`, href: f.path, section: "sleep", group: "pillows", price: pillowFromPrice(f.id), from: true,
+      photo: PILLOW_STORY[f.id].card, get badge() { return pillowsAreNew() ? "New" : undefined; }, fast: true,
+      quick: { kind: "pillow", href: f.path, fill: f.id },
+    })),
   {
     id: DOG_BED.id, name: DOG_BED.title, href: DOG_BED.path, section: "sleep", group: "dog-beds", price: Math.min(...DOG_BED.sizes.map((s) => s.price)), from: true,
     photo: "dog-bed-sorrel-card", review: "ashbury-dog-bed", fast: true,
@@ -121,7 +130,7 @@ import { ORDER } from "@/lib/catalog-order";
 /** Everything for a tab, in default group order, then any manual order from lib/catalog-order.ts. */
 export function itemsFor(handle: string): CatalogItem[] {
   const tab = TABS.find((t) => t[1] === handle);
-  const list = CATALOG.filter((c) => (tab ? tab[2](c) : true));
+  const list = CATALOG.filter((c) => c.id !== "pillow" && (tab ? tab[2](c) : true));
   const rank = (c: CatalogItem) => ORDER[c.id] ?? GROUP_ORDER.indexOf(c.group) * 100 + CATALOG.indexOf(c);
   return [...list].sort((a, b) => rank(a) - rank(b));
 }
