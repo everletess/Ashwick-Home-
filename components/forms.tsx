@@ -16,7 +16,7 @@ type FormName = "newsletter" | "bespoke" | "trade" | "hospitality" | "custom" | 
 type Status = "idle" | "sending" | "sent" | "error";
 
 /** Submit state for one form. `validate` can veto the send (and should report why). */
-export function useFormSend(form: FormName, validate?: () => boolean) {
+export function useFormSend(form: FormName, validate?: () => boolean, onSent?: (data: FormData) => void) {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -37,6 +37,7 @@ export function useFormSend(form: FormName, validate?: () => boolean) {
       const body = await res.json().catch(() => ({}));
       if (!res.ok || !body.ok) throw new Error(body.error);
       setStatus("sent");
+      try { onSent?.(data); } catch {}
     } catch (err) {
       setStatus("error");
       const reason = err instanceof Error && err.message ? err.message + " " : "";

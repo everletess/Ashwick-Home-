@@ -2369,3 +2369,4 @@ button.chip{cursor:pointer}
 .ba-pay,.ba-call{font-weight:300;color:var(--walnut)}
 .ba-call a{color:var(--ink);text-decoration:underline;text-underline-offset:3px;min-height:32px;display:inline-flex;align-items:center}
 .hx-pay{margin:4px 0 0;font:300 13px/1.45 var(--sans);opacity:.85}
+.sw-consent{display:flex!important;flex-direction:row!important;align-items:flex-start;gap:10px;font:300 13px/1.5 var(--sans);color:var(--walnut)}.sw-consent input{margin-top:3px;flex:none;width:18px;height:18px}

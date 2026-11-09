@@ -311,7 +311,7 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
         <div className="assure">
           <span>Made to order</span><span>Handmade in the USA</span><span>Pay over time with Shop Pay Installments</span>
         </div>
-        <Link href={`/pages/fabric-swatches?fabric=${fabric}${color ? `&color=${color}` : ""}`} className="ulink">Order fabric swatches</Link>
+        <Link href={`/pages/fabric-swatches?fabric=${fabric}${color ? `&color=${color}` : ""}`} className="ulink">Order free swatches</Link>
       </div>
     </section>
   );

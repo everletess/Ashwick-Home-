@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { SwatchOrder } from "@/components/swatch-order";
-import { PRODUCTS, SWATCH_PRICE, fmt, type FabricId } from "@/lib/products";
+import { PRODUCTS, SWATCH_MAX, type FabricId } from "@/lib/products";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/pages/fabric-swatches" },
   title: "Fabric swatches",
-  description: "Order swatches of our fabrics before you choose.",
+  description: "Order free swatches of our fabrics before you choose, up to four per order.",
 };
 
 // Every fabric offered on a piece currently on the site, in first-seen order.
@@ -18,7 +18,7 @@ export default function SwatchesPage() {
       <section className="page-head wrap">
         <div className="eyebrow">Fabric swatches</div>
         <h1 className="h1">Feel the fabrics first.</h1>
-        <p className="body">Swatches are {fmt(SWATCH_PRICE)} each. Choose up to eight and tell us where to send them; we&apos;ll email you a payment link before they go out.</p>
+        <p className="body">Swatches are free. Choose up to {SWATCH_MAX} and tell us where to send them.</p>
       </section>
       <section className="wrap" style={{ paddingBottom: 140, maxWidth: 1000 }}>
         <Suspense>
