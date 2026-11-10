@@ -199,7 +199,8 @@ export function constructionFor(p: Product): Construction {
 }
 
 /** Price of one fabric swatch. */
-export const SWATCH_PRICE = 2;
+/** Fabric swatches are free, up to this many per order (Tessa, 09/11). */
+export const SWATCH_MAX = 4;
 
 /** Every piece is made by hand to order. As designed, and when customized (see /pages/terms#orders). */
 export const LEAD_TIME = "Ships within 3–4 weeks as designed.";

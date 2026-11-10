@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Block, InfoPage } from "@/components/info-page";
 import { BESPOKE_PATH } from "@/lib/bespoke";
 import { GUARANTEE_PATH, MATTRESS } from "@/lib/mattress";
-import { SWATCH_PRICE, fmt } from "@/lib/products";
+import { SWATCH_MAX } from "@/lib/products";
 import { STUDIO_EMAIL } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -23,8 +23,8 @@ export default function OrderingPage() {
       </Block>
       <Block title="Fabric swatches">
         <p className="body">
-          See and feel our fabrics at home before you choose. Swatches are {fmt(SWATCH_PRICE)} each.{" "}
-          <Link href="/pages/fabric-swatches" className="inl">Order swatches</Link>
+          See and feel our fabrics at home before you choose. Swatches are free, up to {SWATCH_MAX} per order.{" "}
+          <Link href="/pages/fabric-swatches" className="inl">Order free swatches</Link>
         </p>
       </Block>
       <Block title="Returns & cancellations">
