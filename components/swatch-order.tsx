@@ -5,25 +5,29 @@
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { FormError, Honeypot, useFormSend } from "@/components/forms";
-import { FABRICS, SWATCH_MAX, type FabricId } from "@/lib/products";
+import Link from "next/link";
+import { FABRIC_ALIASES, FABRIC_LIBRARY } from "@/lib/fabric-library";
+import { PHOTOS, type PhotoKey } from "@/lib/photos";
+import { SWATCH_MAX } from "@/lib/products";
 import { track } from "@/lib/pixel";
 
 const MAX_SWATCHES = SWATCH_MAX;
 
-type Swatch = { key: string; fabric: FabricId; label: string; color: string; tex: string; code?: string };
+type Swatch = { key: string; fabric: string; label: string; color?: string; photo?: PhotoKey; tex?: string; code?: string; alsoCalled?: string };
 
-export function SwatchOrder({ fabrics }: { fabrics: FabricId[] }) {
+/**
+ * The fabric library: every fabric we sell (lib/fabric-library.ts), each with what it is, where it's used and its
+ * colors to pick, then one form for up to SWATCH_MAX free swatches. A bar shows the count and jumps to the form.
+ */
+export function SwatchOrder() {
   const params = useSearchParams();
-  const all: Swatch[] = fabrics.flatMap((f): Swatch[] => {
-    const F = FABRICS[f];
-    return F.colors
-      ? F.colors.map((c) => ({ key: `${f}:${c.id}`, fabric: f, label: `${F.label} · ${c.label}`, color: c.swatch, tex: F.tex, code: c.code }))
-      : [{ key: f, fabric: f, label: F.label, color: F.swatch, tex: F.tex }];
-  });
-  // ?fabric=irish&color=flax preselects the swatch the customer was looking at.
-  // "italian" was the Belgian linen's old id; older links still use it.
-  const pre = [params.get("fabric")?.replace(/^italian$/, "belgian"), params.get("color")].filter(Boolean).join(":");
-  const [picked, setPicked] = useState<string[]>(() => all.filter((s) => s.key === pre || s.key === params.get("fabric")).map((s) => s.key).slice(0, 1));
+  const all: Swatch[] = FABRIC_LIBRARY.flatMap((F) =>
+    F.colors.map((c) => ({ key: `${F.id}:${c.id}`, fabric: F.id, label: `${F.name} · ${c.label}`, color: c.swatch, photo: c.photo, tex: c.tex, code: c.code, alsoCalled: c.alsoCalled })),
+  );
+  // ?fabric=irish&color=flax preselects the swatch the customer was looking at (older ids are mapped).
+  const fab = params.get("fabric") ?? "";
+  const pre = `${FABRIC_ALIASES[fab] ?? fab}:${params.get("color") ?? ""}`;
+  const [picked, setPicked] = useState<string[]>(() => all.filter((s) => s.key === pre).map((s) => s.key).slice(0, 1));
   const [limitHit, setLimitHit] = useState(false);
   const [needOne, setNeedOne] = useState(false);
   const toggle = (k: string) =>
@@ -56,30 +60,49 @@ export function SwatchOrder({ fabrics }: { fabrics: FabricId[] }) {
       <Honeypot />
       <input type="hidden" name="total" value={`Free (${picked.length} swatch${picked.length === 1 ? "" : "es"})`} />
       <input type="hidden" name="swatches" value={all.filter((s) => picked.includes(s.key)).map((s) => s.label + (s.code ? ` (${s.code})` : "")).join("; ")} />
-      {fabrics.map((f) => {
-        const group = all.filter((s) => s.fabric === f);
-        return (
-          <fieldset className="sw-group" key={f}>
-            <legend className="eyebrow">{FABRICS[f].label}</legend>
-            {FABRICS[f].detail && <p className="fine">{FABRICS[f].detail}</p>}
-            <div className="sw-pick">
-              {group.map((s) => {
-                const on = picked.includes(s.key);
-                return (
-                  <button type="button" key={s.key} className={"sw-opt" + (on ? " on" : "")} aria-pressed={on} onClick={() => toggle(s.key)}>
-                    <span className={"chip tex-" + s.tex} style={{ background: s.color }} />
-                    <span>{s.label.split(" · ")[1] ?? s.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </fieldset>
-        );
-      })}
-      <p className="fine" aria-live="polite">
-        {picked.length} of {MAX_SWATCHES} chosen · Free
-        {limitHit ? `. You can choose up to ${MAX_SWATCHES} swatches.` : ""}
-      </p>
+      {(["Furniture", "Bedroom"] as const).map((room) => (
+        <div key={room} className="fl-room">
+          <h2 className="fl-room-h">{room === "Furniture" ? "Furniture fabrics" : "Bedroom fabrics"}</h2>
+          {FABRIC_LIBRARY.filter((F) => F.room === room).map((F) => (
+            <fieldset className="fl-fabric" key={F.id} id={F.id}>
+              <legend className="fl-name">{F.name}</legend>
+              <div className="fl-about">
+                {F.makeup && <p className="fl-makeup">{F.makeup}</p>}
+                {F.body && <p className="body small">{F.body}</p>}
+                {F.origin && <p className="fl-origin">{F.origin}</p>}
+                {F.usedOn.length > 0 && (
+                  <p className="fl-used">On {F.usedOn.map((u, i) => <span key={u.href}>{i > 0 && (i === F.usedOn.length - 1 ? " and " : ", ")}<Link href={u.href}>{u.name}</Link></span>)}.</p>
+                )}
+                {F.note && <p className="fl-used">{F.note}</p>}
+              </div>
+              <div className="fl-colors">
+                {all.filter((s) => s.fabric === F.id).map((s) => {
+                  const on = picked.includes(s.key);
+                  return (
+                    <button type="button" key={s.key} className={"fl-sw" + (on ? " on" : "")} aria-pressed={on} onClick={() => toggle(s.key)}>
+                      <span className={"fl-chip" + (s.tex ? " tex-" + s.tex : "")} style={s.photo ? { backgroundImage: `url(${PHOTOS[s.photo].src})` } : { background: s.color }}>
+                        {on && <span className="fl-check" aria-hidden="true">✓</span>}
+                      </span>
+                      <span className="fl-sw-t">{s.label.split(" · ")[1]}</span>
+                      {s.alsoCalled && <small>{s.alsoCalled}</small>}
+                    </button>
+                  );
+                })}
+              </div>
+            </fieldset>
+          ))}
+        </div>
+      ))}
+      <div className="fl-bar" aria-live="polite">
+        <span>{picked.length} of {MAX_SWATCHES} chosen · Free{limitHit ? ` · You can choose up to ${MAX_SWATCHES}.` : ""}</span>
+        <a href="#swatch-form" className="btn light">{picked.length ? "Send my swatches" : "Choose up to " + MAX_SWATCHES}</a>
+      </div>
+      <div id="swatch-form" className="fl-form-h">
+        <h2 className="h2">Where should we send them?</h2>
+        <p className="body">
+          {picked.length ? <>Your swatches: {all.filter((s) => picked.includes(s.key)).map((s) => s.label).join(", ")}.</> : "Choose up to " + MAX_SWATCHES + " swatches above."}
+        </p>
+      </div>
       {needOne && <p className="form-error" role="alert">Choose at least one swatch above.</p>}
 
       <div className="tform">

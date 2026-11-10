@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { BuyAssure } from "@/components/buy-assure";
 import { SALE } from "@/lib/sale";
 import { useRef, useState } from "react";
@@ -118,6 +119,7 @@ export function DogBedView({ bed: D = DOG_BED, children }: { bed?: DogBed; child
               />
             ))}
           </OptGroup>
+          <Link href={`/pages/fabric-swatches?fabric=${D.id === "nook-dog-bed" ? "nook" : "twill"}&color=${sel.id}`} className="ulink sw-link">Order free swatches</Link>
         </div>
 
         {!D.comingSoon && (

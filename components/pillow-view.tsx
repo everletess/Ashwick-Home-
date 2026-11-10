@@ -134,6 +134,7 @@ export function PillowView({ fillId }: { fillId: string }) {
               ))}
             </div>
           </OptGroup>
+          <Link href={`/pages/fabric-swatches?fabric=twill&color=${cover.id}`} className="ulink sw-link">Order free swatches</Link>
         </div>
         <div className="designed">
           <button ref={buyRef} className="btn full" onClick={add}>Add to cart · {fmt(salePrice(price))}</button>
