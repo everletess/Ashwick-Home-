@@ -188,6 +188,7 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
               />
             ))}
           </OptGroup>
+          <Link href={`/pages/fabric-swatches?fabric=twill&color=${color}`} className="ulink sw-link">Order free swatches</Link>
         </div>
 
         <div className="designed">
