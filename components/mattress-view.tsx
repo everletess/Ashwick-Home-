@@ -161,7 +161,7 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
         <p className="fine delivery">{SALE.active ? "Free white glove delivery during the sale" : `+ ${fmt(M.delivery.price)} ${M.delivery.label.toLowerCase()}`}</p>
         <SaleNote />
         <p className="fine price-assure">
-          <strong>{M.guaranteeNights}-night trial</strong> with free pickup and a full refund. Or pay over time with Shop Pay Installments, subject to approval.
+          <strong>{M.guaranteeNights}-night trial</strong> with free pickup and a full refund, or a free exchange for the other feel. Or pay over time with Shop Pay Installments, subject to approval.
         </p>
         <p className="body">
           An all-natural mattress made from nature&apos;s finest materials: organic Living Wool, organic cotton and Swedish horsehair, hand-tufted and made in color. A {M.mattressHeight} mattress with a {M.topperHeight} topper included: {M.combinedHeight} of natural fiber, with no foam and no chemical flame retardants.
@@ -221,7 +221,7 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
           <div className="buy-promise">
             <p className="buy-promise-h">Sleep on it for {M.guaranteeNights} nights.</p>
             <p className="buy-promise-b">
-              Give it at least {M.guaranteeMinNights} nights. If it isn&apos;t right by night {M.guaranteeNights}, we collect it for free and refund you in full.{" "}
+              Give it at least {M.guaranteeMinNights} nights. If it isn&apos;t right by night {M.guaranteeNights}, we collect it for free and refund you in full. {M.exchangeLine}{" "}
               <Link href={GUARANTEE_PATH} className="ulink">How it works</Link>
             </p>
           </div>

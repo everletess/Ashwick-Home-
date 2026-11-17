@@ -131,6 +131,13 @@ export default function MattressPage() {
       </p>,
     ],
     [
+      "Returns & exchanges",
+      <div key="rx">
+        <p className="body small">{M.guaranteeNights}-night trial: give it at least {M.guaranteeMinNights} nights. If it isn&apos;t right, we pick it up for free and refund you in full. {M.exchangeLine}</p>
+        <p className="body small"><strong>{M.exchangeQ}</strong> {M.exchangeA}</p>
+      </div>,
+    ],
+    [
       "Care — mattress",
       <p className="body small" key="cm">
         Single-sided; no flipping needed. Rotate 180° every 3–6 months. Air it occasionally by removing the bedding for an hour. Spot clean only; do not saturate. Use a professional cleaner for deeper care. We recommend a breathable mattress protector.
@@ -218,7 +225,7 @@ export default function MattressPage() {
 
       <section className="statement">
         <p>Sleep on it.</p>
-        <span className="body statement-body">{M.guaranteeNights} nights to be sure, after a {M.guaranteeMinNights}-night minimum, with free return pickup and a full refund. A lifetime limited warranty to keep it.</span>
+        <span className="body statement-body">{M.guaranteeNights} nights to be sure, after a {M.guaranteeMinNights}-night minimum, with free return pickup and a full refund, or one free exchange for the other feel. A lifetime limited warranty to keep it.</span>
         <Link href={GUARANTEE_PATH} className="btn light">Guarantee &amp; warranty</Link>
       </section>
     </main>

@@ -308,6 +308,7 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
         )}
 
         <p className="fine" style={{ marginTop: 14 }}>14-day returns on pieces as designed. <Link href="/pages/ordering" className="ulink">Details</Link></p>
+        <p className="fine"><Link href="/pages/terms#returns" className="ulink-inline">15% restocking fee; return shipping paid by the customer.</Link></p>
         <div className="assure">
           <span>Made to order</span><span>Handmade in the USA</span><span>Pay over time with Shop Pay Installments</span>
         </div>

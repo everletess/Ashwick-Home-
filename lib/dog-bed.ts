@@ -36,7 +36,7 @@ export const DOG_BED = {
   ],
   matchNote: "Fleece, Flint, Flax and Sorrel: the Ashbury's four colors, so it can sit beside the bed it matches.",
   leadTime: "Handmade to order in the USA. Ships within 3–4 days.",
-  returns: "30-day return window. Returned beds are donated.",
+  returns: "14-day returns on unused items; return shipping paid by the customer. Returned beds are donated.",
   warranty: "1-year warranty.",
   colors: [
     { id: "natural", label: "Fleece", swatch: "mattress-swatch-natural", photos: ["dog-bed-fleece", "dog-bed-fleece-room", "dog-bed-fleece-room-2"] },
@@ -133,7 +133,7 @@ export const NOOK: DogBed = {
     },
     {
       q: "Can I return it?",
-      a: "Yes, within 30 days. Returned beds are donated. It also comes with a 1-year warranty.",
+      a: "Yes, within 14 days, unused; return shipping is paid by the customer. Returned beds are donated. It also comes with a 1-year warranty.",
     },
   ],
   editorial: [{ photo: "nook-olive-room", alt: "A chocolate doodle curled up in the Nook Dog Bed in Olive by the fire" }],

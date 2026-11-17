@@ -94,7 +94,7 @@ export function PillowView({ fillId }: { fillId: string }) {
       <p>The fill is adjustable. Add or remove fill material to set your own height and firmness and the support that suits you, whether you sleep on your back, side or stomach.</p>,
     ],
     ["Delivery", <p>Fast, free delivery. Handmade to order in the USA, shipping within 1–2 business days.</p>],
-    ["Returns", <p>{PILLOW_RETURNS.full}</p>],
+    ["Returns", <><p>{PILLOW_RETURNS.line}</p><p>{PILLOW_RETURNS.full}</p></>],
     ...PILLOW_FAQ.filter(([q]) => q === "Fresh out of the box").map(([q, a]): [string, React.ReactNode] => [q, <p>{a}</p>]),
   ];
 
@@ -141,6 +141,7 @@ export function PillowView({ fillId }: { fillId: string }) {
           <BuyAssure ship="pillow" price={salePrice(price)} />
           <ShipsFast when="1–2 business days" note="Fast, free delivery. Handmade to order in the USA." />
           <TrustRow items={[["truck", "Fast & free delivery"], ["hand", "Handmade to order"], ["returns", PILLOW_RETURNS.short, "/pages/terms#returns"]]} />
+          <p className="fine"><Link href="/pages/terms#returns" className="ulink-inline">{PILLOW_RETURNS.line}</Link></p>
           <StickyBuy watch={buyRef} photo={main.photo} name={`${fill.label} Pillow`} summary={`${size.label} · ${cover.label}`} price={salePrice(price)} cta="Add to cart" onAdd={add} />
         </div>
         <Accordion items={details} />
