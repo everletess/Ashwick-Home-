@@ -66,6 +66,10 @@ export const MATTRESS = {
   shipping: "White glove delivery, $200. Our delivery team will contact you to schedule it once your mattress is made.",
   guarantee: "100-night money-back guarantee",
   guaranteeNights: 100,
+  /** One free exchange for the other feel during the trial (Tessa, Nov 16). */
+  exchangeLine: "Prefer a different feel? Exchange it once for free.",
+  exchangeQ: "Can I switch from Soft to Firm (or Firm to Soft)?",
+  exchangeA: "Yes. After 30 nights, you can exchange once for the other feel, free, with pickup and delivery included.",
   /** Nights a mattress must be slept on before a return can be requested. */
   guaranteeMinNights: 30,
   warranty: "Lifetime limited warranty",

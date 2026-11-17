@@ -455,7 +455,7 @@ export function PillowFaq() {
     ["What size do I need for my bed?", <p key="b">Standard 20 × 26 in for a Twin XL or Full, Queen 20 × 30 in for a Queen, and King 20 × 36 in for a King or Cal King.</p>],
     ["How do I wash the cover?", <p key="c">The removable cover washes in cold water and should be line dried. Do not machine wash the pillow itself; air it out in the sun to refresh it.</p>],
     ["Is there a smell when it arrives?", <p key="d">You may notice a slight, natural odor when you first unpack a new pillow. It is harmless and fades on its own within about a week, or a few extra days in a humid climate.</p>],
-    [`Can I return a pillow?`, <p key="e">{PILLOW_RETURNS.full}</p>],
+    [`Can I return a pillow?`, <p key="e">{PILLOW_RETURNS.line} {PILLOW_RETURNS.full}</p>],
     ["How fast does it ship?", <p key="f">Fast, free delivery. Each pillow is handmade to order in the USA and ships within 1–2 business days.</p>],
   ];
   return (

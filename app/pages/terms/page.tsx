@@ -60,8 +60,9 @@ export default function TermsPage() {
       <Block title="7. Returns" id="returns">
         <P><strong>The Ashbury mattress:</strong> standard sizes are covered by our 100-night guarantee (Section 8).</P>
         <P><strong>Pillows:</strong> can be returned within <strong>14 days</strong> of delivery. An unused pillow is refunded in full to your original payment method. A used pillow carries a <strong>15% restocking fee</strong>. Email {email} with your order number to arrange a return before sending anything back.</P>
-        <P><strong>The Ashbury Dog Bed:</strong> can be returned within <strong>30 days</strong> of delivery. Email us to arrange the return. Returned dog beds are donated, never resold as new. The dog bed carries a 1-year warranty against defects in materials and workmanship.</P>
+        <P><strong>The Ashbury Dog Bed:</strong> can be returned within <strong>14 days</strong> of delivery, unused. Email us to arrange the return. Returned dog beds are donated, never resold as new. The dog bed carries a 1-year warranty against defects in materials and workmanship.</P>
         <P><strong>Furniture as designed:</strong> every piece is made to order. Pieces ordered as designed, without customization, can be returned within <strong>14 days</strong> of delivery. They must be in their original, unused condition. Refunds are reduced by the return shipping cost and a <strong>15% restocking fee</strong>. Email us to arrange a return before sending anything back.</P>
+        <P>Return shipping is paid by the customer, except during the Ashbury 100-night trial, where pickup is free.</P>
         <P><strong>Final sale, with no returns unless they arrive damaged:</strong></P>
         <List items={["Customized furniture", "Custom-size mattresses", "Bespoke commissions", "Fabric swatches"]} />
         <P>None of this affects your rights if a piece arrives damaged (Section 9) or has a defect covered by our warranty (Section 11).</P>
@@ -76,6 +77,7 @@ export default function TermsPage() {
           "The mattress and topper are sold as one system and are returned together.",
           "Returned mattresses are donated, never resold as new.",
         ]} />
+        <P><strong>Free comfort exchange.</strong> During your trial, after at least 30 nights, you may exchange your Ashbury once for the other feel (Soft or Firm), in the same size, at no cost. We&apos;ll pick up your original mattress and deliver the new one free of charge. Exchanged mattresses keep the remaining nights of the original trial.</P>
         <P>Full details are on our <Link href="/pages/guarantee-warranty" className="inl">Guarantee &amp; Warranty</Link> page.</P>
       </Block>
       <Block title="9. Delivery and damage" id="delivery">

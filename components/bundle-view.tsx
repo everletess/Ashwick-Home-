@@ -187,6 +187,11 @@ export function BundleBuilder() {
           {SALE.active ? `${SALE.percent}% off is applied automatically at checkout. ` : ""}Taxes calculated at checkout.
         </p>
         <TrustRow items={[["hand", "Handmade to order"], ["truck", "White glove, mattress"], ["moon", `${M.guaranteeNights}-night trial`]]} />
+        <div className="buy-promise">
+          <p className="buy-promise-h">Sleep on it for {M.guaranteeNights} nights.</p>
+          <p className="buy-promise-b">Give it at least {M.guaranteeMinNights} nights. If it isn&apos;t right by night {M.guaranteeNights}, we collect it for free and refund you in full. {M.exchangeLine}</p>
+          <p className="buy-promise-b"><strong>{M.exchangeQ}</strong> {M.exchangeA}</p>
+        </div>
         <p className="fine">
           Each is also sold on its own: <Link href={MATTRESS_PATH} className="ulink-inline">the Ashbury</Link> and <Link href={D.path} className="ulink-inline">the Ashbury Dog Bed</Link>.
         </p>
@@ -316,7 +321,7 @@ export function SleepSuiteBuilder() {
           </details>
           <details>
             <summary>{M.guaranteeNights}-night trial</summary>
-            <p>Mattress: a {M.guaranteeNights}-night trial, with a 30-night minimum before you request a return.</p>
+            <p>Mattress: a {M.guaranteeNights}-night trial, with a 30-night minimum before you request a return. If it isn&apos;t right, we collect it for free and refund you in full. {M.exchangeLine}</p>
           </details>
           <details>
             <summary>Pay over time</summary>
@@ -325,6 +330,7 @@ export function SleepSuiteBuilder() {
           <details>
             <summary>FAQs</summary>
             <p><strong>Is the discount automatic?</strong> {SALE.active ? `Yes. ${SALE.percent}% off is applied automatically at checkout.` : "Prices shown are the prices at checkout."} Taxes calculated at checkout.</p>
+            <p><strong>{M.exchangeQ}</strong> {M.exchangeA}</p>
             <p><strong>Can I change the pillow?</strong> Yes: choose {BUNDLE_PILLOWS.map((x) => x.label).join(" or ")} above.</p>
           </details>
         </div>

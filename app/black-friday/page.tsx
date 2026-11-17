@@ -39,7 +39,7 @@ export default async function BlackFridayPage() {
   if (!rq) throw new Error("review quote not found: " + frag);
   const faq: [string, string][] = [
     ["When will it ship?", "Mattresses and dog beds ship within 3–4 days of your order. Furniture as designed ships within 3–4 weeks; customized furniture within 8–12 weeks."],
-    ["What is the return policy?", "Mattress: a 100-night trial, with a 30-night minimum before you request a return. Dog beds: 30 days from delivery. Furniture as designed: 14 days from delivery, unused, less return shipping and a 15% restocking fee. Customized furniture is final sale."],
+    ["What is the return policy?", "The Ashbury comes with a 100-night trial: free pickup and a full refund, or a free one-time exchange for the other feel. Furniture as designed and pillows can be returned within 14 days; return shipping is paid by the customer, and furniture returns carry a 15% restocking fee."],
     ["What does white glove delivery cost?", `$${BUNDLE_CONFIG.whiteGloveValue} per mattress and a flat $450 per order for furniture, however many pieces. It is free for the mattress in a bundle.`],
     ["Can I pay in installments?", "Yes. Shop Pay Installments is offered at checkout on the mattress and on furniture, subject to approval."],
   ];

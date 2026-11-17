@@ -84,6 +84,8 @@ export const PILLOW_COVER_PHOTOS = {
 export const PILLOW_RETURNS = {
   days: 14,
   short: "14-day returns",
+  /** Under the buy button and in the returns accordion (Tessa, Nov 16). */
+  line: "14-day returns on unused items; return shipping paid by the customer.",
   full: "Pillows can be returned within 14 days of delivery. An unused pillow is refunded in full to your original payment method. A used pillow carries a 15% restocking fee. Email hello@ashwickhome.com with your order number to arrange a return before sending anything back.",
 } as const;
 

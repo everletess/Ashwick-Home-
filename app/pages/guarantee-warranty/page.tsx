@@ -46,7 +46,7 @@ export default function GuaranteePage() {
           <div className="panel">
             <div className="eyebrow">{M.guaranteeNights} nights</div>
             <h2 className="proc-h">Sleep on it at home.</h2>
-            <p className="body">Sleep on it for at least {M.guaranteeMinNights} nights. If it isn&apos;t right within {M.guaranteeNights} nights of delivery, we&apos;ll collect it at no cost to you and refund you in full.</p>
+            <p className="body">Sleep on it for at least {M.guaranteeMinNights} nights. If it isn&apos;t right within {M.guaranteeNights} nights of delivery, we&apos;ll collect it at no cost to you and refund you in full. {M.exchangeLine}</p>
           </div>
           <div className="panel">
             <div className="eyebrow">For life</div>
@@ -136,8 +136,9 @@ export default function GuaranteePage() {
                 </p>,
               ],
               ["What if my mattress arrives damaged?", <p className="body small" key="2">Contact us within 5 business days of delivery, with photos, and we&apos;ll replace it.</p>],
+              [M.exchangeQ, <p className="body small" key="x">{M.exchangeA} The exchanged mattress keeps the remaining nights of your original trial.</p>],
               ["Can I choose between soft and firm?", <p className="body small" key="3">Yes. The {M.shortName} comes in soft and firm. If you&apos;re unsure, our team can help you choose before you order.</p>],
-              ["What about the Ashbury Dog Bed?", <p className="body small" key="dog">The Ashbury Dog Bed has a 30-day return window and a 1-year warranty against defects in materials and workmanship. It is not covered by the 100-night mattress guarantee or the lifetime warranty. Returned dog beds are donated, never resold as new. Email hello@ashwickhome.com with your order number to start a return or claim.</p>],
+              ["What about the Ashbury Dog Bed?", <p className="body small" key="dog">The Ashbury Dog Bed has a 14-day return window for unused beds (return shipping paid by the customer) and a 1-year warranty against defects in materials and workmanship. It is not covered by the 100-night mattress guarantee or the lifetime warranty. Returned dog beds are donated, never resold as new. Email hello@ashwickhome.com with your order number to start a return or claim.</p>],
               [
                 "Do furniture pieces have the same guarantee?",
                 <p className="body small" key="4">
