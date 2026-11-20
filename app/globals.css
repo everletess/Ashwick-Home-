@@ -2403,3 +2403,7 @@ button.chip{cursor:pointer}
   .fl-bar{bottom:8px;padding-left:14px;font-size:13px}
 }
 .sw-link{align-self:flex-start;margin:-6px 0 4px}
+/* Wool on the swatch page: 2 per row on a phone, 5 on desktop, square tiles without a border */
+.fl-colors-wide{grid-template-columns:repeat(5,minmax(0,1fr))}
+.fl-colors-wide .fl-chip{border:0}
+@media (max-width:860px){.fl-colors-wide{grid-template-columns:repeat(2,minmax(0,1fr))}}

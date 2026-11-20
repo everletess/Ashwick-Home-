@@ -18,6 +18,12 @@ export type LibraryFabric = {
   room: "Furniture" | "Bedroom";
   /** One line: what it is (the site's own wording). */
   makeup?: string;
+  /** Bold lead-in before `makeup`, e.g. "Wool." */
+  makeupLead?: string;
+  /** Small text under every color's name, e.g. "Wool". */
+  colorNote?: string;
+  /** Tile grid: 2 per row on a phone and 5 on desktop, square, no border. */
+  wideGrid?: boolean;
   body?: string;
   origin?: string;
   usedOn: { name: string; href: string }[];
@@ -51,6 +57,24 @@ const ALL_FABRICS: LibraryFabric[] = [
     id: "cotton", name: FABRICS.cotton.label, room: "Furniture",
     makeup: FABRICS.cotton.detail,
     usedOn: usedOn("cotton"), colors: furnitureColors("cotton"),
+  },
+  {
+    // Swatch page only for now; not a product option yet (Tessa, Nov 20). OEKO-TEX certified, not organic.
+    id: "wool", name: "Wool", room: "Furniture",
+    makeupLead: "Wool.", makeup: "A heavyweight, tightly woven 100% wool. Dense, durable and naturally soft. OEKO-TEX certified.",
+    usedOn: [], colorNote: "Wool", wideGrid: true,
+    colors: [
+      { id: "chalk", label: "Chalk", photo: "wool-chalk", swatch: "#EEEDE8" },
+      { id: "barley", label: "Barley", photo: "wool-barley", swatch: "#E8D9BC" },
+      { id: "heron", label: "Heron", photo: "wool-heron", swatch: "#C9C0B6" },
+      { id: "heather", label: "Heather", photo: "wool-heather", swatch: "#A7A8BE" },
+      { id: "pebble", label: "Pebble", photo: "wool-pebble", swatch: "#9A958C" },
+      { id: "gorse", label: "Gorse", photo: "wool-gorse", swatch: "#C49A38" },
+      { id: "russet", label: "Russet", photo: "wool-russet", swatch: "#8A4632" },
+      { id: "bark", label: "Bark", photo: "wool-bark", swatch: "#5E4C40" },
+      { id: "slate", label: "Slate", photo: "wool-slate", swatch: "#4F535A" },
+      { id: "ivy", label: "Ivy", photo: "wool-ivy", swatch: "#4B4A35" },
+    ],
   },
   {
     id: "belgian", name: FABRICS.belgian.label, room: "Furniture",
