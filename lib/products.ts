@@ -64,7 +64,8 @@ export const WOODS: Option[] = [
 ];
 /** Woods some older photos still show (walnut and white oak are no longer offered), for "Photo shows the walnut plinth". */
 export const PHOTO_WOODS: Option[] = [...WOODS, { id: "walnut", label: "Walnut" }, { id: "oak", label: "Oak" }];
-export const SWATCH_ORDER: FabricId[] = ["irish", "cotton", "belgian"];
+/** Fabrics in the swatch grid (Trade page). Belgian Linen is off the swatch page for now (Tessa, Nov 20). */
+export const SWATCH_ORDER: FabricId[] = ["irish", "cotton"];
 
 
 export type Product = {
