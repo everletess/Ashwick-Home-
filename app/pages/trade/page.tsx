@@ -113,7 +113,7 @@ export default function TradePage() {
           <div className="proc-t">
             <div className="eyebrow">Fabric swatches</div>
             <h2 className="proc-h">Feel the fabrics before you specify.</h2>
-            <p className="body">Physical swatches of our Irish Linen, Organic Cotton and Belgian Linen, sent to your studio. Free, up to {SWATCH_MAX} per order.</p>
+            <p className="body">Physical swatches of our Irish Linen and Organic Cotton, sent to your studio. Free, up to {SWATCH_MAX} per order.</p>
             <Link href="/pages/fabric-swatches" className="ulink">Request swatches</Link>
           </div>
           <SwatchGrid className="proc-v swgrid" />

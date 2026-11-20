@@ -38,7 +38,10 @@ function furnitureColors(f: FabricId): LibraryColor[] {
   return (F.colors ?? []).map((c) => ({ id: c.id, label: c.label, code: c.code, swatch: c.swatch, tex: F.tex, alsoCalled: marlowe[c.id] ? `${marlowe[c.id]} on the Marlowe` : undefined }));
 }
 
-export const FABRIC_LIBRARY: LibraryFabric[] = [
+/** Fabrics left off the swatch page for now (Tessa, Nov 20: Belgian Linen). Take an id out to bring it back. */
+export const SWATCHES_PAUSED = new Set(["belgian"]);
+
+const ALL_FABRICS: LibraryFabric[] = [
   {
     id: "irish", name: FABRICS.irish.label, room: "Furniture",
     body: linen?.body, origin: linen?.origin,
@@ -71,6 +74,8 @@ export const FABRIC_LIBRARY: LibraryFabric[] = [
     colors: NOOK.colors.map((c) => ({ id: c.id, label: c.label, photo: c.swatch })),
   },
 ];
+
+export const FABRIC_LIBRARY = ALL_FABRICS.filter((F) => !SWATCHES_PAUSED.has(F.id));
 
 /** Old ?fabric= values that still arrive from older links. */
 export const FABRIC_ALIASES: Record<string, string> = { italian: "belgian", mattress: "twill", ashbury: "twill", "dog-bed": "twill", pillow: "twill" };
