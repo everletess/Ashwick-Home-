@@ -211,6 +211,17 @@ import holidayPillows from "@/assets/photos/holiday-pillows.jpg";
 import holidayNook from "@/assets/photos/holiday-nook.jpg";
 import holidayBestFriends from "@/assets/photos/holiday-best-friends.jpg";
 import mattressProtector from "@/assets/photos/mattress-protector.jpg";
+// Wool swatches for the swatch page (Tessa, Nov 20), 800×800.
+import woolChalk from "@/assets/photos/ashwick-wool-chalk.jpg";
+import woolBarley from "@/assets/photos/ashwick-wool-barley.jpg";
+import woolHeron from "@/assets/photos/ashwick-wool-heron.jpg";
+import woolHeather from "@/assets/photos/ashwick-wool-heather.jpg";
+import woolPebble from "@/assets/photos/ashwick-wool-pebble.jpg";
+import woolGorse from "@/assets/photos/ashwick-wool-gorse.jpg";
+import woolRusset from "@/assets/photos/ashwick-wool-russet.jpg";
+import woolBark from "@/assets/photos/ashwick-wool-bark.jpg";
+import woolSlate from "@/assets/photos/ashwick-wool-slate.jpg";
+import woolIvy from "@/assets/photos/ashwick-wool-ivy.jpg";
 import mattressSwatchKhaki from "@/assets/photos/mattress-swatch-khaki.jpg";
 import pembroke1 from "@/assets/photos/pembroke-1.jpg";
 // The Pembroke hero (Nov 2026): leads its gallery and cards. Untagged, so choosing a color moves to that color's photo.
@@ -428,6 +439,16 @@ export const PHOTOS = {
   "holiday-nook": holidayNook,
   "holiday-best-friends": holidayBestFriends,
   "mattress-protector": mattressProtector,
+  "wool-chalk": woolChalk,
+  "wool-barley": woolBarley,
+  "wool-heron": woolHeron,
+  "wool-heather": woolHeather,
+  "wool-pebble": woolPebble,
+  "wool-gorse": woolGorse,
+  "wool-russet": woolRusset,
+  "wool-bark": woolBark,
+  "wool-slate": woolSlate,
+  "wool-ivy": woolIvy,
   "holiday-gifts": pillowsHero,
   "mattress-swatch-khaki": mattressSwatchKhaki,
   "pembroke-1": pembroke1,

@@ -13,7 +13,7 @@ import { track } from "@/lib/pixel";
 
 const MAX_SWATCHES = SWATCH_MAX;
 
-type Swatch = { key: string; fabric: string; label: string; color?: string; photo?: PhotoKey; tex?: string; code?: string; alsoCalled?: string };
+type Swatch = { key: string; fabric: string; label: string; color?: string; photo?: PhotoKey; tex?: string; code?: string; alsoCalled?: string; note?: string };
 
 /**
  * The fabric library: every fabric we sell (lib/fabric-library.ts), each with what it is, where it's used and its
@@ -22,7 +22,7 @@ type Swatch = { key: string; fabric: string; label: string; color?: string; phot
 export function SwatchOrder() {
   const params = useSearchParams();
   const all: Swatch[] = FABRIC_LIBRARY.flatMap((F) =>
-    F.colors.map((c) => ({ key: `${F.id}:${c.id}`, fabric: F.id, label: `${F.name} · ${c.label}`, color: c.swatch, photo: c.photo, tex: c.tex, code: c.code, alsoCalled: c.alsoCalled })),
+    F.colors.map((c) => ({ key: `${F.id}:${c.id}`, fabric: F.id, label: `${F.name} · ${c.label}`, color: c.swatch, photo: c.photo, tex: c.tex, code: c.code, alsoCalled: c.alsoCalled, note: F.colorNote })),
   );
   // ?fabric=irish&color=flax preselects the swatch the customer was looking at (older ids are mapped).
   const fab = params.get("fabric") ?? "";
@@ -59,7 +59,7 @@ export function SwatchOrder() {
     <form className="swatch-order" onSubmit={onSubmit}>
       <Honeypot />
       <input type="hidden" name="total" value={`Free (${picked.length} swatch${picked.length === 1 ? "" : "es"})`} />
-      <input type="hidden" name="swatches" value={all.filter((s) => picked.includes(s.key)).map((s) => s.label + (s.code ? ` (${s.code})` : "")).join("; ")} />
+      <input type="hidden" name="swatches" value={all.filter((s) => picked.includes(s.key)).map((s) => s.label.replace(" · ", ": ") + (s.code ? ` (${s.code})` : "")).join("; ")} />
       {(["Furniture", "Bedroom"] as const).map((room) => (
         <div key={room} className="fl-room">
           <h2 className="fl-room-h">{room === "Furniture" ? "Furniture fabrics" : "Bedroom fabrics"}</h2>
@@ -67,7 +67,7 @@ export function SwatchOrder() {
             <fieldset className="fl-fabric" key={F.id} id={F.id}>
               <legend className="fl-name">{F.name}</legend>
               <div className="fl-about">
-                {F.makeup && <p className="fl-makeup">{F.makeup}</p>}
+                {F.makeup && <p className="fl-makeup">{F.makeupLead && <strong>{F.makeupLead} </strong>}{F.makeup}</p>}
                 {F.body && <p className="body small">{F.body}</p>}
                 {F.origin && <p className="fl-origin">{F.origin}</p>}
                 {F.usedOn.length > 0 && (
@@ -75,16 +75,17 @@ export function SwatchOrder() {
                 )}
                 {F.note && <p className="fl-used">{F.note}</p>}
               </div>
-              <div className="fl-colors">
+              <div className={"fl-colors" + (F.wideGrid ? " fl-colors-wide" : "")}>
                 {all.filter((s) => s.fabric === F.id).map((s) => {
                   const on = picked.includes(s.key);
                   return (
                     <button type="button" key={s.key} className={"fl-sw" + (on ? " on" : "")} aria-pressed={on} onClick={() => toggle(s.key)}>
-                      <span className={"fl-chip" + (s.tex ? " tex-" + s.tex : "")} style={s.photo ? { backgroundImage: `url(${PHOTOS[s.photo].src})` } : { background: s.color }}>
+                      <span className={"fl-chip" + (s.tex ? " tex-" + s.tex : "")} style={s.photo ? { backgroundImage: `url(${PHOTOS[s.photo].src})`, backgroundColor: s.color } : { background: s.color }}>
                         {on && <span className="fl-check" aria-hidden="true">✓</span>}
                       </span>
                       <span className="fl-sw-t">{s.label.split(" · ")[1]}</span>
                       {s.alsoCalled && <small>{s.alsoCalled}</small>}
+                      {s.note && <small>{s.note}</small>}
                     </button>
                   );
                 })}
