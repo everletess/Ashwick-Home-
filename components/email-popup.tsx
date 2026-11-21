@@ -184,7 +184,7 @@ export function EmailPopup() {
             <p className="ep-eyebrow eyebrow">Welcome</p>
             <p className="ep-h h3" id="ep-title">You&apos;re on the list.</p>
             <p className="ep-body body small" id="ep-desc">
-              {SALE.active ? <>Thank you for joining. Watch your inbox for deals throughout the month.</> : <>Here&apos;s 15% off your first order.{emailed && <> We&apos;ve sent it to your inbox too.</>} The first Ashwick Letter will land in your inbox soon.</>}
+              {SALE.active ? <>Thank you for joining. You'll hear from us first on new pieces and colours.</> : <>Here&apos;s 15% off your first order.{emailed && <> We&apos;ve sent it to your inbox too.</>} The first Ashwick Letter will land in your inbox soon.</>}
             </p>
             {!SALE.active && <><p className="ep-code">{DISCOUNT_CODE}</p>
             <p className="fine">Enter it at checkout. One use per customer.</p></>}
@@ -196,12 +196,12 @@ export function EmailPopup() {
             <p className="ep-eyebrow eyebrow">The Ashwick Letter</p>
             {/* Phones get the short version (ep-short), a compact card that leaves the page visible. */}
             <p className="ep-h h3" id="ep-title">
-              <span className="ep-long">{SALE.active ? "Deals all month long." : "Built to be inherited."}</span>
-              <span className="ep-short">{SALE.active ? "Deals all month long" : "15% off your first order"}</span>
+              <span className="ep-long">{SALE.active ? "First to see what's new." : "Built to be inherited."}</span>
+              <span className="ep-short">{SALE.active ? "First to see what's new" : "15% off your first order"}</span>
             </p>
             <p className="ep-body body small" id="ep-desc">
-              <span className="ep-long">{SALE.active ? "Join the Ashwick Letter for deals throughout the month, plus material stories and first access to new pieces." : "Join our exclusive organic design newsletter: material stories, natural interiors, and first access to new pieces. Plus 15% off your first order."}</span>
-              <span className="ep-short">{SALE.active ? "Join the Ashwick Letter for deals throughout the month." : "Join the Ashwick Letter for material stories, new pieces and your code."}</span>
+              <span className="ep-long">{SALE.active ? "Join the Ashwick Letter for first access to new pieces and colours, plus material stories and the deals we run through the year." : "Join our exclusive organic design newsletter: material stories, natural interiors, and first access to new pieces. Plus 15% off your first order."}</span>
+              <span className="ep-short">{SALE.active ? "First access to new pieces and colours, and material stories." : "Join the Ashwick Letter for material stories, new pieces and your code."}</span>
             </p>
 
             <div className="ep-row">
@@ -230,7 +230,7 @@ export function EmailPopup() {
             >
               {status === "loading" ? "One moment…" : (
                 <>
-                  <span className="ep-long">{SALE.active ? "Join the newsletter" : "Get 15% off + the newsletter"}</span>
+                  <span className="ep-long">{SALE.active ? "Get first access" : "Get 15% off + the newsletter"}</span>
                   <span className="ep-short">Submit</span>
                 </>
               )}
