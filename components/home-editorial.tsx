@@ -14,6 +14,7 @@ import { PILLOW_PATH, pillowFromPrice } from "@/lib/pillow";
 import type { PhotoKey } from "@/lib/photos";
 import { cardPrice, getProduct } from "@/lib/products";
 import { SALE, salePrice } from "@/lib/sale";
+import { POR_LABEL, usePriceOnRequest } from "@/components/price-on-request";
 
 /* ---------- 4 · Shop the home, by room ---------- */
 
@@ -62,13 +63,14 @@ const NOOK_PICK: Pick = { key: "nook", name: NOOK.title, href: NOOK.path, photo:
 const picks = (xs: (Pick | null)[]) => xs.filter(Boolean) as Pick[];
 
 function Card({ it, sizes = "(max-width: 860px) 62vw, 300px" }: { it: Pick; sizes?: string }) {
+  const por = usePriceOnRequest().has(it.key);
   return (
     <li className="he-card">
       <Link href={it.href}>
         <span className="he-card-img"><Photo src={it.photo} label={it.name} fill sizes={sizes} /></span>
         <span className="he-card-name">{it.name}</span>
         <span className="he-card-price">
-          {SALE.active ? <><span className="price-now">{fmtWhole(salePrice(it.price))}</span> <s className="price-was">{fmtWhole(it.price)}</s></> : fmtWhole(it.price)}
+          {por ? POR_LABEL : SALE.active ? <><span className="price-now">{fmtWhole(salePrice(it.price))}</span> <s className="price-was">{fmtWhole(it.price)}</s></> : fmtWhole(it.price)}
         </span>
       </Link>
     </li>

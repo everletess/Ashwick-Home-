@@ -7,6 +7,7 @@ import { FURNITURE_MATERIALS_PATH } from "@/lib/materials";
 import { PHOTOS } from "@/lib/photos";
 import { LEAD_TIMES, PRODUCTS, constructionFor, getProduct, relatedTo, type Product } from "@/lib/products";
 import { abs } from "@/lib/mattress-feed";
+import { getPriceOnRequestIds } from "@/lib/price-on-request";
 
 // Shared by /products/:id ("As designed") and /products/:id/customize ("Customize").
 export type ProductParams = { params: Promise<{ id: string }> };
@@ -22,7 +23,8 @@ function seoTitle(p: Product) {
 }
 
 /** What it is, then the made-to-order line and the price. Only facts already on the page. */
-function seoDescription(p: Product) {
+function seoDescription(p: Product, por: boolean) {
+  if (por) return `${p.line} Handmade to order in the USA.`;
   return `${p.line} Handmade to order in the USA, ${p.priceFrom ? "from" : "priced at"} $${p.price.toLocaleString("en-US")}.`;
 }
 
@@ -31,14 +33,14 @@ export async function productMetadata({ params }: ProductParams): Promise<Metada
   if (!p) return {};
   return {
     title: { absolute: `${seoTitle(p)} | Ashwick Home` },
-    description: seoDescription(p),
+    description: seoDescription(p, (await getPriceOnRequestIds()).includes(p.id)),
     alternates: { canonical: `/products/${p.id}` },
     openGraph: { images: [PHOTOS[p.photos[0]].src] },
   };
 }
 
 /** Product and breadcrumb markup for Google. Price and availability come from the same data the page shows. */
-function productJsonLd(p: Product) {
+function productJsonLd(p: Product, por: boolean) {
   const url = abs(`/products/${p.id}`);
   const prices = [p.price, ...Object.values(p.fabricPrices ?? {})];
   return [
@@ -52,7 +54,8 @@ function productJsonLd(p: Product) {
       material: p.materials,
       url,
       image: p.photos.map((k) => abs(PHOTOS[k].src)),
-      offers: {
+      // Priced upon request: no offers or price in the markup (name, images, brand and description stay).
+      ...(por ? {} : { offers: {
         "@type": "AggregateOffer",
         priceCurrency: "USD",
         lowPrice: Math.min(...prices),
@@ -60,7 +63,7 @@ function productJsonLd(p: Product) {
         offerCount: prices.length,
         availability: p.preorder ? "https://schema.org/PreOrder" : "https://schema.org/InStock",
         url,
-      },
+      } }),
     },
     {
       "@context": "https://schema.org",
@@ -78,9 +81,11 @@ export async function ProductPage({ params, mode }: ProductParams & { mode: "des
   const p = getProduct((await params).id);
   if (!p) notFound();
   const construction = constructionFor(p);
+  const porIds = await getPriceOnRequestIds();
+  const por = porIds.includes(p.id);
   return (
     <main>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd(p)).replace(/</g, "\\u003c") }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd(p, por)).replace(/</g, "\\u003c") }} />
       <div className="crumb wrap">
         <Link href="/">Home</Link>
         <span>/</span>
@@ -111,8 +116,8 @@ export async function ProductPage({ params, mode }: ProductParams & { mode: "des
               </div>
             )}
             <div className="spec"><div className="eyebrow">Made</div><p>To order, by hand, in our American workshop.</p></div>
-            <div className="spec"><div className="eyebrow">Lead time</div><p>{p.leadTime ?? LEAD_TIMES}</p></div>
-            <div className="spec"><div className="eyebrow">Payment</div><p>In full at checkout, or over time with Shop Pay Installments, subject to approval.</p></div>
+            {!por && <div className="spec"><div className="eyebrow">Lead time</div><p>{p.leadTime ?? LEAD_TIMES}</p></div>}
+            {!por && <div className="spec"><div className="eyebrow">Payment</div><p>In full at checkout, or over time with Shop Pay Installments, subject to approval.</p></div>}
           </div>
         </div>
       </section>
@@ -143,7 +148,7 @@ export async function ProductPage({ params, mode }: ProductParams & { mode: "des
               <h2 className="h2">More from the collection.</h2>
             </div>
           </div>
-          <ProductGrid products={relatedTo(p)} />
+          <ProductGrid products={relatedTo(p)} por={porIds} />
         </div>
       </section>
     </main>

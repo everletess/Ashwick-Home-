@@ -12,7 +12,7 @@ import { subscribeEmail } from "@/lib/subscribe";
 export { STUDIO_EMAIL };
 const MAX_UPLOAD_BYTES = 4 * 1024 * 1024; // matches the limit in app/api/forms/route.ts
 
-type FormName = "newsletter" | "bespoke" | "trade" | "hospitality" | "custom" | "swatches";
+type FormName = "newsletter" | "bespoke" | "trade" | "hospitality" | "custom" | "swatches" | "price-request";
 type Status = "idle" | "sending" | "sent" | "error";
 
 /** Submit state for one form. `validate` can veto the send (and should report why). */

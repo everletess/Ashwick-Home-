@@ -120,3 +120,32 @@ export async function fetchVariantPrices(): Promise<PricedVariant[]> {
   }
   return out;
 }
+
+/** The tag that puts a product on "Price upon request" (Tessa, Nov 22). */
+export const PRICE_ON_REQUEST_TAG = "price-on-request";
+
+/**
+ * Handles of products tagged `price-on-request` in Shopify. Cached for 5 minutes (a tag change shows on the site
+ * within that). Returns null when Shopify can't be reached, so the caller can fall back.
+ */
+export async function fetchPriceOnRequestHandles(): Promise<string[] | null> {
+  if (!STORE || !TOKEN) return null;
+  try {
+    const res = await fetch(API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-Shopify-Storefront-Access-Token": TOKEN },
+      body: JSON.stringify({ query: `{ products(first: 100, query: "tag:'${PRICE_ON_REQUEST_TAG}'") { edges { node { handle tags } } } }` }),
+      next: { revalidate: 300 },
+    });
+    if (!res.ok) return null;
+    const json = await res.json();
+    if (json.errors) return null;
+    // The search matches the tag; checking `tags` as well guards against a loose search match.
+    return json.data.products.edges
+      .map((e: { node: { handle: string; tags?: string[] } }) => e.node)
+      .filter((n: { tags?: string[] }) => !n.tags || n.tags.map((t) => t.toLowerCase()).includes(PRICE_ON_REQUEST_TAG))
+      .map((n: { handle: string }) => n.handle);
+  } catch {
+    return null;
+  }
+}

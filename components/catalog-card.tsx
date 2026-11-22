@@ -6,6 +6,7 @@ import { createPortal } from "react-dom";
 import { Photo } from "@/components/photo";
 import { useCart } from "@/components/cart";
 import { Stars } from "@/components/reviews";
+import { POR_LABEL, usePriceOnRequest } from "@/components/price-on-request";
 import { SALE, mattressDelivery, salePrice } from "@/lib/sale";
 import { DOG_BED, NOOK } from "@/lib/dog-bed";
 import { MATTRESS, colorById, sizeById } from "@/lib/mattress";
@@ -33,10 +34,12 @@ function CardPrice({ item }: { item: CatalogItem }) {
 /** One product card, used by every grid: 4:5 photo (a small + on it opens Quick add), name, price, and small stars where reviews exist. */
 export function CatalogCard({ item, priority }: { item: CatalogItem; priority?: boolean }) {
   const [quick, setQuick] = useState(false);
+  // Priced upon request: no price, badge or quick add; sorted after the priced pieces (filter-sort.tsx).
+  const por = usePriceOnRequest().has(item.id);
   const rv = item.review ? reviewsFor(item.review) : null;
-  const badge = item.badge && BADGES.has(item.badge) ? item.badge : null;
+  const badge = !por && item.badge && BADGES.has(item.badge) ? item.badge : null;
   return (
-    <div className="cc" data-price={item.price} data-name={item.name} data-group={item.group} data-fast={item.fast ? "1" : undefined}>
+    <div className="cc" data-price={por ? undefined : item.price} data-por={por ? "1" : undefined} data-name={item.name} data-group={item.group} data-fast={item.fast ? "1" : undefined}>
       <div className="cc-media">
         <Link href={item.href} className="cc-link" aria-label={item.name} tabIndex={-1}>
           <div className={"cc-img" + (String(item.photo).startsWith("mattress-room") ? " crop-cap" : "")}>
@@ -45,11 +48,11 @@ export function CatalogCard({ item, priority }: { item: CatalogItem; priority?: 
           </div>
         </Link>
         {badge && <span className="cc-badge">{badge}</span>}
-        {item.quick && <button type="button" className="cc-plus" aria-label={`Quick add: ${item.name}`} onClick={() => setQuick(true)}>+</button>}
+        {item.quick && !por && <button type="button" className="cc-plus" aria-label={`Quick add: ${item.name}`} onClick={() => setQuick(true)}>+</button>}
       </div>
       <Link href={item.href} className="cc-link">
         <h3 className="cc-name">{item.name}</h3>
-        <CardPrice item={item} />
+        {por ? <div className="cc-price"><span className="cc-now">{POR_LABEL}</span></div> : <CardPrice item={item} />}
         {rv && rv.count > 0 && <div className="cc-stars"><Stars rating={rv.average} /><span>{rv.count}</span></div>}
       </Link>
       {quick && item.quick && <QuickAddSheet kind={item.quick.kind} href={item.quick.href} fill={item.quick.fill} onClose={() => setQuick(false)} />}

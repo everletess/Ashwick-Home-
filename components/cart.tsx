@@ -6,6 +6,7 @@ import { trackAddedToCart } from "@/lib/subscribe";
 import type { PhotoKey } from "@/lib/photos";
 import { BUNDLES, SALE, bundlePrice, bundleTitleFor, orderDelivery, salePrice } from "@/lib/sale";
 import { isUnavailable, migrateLine, productPathOf } from "@/lib/cart-migrate";
+import { usePriceOnRequest } from "@/components/price-on-request";
 
 /** The bundle id a line belongs to (all lines of the bundle share it), if any. */
 export const bundleIdOf = (l: { options: [string, string][] }) =>
@@ -50,7 +51,8 @@ type Cart = {
   drop: (lineIds: string[]) => void;
 };
 
-export type CartNotice = { name: string; href: string };
+/** `por`: the piece is now priced upon request (a different note). */
+export type CartNotice = { name: string; href: string; por?: boolean };
 
 const STORAGE_KEY = "ashwick-cart";
 const CartCtx = createContext<Cart | null>(null);
@@ -61,6 +63,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [loaded, setLoaded] = useState(false);
 
   const [notice, setNotice] = useState<CartNotice[]>([]);
+  const por = usePriceOnRequest();
 
   /** Lines (and the rest of their bundles) taken out, as notices: what it was and where to choose again. */
   const withoutLines = (list: CartLine[], ids: Set<string>) => {
@@ -84,7 +87,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       // Carts saved before the fabric was renamed say "Italian Linen"; it's Belgian Linen.
       if (saved) restored = (JSON.parse(saved.replaceAll("Italian Linen", "Belgian Linen")) as CartLine[]).map(migrateLine);
     } catch {}
-    const { kept, notes } = withoutLines(restored, new Set(restored.filter(isUnavailable).map((i) => i.lineId)));
+    // Pieces now priced upon request come out with their own note; the rest of the cart checks out as usual.
+    const porLines = restored.filter((i) => por.has(i.id));
+    const porNotes: CartNotice[] = [...new Map(porLines.map((i) => [i.id, { name: i.name, href: productPathOf(i.id), por: true }])).values()];
+    const afterPor = restored.filter((i) => !por.has(i.id));
+    const { kept, notes: oldNotes } = withoutLines(afterPor, new Set(afterPor.filter(isUnavailable).map((i) => i.lineId)));
+    const notes = [...porNotes, ...oldNotes];
     /* eslint-disable react-hooks/set-state-in-effect -- one-time hydration from storage */
     setItems(kept);
     if (notes.length) setNotice(notes);
@@ -104,6 +112,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         });
       })
       .catch(() => {});
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- runs once when the saved cart loads; the list comes from the layout
   }, []);
   useEffect(() => {
     if (!loaded) return;
@@ -187,14 +196,26 @@ export function useCart() {
 export function CartNoticeBox({ onNavigate }: { onNavigate?: () => void }) {
   const { notice, dismissNotice } = useCart();
   if (!notice.length) return null;
+  const porN = notice.filter((n) => n.por);
+  const gone = notice.filter((n) => !n.por);
   return (
     <div className="cart-notice" role="status">
-      <p>
-        {notice.length === 1 ? "One item in your cart is no longer available in that size. Please choose again." : "Some items in your cart are no longer available in those sizes. Please choose again."}
-      </p>
-      <p className="cart-notice-links">
-        {notice.map((n) => <a key={n.name} href={n.href} onClick={() => { dismissNotice(); onNavigate?.(); }}>Choose again: {n.name} →</a>)}
-      </p>
+      {porN.map((n) => (
+        <p key={n.name}>
+          The {n.name.replace(/^The /, "")} is now priced upon request.{" "}
+          <a href={n.href} className="cart-notice-a" onClick={() => { dismissNotice(); onNavigate?.(); }}>Request pricing →</a>
+        </p>
+      ))}
+      {gone.length > 0 && (
+        <>
+          <p>
+            {gone.length === 1 ? "One item in your cart is no longer available in that size. Please choose again." : "Some items in your cart are no longer available in those sizes. Please choose again."}
+          </p>
+          <p className="cart-notice-links">
+            {gone.map((n) => <a key={n.name} href={n.href} onClick={() => { dismissNotice(); onNavigate?.(); }}>Choose again: {n.name} →</a>)}
+          </p>
+        </>
+      )}
       <button type="button" className="cart-notice-x" aria-label="Dismiss" onClick={dismissNotice}>×</button>
     </div>
   );

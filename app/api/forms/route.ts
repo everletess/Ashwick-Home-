@@ -10,6 +10,7 @@ const FORMS = {
   hospitality: "Hospitality request",
   custom: "Customization request",
   swatches: "Swatch request",
+  "price-request": "Price request",
 } as const;
 type FormName = keyof typeof FORMS;
 

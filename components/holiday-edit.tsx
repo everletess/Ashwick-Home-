@@ -18,6 +18,7 @@ import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
 import type { PhotoKey } from "@/lib/photos";
 import { PILLOW_PATH } from "@/lib/pillow";
 import { getProduct } from "@/lib/products";
+import { usePriceOnRequest } from "@/components/price-on-request";
 import { BUNDLE, BUNDLE_PILLOWS, SALE, SLEEP_SUITE, countdownFrom, mattressDelivery, saleEndShort, salePrice, sleepSuiteLines } from "@/lib/sale";
 
 /** The page's photographs: Tessa's (05/11), except the Gifts band, a stand-in for now. */
@@ -231,7 +232,7 @@ export function BestFriendsDeal({ prices }: { prices: LivePrices }) {
   );
 }
 
-/* ---------- 6 · No. 3, 20% off all furniture ---------- */
+/* ---------- 6 · No. 3, 20% off furniture (pieces priced upon request are left out) ---------- */
 
 const FURNITURE: Record<"Sofas" | "Chairs" | "Bedroom", string[]> = {
   Sofas: ["marlowe", "marlowe-loveseat", "chatsworth", "cotswold", "burford"],
@@ -273,18 +274,20 @@ function FurnitureCard({ id, prices }: { id: string; prices: LivePrices }) {
 
 export function FurnitureDeal({ prices }: { prices: LivePrices }) {
   const [tab, setTab] = useState<keyof typeof FURNITURE>("Sofas");
+  const por = usePriceOnRequest();
   return (
     <section className="hx-sec hx-alabaster" id="furniture" aria-labelledby="hx-fur-h">
       <div className="wrap">
-        <p className="hx-no"><em>No. 3</em> · {SALE.percent}% off all furniture</p>
+        <p className="hx-no"><em>No. 3</em> · {SALE.percent}% off furniture</p>
         <h2 className="hx-h2" id="hx-fur-h">For every room.</h2>
         <div className="hx-filters" role="tablist" aria-label="Furniture">
           {(Object.keys(FURNITURE) as (keyof typeof FURNITURE)[]).map((t) => (
             <button key={t} type="button" role="tab" aria-selected={tab === t} className={"hx-filter" + (tab === t ? " on" : "")} onClick={() => setTab(t)}>{t}</button>
           ))}
         </div>
-        <ul className="hx-grid" role="tabpanel">{FURNITURE[tab].map((id) => <FurnitureCard key={id} id={id} prices={prices} />)}</ul>
+        <ul className="hx-grid" role="tabpanel">{FURNITURE[tab].filter((id) => !por.has(id)).map((id) => <FurnitureCard key={id} id={id} prices={prices} />)}</ul>
         <Link href="/collections/all" className="ulink">Shop all furniture →</Link>
+        {por.size > 0 && <p className="hx-foot"><Link href="/collections/sofas">Excludes pieces priced upon request.</Link></p>}
       </div>
     </section>
   );

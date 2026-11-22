@@ -22,7 +22,14 @@ export function FilterSort({ current }: { current: string }) {
   useEffect(() => {
     document.querySelectorAll<HTMLElement>("[data-grid]").forEach((grid) => {
       const cards = [...grid.querySelectorAll<HTMLElement>(".cc")];
-      const order = [...cards].sort((x, y) => sort === "low" ? +x.dataset.price! - +y.dataset.price! : sort === "high" ? +y.dataset.price! - +x.dataset.price! : 0);
+      // Pieces priced upon request (data-por) sort after every priced piece, low to high and high to low.
+      const key = (c: HTMLElement) => (c.dataset.por ? null : +c.dataset.price!);
+      const order = [...cards].sort((x, y) => {
+        if (sort === "featured") return 0;
+        const a = key(x), b = key(y);
+        if (a == null || b == null) return a == null && b == null ? 0 : a == null ? 1 : -1;
+        return sort === "low" ? a - b : b - a;
+      });
       cards.forEach((c) => {
         c.style.order = sort === "featured" ? "" : String(order.indexOf(c));
         c.style.display = fast && !c.dataset.fast ? "none" : "";

@@ -8,18 +8,18 @@ import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
 
 const CARD_SIZES = "(max-width: 620px) 100vw, (max-width: 1180px) 50vw, 460px";
 
-export function ProductCard({ p, custom }: { p: Product; custom?: boolean }) {
+export function ProductCard({ p, custom, por }: { p: Product; custom?: boolean; por?: boolean }) {
   return (
-    <Link href={"/products/" + p.id + (custom ? "/customize" : "")} className="card" data-price={cardPrice(p).price} data-name={p.name}>
+    <Link href={"/products/" + p.id + (custom ? "/customize" : "")} className="card" data-price={por ? undefined : cardPrice(p).price} data-por={por ? "1" : undefined} data-name={p.name}>
       <div className="card-img">
         <Photo src={p.cardPhoto ?? p.photos[0]} label={p.name} fill sizes={CARD_SIZES} />
         {p.photos[1] && !p.cardSingle && <Photo src={p.photos[1]} label={p.name} className="alt" fill sizes={CARD_SIZES} />}
-        {!custom && <SaleTag />}
+        {!custom && !por && <SaleTag />}
         <span className="card-cta">{custom ? "Customize" : "Shop now"}</span>
       </div>
       <div className="card-row">
         <span className="card-name">{p.name}</span>
-        <span className="card-price">{custom ? <>{cardPrice(p).from ? "From " : ""}{fmt(cardPrice(p).price)}</> : <Price price={cardPrice(p).price} from={cardPrice(p).from} was={!NO_WAS_PRICE.has(p.id)} />}</span>
+        <span className="card-price">{por ? "Price upon request" : custom ? <>{cardPrice(p).from ? "From " : ""}{fmt(cardPrice(p).price)}</> : <Price price={cardPrice(p).price} from={cardPrice(p).from} was={!NO_WAS_PRICE.has(p.id)} />}</span>
       </div>
       <p className="card-line">{p.line}</p>
       <div className="card-meta">{p.type} · Made to order · Customizable</div>
@@ -49,10 +49,11 @@ export function MattressCard({ custom }: { custom?: boolean }) {
   );
 }
 
-export function ProductGrid({ products, custom, mattress }: { products: Product[]; custom?: boolean; mattress?: boolean }) {
+/** `por`: site product ids priced upon request (from getPriceOnRequestIds()). */
+export function ProductGrid({ products, custom, mattress, por = [] }: { products: Product[]; custom?: boolean; mattress?: boolean; por?: string[] }) {
   return (
     <div className="grid3 coll-grid" data-grid>
-      {products.map((p) => <ProductCard key={p.id} p={p} custom={custom} />)}
+      {products.map((p) => <ProductCard key={p.id} p={p} custom={custom} por={por.includes(p.id)} />)}
       {mattress && <MattressCard custom={custom} />}
     </div>
   );
