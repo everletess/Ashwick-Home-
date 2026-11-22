@@ -1,6 +1,8 @@
 "use client";
 
 import { BuyAssure } from "@/components/buy-assure";
+import { POR_LABEL, usePriceOnRequest } from "@/components/price-on-request";
+import { RequestPricing } from "@/components/request-pricing";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useCart } from "@/components/cart";
@@ -78,6 +80,9 @@ function CustomRequest({ about }: { about: string }) {
 export function ProductView({ id, initialMode }: { id: string; initialMode: Mode }) {
   const p = getProduct(id)!;
   const cart = useCart();
+  // Priced upon request (Shopify tag price-on-request): no price, no Add to cart; "Request pricing" instead.
+  const por = usePriceOnRequest().has(p.id);
+  const [asking, setAsking] = useState(false);
   const [mode, setModeState] = useState<Mode>(initialMode);
   const buyRef = useRef<HTMLButtonElement>(null);
   const [img, setImg] = useState(0);
@@ -150,8 +155,8 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
   useEffect(() => {
     if (viewed.current) return;
     viewed.current = true;
-    track("ViewContent", { content_ids: [p.id], content_name: p.name, content_type: "product", value: price ?? undefined });
-  }, [p.id, p.name, price]);
+    track("ViewContent", { content_ids: [p.id], content_name: p.name, content_type: "product", value: por ? undefined : (price ?? undefined) });
+  }, [p.id, p.name, price, por]);
   const fabricChoices = p.fabrics;
   const photo = p.photos[img];
   const shown = p.photoTags?.[photo];
@@ -241,9 +246,18 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
       <div className="info">
         <div className="eyebrow">{p.type} · Made to order · Handmade in the USA</div>
         <h1 className="pdp-name">{p.name}</h1>
-        <div className="pdp-price"><Price price={price} from={p.priceFrom} was={!NO_WAS_PRICE.has(p.id)} /></div>
-        <SaleNote />
-        {p.delivery && <p className="fine delivery">+ {fmt(p.delivery.price)} white glove delivery per order, however many pieces</p>}
+        {por ? (
+          <>
+            <div className="pdp-price por-price">{POR_LABEL}</div>
+            <p className="por-line">Made to order in our American workshop. Our design team will share pricing, fabrics and lead time.</p>
+          </>
+        ) : (
+          <>
+            <div className="pdp-price"><Price price={price} from={p.priceFrom} was={!NO_WAS_PRICE.has(p.id)} /></div>
+            <SaleNote />
+            {p.delivery && <p className="fine delivery">+ {fmt(p.delivery.price)} white glove delivery per order, however many pieces</p>}
+          </>
+        )}
         <p className="body">{p.line}</p>
 
         <div className="choices" id={BUY_OPTIONS_ID}>
@@ -274,6 +288,13 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
             : <p className="fixed-opt"><span>Base</span> {lab(WOODS, wood)}</p>)}
         </div>
 
+        {por ? (
+          <div className="designed por-cta">
+            <button type="button" className="btn full" onClick={() => setAsking(true)}>Request pricing</button>
+            <p className="fine">Questions? Call or text <a href="tel:+17735979629" className="ulink">(773) 597-9629</a></p>
+            {asking && <RequestPricing piece={p.name} selection={summary.filter(([k]) => k !== "Wood").map(([, v]) => v).join(" · ")} onClose={() => setAsking(false)} />}
+          </div>
+        ) : (<>
         <div className="mode" role="tablist">
           <button role="tab" aria-selected={mode === "designed"} className={mode === "designed" ? "on" : ""} onClick={() => setMode("designed")}>As designed</button>
           <button role="tab" aria-selected={mode === "custom"} className={mode === "custom" ? "on" : ""} onClick={() => setMode("custom")}>Customize</button>
@@ -307,10 +328,11 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
           </div>
         )}
 
+        </>)}
         <p className="fine" style={{ marginTop: 14 }}>14-day returns on pieces as designed. <Link href="/pages/ordering" className="ulink">Details</Link></p>
         <p className="fine"><Link href="/pages/terms#returns" className="ulink-inline">15% restocking fee; return shipping paid by the customer.</Link></p>
         <div className="assure">
-          <span>Made to order</span><span>Handmade in the USA</span><span>Pay over time with Shop Pay Installments</span>
+          <span>Made to order</span><span>Handmade in the USA</span>{!por && <span>Pay over time with Shop Pay Installments</span>}
         </div>
         <Link href={`/pages/fabric-swatches?fabric=${fabric}${color ? `&color=${color}` : ""}`} className="ulink">Order free swatches</Link>
       </div>

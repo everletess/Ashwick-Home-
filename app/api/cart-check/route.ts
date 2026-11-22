@@ -8,6 +8,7 @@
 import { NextResponse } from "next/server";
 import { fetchProductVariants } from "@/lib/shopify";
 import { variantForLine, type CheckoutRequestLine } from "@/lib/checkout-match";
+import { getPriceOnRequestIds } from "@/lib/price-on-request";
 
 export async function POST(req: Request) {
   let lines: CheckoutRequestLine[] = [];
@@ -18,9 +19,10 @@ export async function POST(req: Request) {
   }
   if (!Array.isArray(lines) || lines.length === 0 || lines.length > 50) return NextResponse.json({ bad: [] });
   try {
-    const variants = await fetchProductVariants();
+    const [variants, por] = await Promise.all([fetchProductVariants(), getPriceOnRequestIds()]);
     const bad = lines.flatMap((l, i) => {
       try {
+        if (por.includes(l.productId)) return [i];
         variantForLine(variants, l);
         return [];
       } catch {

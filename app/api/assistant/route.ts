@@ -3,6 +3,8 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { ASSISTANT_KNOWLEDGE, WELCOME_OFFER } from "@/lib/assistant-knowledge";
 import { MATTRESS } from "@/lib/mattress";
+import { getPriceOnRequestIds } from "@/lib/price-on-request";
+import { getProduct } from "@/lib/products";
 import { STUDIO_EMAIL, STUDIO_PHONE } from "@/lib/site";
 
 const MODEL = process.env.ASSISTANT_MODEL ?? "claude-sonnet-5-5";
@@ -50,7 +52,7 @@ function limited(ip: string) {
   return recent.length > 40;
 }
 
-function ask(messages: Anthropic.Beta.BetaMessageParam[]) {
+function ask(messages: Anthropic.Beta.BetaMessageParam[], porNote = "") {
   return client.beta.messages.create({
     model: MODEL,
     max_tokens: 2000,
@@ -58,7 +60,7 @@ function ask(messages: Anthropic.Beta.BetaMessageParam[]) {
     output_config: { effort: "low" },
     // The instructions and knowledge are the same on every request, so they're cached: repeat messages read them at
     // a fraction of the price.
-    system: [{ type: "text", text: SYSTEM, cache_control: { type: "ephemeral" } }],
+    system: [{ type: "text", text: SYSTEM, cache_control: { type: "ephemeral" } }, ...(porNote ? [{ type: "text" as const, text: porNote }] : [])],
     tools: TOOLS,
     messages,
     // If a safety check declines a request, Anthropic retries it on its recommended fallback model.
@@ -87,9 +89,14 @@ export async function POST(req: Request) {
   while (messages.length && messages[0].role !== "user") messages.shift();
   if (!messages.length || messages[messages.length - 1].role !== "user") return Response.json({ error: "Bad request" }, { status: 400 });
 
+  // Pieces priced upon request (Shopify tag): the assistant must not quote their prices.
+  const porNames = (await getPriceOnRequestIds()).map((id) => getProduct(id)?.name).filter(Boolean);
+  const porNote = porNames.length
+    ? `PRICE UPON REQUEST\nThese pieces are priced upon request and can't be bought online right now: ${porNames.join(", ")}. Never quote a price, sale price or lead time for them, even though the knowledge lists one. Say they're priced upon request and that the "Request pricing" button on the piece's page, or ${STUDIO_EMAIL}, reaches the design team, who share pricing, fabrics and lead time within one business day.`
+    : "";
   try {
     const convo: Anthropic.Beta.BetaMessageParam[] = [...messages];
-    let out = await ask(convo);
+    let out = await ask(convo, porNote);
     let showSignup = false;
     for (let i = 0; i < MAX_TOOL_ROUNDS && out.stop_reason === "tool_use"; i++) {
       const results: Anthropic.Beta.BetaToolResultBlockParam[] = [];
@@ -105,7 +112,7 @@ export async function POST(req: Request) {
         });
       }
       convo.push({ role: "assistant", content: out.content }, { role: "user", content: results });
-      out = await ask(convo);
+      out = await ask(convo, porNote);
     }
     if (out.stop_reason === "refusal") {
       return Response.json({ reply: `That's one for the team. Email ${STUDIO_EMAIL} and they'll help.`, showSignup });

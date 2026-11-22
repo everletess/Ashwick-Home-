@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getPriceOnRequestIds } from "@/lib/price-on-request";
 import Link from "next/link";
 import { AnchorAliases } from "@/components/anchor-aliases";
 import { BespokeForm } from "@/components/forms";
@@ -54,7 +55,7 @@ const PALETTE: [string, PhotoKey][] = [
 ];
 
 // Ashwick Bespoke handoff (Oct 16), with Tessa's answers to its open questions (Oct 17).
-export default function BespokePage() {
+export default async function BespokePage() {
   return (
     <main>
       <AnchorAliases map={{ choose: "tailored", bespoke: "commission" }} />
@@ -158,7 +159,7 @@ export default function BespokePage() {
             </div>
             <p className="body">Every piece in the collection can be changed. Choose one to begin.</p>
           </div>
-          <ProductGrid products={PRODUCTS} custom mattress />
+          <ProductGrid products={PRODUCTS} custom mattress por={await getPriceOnRequestIds()} />
           <div className="bsp-mattress" id="mattresses">
             <h3 className="proc-h">The bespoke Ashbury.</h3>
             <p className="body">

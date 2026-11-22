@@ -255,3 +255,39 @@ async function trackExistingCart(email: string): Promise<void> {
     // Never let tracking break sign-up.
   }
 }
+
+/**
+ * A "Request pricing" enquiry (Price upon request pieces): creates or updates the Klaviyo profile with the piece asked
+ * about (properties `price_request` and `price_request_tag`; Klaviyo profiles have no tags of their own, so segment on
+ * these). It does not subscribe the email to marketing. SMS marketing only when the shopper ticked the box.
+ */
+export async function recordPriceRequest(email: string, product: string, phone: string | null, sms: boolean): Promise<void> {
+  if (!KLAVIYO_COMPANY_ID) return;
+  const headers = { "Content-Type": "application/vnd.api+json", revision: "2024-10-15" };
+  await fetch(`https://a.klaviyo.com/client/profiles/?company_id=${KLAVIYO_COMPANY_ID}`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({
+      data: {
+        type: "profile",
+        attributes: { email, ...(phone ? { phone_number: phone } : {}), properties: { price_request: product, price_request_tag: "price-request", ...attributionProps() } },
+      },
+    }),
+  }).catch(() => {});
+  if (sms && phone && KLAVIYO_LIST_ID) {
+    await fetch(`https://a.klaviyo.com/client/subscriptions/?company_id=${KLAVIYO_COMPANY_ID}`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        data: {
+          type: "subscription",
+          attributes: {
+            custom_source: "Price request",
+            profile: { data: { type: "profile", attributes: { email, phone_number: phone, subscriptions: { sms: { marketing: { consent: "SUBSCRIBED" } } } } } },
+          },
+          relationships: { list: { data: { type: "list", id: KLAVIYO_LIST_ID } } },
+        },
+      }),
+    }).catch(() => {});
+  }
+}

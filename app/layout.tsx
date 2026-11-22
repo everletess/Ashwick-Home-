@@ -1,4 +1,6 @@
 import type { Metadata, Viewport } from "next";
+import { PriceOnRequestProvider } from "@/components/price-on-request";
+import { getPriceOnRequestIds } from "@/lib/price-on-request";
 import { Cormorant_Garamond, Jost } from "next/font/google";
 import Script from "next/script";
 import { CartProvider } from "@/components/cart";
@@ -44,7 +46,7 @@ export const revalidate = 300;
 
 export const viewport: Viewport = { themeColor: "#F6F2EC" };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${cormorant.variable} ${jost.variable}`}>
       <body>
@@ -114,6 +116,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             alt=""
           />
         </noscript>
+        <PriceOnRequestProvider ids={await getPriceOnRequestIds()}>
         <CartProvider>
           <UtmCapture />
           <AnnouncementBar />
@@ -125,6 +128,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {/* The chat button only shows once the Anthropic key is set in Vercel (redeploy after adding it). */}
           {process.env.ANTHROPIC_API_KEY ? <Assistant /> : null}
         </CartProvider>
+        </PriceOnRequestProvider>
       </body>
     </html>
   );

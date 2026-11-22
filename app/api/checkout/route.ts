@@ -14,6 +14,7 @@
 import { NextResponse } from "next/server";
 import { createCheckout, fetchProductVariants } from "@/lib/shopify";
 import { variantForLine, type CheckoutRequestLine } from "@/lib/checkout-match";
+import { getPriceOnRequestIds } from "@/lib/price-on-request";
 
 export type { CheckoutRequestLine };
 
@@ -22,10 +23,12 @@ export async function POST(req: Request) {
     const { lines } = (await req.json()) as { lines: CheckoutRequestLine[] };
     if (!lines?.length) return NextResponse.json({ error: "Empty cart" }, { status: 400 });
 
-    const variants = await fetchProductVariants();
+    const [variants, por] = await Promise.all([fetchProductVariants(), getPriceOnRequestIds()]);
     const skipped: number[] = [];
     const checkoutLines = lines.flatMap((line, i) => {
       try {
+        // Pieces priced upon request can't be checked out (an old saved cart may still hold one).
+        if (por.includes(line.productId)) throw new Error(`"${line.productId}" is priced upon request`);
         const v = variantForLine(variants, line);
         return [{ variantId: v.variantId, quantity: line.qty, customAttributes: line.options.map(([key, value]) => ({ key, value })) }];
       } catch (err) {
