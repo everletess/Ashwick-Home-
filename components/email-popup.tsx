@@ -81,7 +81,6 @@ export function EmailPopup() {
   useEffect(() => {
     if (lastCount.current != null && count > lastCount.current && cartOpen) {
       try { sessionStorage.setItem(ADDED_KEY, "1"); } catch {}
-      setDue(false);
     }
     lastCount.current = count;
   }, [count, cartOpen]);
@@ -296,7 +295,7 @@ export function ProductLetter() {
   const [errorMsg, setErrorMsg] = useState("");
   const [known, setKnown] = useState(true); // hidden until we know they haven't subscribed (no flash for subscribers)
   useEffect(() => {
-    setKnown(isSubscribed());
+    if (!isSubscribed()) setKnown(false);
     const hide = () => setKnown(true);
     window.addEventListener(SUBSCRIBED_EVENT, hide);
     return () => window.removeEventListener(SUBSCRIBED_EVENT, hide);
