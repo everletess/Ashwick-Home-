@@ -3,6 +3,7 @@
 // client API, so only the public company ID is used, never a secret key. Also notifies the studio (best effort).
 
 import { PHOTOS, type PhotoKey } from "@/lib/photos";
+import { klaviyoKnowsVisitor, klaviyoTrack } from "@/lib/klaviyo";
 import { track } from "@/lib/pixel";
 import { bundleColorOf, bundlePhotoFor } from "@/lib/sale";
 
@@ -191,7 +192,7 @@ export async function saveCart(email: string, lines: SavedCartLine[], total: num
  * link, so the abandoned-cart flow can follow up. Anonymous visitors are skipped (no email, nothing to match).
  * Public client API only; never blocks or breaks the add-to-cart.
  */
-async function sendAddedToCart(email: string, lines: SavedCartLine[], total: number | null): Promise<void> {
+async function cartEventProps(lines: SavedCartLine[], total: number | null) {
   let checkoutUrl = "https://ashwickhome.com/products/luxury-organic-mattress";
   try {
     const r = await fetch("/api/checkout", {
@@ -202,6 +203,17 @@ async function sendAddedToCart(email: string, lines: SavedCartLine[], total: num
     const d = await r.json();
     if (r.ok && d.checkoutUrl) checkoutUrl = d.checkoutUrl;
   } catch {}
+  return {
+    CheckoutURL: checkoutUrl,
+    ItemNames: lines.map((l) => l.name),
+    Items: lines.map(emailItem),
+    HeroImage: heroImage(lines),
+    Total: total,
+  };
+}
+
+async function sendAddedToCart(email: string, lines: SavedCartLine[], total: number | null): Promise<void> {
+  const properties = await cartEventProps(lines, total);
   await fetch(`https://a.klaviyo.com/client/events/?company_id=${KLAVIYO_COMPANY_ID}`, {
     method: "POST",
     headers: { "Content-Type": "application/vnd.api+json", revision: "2024-10-15" },
@@ -212,13 +224,7 @@ async function sendAddedToCart(email: string, lines: SavedCartLine[], total: num
           metric: { data: { type: "metric", attributes: { name: "Added to Cart" } } },
           profile: { data: { type: "profile", attributes: { email } } },
           value: total ?? 0,
-          properties: {
-            CheckoutURL: checkoutUrl,
-            ItemNames: lines.map((l) => l.name),
-            Items: lines.map(emailItem),
-            HeroImage: heroImage(lines),
-            Total: total,
-          },
+          properties,
         },
       },
     }),
@@ -229,8 +235,13 @@ export async function trackAddedToCart(lines: SavedCartLine[], total: number | n
   try {
     if (!KLAVIYO_COMPANY_ID || lines.length === 0) return;
     const email = localStorage.getItem(SUBSCRIBER_EMAIL_KEY);
-    if (!email) return;
-    await sendAddedToCart(email, lines, total);
+    if (email) {
+      await sendAddedToCart(email, lines, total);
+      return;
+    }
+    // No email saved on this device, but klaviyo.js may still recognise them (e.g. they came from an Ashwick email).
+    if (!(await klaviyoKnowsVisitor())) return;
+    klaviyoTrack("Added to Cart", { ...(await cartEventProps(lines, total)), $value: total ?? 0 });
   } catch {
     // Never let tracking break the site.
   }
