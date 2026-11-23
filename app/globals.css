@@ -720,6 +720,13 @@ button.chip{cursor:pointer}
 .ep-tab-x{background:none;border:0;border-left:1px solid rgba(246,242,236,.25);color:inherit;font:300 18px/1 var(--sans);padding:0 14px;cursor:pointer}
 @media(max-width:640px){.ep-tab{left:12px;bottom:12px}.ep-tab-open{padding:12px 12px 12px 14px;font-size:10px;letter-spacing:.14em}}
 /* Footer sign-up */
+/* Product pages: The Ashwick Letter, below the FAQ and above the footer */
+.pl{background:var(--linen);padding:56px 20px;border-top:1px solid var(--hair)}
+.pl-in{max-width:520px;margin:0 auto;text-align:center}
+.pl .eyebrow{color:var(--walnut);margin:0}
+.pl-line{font:400 22px/1.35 var(--serif);color:var(--ink);margin:14px 0 0}
+.pl-form{margin:22px auto 0;max-width:420px}
+@media (min-width:861px){.pl{padding:72px 20px}.pl-line{font-size:26px}}
 .ftr-nl{margin-top:32px;max-width:360px}
 .ftr-nl-copy{font:300 14px/1.6 var(--sans);color:var(--walnut);margin:10px 0 0}
 .ftr-nl-form{margin:12px 0 0;max-width:none}

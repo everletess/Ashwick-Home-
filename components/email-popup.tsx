@@ -7,14 +7,33 @@ import { SUBSCRIBED_EVENT, SUBSCRIBED_KEY, subscribeEmail } from "@/lib/subscrib
 import { SALE } from "@/lib/sale";
 
 const STORAGE_KEY = SUBSCRIBED_KEY;
-const SCROLL_FRACTION = 0.5; // phones: opens after 30 s or at 50% scroll, once per session
-const WAIT_MS = 30000;
+// When it opens (Tessa's brief, Nov 22): after 15 s on a page, at 40% scroll, or on desktop exit intent, once per session.
+// Product pages (where every Meta ad lands): after 20 s or at 40% scroll or exit intent, never in the first 8 s,
+// never with the cart drawer open, and not again this session once something has been added to the cart.
+const SCROLL_FRACTION = 0.4;
+const WAIT_MS = 15000;
+const PRODUCT_WAIT_MS = 20000;
+const PRODUCT_MIN_MS = 8000;
 const SESSION_KEY = "aw-sheet-shown";
-// Pages where someone is mid-form; the pop-up and the tab wait until they move on.
-const QUIET_PATHS = ["/pages/bespoke", "/pages/trade", "/account", "/products/", "/cart", "/checkout"];
-const DISMISS_DAYS = 30; // "No thanks" hides the pop-up this long (the small tab stays); subscribers never see either again
+const ADDED_KEY = "aw-added-to-cart"; // set when something goes in the cart this session
+// Pages where someone is mid-form or buying; the pop-up waits until they move on.
+const QUIET_PATHS = ["/pages/bespoke", "/pages/trade", "/account", "/cart", "/checkout"];
+const isProductPage = (path: string | null) => !!path?.startsWith("/products/");
+const DISMISS_DAYS = 7; // "No thanks" or × hides the pop-up this long; subscribers never see it again
 const TAB_HIDDEN_KEY = "aw-tab-hidden"; // closing the tab hides it for this browser session
 const DISCOUNT_CODE = "ASHWICK15";
+/** The sale's last day, "December 1" / "Dec 1" (Pacific), for the sale-time copy. */
+export function saleEndDay(month: "long" | "short" = "long") {
+  if (!SALE.endsAt) return "";
+  return new Date(SALE.endsAt).toLocaleDateString("en-US", { month, day: "numeric", timeZone: "America/Los_Angeles" });
+}
+function addedThisSession() {
+  try {
+    return sessionStorage.getItem(ADDED_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
 /** Dispatch on window to open the sign-up form on request (the site assistant does this). */
 export const SHOW_SIGNUP_EVENT = "ashwick:show-signup";
 
@@ -46,7 +65,7 @@ function tabHidden() {
 
 export function EmailPopup() {
   const pathname = usePathname();
-  const { open: cartOpen } = useCart();
+  const { open: cartOpen, count } = useCart();
   const [due, setDue] = useState(false);
   const [visible, setVisible] = useState(false);
   const [tab, setTab] = useState(false);
@@ -56,7 +75,18 @@ export function EmailPopup() {
   const [errorMsg, setErrorMsg] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // First visit: open as soon as they scroll. Someone who said "No thanks" gets the small tab instead.
+  // Something added to the cart: the drawer opens in the same moment, so a rise in count while it's open is an add
+  // (a saved cart loading on arrival doesn't open the drawer). The pop-up then stays away for the session.
+  const lastCount = useRef<number | null>(null);
+  useEffect(() => {
+    if (lastCount.current != null && count > lastCount.current && cartOpen) {
+      try { sessionStorage.setItem(ADDED_KEY, "1"); } catch {}
+      setDue(false);
+    }
+    lastCount.current = count;
+  }, [count, cartOpen]);
+
+  // Timers restart on each page, so "20 seconds" means 20 seconds on that product page.
   useEffect(() => {
     if (isSubscribed()) return;
     // Ad links with ?offer=15 open the 15% sign-up straight away, even for people who said "No thanks" before.
@@ -68,26 +98,37 @@ export function EmailPopup() {
     } catch {}
     if (seen()) return;
     try { if (sessionStorage.getItem(SESSION_KEY) === "1") return; } catch {}
+    const product = isProductPage(pathname);
+    if (product && addedThisSession()) return;
+    const start = Date.now();
+    let early: number | undefined;
+    // On a product page nothing opens in the first 8 seconds; an earlier scroll or exit waits for the 8-second mark.
+    const fire = () => {
+      const wait = product ? PRODUCT_MIN_MS - (Date.now() - start) : 0;
+      if (wait <= 0) setDue(true);
+      else if (early == null) early = window.setTimeout(() => setDue(true), wait);
+    };
     const onScroll = () => {
       const max = document.documentElement.scrollHeight - window.innerHeight;
-      if (max > 0 && window.scrollY / max >= SCROLL_FRACTION) setDue(true);
+      if (max > 0 && window.scrollY / max >= SCROLL_FRACTION) fire();
     };
     window.addEventListener("scroll", onScroll, { passive: true });
-    const timer = window.setTimeout(() => setDue(true), WAIT_MS);
-    // Exit intent (desktop): if they head for the tabs or address bar before scrolling, open now.
+    const timer = window.setTimeout(fire, product ? PRODUCT_WAIT_MS : WAIT_MS);
+    // Exit intent (desktop): if they head for the tabs or address bar, open now.
     const onLeave = (e: MouseEvent) => {
-      if (e.clientY <= 0 && !e.relatedTarget) setDue(true);
+      if (e.clientY <= 0 && !e.relatedTarget) fire();
     };
     document.documentElement.addEventListener("mouseleave", onLeave);
     return () => {
       window.clearTimeout(timer);
+      window.clearTimeout(early);
       window.removeEventListener("scroll", onScroll);
       document.documentElement.removeEventListener("mouseleave", onLeave);
     };
-  }, []);
+  }, [pathname]);
 
-  // Shows on every page, even with items in the cart. Waits while the cart drawer is open or on a form page.
-  const quiet = cartOpen || QUIET_PATHS.some((p) => pathname?.startsWith(p));
+  // Waits while the cart drawer is open or on a form or checkout page; on a product page, not after an add to cart.
+  const quiet = cartOpen || QUIET_PATHS.some((p) => pathname?.startsWith(p)) || (isProductPage(pathname) && addedThisSession());
   const show = due && !quiet;
   const [shown, setShown] = useState(false);
   if (show && !shown) {
@@ -184,7 +225,7 @@ export function EmailPopup() {
             <p className="ep-eyebrow eyebrow">Welcome</p>
             <p className="ep-h h3" id="ep-title">You&apos;re on the list.</p>
             <p className="ep-body body small" id="ep-desc">
-              {SALE.active ? <>Thank you for joining. Watch your inbox for deals throughout the month.</> : <>Here&apos;s 15% off your first order.{emailed && <> We&apos;ve sent it to your inbox too.</>} The first Ashwick Letter will land in your inbox soon.</>}
+              {SALE.active ? <>We&apos;ll remind you before {saleEndDay()}.</> : <>Here&apos;s 15% off your first order.{emailed && <> We&apos;ve sent it to your inbox too.</>} The first Ashwick Letter will land in your inbox soon.</>}
             </p>
             {!SALE.active && <><p className="ep-code">{DISCOUNT_CODE}</p>
             <p className="fine">Enter it at checkout. One use per customer.</p></>}
@@ -196,12 +237,12 @@ export function EmailPopup() {
             <p className="ep-eyebrow eyebrow">The Ashwick Letter</p>
             {/* Phones get the short version (ep-short), a compact card that leaves the page visible. */}
             <p className="ep-h h3" id="ep-title">
-              <span className="ep-long">{SALE.active ? "Deals all month long." : "Built to be inherited."}</span>
-              <span className="ep-short">{SALE.active ? "Deals all month long" : "15% off your first order"}</span>
+              <span className="ep-long">{SALE.active ? `${SALE.percent}% off ends ${saleEndDay()}.` : "Built to be inherited."}</span>
+              <span className="ep-short">{SALE.active ? `${SALE.percent}% off ends ${saleEndDay("short")}` : "15% off your first order"}</span>
             </p>
             <p className="ep-body body small" id="ep-desc">
-              <span className="ep-long">{SALE.active ? "Join the Ashwick Letter for deals throughout the month, plus material stories and first access to new pieces." : "Join our exclusive organic design newsletter: material stories, natural interiors, and first access to new pieces. Plus 15% off your first order."}</span>
-              <span className="ep-short">{SALE.active ? "Join the Ashwick Letter for deals throughout the month." : "Join the Ashwick Letter for material stories, new pieces and your code."}</span>
+              <span className="ep-long">{SALE.active ? "Join the Ashwick Letter and we'll send you a reminder before it ends, plus first access to new pieces and colours." : "Join our exclusive organic design newsletter: material stories, natural interiors, and first access to new pieces. Plus 15% off your first order."}</span>
+              <span className="ep-short">{SALE.active ? "We'll remind you before it ends." : "Join the Ashwick Letter for material stories, new pieces and your code."}</span>
             </p>
 
             <div className="ep-row">
@@ -230,7 +271,7 @@ export function EmailPopup() {
             >
               {status === "loading" ? "One moment…" : (
                 <>
-                  <span className="ep-long">{SALE.active ? "Join the newsletter" : "Get 15% off + the newsletter"}</span>
+                  <span className="ep-long">{SALE.active ? "Remind me" : "Get 15% off + the newsletter"}</span>
                   <span className="ep-short">Submit</span>
                 </>
               )}
@@ -244,6 +285,54 @@ export function EmailPopup() {
         )}
       </div>
     </>
+  );
+}
+
+/** Product pages, below the FAQ and above the footer (Tessa's brief, Nov 22). Hidden for subscribers. */
+export function ProductLetter() {
+  const pathname = usePathname();
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "done" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [known, setKnown] = useState(true); // hidden until we know they haven't subscribed (no flash for subscribers)
+  useEffect(() => {
+    setKnown(isSubscribed());
+    const hide = () => setKnown(true);
+    window.addEventListener(SUBSCRIBED_EVENT, hide);
+    return () => window.removeEventListener(SUBSCRIBED_EVENT, hide);
+  }, []);
+  async function submit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!email.trim()) return;
+    setStatus("loading");
+    try {
+      await subscribeEmail(email, "Ashwick product page");
+      setStatus("done");
+    } catch (err) {
+      setErrorMsg(err instanceof Error ? err.message : "Please try again.");
+      setStatus("error");
+    }
+  }
+  if (!isProductPage(pathname)) return null;
+  if (known && status !== "done") return null;
+  return (
+    <section className="pl" aria-labelledby="pl-h">
+      <div className="pl-in">
+        <h2 className="eyebrow" id="pl-h">The Ashwick Letter</h2>
+        {status === "done" ? (
+          <p className="pl-line" role="status">{SALE.active ? <>You&apos;re on the list. We&apos;ll remind you before {saleEndDay()}.</> : <>You&apos;re on the list.</>}</p>
+        ) : (
+          <>
+            <p className="pl-line">{SALE.active ? `Not ready yet? We'll remind you before ${SALE.percent}% off ends on ${saleEndDay()}.` : "Material stories, new pieces and colours, first."}</p>
+            <form className="nl-form pl-form" onSubmit={submit} noValidate>
+              <input type="email" required placeholder="Email address" aria-label="Email address" value={email} onChange={(e) => { setEmail(e.target.value); setStatus("idle"); }} autoComplete="email" />
+              <button type="submit" disabled={status === "loading"}>{status === "loading" ? "…" : SALE.active ? "Remind me" : "Join"}</button>
+            </form>
+            {status === "error" && <p className="form-error" role="alert">{errorMsg}</p>}
+          </>
+        )}
+      </div>
+    </section>
   );
 }
 

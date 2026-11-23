@@ -5,7 +5,7 @@ import { Cormorant_Garamond, Jost } from "next/font/google";
 import Script from "next/script";
 import { CartProvider } from "@/components/cart";
 import { Assistant } from "@/components/assistant";
-import { EmailPopup } from "@/components/email-popup";
+import { EmailPopup, ProductLetter } from "@/components/email-popup";
 import { UtmCapture } from "@/components/utm-capture";
 import { Footer } from "@/components/footer";
 import { AnnouncementBar, CartDrawer, Header } from "@/components/shell";
@@ -122,6 +122,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <AnnouncementBar />
           <Header />
           {children}
+          <ProductLetter />
           <Footer />
           <CartDrawer />
           <EmailPopup />
