@@ -7,6 +7,7 @@ import { CartProvider } from "@/components/cart";
 import { Assistant } from "@/components/assistant";
 import { EmailPopup } from "@/components/email-popup";
 import { UtmCapture } from "@/components/utm-capture";
+import { KlaviyoProductView } from "@/components/klaviyo-product-view";
 import { Footer } from "@/components/footer";
 import { AnnouncementBar, CartDrawer, Header } from "@/components/shell";
 import { PHOTOS } from "@/lib/photos";
@@ -107,6 +108,28 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             `,
           }}
         />
+        {/* Klaviyo on-site (klaviyo.js): recognises returning subscribers, records Active on Site, and receives the
+            Viewed Product / Added to Cart events (components/klaviyo-product-view.tsx, lib/subscribe.ts). Live site only,
+            and the library downloads after the page has loaded; calls made before then are queued, not lost. */}
+        {process.env.NEXT_PUBLIC_KLAVIYO_COMPANY_ID ? (
+          <Script
+            id="klaviyo-onsite"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+              if (/(^|\\.)ashwickhome\\.com$/.test(location.hostname)) {
+                !function(){if(!window.klaviyo){window._klOnsite=window._klOnsite||[];try{window.klaviyo=new Proxy({},{get:function(n,i){return"push"===i?function(){var n;(n=window._klOnsite).push.apply(n,arguments)}:function(){for(var n=arguments.length,o=new Array(n),w=0;w<n;w++)o[w]=arguments[w];var t="function"==typeof o[o.length-1]?o.pop():void 0,e=new Promise((function(n){window._klOnsite.push([i].concat(o,[function(i){t&&t(i),n(i)}]))}));return e}}})}catch(n){window.klaviyo=window.klaviyo||[],window.klaviyo.push=function(){var n;(n=window._klOnsite).push.apply(n,arguments)}}}}();
+                var kload=function(){var s=document.createElement('script');s.async=true;
+                  s.src='https://static.klaviyo.com/onsite/js/${process.env.NEXT_PUBLIC_KLAVIYO_COMPANY_ID}/klaviyo.js?company_id=${process.env.NEXT_PUBLIC_KLAVIYO_COMPANY_ID}';
+                  document.head.appendChild(s)};
+                if(document.readyState==='complete')setTimeout(kload,0);else window.addEventListener('load',function(){setTimeout(kload,0)});
+                // A subscriber who signed up on this device is recognised straight away.
+                try{var kem=localStorage.getItem('aw-subscriber-email');if(kem&&kem.indexOf('@')>0)window.klaviyo.identify({email:kem})}catch(e){}
+              }
+            `,
+            }}
+          />
+        ) : null}
         <noscript>
           <img
             height="1"
@@ -119,6 +142,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <PriceOnRequestProvider ids={await getPriceOnRequestIds()}>
         <CartProvider>
           <UtmCapture />
+          <KlaviyoProductView />
           <AnnouncementBar />
           <Header />
           {children}

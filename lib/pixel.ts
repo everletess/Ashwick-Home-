@@ -3,6 +3,8 @@
 // Every event also goes to Meta from our server (Conversions API, app/api/meta-events) with the same event ID, so Meta
 // keeps one of each pair and still gets the events the browser pixel loses.
 
+import { klaviyoIdentify } from "@/lib/klaviyo";
+
 type Fbq = (...args: unknown[]) => void;
 
 function fbq(): Fbq | null {
@@ -65,7 +67,7 @@ const SHOPIFY_PRODUCT_IDS: Record<string, string> = {
   "marlowe-chair": "15387070988514",
   "marlowe-ottoman": "15387071086818",
 };
-const catalogId = (id: unknown) => {
+export const catalogId = (id: unknown) => {
   const k = String(id);
   return SHOPIFY_PRODUCT_IDS[k] ?? SHOPIFY_PRODUCT_IDS[k.replace(/^the-/, "")] ?? k;
 };
@@ -113,6 +115,8 @@ function gtagEvent(event: PixelEvent, params: Record<string, unknown>) {
 }
 
 export function track(event: PixelEvent, params: Record<string, unknown> = {}, email?: string) {
+  // Anyone who gives us their email (sign-up, swatches, request pricing) is recognised by Klaviyo from here on.
+  if (email) klaviyoIdentify(email);
   const eventID = newEventId();
   const data = { currency: "USD", ...forCatalog(params) };
   try {
