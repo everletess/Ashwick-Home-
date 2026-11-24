@@ -40,7 +40,7 @@ const usedOn = (f: FabricId) => visible.filter((p) => p.fabrics.includes(f)).map
 /** A fabric's colors, with the Marlowe's own name where it has one (same swatch). */
 function furnitureColors(f: FabricId): LibraryColor[] {
   const F = FABRICS[f];
-  const marlowe = visible.find((p) => p.colorNames?.[f])?.colorNames?.[f] ?? {};
+  const marlowe = visible.find((p) => p.id === "marlowe")?.colorNames?.[f] ?? {};
   return (F.colors ?? []).map((c) => ({ id: c.id, label: c.label, code: c.code, swatch: c.swatch, tex: F.tex, alsoCalled: marlowe[c.id] ? `${marlowe[c.id]} on the Marlowe` : undefined }));
 }
 
@@ -92,14 +92,25 @@ const ALL_FABRICS: LibraryFabric[] = [
     colors: MATTRESS.colors.map((c) => ({ id: c.id, label: c.label, photo: c.swatch })),
   },
   {
+    // The Nook's cover fabric, also the Pembroke's Belgian Linen (Tessa, Nov 23); product pages link here for both.
     id: "nook", name: "Nook cover", room: "Bedroom",
     makeup: NOOK.materials.find((m) => m.name === "Cover")?.note,
-    usedOn: [{ name: NOOK.title, href: NOOK.path }],
+    usedOn: [{ name: NOOK.title, href: NOOK.path }, ...visible.filter((p) => p.fabrics.includes("belgian") && p.colorNames?.belgian).map((p) => ({ name: p.name, href: "/products/" + p.id }))],
     colors: NOOK.colors.map((c) => ({ id: c.id, label: c.label, photo: c.swatch })),
   },
 ];
 
 export const FABRIC_LIBRARY = ALL_FABRICS.filter((F) => !SWATCHES_PAUSED.has(F.id));
+
+/**
+ * Swatch page link for a furniture fabric and color. Belgian Linen swatches are ordered as the Nook cover (the same
+ * cloth), under the Nook's color names, while the Belgian Linen entry stays paused.
+ */
+const BELGIAN_TO_NOOK: Record<string, string> = { moss: "olive", ivory: "oat", coco: "toffee" };
+export function swatchHref(fabric: string, color?: string) {
+  if (fabric === "belgian") return `/pages/fabric-swatches?fabric=nook${color && BELGIAN_TO_NOOK[color] ? `&color=${BELGIAN_TO_NOOK[color]}` : ""}`;
+  return `/pages/fabric-swatches?fabric=${fabric}${color ? `&color=${color}` : ""}`;
+}
 
 /** Old ?fabric= values that still arrive from older links. */
 export const FABRIC_ALIASES: Record<string, string> = { italian: "belgian", mattress: "twill", ashbury: "twill", "dog-bed": "twill", pillow: "twill" };

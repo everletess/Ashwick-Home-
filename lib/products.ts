@@ -27,7 +27,7 @@ export const FABRICS: Record<FabricId, Fabric> = {
   leather: { id: "leather", label: "Vegetable-tanned leather", swatch: "#A36A40", tex: "leather" },
   belgian: {
     id: "belgian", label: "Belgian Linen", swatch: "#B9AD94", tex: "linen",
-    detail: "100% organic Belgian linen.",
+    detail: "51% Belgian linen, 49% wool. OEKO-TEX certified.",
     colors: [
       { id: "coco", label: "Coco", code: "FAQ559 0007", swatch: "#B5A88D" },
       { id: "moss", label: "Moss", code: "FAQ559 0001", swatch: "#5F6752" },
@@ -210,6 +210,9 @@ const MARLOWE_COLORS: Record<string, string> = {
   white: "Fleece", cream: "Oat", flax: "Reed", oatmeal: "Flax", ivory: "Chalk", sand: "Fawn", coco: "Saddle", dove: "Flint",
 };
 
+/** The Nook's names for the Belgian linen-and-wool colors (the Nook's cover is this fabric; FAQ559 0001/0005/0007). */
+export const NOOK_COLORS: Record<string, string> = { moss: "Olive", ivory: "Oat", coco: "Toffee" };
+
 export const CUSTOM_LEAD_TIME = "Ships within 8–12 weeks when customized.";
 export const LEAD_TIMES = "Ships within 3–4 weeks as designed, or 8–12 weeks when customized.";
 
@@ -299,12 +302,13 @@ const ALL_PRODUCTS: Product[] = [
   },
   {
     id: "pembroke", name: "The Pembroke", type: "Chair", category: "chairs", price: 5000,
-    line: "A sculptural wingback lounge chair on a swivel base, in Irish Linen, Organic Cotton or Belgian Linen.",
+    line: "A sculptural wingback lounge chair on a swivel base, in Irish Linen or Belgian Linen.",
+    // Fabrics (Tessa, Nov 23): the Marlowe's Irish Linen in all eight of its colors and names, plus the Nook's cover
+    // fabric (Belgian linen and wool) in the Nook's three colors. Organic Cotton is off the Pembroke. One price for both.
     photos: [
       "pembroke-hero",
       "pembroke-blend-ivory", "pembroke-blend-sand", "pembroke-blend-coco", "pembroke-blend-dove",
-      "pembroke-cotton-cream", "pembroke-cotton-natural", "pembroke-cotton-khaki",
-      "pembroke-belgian-coco", "pembroke-belgian-ivory", "pembroke-belgian-moss",
+      "pembroke-belgian-moss", "pembroke-belgian-ivory", "pembroke-belgian-coco",
       "pembroke-1", "pembroke-2",
     ],
     cardSingle: true,
@@ -313,19 +317,17 @@ const ALL_PRODUCTS: Product[] = [
       "pembroke-blend-sand": { fabric: "irish", color: "sand" },
       "pembroke-blend-coco": { fabric: "irish", color: "coco" },
       "pembroke-blend-dove": { fabric: "irish", color: "dove" },
-      "pembroke-cotton-cream": { fabric: "cotton", color: "cream" },
-      "pembroke-cotton-natural": { fabric: "cotton", color: "natural" },
-      "pembroke-cotton-khaki": { fabric: "cotton", color: "khaki" },
-      "pembroke-belgian-coco": { fabric: "belgian", color: "coco" },
-      "pembroke-belgian-ivory": { fabric: "belgian", color: "ivory" },
       "pembroke-belgian-moss": { fabric: "belgian", color: "moss" },
+      "pembroke-belgian-ivory": { fabric: "belgian", color: "ivory" },
+      "pembroke-belgian-coco": { fabric: "belgian", color: "coco" },
     },
     photoNotes: { "pembroke-1": "Customized version", "pembroke-2": "Customized version" },
-    fabrics: ["irish", "cotton", "belgian"], designedFabric: "irish",
-    fabricPrices: { cotton: 5200, belgian: 5700 },
-    fabricColors: { irish: ["ivory", "sand", "coco", "dove"] },
+    fabrics: ["irish", "belgian"], designedFabric: "irish",
+    // The photographed Irish Linen colors first, so the page opens on a real photo; then the Marlowe's other four.
+    fabricColors: { irish: ["ivory", "sand", "coco", "dove", "white", "cream", "flax", "oatmeal"], belgian: ["moss", "ivory", "coco"] },
+    colorNames: { irish: MARLOWE_COLORS, belgian: NOOK_COLORS },
     delivery: WHITE_GLOVE,
-    materials: "Solid hardwood frame · Swivel base · Irish Linen, Organic Cotton or Belgian Linen upholstery",
+    materials: "Solid hardwood frame · Swivel base · Irish Linen or Belgian Linen (linen and wool) upholstery",
     dimensions: {
       overall: "36″ W × 36.5″ D × 39″ H",
       rows: [
