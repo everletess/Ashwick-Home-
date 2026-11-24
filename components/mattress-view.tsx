@@ -195,9 +195,10 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
           <ShipsFast when="3–4 days" note={`Handmade to order in the USA. ${SALE.active ? "Free white glove delivery during the sale. Our delivery team will contact you to schedule it once your mattress is made." : M.shipping}`} />
           {M.available ? (
             <>
-              <SuiteUpsell sizeId={size} feelId={feel} colorId={color} />
               <button ref={buyRef} className="btn full" onClick={buyNow} disabled={buying}>{buying ? "Taking you to checkout\u2026" : `Buy now \u00b7 ${fmt(salePrice(sz.price))}`}</button>
               <button className="btn full btn-ghost" onClick={add} disabled={buying}>Add to cart</button>
+              {/* Below the buttons (Clarity, Nov 23): the upsell used to sit between the options and Buy now. */}
+              <SuiteUpsell sizeId={size} feelId={feel} colorId={color} />
               <BuyAssure ship="days" price={salePrice(sz.price)} />
               {buyError && <p className="fine" role="alert" style={{ color: "var(--err, #b00)", textAlign: "center" }}>{buyError}</p>}
               <PillowAddRow />

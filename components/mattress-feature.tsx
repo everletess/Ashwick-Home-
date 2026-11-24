@@ -32,7 +32,7 @@ export function MattressFeature() {
             </li>
           ))}
         </ul>
-        <p className="m-feature-p"><Price price={Math.min(...MATTRESS.sizes.map((z) => z.price))} whole /></p>
+        <p className="m-feature-p"><Price price={Math.min(...MATTRESS.sizes.map((z) => z.price))} from whole /></p>
         <div className="btns"><Link href={href} className="btn">Shop the Ashbury</Link></div>
       </div>
     </section>

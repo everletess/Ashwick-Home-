@@ -9,9 +9,16 @@ import { fmt } from "@/lib/products";
 /** Where "Change options" scrolls back to: the product page's options. */
 export const BUY_OPTIONS_ID = "buy-options";
 
+/** Phones and small tablets, where the gallery fills the first screen and the buy button sits far below it. */
+const PHONE_QUERY = "(max-width: 960px)";
+
 /**
- * Add-to-cart bar that slides up from the bottom once the page's own Add to cart button has scrolled out of view
- * (above the screen), so it's always one tap away on long product pages. Mounted next to that button.
+ * Add-to-cart bar fixed to the bottom of the screen, so the price and the buy button are always one tap away on long
+ * product pages. Mounted next to the page's own buy button.
+ *
+ * Desktop: slides up once that button has scrolled off the top of the screen.
+ * Phones (Clarity, Nov 23): showing from the first screen, because about half of ad visitors leave before scrolling
+ * and two thirds never reached the buy button. It steps aside while the page's own button is on screen.
  */
 export function StickyBuy({ watch, photo, name, summary, price, note, cta, onAdd }: {
   /** The page's own buy button; the bar shows while it's scrolled off the top of the screen. */
@@ -29,10 +36,14 @@ export function StickyBuy({ watch, photo, name, summary, price, note, cta, onAdd
   // Checked on scroll (not an IntersectionObserver, which misses a jump straight past the button).
   useEffect(() => {
     let frame = 0;
+    const phone = window.matchMedia(PHONE_QUERY);
     const check = () => {
       frame = 0;
       const el = watch.current;
-      setShow(!!el && el.getBoundingClientRect().bottom < 0);
+      if (!el) return setShow(false);
+      const r = el.getBoundingClientRect();
+      // On phones: shown unless the page's own button is on screen. On desktop: only once it has scrolled past.
+      setShow(phone.matches ? r.bottom < 0 || r.top > window.innerHeight : r.bottom < 0);
     };
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(check);
@@ -40,10 +51,12 @@ export function StickyBuy({ watch, photo, name, summary, price, note, cta, onAdd
     check();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
+    phone.addEventListener("change", onScroll);
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
+      phone.removeEventListener("change", onScroll);
     };
   }, [watch]);
 
