@@ -20,6 +20,7 @@ export function BuyAssure({ ship, price }: { ship: ShipKind; price?: number }) {
   return (
     <div className="buy-assure">
       <p className="ba-row"><Icon name="truck" size={18} /><span>{line ?? " "}</span></p>
+      {closed && <p className="ba-row ba-closed"><span>{closed}</span></p>}
       {price != null && price >= 1000 && (
         <p className="ba-row ba-pay"><span>Or pay over time with Shop Pay Installments, subject to approval.</span></p>
       )}
