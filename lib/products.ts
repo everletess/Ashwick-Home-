@@ -308,11 +308,10 @@ const ALL_PRODUCTS: Product[] = [
     // Fabrics (Tessa, Nov 23): the Marlowe's Irish Linen in all eight of its colors and names, plus the Nook's cover
     // fabric (Belgian linen and wool) in the Nook's three colors. Organic Cotton is off the Pembroke. One price for both.
     // Photos (Tessa, Nov 23): renders of the real chair (Higgsfield, from pembroke-hero) in each color, then the
-    // real photo. Saddle has no render yet (the first one came out the wrong shape and is being remade, Tessa Nov 23):
-    // it shows pembroke-hero recolored (public/tint/pembroke-hero.png). The older
+    // real photo (every color has a render as of Nov 23; pembroke-hero stays recolorable as a fallback) (public/tint/pembroke-hero.png). The older
     // pembroke-blend/-belgian/-cotton/-1/-2 files show a different chair and stay off the page.
     photos: [
-      "pembroke-irish-fleece", "pembroke-irish-oat", "pembroke-irish-reed", "pembroke-irish-flax", "pembroke-irish-chalk", "pembroke-irish-fawn", "pembroke-irish-flint",
+      "pembroke-irish-fleece", "pembroke-irish-oat", "pembroke-irish-reed", "pembroke-irish-flax", "pembroke-irish-chalk", "pembroke-irish-fawn", "pembroke-irish-saddle", "pembroke-irish-flint",
       "pembroke-belgian-olive", "pembroke-belgian-oat", "pembroke-belgian-toffee",
       "pembroke-hero",
     ],
@@ -323,6 +322,7 @@ const ALL_PRODUCTS: Product[] = [
       "pembroke-irish-chalk": { fabric: "irish", color: "ivory" },
       "pembroke-irish-flax": { fabric: "irish", color: "oatmeal" },
       "pembroke-irish-fawn": { fabric: "irish", color: "sand" },
+      "pembroke-irish-saddle": { fabric: "irish", color: "coco" },
       "pembroke-irish-flint": { fabric: "irish", color: "dove" },
       "pembroke-irish-reed": { fabric: "irish", color: "flax" },
       "pembroke-belgian-olive": { fabric: "belgian", color: "moss" },
