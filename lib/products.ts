@@ -307,12 +307,28 @@ const ALL_PRODUCTS: Product[] = [
     line: "A sculptural wingback lounge chair on a swivel base, in Irish Linen or Belgian Linen.",
     // Fabrics (Tessa, Nov 23): the Marlowe's Irish Linen in all eight of its colors and names, plus the Nook's cover
     // fabric (Belgian linen and wool) in the Nook's three colors. Organic Cotton is off the Pembroke. One price for both.
-    // Photos (Tessa, Nov 23): only pembroke-hero is the real chair; the other Pembroke files show a different chair and
-    // are off the page. Every color is shown by recoloring this photo (public/tint/pembroke-hero.png) until renders of
-    // the real chair in each color arrive (claude/ashwick-pembroke-render-prompts.md).
-    photos: ["pembroke-hero"],
+    // Photos (Tessa, Nov 23): renders of the real chair (Higgsfield, from pembroke-hero) in each color, then the
+    // real photo. Reed has no render yet: it shows pembroke-hero recolored (public/tint/pembroke-hero.png). The older
+    // pembroke-blend/-belgian/-cotton/-1/-2 files show a different chair and stay off the page.
+    photos: [
+      "pembroke-irish-fleece", "pembroke-irish-oat", "pembroke-irish-chalk", "pembroke-irish-flax", "pembroke-irish-fawn", "pembroke-irish-saddle", "pembroke-irish-flint",
+      "pembroke-belgian-olive", "pembroke-belgian-oat", "pembroke-belgian-toffee",
+      "pembroke-hero",
+    ],
     cardSingle: true,
-    photoTags: { "pembroke-hero": { fabric: "irish" } },
+    photoTags: {
+      "pembroke-irish-fleece": { fabric: "irish", color: "white" },
+      "pembroke-irish-oat": { fabric: "irish", color: "cream" },
+      "pembroke-irish-chalk": { fabric: "irish", color: "ivory" },
+      "pembroke-irish-flax": { fabric: "irish", color: "oatmeal" },
+      "pembroke-irish-fawn": { fabric: "irish", color: "sand" },
+      "pembroke-irish-saddle": { fabric: "irish", color: "coco" },
+      "pembroke-irish-flint": { fabric: "irish", color: "dove" },
+      "pembroke-belgian-olive": { fabric: "belgian", color: "moss" },
+      "pembroke-belgian-oat": { fabric: "belgian", color: "ivory" },
+      "pembroke-belgian-toffee": { fabric: "belgian", color: "coco" },
+      "pembroke-hero": { fabric: "irish" },
+    },
     fabrics: ["irish", "belgian"], designedFabric: "irish",
     // Irish Linen in the Marlowe's order (Fleece, Oat, Reed, Flax, Chalk, Fawn, Saddle, Flint).
     fabricColors: { irish: ["white", "cream", "flax", "oatmeal", "ivory", "sand", "coco", "dove"], belgian: ["moss", "ivory", "coco"] },

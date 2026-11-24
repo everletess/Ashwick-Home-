@@ -227,6 +227,16 @@ import pembroke1 from "@/assets/photos/pembroke-1.jpg";
 // The Pembroke hero (Nov 2026): leads its gallery and cards. Untagged, so choosing a color moves to that color's photo.
 import pembrokeHero from "@/assets/photos/pembroke-hero.jpg";
 import pembroke2 from "@/assets/photos/pembroke-2.jpg";
+import pembrokeIrishFleece from "@/assets/photos/pembroke-irish-fleece.jpg";
+import pembrokeIrishOat from "@/assets/photos/pembroke-irish-oat.jpg";
+import pembrokeIrishChalk from "@/assets/photos/pembroke-irish-chalk.jpg";
+import pembrokeIrishFlax from "@/assets/photos/pembroke-irish-flax.jpg";
+import pembrokeIrishFawn from "@/assets/photos/pembroke-irish-fawn.jpg";
+import pembrokeIrishSaddle from "@/assets/photos/pembroke-irish-saddle.jpg";
+import pembrokeIrishFlint from "@/assets/photos/pembroke-irish-flint.jpg";
+import pembrokeBelgianOlive from "@/assets/photos/pembroke-belgian-olive.jpg";
+import pembrokeBelgianOat from "@/assets/photos/pembroke-belgian-oat.jpg";
+import pembrokeBelgianToffee from "@/assets/photos/pembroke-belgian-toffee.jpg";
 import pembrokeBlendDove from "@/assets/photos/pembroke-blend-dove.jpg";
 import pembrokeBlendIvory from "@/assets/photos/pembroke-blend-ivory.jpg";
 import pembrokeBlendSand from "@/assets/photos/pembroke-blend-sand.jpg";
@@ -454,6 +464,16 @@ export const PHOTOS = {
   "pembroke-1": pembroke1,
   "pembroke-hero": pembrokeHero,
   "pembroke-2": pembroke2,
+  "pembroke-irish-fleece": pembrokeIrishFleece,
+  "pembroke-irish-oat": pembrokeIrishOat,
+  "pembroke-irish-chalk": pembrokeIrishChalk,
+  "pembroke-irish-flax": pembrokeIrishFlax,
+  "pembroke-irish-fawn": pembrokeIrishFawn,
+  "pembroke-irish-saddle": pembrokeIrishSaddle,
+  "pembroke-irish-flint": pembrokeIrishFlint,
+  "pembroke-belgian-olive": pembrokeBelgianOlive,
+  "pembroke-belgian-oat": pembrokeBelgianOat,
+  "pembroke-belgian-toffee": pembrokeBelgianToffee,
   "pembroke-blend-ivory": pembrokeBlendIvory,
   "pembroke-blend-dove": pembrokeBlendDove,
   "pembroke-blend-sand": pembrokeBlendSand,
