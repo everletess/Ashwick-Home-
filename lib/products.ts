@@ -307,26 +307,15 @@ const ALL_PRODUCTS: Product[] = [
     line: "A sculptural wingback lounge chair on a swivel base, in Irish Linen or Belgian Linen.",
     // Fabrics (Tessa, Nov 23): the Marlowe's Irish Linen in all eight of its colors and names, plus the Nook's cover
     // fabric (Belgian linen and wool) in the Nook's three colors. Organic Cotton is off the Pembroke. One price for both.
-    photos: [
-      "pembroke-hero",
-      "pembroke-blend-ivory", "pembroke-blend-sand", "pembroke-blend-coco", "pembroke-blend-dove",
-      "pembroke-belgian-moss", "pembroke-belgian-ivory", "pembroke-belgian-coco",
-      "pembroke-1", "pembroke-2",
-    ],
+    // Photos (Tessa, Nov 23): only pembroke-hero is the real chair; the other Pembroke files show a different chair and
+    // are off the page. Every color is shown by recoloring this photo (public/tint/pembroke-hero.png) until renders of
+    // the real chair in each color arrive (claude/ashwick-pembroke-render-prompts.md).
+    photos: ["pembroke-hero"],
     cardSingle: true,
-    photoTags: {
-      "pembroke-blend-ivory": { fabric: "irish", color: "ivory" },
-      "pembroke-blend-sand": { fabric: "irish", color: "sand" },
-      "pembroke-blend-coco": { fabric: "irish", color: "coco" },
-      "pembroke-blend-dove": { fabric: "irish", color: "dove" },
-      "pembroke-belgian-moss": { fabric: "belgian", color: "moss" },
-      "pembroke-belgian-ivory": { fabric: "belgian", color: "ivory" },
-      "pembroke-belgian-coco": { fabric: "belgian", color: "coco" },
-    },
-    photoNotes: { "pembroke-1": "Customized version", "pembroke-2": "Customized version" },
+    photoTags: { "pembroke-hero": { fabric: "irish" } },
     fabrics: ["irish", "belgian"], designedFabric: "irish",
-    // The photographed Irish Linen colors first, so the page opens on a real photo; then the Marlowe's other four.
-    fabricColors: { irish: ["ivory", "sand", "coco", "dove", "white", "cream", "flax", "oatmeal"], belgian: ["moss", "ivory", "coco"] },
+    // Irish Linen in the Marlowe's order (Fleece, Oat, Reed, Flax, Chalk, Fawn, Saddle, Flint).
+    fabricColors: { irish: ["white", "cream", "flax", "oatmeal", "ivory", "sand", "coco", "dove"], belgian: ["moss", "ivory", "coco"] },
     colorNames: { irish: MARLOWE_COLORS, belgian: NOOK_COLORS },
     delivery: WHITE_GLOVE,
     materials: "Solid hardwood frame · Swivel base · Irish Linen or Belgian Linen (linen and wool) upholstery",
