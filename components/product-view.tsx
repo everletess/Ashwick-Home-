@@ -1,5 +1,6 @@
 "use client";
 
+import { swatchHref } from "@/lib/fabric-library";
 import { BuyAssure } from "@/components/buy-assure";
 import { POR_LABEL, usePriceOnRequest } from "@/components/price-on-request";
 import { RequestPricing } from "@/components/request-pricing";
@@ -334,7 +335,7 @@ export function ProductView({ id, initialMode }: { id: string; initialMode: Mode
         <div className="assure">
           <span>Made to order</span><span>Handmade in the USA</span>{!por && <span>Pay over time with Shop Pay Installments</span>}
         </div>
-        <Link href={`/pages/fabric-swatches?fabric=${fabric}${color ? `&color=${color}` : ""}`} className="ulink">Order free swatches</Link>
+        <Link href={swatchHref(fabric, color)} className="ulink">Order free swatches</Link>
       </div>
     </section>
   );
