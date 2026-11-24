@@ -15,7 +15,7 @@ export default function DogBedsPage() {
       <section className="page-head wrap">
         <div className="eyebrow">Shop</div>
         <h1 className="h1">Dog Beds</h1>
-        <p className="body">Handmade to order in the USA from organic cotton, Living Wool and cashmere. Ships within 3–4 days.</p>
+        <p className="body">Handmade to order in the USA from organic cotton, Living Wool and cashmere. Usually ships within 3–4 business days.</p>
       </section>
       <CollectionTabs current="dog-beds" />
       <section className="wrap" style={{ paddingBottom: 140 }}>

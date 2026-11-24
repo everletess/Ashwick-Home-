@@ -29,6 +29,7 @@ import { saveCart, normalizePhone } from "@/lib/subscribe";
 import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
 import { NewBadge, useNow } from "@/components/bf-push";
 import { DOG_BED_ID, NOOK } from "@/lib/dog-bed";
+import { closedNote } from "@/lib/delivery-estimate";
 import { ASHBURY_PATH, FURNITURE_MATERIALS_PATH, MATERIALS_PATH } from "@/lib/materials";
 
 const MATERIAL_LINKS: [string, string, string][] = [
@@ -167,7 +168,9 @@ function cartNote(items: { id: string; delivery?: { label: string; price: number
     items.some((i) => deliveryFor(i)?.price) && "Includes white glove delivery.",
     items.some((i) => i.id === MATTRESS.id) && !items.some((i) => deliveryFor(i)?.price) && "White glove delivery is free during the sale.",
     dogBeds && "Dog beds ship free.",
-    (mattress || dogBeds) && "Ships within 3–4 days.",
+    mattress && (dogBeds ? "Mattresses ship within 3–4 days; dog beds usually within 3–4 business days." : "Ships within 3–4 days."),
+    !mattress && dogBeds && "Usually ships within 3–4 business days.",
+    (mattress || dogBeds) && closedNote(new Date()),
     mattress && "Our delivery team will contact you to schedule your mattress delivery.",
     "Pay in full at checkout, or over time with Shop Pay Installments, subject to approval.",
     "Taxes calculated at checkout.",
