@@ -483,6 +483,7 @@ export const TINTABLE: Partial<Record<PhotoKey, string>> = {
   "csofa-studio": "#e9e1db",
   "burford-1": "#d4c4b9",
   "cchair-studio": "#d6c4b8",
+  "pembroke-hero": "#e3ddd2",
 };
 
 /**
