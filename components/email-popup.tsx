@@ -7,13 +7,14 @@ import { SUBSCRIBED_EVENT, SUBSCRIBED_KEY, subscribeEmail } from "@/lib/subscrib
 import { SALE } from "@/lib/sale";
 
 const STORAGE_KEY = SUBSCRIBED_KEY;
-// When it opens (Tessa's brief, Nov 22): after 15 s on a page, at 40% scroll, or on desktop exit intent, once per session.
-// Product pages (where every Meta ad lands): after 20 s or at 40% scroll or exit intent, never in the first 8 s,
-// never with the cart drawer open, and not again this session once something has been added to the cart.
-const SCROLL_FRACTION = 0.4;
-const WAIT_MS = 15000;
-const PRODUCT_WAIT_MS = 20000;
-const PRODUCT_MIN_MS = 8000;
+// When it opens: after 12 s on a page, at 25% scroll, or on desktop exit intent, once per session. Product pages
+// (where every Meta ad lands) never open it in the first 6 s, never with the cart drawer open, and not again this
+// session once something has been added to the cart. Earlier than before (Nov 23): Clarity showed about half of
+// mobile ad visitors leave a product page within its first screen, so a 20-second timer missed most of them.
+const SCROLL_FRACTION = 0.25;
+const WAIT_MS = 12000;
+const PRODUCT_WAIT_MS = 12000;
+const PRODUCT_MIN_MS = 6000;
 const SESSION_KEY = "aw-sheet-shown";
 const ADDED_KEY = "aw-added-to-cart"; // set when something goes in the cart this session
 // Pages where someone is mid-form or buying; the pop-up waits until they move on.
@@ -224,7 +225,7 @@ export function EmailPopup() {
             <p className="ep-eyebrow eyebrow">Welcome</p>
             <p className="ep-h h3" id="ep-title">You&apos;re on the list.</p>
             <p className="ep-body body small" id="ep-desc">
-              {SALE.active ? <>We&apos;ll remind you before {saleEndDay()}.</> : <>Here&apos;s 15% off your first order.{emailed && <> We&apos;ve sent it to your inbox too.</>} The first Ashwick Letter will land in your inbox soon.</>}
+              {SALE.active ? <>You&apos;ll see new pieces and colours first, and we&apos;ll remind you before {SALE.percent}% off ends on {saleEndDay()}.</> : <>Here&apos;s 15% off your first order.{emailed && <> We&apos;ve sent it to your inbox too.</>} The first Ashwick Letter will land in your inbox soon.</>}
             </p>
             {!SALE.active && <><p className="ep-code">{DISCOUNT_CODE}</p>
             <p className="fine">Enter it at checkout. One use per customer.</p></>}
@@ -236,12 +237,12 @@ export function EmailPopup() {
             <p className="ep-eyebrow eyebrow">The Ashwick Letter</p>
             {/* Phones get the short version (ep-short), a compact card that leaves the page visible. */}
             <p className="ep-h h3" id="ep-title">
-              <span className="ep-long">{SALE.active ? `${SALE.percent}% off ends ${saleEndDay()}.` : "Built to be inherited."}</span>
-              <span className="ep-short">{SALE.active ? `${SALE.percent}% off ends ${saleEndDay("short")}` : "15% off your first order"}</span>
+              <span className="ep-long">{SALE.active ? "Be first to see what\u2019s next." : "Built to be inherited."}</span>
+              <span className="ep-short">{SALE.active ? "First access to new pieces" : "15% off your first order"}</span>
             </p>
             <p className="ep-body body small" id="ep-desc">
-              <span className="ep-long">{SALE.active ? "Join the Ashwick Letter and we'll send you a reminder before it ends, plus first access to new pieces and colours." : "Join our exclusive organic design newsletter: material stories, natural interiors, and first access to new pieces. Plus 15% off your first order."}</span>
-              <span className="ep-short">{SALE.active ? "We'll remind you before it ends." : "Join the Ashwick Letter for material stories, new pieces and your code."}</span>
+              <span className="ep-long">{SALE.active ? `New pieces and colours reach the Ashwick Letter before anyone else, with material stories and natural interiors. We'll also remind you before ${SALE.percent}% off ends on ${saleEndDay()}.` : "Join our exclusive organic design newsletter: material stories, natural interiors, and first access to new pieces. Plus 15% off your first order."}</span>
+              <span className="ep-short">{SALE.active ? `New pieces and colours before anyone else, and a reminder before ${SALE.percent}% off ends ${saleEndDay("short")}.` : "Join the Ashwick Letter for material stories, new pieces and your code."}</span>
             </p>
 
             <div className="ep-row">
@@ -270,8 +271,8 @@ export function EmailPopup() {
             >
               {status === "loading" ? "One moment…" : (
                 <>
-                  <span className="ep-long">{SALE.active ? "Remind me" : "Get 15% off + the newsletter"}</span>
-                  <span className="ep-short">Submit</span>
+                  <span className="ep-long">{SALE.active ? "Get first access" : "Get 15% off + the newsletter"}</span>
+                  <span className="ep-short">{SALE.active ? "Get first access" : "Submit"}</span>
                 </>
               )}
             </button>
@@ -322,10 +323,10 @@ export function ProductLetter() {
           <p className="pl-line" role="status">{SALE.active ? <>You&apos;re on the list. We&apos;ll remind you before {saleEndDay()}.</> : <>You&apos;re on the list.</>}</p>
         ) : (
           <>
-            <p className="pl-line">{SALE.active ? `Not ready yet? We'll remind you before ${SALE.percent}% off ends on ${saleEndDay()}.` : "Material stories, new pieces and colours, first."}</p>
+            <p className="pl-line">{SALE.active ? `Not ready yet? Be first to see new pieces and colours, and we'll remind you before ${SALE.percent}% off ends on ${saleEndDay()}.` : "Material stories, new pieces and colours, first."}</p>
             <form className="nl-form pl-form" onSubmit={submit} noValidate>
               <input type="email" required placeholder="Email address" aria-label="Email address" value={email} onChange={(e) => { setEmail(e.target.value); setStatus("idle"); }} autoComplete="email" />
-              <button type="submit" disabled={status === "loading"}>{status === "loading" ? "…" : SALE.active ? "Remind me" : "Join"}</button>
+              <button type="submit" disabled={status === "loading"}>{status === "loading" ? "…" : "Join"}</button>
             </form>
             {status === "error" && <p className="form-error" role="alert">{errorMsg}</p>}
           </>
@@ -362,7 +363,7 @@ export function FooterSignup() {
         <p className="ftr-nl-done" role="status">{SALE.active ? "You’re on the list." : <>You&apos;re on the list. Your 15% code is on its way: {DISCOUNT_CODE}</>}</p>
       ) : (
         <>
-          <p className="ftr-nl-copy">{SALE.active ? "Deals throughout the month, material stories and natural interiors." : "Material stories and natural interiors, weekly. 15% off your first order."}</p>
+          <p className="ftr-nl-copy">{SALE.active ? "First access to new pieces and colours, material stories and natural interiors." : "Material stories and natural interiors, weekly. 15% off your first order."}</p>
           <form className="nl-form ftr-nl-form" onSubmit={submit} noValidate>
             <input type="email" required placeholder="Email address" aria-label="Email address" value={email} onChange={(e) => { setEmail(e.target.value); setStatus("idle"); }} autoComplete="email" />
             <button type="submit" disabled={status === "loading"}>{status === "loading" ? "…" : "Join"}</button>

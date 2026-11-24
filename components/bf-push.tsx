@@ -137,7 +137,7 @@ export function MiniCard({ it }: { it: Mini }) {
         {it.quick && <button type="button" className="mc-add" aria-label={`Quick add: ${it.name}`} onClick={() => setOpen(true)}>+</button>}
       </div>
       <Link href={it.href} className="mc-name">{it.name}</Link>
-      <span className="mc-price">{it.now != null && SALE.active ? <><span className="price-now">{fmtWhole(it.now)}</span> <s className="price-was">{fmtWhole(it.from)}</s></> : <Price price={it.from} whole />}</span>
+      <span className="mc-price">{it.now != null && SALE.active ? <>From <span className="price-now">{fmtWhole(it.now)}</span> <s className="price-was">{fmtWhole(it.from)}</s></> : <Price price={it.from} from whole />}</span>
       {open && it.quick && <QuickAddSheet kind={it.quick.kind} href={it.href} fill={it.quick.fill} onClose={() => setOpen(false)} />}
     </div>
   );
