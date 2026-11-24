@@ -35,7 +35,7 @@ export const DOG_BED = {
     { name: "Organic cotton twill cover", note: "100% organic cotton, the same twill as the Ashbury." },
   ],
   matchNote: "Fleece, Flint, Flax and Sorrel: the Ashbury's four colors, so it can sit beside the bed it matches.",
-  leadTime: "Handmade to order in the USA. Ships within 3–4 days.",
+  leadTime: "Handmade to order in the USA. Usually ships within 3–4 business days.",
   returns: "14-day returns on unused items; return shipping paid by the customer. Returned beds are donated.",
   warranty: "1-year warranty.",
   colors: [
@@ -129,7 +129,7 @@ export const NOOK: DogBed = {
     },
     {
       q: "How fast does it ship?",
-      a: "Each Nook is handmade to order in the USA and ships within 3–4 days.",
+      a: "Each Nook is handmade to order in the USA and usually ships within 3–4 business days.",
     },
     {
       q: "Can I return it?",

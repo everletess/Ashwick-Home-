@@ -4,15 +4,18 @@
 // time on a larger purchase, and a real person to call or text.
 import { useEffect, useState } from "react";
 import { Icon } from "@/components/buy-icons";
-import { arrivalLine, type ShipKind } from "@/lib/delivery-estimate";
+import { arrivalLine, closedNote, type ShipKind } from "@/lib/delivery-estimate";
 import { STUDIO_PHONE, STUDIO_PHONE_HREF } from "@/lib/site";
 
 export function BuyAssure({ ship, price }: { ship: ShipKind; price?: number }) {
   // The date is worked out after mount, in the shopper's time zone (the server doesn't know it).
   const [line, setLine] = useState<string | null>(null);
+  const [closed, setClosed] = useState<string | null>(null);
   useEffect(() => {
+    const now = new Date();
     // eslint-disable-next-line react-hooks/set-state-in-effect -- the shopper's clock and time zone, read once after mount
-    setLine(arrivalLine(ship, new Date()));
+    setLine(arrivalLine(ship, now));
+    setClosed(ship === "furniture" ? null : closedNote(now));
   }, [ship]);
   return (
     <div className="buy-assure">

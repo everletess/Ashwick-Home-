@@ -5,10 +5,27 @@
  */
 export const TRANSIT_DAYS: [number, number] = [3, 5];
 
-export type ShipKind = "days" | "pillow" | "furniture";
+export type ShipKind = "days" | "dog-bed" | "pillow" | "furniture";
 
-/** Business days to ship, by kind (mattress and dog beds 3–4, pillows 1–2); furniture is in weeks. */
-const SHIP: Record<Exclude<ShipKind, "furniture">, [number, number]> = { days: [3, 4], pillow: [1, 2] };
+/** Business days to ship, by kind (mattress 3–4, dog beds 3–4 business days, pillows 1–2); furniture is in weeks. */
+const SHIP: Record<Exclude<ShipKind, "furniture">, [number, number]> = { days: [3, 4], "dog-bed": [3, 4], pillow: [1, 2] };
+
+/**
+ * Days the workshop is closed (YYYY-MM-DD, local). They don't count as business days, and while one is coming up the
+ * arrival line says so. Add the next one here; past dates do nothing.
+ */
+export const CLOSED_DAYS: { dates: string[]; note: string }[] = [
+  { dates: ["2026-11-26", "2026-11-27"], note: "Our workshop is closed Nov 26–27 for Thanksgiving." },
+];
+
+const ymd = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+const isClosed = (d: Date) => CLOSED_DAYS.some((c) => c.dates.includes(ymd(d)));
+
+/** The closure note to show now: only while the closure is still ahead or under way. */
+export function closedNote(now: Date): string | null {
+  const today = ymd(now);
+  return CLOSED_DAYS.find((c) => c.dates.some((d) => d >= today))?.note ?? null;
+}
 
 export function addBusinessDays(from: Date, n: number): Date {
   const d = new Date(from);
@@ -16,7 +33,7 @@ export function addBusinessDays(from: Date, n: number): Date {
   while (left > 0) {
     d.setDate(d.getDate() + 1);
     const day = d.getDay();
-    if (day !== 0 && day !== 6) left--;
+    if (day !== 0 && day !== 6 && !isClosed(d)) left--;
   }
   return d;
 }
@@ -33,5 +50,6 @@ export function arrivalLine(kind: ShipKind, now: Date): string {
   const a = addBusinessDays(now, s0 + TRANSIT_DAYS[0]);
   const b = addBusinessDays(now, s1 + TRANSIT_DAYS[1]);
   const range = a.getMonth() === b.getMonth() ? `${md(a)}–${b.getDate()}` : `${md(a)}–${md(b)}`;
-  return `Ships in ${kind === "pillow" ? "1–2 business days" : "3–4 days"} · Estimated delivery ${range}`;
+  const ships = kind === "pillow" ? "1–2 business days" : kind === "dog-bed" ? "3–4 business days" : "3–4 days";
+  return `Ships in ${ships} · Estimated delivery ${range}`;
 }
