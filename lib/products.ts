@@ -44,16 +44,18 @@ export const FABRICS: Record<FabricId, Fabric> = {
     ],
   },
   irish: {
+    // 100% organic Irish linen in every color (Tessa checked each Marlowe color with the workroom, Nov 20). No mill codes
+    // here: the old FA60xx codes belonged to a different (linen-poly) cloth and sent the wrong swatches out.
     id: "irish", label: "Irish Linen", swatch: "#E3DDD2", tex: "linen",
     colors: [
       { id: "white", label: "White", swatch: "#F1EEE7" },
       { id: "cream", label: "Cream", swatch: "#E8E0CF" },
       { id: "flax", label: "Flax", swatch: "#CDBE9F" },
       { id: "oatmeal", label: "Oatmeal", swatch: "#D8CDB9" },
-      { id: "ivory", label: "Ivory", code: "FA6025", swatch: "#E2DCCF" },
-      { id: "sand", label: "Sand", code: "FA6053", swatch: "#CDC3B1" },
-      { id: "coco", label: "Coco", code: "FA6059", swatch: "#A5896A" },
-      { id: "dove", label: "Dove", code: "FA6078", swatch: "#B8B3A9" },
+      { id: "ivory", label: "Ivory", swatch: "#E2DCCF" },
+      { id: "sand", label: "Sand", swatch: "#CDC3B1" },
+      { id: "coco", label: "Coco", swatch: "#A5896A" },
+      { id: "dove", label: "Dove", swatch: "#B8B3A9" },
     ],
   },
 };
