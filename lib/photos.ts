@@ -228,6 +228,7 @@ import pembroke1 from "@/assets/photos/pembroke-1.jpg";
 import pembrokeHero from "@/assets/photos/pembroke-hero.jpg";
 import pembroke2 from "@/assets/photos/pembroke-2.jpg";
 import pembrokeIrishFleece from "@/assets/photos/pembroke-irish-fleece.jpg";
+import pembrokeIrishReed from "@/assets/photos/pembroke-irish-reed.jpg";
 import pembrokeIrishOat from "@/assets/photos/pembroke-irish-oat.jpg";
 import pembrokeIrishChalk from "@/assets/photos/pembroke-irish-chalk.jpg";
 import pembrokeIrishFlax from "@/assets/photos/pembroke-irish-flax.jpg";
@@ -465,6 +466,7 @@ export const PHOTOS = {
   "pembroke-hero": pembrokeHero,
   "pembroke-2": pembroke2,
   "pembroke-irish-fleece": pembrokeIrishFleece,
+  "pembroke-irish-reed": pembrokeIrishReed,
   "pembroke-irish-oat": pembrokeIrishOat,
   "pembroke-irish-chalk": pembrokeIrishChalk,
   "pembroke-irish-flax": pembrokeIrishFlax,
