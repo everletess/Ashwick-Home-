@@ -19,7 +19,7 @@ import type { PhotoKey } from "@/lib/photos";
 import { PILLOW_PATH } from "@/lib/pillow";
 import { getProduct } from "@/lib/products";
 import { usePriceOnRequest } from "@/components/price-on-request";
-import { BUNDLE, BUNDLE_PILLOWS, SALE, SLEEP_SUITE, countdownFrom, mattressDelivery, saleEndShort, salePrice, sleepSuiteLines } from "@/lib/sale";
+import { BUNDLE, BUNDLE_PILLOWS, SALE, SLEEP_SUITE, giftActive, giftLine, countdownFrom, mattressDelivery, saleEndShort, salePrice, sleepSuiteLines } from "@/lib/sale";
 
 /** The page's photographs: Tessa's (05/11), except the Gifts band, a stand-in for now. */
 export const HOLIDAY_PHOTOS: Record<"hero" | "suite" | "bestFriends" | "gifts", { photo: PhotoKey; alt: string }> = {
@@ -76,7 +76,7 @@ export function HolidayHero() {
       <div className="hx-hero-t">
         <p className="hx-eyebrow">The Holiday Edit</p>
         <h1 className="hx-h1">Give the gift of home.</h1>
-        <p className="hx-sub">{SALE.percent}% off everything, through {end}. No code needed.</p>
+        <p className="hx-sub">{SALE.percent}% off everything, through {end}. No code needed.{giftActive() && <><br />{giftLine()}</>}</p>
         <div className="hx-btns">
           <a href="#deals" className="btn light">Shop the deals</a>
           <a href="#gifts" className="btn light">Shop gifts</a>

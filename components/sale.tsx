@@ -1,4 +1,4 @@
-import { SALE, salePrice } from "@/lib/sale";
+import { SALE, giftActive, giftLine, salePrice } from "@/lib/sale";
 import { fmt } from "@/lib/products";
 
 /** Whole dollars, rounded down ($103, not $103.20): for cards and banners. Exact cents stay in the cart and checkout. */
@@ -31,7 +31,7 @@ export function SaleNote() {
   if (!SALE.active) return null;
   return (
     <p className="fine sale-note">
-      {SALE.name}: {SALE.percent}% off, applied automatically at checkout.
+      {SALE.name}: {SALE.percent}% off, applied automatically at checkout.{giftActive() && " " + giftLine()}
     </p>
   );
 }

@@ -54,6 +54,47 @@ export const SALE = {
   },
 };
 
+/**
+ * Black Friday gift (Tessa, Nov 25 2026): two free Ashwick Pillows (100% organic cotton, Standard) on orders of $1,000
+ * or more, from Wed Nov 25 6pm to Mon Dec 1 (Pacific). The shopper picks the cover color in the cart; it starts on the
+ * color of the mattress (or other piece) in their cart, so the pillows match. The threshold is what the shopper pays
+ * for the order's qualifying products after the sale (delivery and tax don't count). The checkout adds the two
+ * pillows (app/api/checkout/route.ts) and Shopify's automatic "Buy X get Y" discount makes them $0 (all four
+ * organic cotton Standard covers), so both must run on the same dates and threshold.
+ */
+export const GIFT = {
+  startsAt: "2026-11-25T18:00:00-08:00",
+  endsAt: "2026-12-01T23:59:59-08:00",
+  threshold: 1000,
+  qty: 2,
+  /** Sentence-case phrase for copy: "two free organic pillows". */
+  phrase: "two free organic pillows",
+  /** Cover colors the shopper can pick (Shopify option "Cover color"), the same four as the Ashbury. */
+  covers: ["Fleece", "Flint", "Flax", "Sorrel"] as const,
+  /** Line attribute on the gift line, visible on the Shopify order. */
+  attribute: { key: "_Gift", value: "Black Friday: 2 free organic pillows" },
+};
+export type GiftCover = (typeof GIFT.covers)[number];
+export const isGiftCover = (v: unknown): v is GiftCover => typeof v === "string" && (GIFT.covers as readonly string[]).includes(v);
+/** The pillow added, as cart options (matched to its Shopify variant like any pillow line). */
+export const giftOptions = (cover: GiftCover): [string, string][] => [["Fill", "100% Organic Cotton"], ["Size", "Standard 20x26"], ["Cover color", cover]];
+/** The cover the gift starts on: the mattress's color if there's one in the cart, else any piece's matching color, else Fleece. */
+export const defaultGiftCover = (lines: { productId: string; options: [string, string][] }[]): GiftCover => {
+  const colorOf = (l: { options: [string, string][] }) => l.options.find(([k]) => k === "Color" || k === "Cover color")?.[1];
+  const mattress = lines.filter((l) => l.productId === MATTRESS.id).map(colorOf).find(isGiftCover);
+  return mattress ?? lines.map(colorOf).find(isGiftCover) ?? "Fleece";
+};
+/** True while the weekend gift runs (pass a time, or now). */
+/**
+ * Which products count toward the gift threshold. Mirrors the Shopify automatic discount "Black Friday weekend: 2 free
+ * organic pillows" (Customer spends: every product except the Ashwick Pillow and the bedding set, which has too many
+ * variants for Shopify's picker). Keep the two in step, or the site adds pillows Shopify then charges for.
+ */
+export const giftCounts = (productId: string) => productId !== "ashwick-pillow" && productId !== BUNDLE_CONFIG.beddingSet.handle;
+export const giftActive = (now: number = Date.now()) => now >= Date.parse(GIFT.startsAt) && now <= Date.parse(GIFT.endsAt);
+/** The gift line for offer copy, e.g. "Plus two free organic pillows on orders of $1,000 or more." */
+export const giftLine = () => `Plus ${GIFT.phrase} on orders of $${GIFT.threshold.toLocaleString("en-US")} or more, through Dec 1.`;
+
 /** The live countdown shows only in the final 72 hours (from this time); before it, the offer band says "Ends Dec 1". */
 export const countdownFrom = () => (SALE.endsAt ? Date.parse(SALE.endsAt) - 72 * 3600_000 : Infinity);
 /** "Ends Dec 1" (Pacific), or "" with no end date set. */

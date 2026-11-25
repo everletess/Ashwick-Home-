@@ -15,7 +15,7 @@ import { PILLOW_PATH, PILLOW_STANDALONE_FILLS, PILLOW_STORY, pillowFromPrice } f
 import { fmt } from "@/lib/products";
 import type { PhotoKey } from "@/lib/photos";
 import { trackCustom } from "@/lib/pixel";
-import { SALE, SLEEP_SUITE, countdownFrom, giftsShowing, pillowsAreNew, saleEndShort, salePrice, sleepSuitePrice, suiteHref, suiteVsAshbury } from "@/lib/sale";
+import { SALE, SLEEP_SUITE, countdownFrom, giftActive, giftLine, giftsShowing, pillowsAreNew, saleEndShort, salePrice, sleepSuitePrice, suiteHref, suiteVsAshbury } from "@/lib/sale";
 
 /* ---------- Time ---------- */
 
@@ -96,6 +96,7 @@ export function OfferBand() {
       <p className="ob-lead">{SALE.name}</p>
       <p className="ob-t">{SALE.percent}% off everything</p>
       <p className="ob-s">{live ? <span className="ob-clock" role="timer">{clock}</span> : saleEndShort()}{(live || saleEndShort()) && " · "}No code needed</p>
+      {now != null && giftActive(now) && <p className="ob-s ob-gift">{giftLine()}</p>}
     </div>
   );
 }
