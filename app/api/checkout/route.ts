@@ -15,14 +15,14 @@ import { NextResponse } from "next/server";
 import { createCheckout, fetchProductVariants } from "@/lib/shopify";
 import { variantForLine, type CheckoutRequestLine } from "@/lib/checkout-match";
 import { getPriceOnRequestIds } from "@/lib/price-on-request";
-import { GIFT, SALE, giftActive, giftCounts } from "@/lib/sale";
+import { GIFT, SALE, defaultGiftCover, giftActive, giftCounts, giftOptions, isGiftCover } from "@/lib/sale";
 import { PILLOW_ID } from "@/lib/pillow";
 
 export type { CheckoutRequestLine };
 
 export async function POST(req: Request) {
   try {
-    const { lines } = (await req.json()) as { lines: CheckoutRequestLine[] };
+    const { lines, giftCover } = (await req.json()) as { lines: CheckoutRequestLine[]; giftCover?: string };
     if (!lines?.length) return NextResponse.json({ error: "Empty cart" }, { status: 400 });
 
     const [variants, por] = await Promise.all([fetchProductVariants(), getPriceOnRequestIds()]);
@@ -46,11 +46,12 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "The items in your cart are no longer available in those options. Please choose again.", skipped }, { status: 409 });
     }
 
-    // Black Friday weekend: two free organic pillows on qualifying orders. Shopify's automatic discount makes them $0.
+    // Black Friday: two free organic pillows on qualifying orders, in the cover the shopper picked (or the one matching their
+    // mattress, e.g. from Buy now). Shopify's automatic discount makes them $0.
     // If the pillow can't be matched, checkout goes ahead without it rather than failing.
     if (giftActive() && giftBasis >= GIFT.threshold) {
       try {
-        const g = variantForLine(variants, { productId: PILLOW_ID, qty: GIFT.qty, options: GIFT.options });
+        const g = variantForLine(variants, { productId: PILLOW_ID, qty: GIFT.qty, options: giftOptions(isGiftCover(giftCover) ? giftCover : defaultGiftCover(lines)) });
         checkoutLines.push({ variantId: g.variantId, quantity: GIFT.qty, customAttributes: [GIFT.attribute] });
       } catch (err) {
         console.error("[/api/checkout] gift pillow not added", err instanceof Error ? err.message : err);

@@ -55,23 +55,34 @@ export const SALE = {
 };
 
 /**
- * Black Friday weekend gift (Tessa, Nov 25 2026): two free Ashwick Pillows (100% organic cotton, Standard, Fleece cover)
- * on orders of $1,000 or more, Fri Nov 27 to Mon Dec 1 (Pacific). The threshold is what the shopper pays for the
- * order's products after the sale (pillows themselves don't count; delivery and tax don't count). The checkout adds
- * the two pillows (app/api/checkout/route.ts) and Shopify's automatic "Buy X get Y" discount makes them $0, so both
- * must run on the same dates and threshold.
+ * Black Friday gift (Tessa, Nov 25 2026): two free Ashwick Pillows (100% organic cotton, Standard) on orders of $1,000
+ * or more, from Wed Nov 25 6pm to Mon Dec 1 (Pacific). The shopper picks the cover color in the cart; it starts on the
+ * color of the mattress (or other piece) in their cart, so the pillows match. The threshold is what the shopper pays
+ * for the order's qualifying products after the sale (delivery and tax don't count). The checkout adds the two
+ * pillows (app/api/checkout/route.ts) and Shopify's automatic "Buy X get Y" discount makes them $0 (all four
+ * organic cotton Standard covers), so both must run on the same dates and threshold.
  */
 export const GIFT = {
-  startsAt: "2026-11-27T00:00:00-08:00",
+  startsAt: "2026-11-25T18:00:00-08:00",
   endsAt: "2026-12-01T23:59:59-08:00",
   threshold: 1000,
   qty: 2,
   /** Sentence-case phrase for copy: "two free organic pillows". */
   phrase: "two free organic pillows",
-  /** The pillow added, as cart options (matched to its Shopify variant like any pillow line). */
-  options: [["Fill", "100% Organic Cotton"], ["Size", "Standard 20x26"], ["Cover color", "Fleece"]] as [string, string][],
+  /** Cover colors the shopper can pick (Shopify option "Cover color"), the same four as the Ashbury. */
+  covers: ["Fleece", "Flint", "Flax", "Sorrel"] as const,
   /** Line attribute on the gift line, visible on the Shopify order. */
-  attribute: { key: "_Gift", value: "Black Friday weekend: 2 free organic pillows" },
+  attribute: { key: "_Gift", value: "Black Friday: 2 free organic pillows" },
+};
+export type GiftCover = (typeof GIFT.covers)[number];
+export const isGiftCover = (v: unknown): v is GiftCover => typeof v === "string" && (GIFT.covers as readonly string[]).includes(v);
+/** The pillow added, as cart options (matched to its Shopify variant like any pillow line). */
+export const giftOptions = (cover: GiftCover): [string, string][] => [["Fill", "100% Organic Cotton"], ["Size", "Standard 20x26"], ["Cover color", cover]];
+/** The cover the gift starts on: the mattress's color if there's one in the cart, else any piece's matching color, else Fleece. */
+export const defaultGiftCover = (lines: { productId: string; options: [string, string][] }[]): GiftCover => {
+  const colorOf = (l: { options: [string, string][] }) => l.options.find(([k]) => k === "Color" || k === "Cover color")?.[1];
+  const mattress = lines.filter((l) => l.productId === MATTRESS.id).map(colorOf).find(isGiftCover);
+  return mattress ?? lines.map(colorOf).find(isGiftCover) ?? "Fleece";
 };
 /** True while the weekend gift runs (pass a time, or now). */
 /**

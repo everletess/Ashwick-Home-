@@ -18,7 +18,7 @@ function useScrollLock(locked: boolean) {
   }, [locked]);
 }
 import { bundleIdOf, useCart, type CartLine, CartNoticeBox, unitTotal } from "@/components/cart";
-import { BUNDLE_CONFIG, NO_WAS_PRICE, SLEEP_SUITE, SLEEP_SUITE_BEDDING_NAME, bundleColorOf, bundlePhotoFor, bundleTitleFor, SALE, bundlePrice, deliveryFor, isFurnitureLine, orderDelivery, salePrice, GIFT, giftActive, giftCounts } from "@/lib/sale";
+import { BUNDLE_CONFIG, NO_WAS_PRICE, SLEEP_SUITE, SLEEP_SUITE_BEDDING_NAME, bundleColorOf, bundlePhotoFor, bundleTitleFor, SALE, bundlePrice, deliveryFor, isFurnitureLine, orderDelivery, salePrice, GIFT, giftActive, giftCounts, defaultGiftCover, type GiftCover } from "@/lib/sale";
 import { STUDIO_EMAIL, STUDIO_PHONE } from "@/lib/site";
 import { PRODUCTS } from "@/lib/products";
 import type { PhotoKey } from "@/lib/photos";
@@ -158,13 +158,32 @@ import { fmt } from "@/lib/products";
 const isDogBed = (id: string) => id === DOG_BED_ID || id === NOOK.id;
 
 /** The line under the cart subtotal: delivery (white glove for furniture and the mattress, free for dog beds), ship time and payment. */
-/** The weekend gift line in the cart: included, or how much more to spend (only while the gift runs). */
+/** What the cart's qualifying products cost after the sale: the gift's threshold (mirrors /api/checkout). */
+const giftBasis = (items: CartLine[]) =>
+  items.filter((i) => giftCounts(i.id)).reduce((s, i) => s + (i.price == null ? 0 : (unitTotal(i) - (i.delivery && !isFurnitureLine(i) && !SALE.active ? i.delivery.price : 0)) * i.qty), 0);
+const giftEarned = (items: CartLine[]) => giftActive() && items.length > 0 && giftBasis(items) >= GIFT.threshold;
+
+/** The gift line in the cart: how much more to spend (only while the gift runs). Once earned, GiftPicker says it instead. */
 function giftNote(items: CartLine[]) {
-  if (!giftActive() || !items.length) return "";
-  const basis = items.filter((i) => giftCounts(i.id)).reduce((s, i) => s + (i.price == null ? 0 : (unitTotal(i) - (i.delivery && !isFurnitureLine(i) && !SALE.active ? i.delivery.price : 0)) * i.qty), 0);
-  if (basis >= GIFT.threshold) return `Black Friday weekend: ${GIFT.phrase} (Standard, Fleece cover) are added free at checkout. `;
+  if (!giftActive() || !items.length || giftEarned(items)) return "";
+  const basis = giftBasis(items);
   const more = Math.ceil(GIFT.threshold - basis);
-  return basis > 0 ? `Spend $${more.toLocaleString("en-US")} more for ${GIFT.phrase}, free this weekend. ` : "";
+  return basis > 0 ? `Spend $${more.toLocaleString("en-US")} more for ${GIFT.phrase}, through Dec 1. ` : "";
+}
+
+/** Once the order qualifies: the two free pillows, with the cover color to choose (starts on the mattress color). */
+function GiftPicker({ cover, onPick }: { cover: GiftCover; onPick: (c: GiftCover) => void }) {
+  return (
+    <div className="gift-pick" role="group" aria-label="Cover color for your free pillows">
+      <p className="gift-pick-title">Your {GIFT.phrase} are added free at checkout</p>
+      <p className="gift-pick-sub">Organic cotton, Standard. Choose the cover:</p>
+      <div className="gift-pick-row">
+        {GIFT.covers.map((c) => (
+          <button key={c} type="button" className="gift-pick-opt" aria-pressed={c === cover} onClick={() => onPick(c)}>{c}</button>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 function cartNote(items: CartLine[]) {
@@ -392,6 +411,9 @@ export function CartDrawer({ page = false }: { page?: boolean }) {
   const close = () => cart.setOpen(false);
   const [checking, setChecking] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  // The free pillows' cover: the shopper's pick, else the color matching their mattress.
+  const [giftPick, setGiftPick] = useState<GiftCover | null>(null);
+  const giftCover = giftPick ?? defaultGiftCover(cart.items.map((i) => ({ productId: i.id, options: i.options })));
   const [saveEmail, setSaveEmail] = useState("");
   const [savePhone, setSavePhone] = useState("");
   const [saveState, setSaveState] = useState<"idle" | "sending" | "done" | "error" | "badphone">("idle");
@@ -458,6 +480,7 @@ export function CartDrawer({ page = false }: { page?: boolean }) {
             qty: i.qty,
             options: i.options,
           })),
+          giftCover,
         }),
       });
       const data = await res.json();
@@ -573,6 +596,7 @@ export function CartDrawer({ page = false }: { page?: boolean }) {
           // Scrolls with the items: only the subtotal and Check out stay pinned (a phone keeps room for the cart).
           <div className="drawer-more">
             <CartUpsell items={cart.items} onNavigate={close} />
+            {giftEarned(cart.items) && <GiftPicker cover={giftCover} onPick={setGiftPick} />}
             <p className="fine">
               {cartNote(cart.items)}
             </p>

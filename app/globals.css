@@ -2461,3 +2461,11 @@ button.chip{cursor:pointer}
   /* Room under the footer so the bar never covers the last links. */
   html.has-sticky-buy body{padding-bottom:76px}
 }
+
+/* Black Friday gift: free pillows' cover picker in the cart */
+.gift-pick{margin:4px 0 12px;padding:12px 14px;border:1px solid var(--hair);border-radius:4px}
+.gift-pick-title{margin:0;font:500 14px/1.4 var(--sans);color:var(--ink)}
+.gift-pick-sub{margin:2px 0 10px;font:400 13px/1.4 var(--sans);color:var(--ink);opacity:.75}
+.gift-pick-row{display:flex;flex-wrap:wrap;gap:6px}
+.gift-pick-opt{min-height:36px;padding:6px 14px;border:1px solid var(--oat);border-radius:999px;background:transparent;font:400 13px/1 var(--sans);color:var(--ink);cursor:pointer}
+.gift-pick-opt[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--alabaster)}
