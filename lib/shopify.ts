@@ -59,7 +59,7 @@ export async function createCheckout(lines: CheckoutLine[]): Promise<string> {
   return cart.checkoutUrl as string;
 }
 
-export type ShopifyVariant = { productHandle: string; productTitle: string; productType: string; variantId: string; title: string };
+export type ShopifyVariant = { productHandle: string; productTitle: string; productType: string; variantId: string; title: string; price: number };
 
 /** Fetch all product variants the website's sales channel can see, for ID mapping. */
 export async function fetchProductVariants(): Promise<ShopifyVariant[]> {
@@ -70,7 +70,7 @@ export async function fetchProductVariants(): Promise<ShopifyVariant[]> {
           title
           productType
           variants(first: 100) {
-            edges { node { id title } }
+            edges { node { id title price { amount } } }
           }
         }}
       }
@@ -79,7 +79,7 @@ export async function fetchProductVariants(): Promise<ShopifyVariant[]> {
   const results: ShopifyVariant[] = [];
   for (const { node: product } of data.products.edges) {
     for (const { node: variant } of product.variants.edges) {
-      results.push({ productHandle: product.handle, productTitle: product.title, productType: product.productType, variantId: variant.id, title: variant.title });
+      results.push({ productHandle: product.handle, productTitle: product.title, productType: product.productType, variantId: variant.id, title: variant.title, price: Number(variant.price?.amount ?? 0) });
     }
   }
   return results;

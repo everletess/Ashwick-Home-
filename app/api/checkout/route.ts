@@ -15,6 +15,8 @@ import { NextResponse } from "next/server";
 import { createCheckout, fetchProductVariants } from "@/lib/shopify";
 import { variantForLine, type CheckoutRequestLine } from "@/lib/checkout-match";
 import { getPriceOnRequestIds } from "@/lib/price-on-request";
+import { GIFT, SALE, giftActive, giftCounts } from "@/lib/sale";
+import { PILLOW_ID } from "@/lib/pillow";
 
 export type { CheckoutRequestLine };
 
@@ -25,11 +27,14 @@ export async function POST(req: Request) {
 
     const [variants, por] = await Promise.all([fetchProductVariants(), getPriceOnRequestIds()]);
     const skipped: number[] = [];
+    /** What the order's qualifying products cost after the sale (pillows and the bedding set left out): the weekend gift's threshold. */
+    let giftBasis = 0;
     const checkoutLines = lines.flatMap((line, i) => {
       try {
         // Pieces priced upon request can't be checked out (an old saved cart may still hold one).
         if (por.includes(line.productId)) throw new Error(`"${line.productId}" is priced upon request`);
         const v = variantForLine(variants, line);
+        if (giftCounts(line.productId)) giftBasis += v.price * line.qty * (SALE.active ? (100 - SALE.percent) / 100 : 1);
         return [{ variantId: v.variantId, quantity: line.qty, customAttributes: line.options.map(([key, value]) => ({ key, value })) }];
       } catch (err) {
         console.error("[/api/checkout] skipped line", i, err instanceof Error ? err.message : err);
@@ -39,6 +44,17 @@ export async function POST(req: Request) {
     });
     if (!checkoutLines.length) {
       return NextResponse.json({ error: "The items in your cart are no longer available in those options. Please choose again.", skipped }, { status: 409 });
+    }
+
+    // Black Friday weekend: two free organic pillows on qualifying orders. Shopify's automatic discount makes them $0.
+    // If the pillow can't be matched, checkout goes ahead without it rather than failing.
+    if (giftActive() && giftBasis >= GIFT.threshold) {
+      try {
+        const g = variantForLine(variants, { productId: PILLOW_ID, qty: GIFT.qty, options: GIFT.options });
+        checkoutLines.push({ variantId: g.variantId, quantity: GIFT.qty, customAttributes: [GIFT.attribute] });
+      } catch (err) {
+        console.error("[/api/checkout] gift pillow not added", err instanceof Error ? err.message : err);
+      }
     }
 
     const rawUrl = await createCheckout(checkoutLines);

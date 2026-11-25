@@ -7,7 +7,7 @@ import { DOG_BED } from "@/lib/dog-bed";
 import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
 import { PILLOW_PATH } from "@/lib/pillow";
 import { getProduct } from "@/lib/products";
-import { BUNDLE, BUNDLE_CONFIG, BUNDLE_HERO, SALE, SLEEP_SUITE, bundlePrice, salePrice } from "@/lib/sale";
+import { BUNDLE, BUNDLE_CONFIG, BUNDLE_HERO, SALE, SLEEP_SUITE, bundlePrice, giftActive, giftLine, salePrice } from "@/lib/sale";
 import { fmt } from "@/lib/products";
 import type { PhotoKey } from "@/lib/photos";
 
@@ -65,7 +65,7 @@ export function BlackFridayBand() {
         <div className="home-bf-head">
           <div className="eyebrow light">{SALE.name} at Ashwick</div>
           <h2 className="h2">{SALE.percent}% off everything.</h2>
-          <p className="home-bf-sub">No code needed. Free white glove delivery on the mattress in both bundles.</p>
+          <p className="home-bf-sub">No code needed. Free white glove delivery on the mattress in both bundles.{giftActive() && " " + giftLine()}</p>
           <Link href={SALE.path} className="btn light">Shop {SALE.name}</Link>
         </div>
         <ul className="rail home-bf-rail">

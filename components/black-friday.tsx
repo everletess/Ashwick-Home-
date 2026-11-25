@@ -4,7 +4,7 @@ import { Price, SaleTag } from "@/components/sale";
 import { DOG_BED, NOOK, type DogBed } from "@/lib/dog-bed";
 import { Stars } from "@/components/reviews";
 import { fmt } from "@/lib/products";
-import { BUNDLE, SALE, salePrice } from "@/lib/sale";
+import { BUNDLE, SALE, giftActive, giftLine, salePrice } from "@/lib/sale";
 
 /** Homepage banner for the event, under the hero. Renders nothing when the sale is off. */
 export function BlackFridayBanner() {
@@ -18,7 +18,7 @@ export function BlackFridayBanner() {
         <div className="bf-banner-t">
           <div className="eyebrow">{SALE.name} at Ashwick</div>
           <h2 className="h2">{SALE.percent}% off everything.</h2>
-          <p className="body">No code needed. Two bundles with free white glove delivery for the mattress.</p>
+          <p className="body">No code needed. Two bundles with free white glove delivery for the mattress.{giftActive() && " " + giftLine()}</p>
           <div className="btns">
             <Link href={SALE.path} className="btn light">Shop {SALE.name}</Link>
             <Link href={SALE.path + "#bundles"} className="btn outline-light">See the bundles</Link>

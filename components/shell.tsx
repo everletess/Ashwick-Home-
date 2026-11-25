@@ -17,8 +17,8 @@ function useScrollLock(locked: boolean) {
     };
   }, [locked]);
 }
-import { bundleIdOf, useCart, type CartLine, CartNoticeBox } from "@/components/cart";
-import { BUNDLE_CONFIG, NO_WAS_PRICE, SLEEP_SUITE, SLEEP_SUITE_BEDDING_NAME, bundleColorOf, bundlePhotoFor, bundleTitleFor, SALE, bundlePrice, deliveryFor, isFurnitureLine, orderDelivery, salePrice } from "@/lib/sale";
+import { bundleIdOf, useCart, type CartLine, CartNoticeBox, unitTotal } from "@/components/cart";
+import { BUNDLE_CONFIG, NO_WAS_PRICE, SLEEP_SUITE, SLEEP_SUITE_BEDDING_NAME, bundleColorOf, bundlePhotoFor, bundleTitleFor, SALE, bundlePrice, deliveryFor, isFurnitureLine, orderDelivery, salePrice, GIFT, giftActive, giftCounts } from "@/lib/sale";
 import { STUDIO_EMAIL, STUDIO_PHONE } from "@/lib/site";
 import { PRODUCTS } from "@/lib/products";
 import type { PhotoKey } from "@/lib/photos";
@@ -158,8 +158,17 @@ import { fmt } from "@/lib/products";
 const isDogBed = (id: string) => id === DOG_BED_ID || id === NOOK.id;
 
 /** The line under the cart subtotal: delivery (white glove for furniture and the mattress, free for dog beds), ship time and payment. */
-function cartNote(items: { id: string; delivery?: { label: string; price: number } }[]) {
-  const sale = SALE.active ? `${SALE.name}: ${SALE.percent}% off is applied automatically at checkout. ` : "";
+/** The weekend gift line in the cart: included, or how much more to spend (only while the gift runs). */
+function giftNote(items: CartLine[]) {
+  if (!giftActive() || !items.length) return "";
+  const basis = items.filter((i) => giftCounts(i.id)).reduce((s, i) => s + (i.price == null ? 0 : (unitTotal(i) - (i.delivery && !isFurnitureLine(i) && !SALE.active ? i.delivery.price : 0)) * i.qty), 0);
+  if (basis >= GIFT.threshold) return `Black Friday weekend: ${GIFT.phrase} (Standard, Fleece cover) are added free at checkout. `;
+  const more = Math.ceil(GIFT.threshold - basis);
+  return basis > 0 ? `Spend $${more.toLocaleString("en-US")} more for ${GIFT.phrase}, free this weekend. ` : "";
+}
+
+function cartNote(items: CartLine[]) {
+  const sale = (SALE.active ? `${SALE.name}: ${SALE.percent}% off is applied automatically at checkout. ` : "") + giftNote(items);
   const freeGlove = SALE.active && items.some((i) => i.id === MATTRESS.id) ? "White glove delivery on the mattress is free during the sale. " : "";
   if (!items.every((i) => i.delivery || isDogBed(i.id))) return sale + freeGlove + "Pay in full at checkout, or over time with Shop Pay Installments, subject to approval. Taxes and shipping calculated at checkout.";
   const mattress = items.some((i) => i.id === MATTRESS.id);
