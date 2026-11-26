@@ -2088,6 +2088,7 @@ button.chip{cursor:pointer}
 .he-living{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;padding:0}
 .he-living-img{position:relative;min-height:860px;height:100%}
 .he-living-img img{object-fit:cover}
+.he-living-img img.he-living-holiday{object-position:24% 50%}
 .he-living-t{padding:72px var(--gut) 72px 64px;min-width:0}
 .he-cards{list-style:none;margin:36px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 20px}
 .he-card a{display:block;color:var(--ink)}
