@@ -5,6 +5,7 @@
 import { PHOTOS, type PhotoKey } from "@/lib/photos";
 import { klaviyoKnowsVisitor, klaviyoTrack } from "@/lib/klaviyo";
 import { track } from "@/lib/pixel";
+import { attributionAttributes } from "@/lib/attribution";
 import { bundleColorOf, bundlePhotoFor } from "@/lib/sale";
 
 const KLAVIYO_COMPANY_ID = process.env.NEXT_PUBLIC_KLAVIYO_COMPANY_ID ?? "";
@@ -157,7 +158,7 @@ export async function saveCart(email: string, lines: SavedCartLine[], total: num
     const r = await fetch("/api/checkout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ lines: lines.map((l) => ({ productId: l.productId, qty: l.qty, options: l.options })) }),
+      body: JSON.stringify({ lines: lines.map((l) => ({ productId: l.productId, qty: l.qty, options: l.options })), attribution: attributionAttributes() }),
     });
     const d = await r.json();
     if (r.ok && d.checkoutUrl) checkoutUrl = d.checkoutUrl;
@@ -198,7 +199,7 @@ async function cartEventProps(lines: SavedCartLine[], total: number | null) {
     const r = await fetch("/api/checkout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ lines: lines.map((l) => ({ productId: l.productId, qty: l.qty, options: l.options })) }),
+      body: JSON.stringify({ lines: lines.map((l) => ({ productId: l.productId, qty: l.qty, options: l.options })), attribution: attributionAttributes() }),
     });
     const d = await r.json();
     if (r.ok && d.checkoutUrl) checkoutUrl = d.checkoutUrl;

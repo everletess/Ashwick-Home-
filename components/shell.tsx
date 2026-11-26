@@ -27,6 +27,7 @@ import type { PhotoKey } from "@/lib/photos";
 import { SHOW_SIGNUP_EVENT } from "@/components/email-popup";
 import { SUBSCRIBED_EVENT, SUBSCRIBED_KEY } from "@/lib/subscribe";
 import { trackThen } from "@/lib/pixel";
+import { attributionAttributes } from "@/lib/attribution";
 import { saveCart, normalizePhone } from "@/lib/subscribe";
 import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
 import { NewBadge, useNow } from "@/components/bf-push";
@@ -483,6 +484,7 @@ export function CartDrawer({ page = false }: { page?: boolean }) {
             options: i.options,
           })),
           giftCover,
+          attribution: attributionAttributes(),
         }),
       });
       const data = await res.json();

@@ -11,6 +11,7 @@ import { KlaviyoProductView } from "@/components/klaviyo-product-view";
 import { Footer } from "@/components/footer";
 import { AnnouncementBar, CartDrawer, Header } from "@/components/shell";
 import { PHOTOS } from "@/lib/photos";
+import { AttributionCapture } from "@/components/attribution-capture";
 import { SALE } from "@/lib/sale";
 import "./globals.css";
 
@@ -51,6 +52,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en" className={`${cormorant.variable} ${jost.variable}`}>
       <body>
+        <AttributionCapture />
         <Script
           id="meta-pixel"
           strategy="afterInteractive"
