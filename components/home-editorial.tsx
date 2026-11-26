@@ -9,6 +9,7 @@ import { useRef, useState } from "react";
 import { Photo } from "@/components/photo";
 import { fmtWhole } from "@/components/sale";
 import { DOG_BED, NOOK } from "@/lib/dog-bed";
+import { WINTER_ROOM_BY_COLOR, holidayActive } from "@/lib/holiday";
 import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
 import { PILLOW_PATH, pillowFromPrice } from "@/lib/pillow";
 import type { PhotoKey } from "@/lib/photos";
@@ -128,12 +129,15 @@ export function LivingRoom() {
 const CLEAN: Record<string, PhotoKey> = { natural: "mattress-room-fleece-clean", dove: "mattress-room-flint-clean", safari: "mattress-room-flax-clean", mocha: "mattress-room-sorrel-clean" };
 
 export function Bedroom() {
-  const [color, setColor] = useState("mocha");
+  /* Over the holidays: the winter rooms, opening on Fleece (Tessa, Nov 25). */
+  const winter = holidayActive();
+  const [color, setColor] = useState(winter ? "natural" : "mocha");
+  const room = (id: string) => (winter ? WINTER_ROOM_BY_COLOR[id] : CLEAN[id]);
   return (
     <section className="he he-sage he-bed" aria-labelledby="he-bed-h">
       <div className="he-bed-img">
         {MATTRESS.colors.map((c) => (
-          <Photo key={c.id} src={CLEAN[c.id] ?? c.photos[0]} label={`${MATTRESS.title} in ${c.label} on a light oak bed in a sunlit bedroom`} className={c.id === color ? "on" : undefined} fill sizes="(max-width: 860px) 100vw, 55vw" />
+          <Photo key={c.id} src={room(c.id) ?? c.photos[0]} label={winter ? `${MATTRESS.title} in ${c.label}, made up with matching pillows and a throw, in a winter bedroom with a wreath in the window` : `${MATTRESS.title} in ${c.label} on a light oak bed in a sunlit bedroom`} className={c.id === color ? "on" : undefined} fill sizes="(max-width: 860px) 100vw, 55vw" />
         ))}
       </div>
       <div className="he-bed-t">

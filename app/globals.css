@@ -2477,3 +2477,7 @@ button.chip{cursor:pointer}
 .set-pill.on .set-save{color:inherit;opacity:.85}
 .set-note{margin:8px 0 0;font-size:13px;color:var(--ink);opacity:.8}
 .set-each{font-size:.6em;opacity:.7;white-space:nowrap}
+
+/* Holiday hero (the decorated living room): keep the dog bed in frame, center the tree on phones. */
+.hero>img.hero-img.holiday-pos,.sh-img.holiday-pos{object-position:50% 62%}
+@media (max-width:860px){.hero>img.hero-img.holiday-pos,.sh-img.holiday-pos{object-position:60% 50%}}
