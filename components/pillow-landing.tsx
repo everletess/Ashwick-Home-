@@ -20,7 +20,7 @@ import {
 import { fmt } from "@/lib/products";
 import { GIFT, SALE, SLEEP_SUITE, giftActive, pillowSizeNameFor, salePrice } from "@/lib/sale";
 import { useNow } from "@/components/bf-push";
-import { GIFTS_PATH, holidayNote } from "@/lib/holiday";
+import { GIFTS_PATH, holidayActive, holidayNote } from "@/lib/holiday";
 
 /** The brief's order: Horsehair, Latex, Cotton (cards, compare and tabs). */
 const ORDER = ["living-wool-horse-hair", "living-wool-latex", "organic-cotton"];
@@ -105,15 +105,18 @@ function useAddPillow() {
 
 /** Hero photo (Tessa, 04/11): the four cover colors stacked on a wooden stool in warm light. */
 const HERO: { photo: PhotoKey; alt: string } = { photo: "pillows-hero", alt: "Four Ashwick pillows in Fleece, Flax, Sorrel and Flint stacked on a rustic wooden stool in warm sunlight" };
+/** Over the holidays (through Jan 4, lib/holiday.ts): the same stack tied with linen ribbon and pine, by a frosted window. */
+const HOLIDAY_HERO: { photo: PhotoKey; alt: string } = { photo: "holiday-pillows-gift", alt: "Four Ashwick pillows in Fleece, Flax, Sorrel and Flint stacked on a wooden stool, tied with a linen ribbon and a sprig of pine, beside a frosted window and a lit candle" };
 
 export function PillowHero() {
   // The Black Friday gift, so the pillow ads (which promise it) land on a page that says it too (Tessa, Nov 26).
   const now = useNow();
+  const hero = holidayActive() ? HOLIDAY_HERO : HERO;
   return (
     <>
       <section className="pl-hero">
         {/* Phones: the photo, then the words on a dark band below it. Desktop: the words over the photo, on the left. */}
-        <div className="pl-hero-media"><Photo src={HERO.photo} label={HERO.alt} className="pl-hero-img" fill preload sizes="100vw" /></div>
+        <div className={"pl-hero-media" + (hero === HOLIDAY_HERO ? " is-holiday" : "")}><Photo src={hero.photo} label={hero.alt} className="pl-hero-img" fill preload sizes="100vw" /></div>
         <div className="pl-hero-scrim" />
         <div className="pl-hero-txt">
           <div className="eyebrow">The Ashwick Pillow</div>
