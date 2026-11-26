@@ -13,6 +13,7 @@ import { Stars } from "@/components/reviews";
 import { IncIcon } from "@/components/bf-push";
 import { fmtWhole } from "@/components/sale";
 import { reviewsFor } from "@/lib/reviews";
+import { track } from "@/lib/pixel";
 import type { PhotoKey } from "@/lib/photos";
 import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
 import { DOG_BED } from "@/lib/dog-bed";
@@ -73,6 +74,14 @@ export function BundleBuilder() {
 
   const { m, d, bed, list, now } = bundleTotals(mSize, dSize);
   const mc = M.colors.find((c) => c.id === mColor) ?? M.colors[0];
+  // Meta Pixel / GA4 / Klaviyo: one ViewContent per page view, as on the product pages, so ads can learn who looks at
+  // the bundle (Nov 26: this page fired none). Priced at the opening sizes.
+  const viewed = useRef(false);
+  useEffect(() => {
+    if (viewed.current) return;
+    viewed.current = true;
+    track("ViewContent", { content_ids: [M.id, D.id, BUNDLE_CONFIG.beddingSet.handle], content_name: BUNDLE.title, content_type: "product_group", value: now });
+  }, [now]);
   const dc = D.colors.find((c) => c.id === dColor) ?? D.colors[0];
   const pillows = pillowSizeFor(m.id);
   const pil = BUNDLE_PILLOWS.find((x) => x.id === pillow) ?? BUNDLE_PILLOWS[0];
@@ -242,6 +251,13 @@ export function SleepSuiteBuilder() {
   const mc = M.colors.find((c) => c.id === mColor) ?? M.colors[0];
   const pil = BUNDLE_PILLOWS.find((x) => x.id === pillow) ?? BUNDLE_PILLOWS[0];
   const pillowSize = `${pillowSizeNameFor(m.id)} ${pillowSizeFor(m.id).replace("×", "x")}`;
+  // Meta Pixel / GA4 / Klaviyo: one ViewContent per page view, as on the product pages (Nov 26: this page fired none).
+  const viewed = useRef(false);
+  useEffect(() => {
+    if (viewed.current) return;
+    viewed.current = true;
+    track("ViewContent", { content_ids: [M.id, BUNDLE_CONFIG.beddingSet.handle], content_name: SLEEP_SUITE.name, content_type: "product_group", value: now });
+  }, [now]);
   const coverColor = BUNDLE_COVER_BY_MATTRESS_COLOR[mc.id] ?? mc.label;
   const feelLabel = M.feels.find((f) => f.id === feel)!.label;
   const rv = reviewsFor("ashbury");
