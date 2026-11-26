@@ -17,6 +17,8 @@ function useScrollLock(locked: boolean) {
     };
   }, [locked]);
 }
+import { pillowCount, pillowSetSave, pillowSetUnit } from "@/lib/pillow-sets";
+import { PILLOW_ID } from "@/lib/pillow";
 import { bundleIdOf, useCart, type CartLine, CartNoticeBox, unitTotal } from "@/components/cart";
 import { BUNDLE_CONFIG, NO_WAS_PRICE, SLEEP_SUITE, SLEEP_SUITE_BEDDING_NAME, bundleColorOf, bundlePhotoFor, bundleTitleFor, SALE, bundlePrice, deliveryFor, isFurnitureLine, orderDelivery, salePrice, GIFT, giftActive, giftCounts, defaultGiftCover, type GiftCover } from "@/lib/sale";
 import { STUDIO_EMAIL, STUDIO_PHONE } from "@/lib/site";
@@ -575,10 +577,10 @@ export function CartDrawer({ page = false }: { page?: boolean }) {
                       <div className="line-top">
                         <span className="line-name">{i.name}</span>
                         <span className="line-price">
-                          {i.price == null ? "[PRICE]" : SALE.active ? <>{!NO_WAS_PRICE.has(i.id) && <s className="price-was">{fmt(i.price * i.qty)}</s>}{fmt(salePrice(i.price) * i.qty)}</> : fmt(i.price * i.qty)}
+                          {i.price == null ? "[PRICE]" : i.id === PILLOW_ID && pillowSetSave(pillowCount(cart.items)) > 0 ? <><s className="price-was">{fmt(i.price * i.qty)}</s>{fmt(pillowSetUnit(i.price, pillowCount(cart.items)) * i.qty)}</> : SALE.active ? <>{!NO_WAS_PRICE.has(i.id) && <s className="price-was">{fmt(i.price * i.qty)}</s>}{fmt(salePrice(i.price) * i.qty)}</> : fmt(i.price * i.qty)}
                         </span>
                       </div>
-                      <div className="line-mode">{i.mode}{SALE.active && i.price != null ? ` · ${SALE.percent}% off` : ""}</div>
+                      <div className="line-mode">{i.mode}{SALE.active && i.price != null ? ` · ${SALE.percent}% off` : ""}{i.id === PILLOW_ID && pillowSetSave(pillowCount(cart.items)) > 0 ? ` · ${SALE.active ? "plus " : ""}${pillowSetSave(pillowCount(cart.items))}% set saving` : ""}</div>
                       {i.options.filter(([k]) => !k.startsWith("_")).map(([k, v]) => (
                         <div className="line-opt" key={k}><span>{k}</span>{v}</div>
                       ))}
