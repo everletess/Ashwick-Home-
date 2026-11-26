@@ -20,6 +20,7 @@ import {
 import { fmt } from "@/lib/products";
 import { GIFT, SALE, SLEEP_SUITE, giftActive, pillowSizeNameFor, salePrice } from "@/lib/sale";
 import { useNow } from "@/components/bf-push";
+import { GIFTS_PATH, holidayNote } from "@/lib/holiday";
 
 /** The brief's order: Horsehair, Latex, Cotton (cards, compare and tabs). */
 const ORDER = ["living-wool-horse-hair", "living-wool-latex", "organic-cotton"];
@@ -122,6 +123,12 @@ export function PillowHero() {
             <p className="pl-hero-gift">
               <strong>{SALE.name}:</strong> two free organic cotton pillows when you spend ${GIFT.threshold.toLocaleString("en-US")}+ on furniture or a mattress, through Dec 1.{" "}
               <Link href={SALE.path}>See the offer</Link>
+            </p>
+          )}
+          {/* After Black Friday, through Christmas: the pillows' order-by date. */}
+          {now != null && !giftActive(now) && holidayNote("pillow", now) && (
+            <p className="pl-hero-gift">
+              {holidayNote("pillow", now)} <Link href={GIFTS_PATH}>Shop holiday gifts</Link>
             </p>
           )}
           <div className="pl-hero-btns">

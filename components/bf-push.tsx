@@ -10,7 +10,7 @@ import { QuickAddSheet } from "@/components/catalog-card";
 import { Photo } from "@/components/photo";
 import { Price, fmtWhole } from "@/components/sale";
 import { DOG_BED, NOOK } from "@/lib/dog-bed";
-import { homeHeroPhoto } from "@/lib/holiday";
+import { GIFTS_PATH, giftsActive, homeHeroPhoto } from "@/lib/holiday";
 import { MATTRESS } from "@/lib/mattress";
 import { PILLOW_PATH, PILLOW_STANDALONE_FILLS, PILLOW_STORY, pillowFromPrice } from "@/lib/pillow";
 import { fmt } from "@/lib/products";
@@ -72,7 +72,7 @@ export function SaleHero({ page = "home" }: { page?: "home" | "sale" }) {
         <p className="sh-sub">{home ? "Organic furniture, handmade to be handed down." : "Organic furniture, handmade to be handed down. No code needed."}</p>
         <div className="sh-btns">
           {home
-            ? <><Link href={SALE.path} className="btn light">Shop {SALE.name}</Link><Link href="/collections/all" className="btn light">Shop the collection</Link></>
+            ? <><Link href={SALE.path} className="btn light">Shop {SALE.name}</Link>{giftsActive() ? <Link href={GIFTS_PATH} className="btn light">Shop gifts</Link> : <Link href="/collections/all" className="btn light">Shop the collection</Link>}</>
             : <><a href="#sofas" className="btn light">Shop furniture</a><a href="#sleep-suite" className="btn light">Shop the Sleep Suite</a></>}
         </div>
       </div>

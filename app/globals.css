@@ -2376,6 +2376,9 @@ button.chip{cursor:pointer}
 .buy-assure{display:flex;flex-direction:column;gap:6px;margin:12px 0 4px}
 .ba-row{display:flex;align-items:center;gap:8px;margin:0;font:400 14px/1.45 var(--sans);color:var(--ink)}
 .ba-row svg{flex:none;color:var(--walnut)}
+.ba-holiday{color:var(--sorrel-deep)}
+.ba-holiday svg{color:var(--sorrel-deep)}
+.ba-holiday a{color:inherit;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
 .ba-pay,.ba-call{font-weight:300;color:var(--walnut)}
 .ba-call a{color:var(--ink);text-decoration:underline;text-underline-offset:3px;min-height:32px;display:inline-flex;align-items:center}
 .hx-pay{margin:4px 0 0;font:300 13px/1.45 var(--sans);opacity:.85}
@@ -2466,6 +2469,14 @@ button.chip{cursor:pointer}
 }
 
 /* Black Friday gift: free pillows' cover picker in the cart */
+.cart-holiday{margin:4px 0 12px;padding:12px 14px;border:1px solid var(--hair);border-radius:4px;display:flex;flex-direction:column;gap:8px}
+.cart-holiday-note{margin:0;font:400 13px/1.45 var(--sans);color:var(--sorrel-deep)}
+.cart-gift-toggle{display:flex;align-items:center;gap:10px;font:400 14px/1.4 var(--sans);cursor:pointer;min-height:32px}
+.cart-gift-toggle input{width:18px;height:18px;accent-color:var(--ink);margin:0}
+.cart-gift-msg{display:flex;flex-direction:column;gap:6px}
+.cart-gift-msg label{font:400 11px/1.4 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--walnut)}
+.cart-gift-msg textarea{font:300 15px/1.5 var(--sans);padding:10px 12px;border:1px solid var(--hair);border-radius:3px;background:var(--alabaster);color:var(--ink);resize:vertical}
+.cart-gift-msg .fine{margin:0}
 .gift-pick{margin:4px 0 12px;padding:12px 14px;border:1px solid var(--hair);border-radius:4px}
 .gift-pick-title{margin:0;font:500 14px/1.4 var(--sans);color:var(--ink)}
 .gift-pick-sub{margin:2px 0 10px;font:400 13px/1.4 var(--sans);color:var(--ink);opacity:.75}
@@ -2484,3 +2495,12 @@ button.chip{cursor:pointer}
 /* Holiday hero (the decorated living room): keep the dog bed in frame, center the tree on phones. */
 .hero>img.hero-img.holiday-pos,.sh-img.holiday-pos{object-position:50% 62%}
 @media (max-width:860px){.hero>img.hero-img.holiday-pos,.sh-img.holiday-pos{object-position:60% 50%}}
+
+/* Under a collection heading through Christmas (components/holiday-line.tsx). */
+.holiday-line{margin:12px auto 0;font:400 13px/1.5 var(--sans);letter-spacing:.02em;color:var(--sorrel-deep);max-width:60ch}
+.holiday-line a{color:inherit;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+/* /gifts, the Holiday Gifts page: the Holiday Edit's sections, its own hero */
+.gx-hero-img{object-position:50% 60%}
+@media (max-width:860px){.gx-hero-img{object-position:60% 50%}}
+.gx-help{padding:64px var(--gut) 88px;text-align:center}
+.gx-help p{margin:0 auto 16px;font:300 18px/1.55 var(--sans);max-width:46ch}

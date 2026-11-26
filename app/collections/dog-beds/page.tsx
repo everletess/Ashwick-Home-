@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { CollectionTabs } from "@/components/collection-tabs";
 import { CatalogCard } from "@/components/catalog-card";
 import { itemsFor } from "@/lib/catalog";
+import { HolidayLine } from "@/components/holiday-line";
 
 export const metadata: Metadata = {
   title: "Dog Beds",
@@ -16,6 +17,7 @@ export default function DogBedsPage() {
         <div className="eyebrow">Shop</div>
         <h1 className="h1">Dog Beds</h1>
         <p className="body">Handmade to order in the USA from organic cotton, Living Wool and cashmere. Usually ships within 3–4 business days.</p>
+        <HolidayLine kind="dog-bed" />
       </section>
       <CollectionTabs current="dog-beds" />
       <section className="wrap" style={{ paddingBottom: 140 }}>

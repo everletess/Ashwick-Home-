@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CatalogCard } from "@/components/catalog-card";
+import { HolidayLine } from "@/components/holiday-line";
 import { FilterSort } from "@/components/filter-sort";
 import { GROUP_ORDER, SECTION_LABEL, TABS, itemsFor, type CatalogItem } from "@/lib/catalog";
 
@@ -43,6 +44,7 @@ export default async function CollectionPage({ params }: Props) {
         <div className="eyebrow">Shop</div>
         <h1 className="h1">{meta.title}</h1>
         <p className="body">{meta.description}</p>
+        <HolidayLine kind={handle === "sofas" || handle === "chairs" ? "furniture" : handle === "mattress" ? "days" : undefined} />
       </section>
       <nav className="tabs wrap" aria-label="Collections">
         {TABS.map(([label, h]) => (

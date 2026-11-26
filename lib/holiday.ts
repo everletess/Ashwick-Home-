@@ -16,3 +16,68 @@ export const homeHeroPhoto = (): { photo: PhotoKey; alt: string; holiday?: true 
 
 /** The winter bedroom by mattress color id (natural = Fleece, dove = Flint, safari = Flax, mocha = Sorrel). */
 export const WINTER_ROOM_BY_COLOR: Record<string, PhotoKey> = { natural: "holiday-suite-fleece", dove: "holiday-suite-flint", safari: "holiday-suite-flax", mocha: "holiday-suite" };
+
+/* ---------- Holiday gifting, Nov 26 – Dec 25 (Tessa, Nov 26: "more holiday focused and festive") ---------- */
+
+/** The Holiday Gifts page. Live until the end of Christmas Day (Pacific), then it redirects to all products. */
+export const GIFTS_PATH = "/gifts";
+export const GIFTS_UNTIL = "2026-12-25T23:59:59-08:00";
+export const giftsActive = (now = Date.now()) => HOLIDAY.enabled && now < Date.parse(GIFTS_UNTIL);
+
+/** What a product ships as: "days" is the mattress (and its bundles), matching lib/delivery-estimate.ts. */
+export type HolidayKind = "days" | "dog-bed" | "pillow" | "furniture";
+
+/**
+ * The last day to order for delivery before Christmas, by category (Tessa, Nov 5). End of day, Pacific. Each date
+ * drops off the site on its own once it has passed.
+ */
+export const HOLIDAY_ORDER_BY: { what: string; kinds: HolidayKind[]; by: string }[] = [
+  { what: "Furniture", kinds: ["furniture"], by: "2026-11-23T23:59:59-08:00" },
+  { what: "Mattresses and dog beds", kinds: ["days", "dog-bed"], by: "2026-12-10T23:59:59-08:00" },
+  { what: "Pillows", kinds: ["pillow"], by: "2026-12-19T23:59:59-08:00" },
+];
+
+/** "Dec 10" */
+export const holidayDay = (iso: string) => new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "America/Los_Angeles" });
+
+/** The order-by dates still ahead. */
+export const upcomingOrderBy = (now = Date.now()) => HOLIDAY_ORDER_BY.filter((l) => Date.parse(l.by) >= now);
+
+/** Under Add to cart: "Order by Dec 10 for delivery before Christmas.", or, once that has passed, the new-year line. */
+export function holidayNote(kind: HolidayKind, now = Date.now()): string | null {
+  if (!giftsActive(now)) return null;
+  const o = HOLIDAY_ORDER_BY.find((l) => l.kinds.includes(kind));
+  if (!o) return null;
+  if (now <= Date.parse(o.by)) return `Order by ${holidayDay(o.by)} for delivery before Christmas.`;
+  return kind === "furniture" ? "Give it for Christmas, delivered in the new year." : "Arrives after Christmas: a gift for the new year.";
+}
+
+/** The cart's holiday line, for the kinds of things in it: the earliest date still ahead, and a note for furniture. */
+export function cartHolidayNote(kinds: HolidayKind[], now = Date.now()): string | null {
+  if (!giftsActive(now) || !kinds.length) return null;
+  const parts: string[] = [];
+  const ahead = HOLIDAY_ORDER_BY.filter((l) => l.kinds.some((k) => kinds.includes(k)) && Date.parse(l.by) >= now);
+  if (ahead.length) parts.push(`Order by ${holidayDay(ahead[0].by)} for delivery before Christmas.`);
+  if (kinds.includes("furniture")) parts.push("Furniture is delivered in the new year.");
+  else if (!ahead.length) parts.push("Your order arrives after Christmas.");
+  return parts.join(" ");
+}
+
+/** The top bar after Black Friday: the dates still ahead, then a thank-you once they have all passed. */
+export function holidayBarLine(now = Date.now()): string | null {
+  if (!giftsActive(now)) return null;
+  const ahead = upcomingOrderBy(now).filter((l) => !l.kinds.includes("furniture"));
+  if (!ahead.length) return "Happy holidays from the Ashwick workshop";
+  const [first, ...rest] = ahead;
+  return [`Order by ${holidayDay(first.by)} for Christmas delivery on ${first.what.toLowerCase()}`, ...rest.map((l) => `${holidayDay(l.by)} for ${l.what.toLowerCase()}`)].join(" · ");
+}
+
+/** Winter shots of the dog beds, by `${bed id}:${color id}`: the Ashbury Dog Bed in Flint by a frosty window, the Nook in Olive by the fire. */
+export const HOLIDAY_DOG_BED_PHOTOS: Record<string, PhotoKey> = { "ashbury-dog-bed:dove": "holiday-best-friends", "nook-dog-bed:olive": "holiday-nook" };
+
+/** The Christmas living room (the Marlowe Sofa and Chair) goes second in their galleries over the holidays. */
+const HOLIDAY_GALLERY: Record<string, PhotoKey> = { marlowe: "holiday-living-room", "marlowe-chair": "holiday-living-room" };
+export function withHolidayPhotos<T extends { id: string; photos: PhotoKey[] }>(p: T): T {
+  const extra = holidayActive() ? HOLIDAY_GALLERY[p.id] : undefined;
+  return extra && !p.photos.includes(extra) ? { ...p, photos: [p.photos[0], extra, ...p.photos.slice(1)] } : p;
+}

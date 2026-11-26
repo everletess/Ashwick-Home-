@@ -22,6 +22,7 @@ import { SALE, mattressDelivery, salePrice } from "@/lib/sale";
 import { track, trackThen } from "@/lib/pixel";
 import { trackAddedToCart } from "@/lib/subscribe";
 import { attributionAttributes } from "@/lib/attribution";
+import { WINTER_ROOM_BY_COLOR, holidayActive } from "@/lib/holiday";
 
 const M = MATTRESS;
 
@@ -42,7 +43,10 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
   const sel = colorById(color);
   const sz = sizeById(size);
   // The color's own shots, then the five-color lineup and the construction.
+  // Over the holidays the color's winter bedroom comes first (lib/holiday.ts).
+  const winter = holidayActive() ? WINTER_ROOM_BY_COLOR[sel.id] : undefined;
   const gallery: { photo: PhotoKey; alt: string }[] = [
+    ...(winter ? [{ photo: winter, alt: `${M.title} in ${sel.label}, made up with matching pillows and a throw, in a winter bedroom with a wreath in the window` }] : []),
     ...sel.photos.map((photo) => ({ photo, alt: sel.alt })),
     ...(sel.layers ? [{ photo: sel.layers, alt: `${sel.alt}: the layers inside, numbered from the topper to the cover` }] : []),
   ];

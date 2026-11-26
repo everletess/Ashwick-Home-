@@ -3,6 +3,7 @@ import { PRODUCTS } from "@/lib/products";
 import { PILLOW_STANDALONE_FILLS } from "@/lib/pillow";
 import { BUNDLE, SALE, SLEEP_SUITE } from "@/lib/sale";
 import { DOG_BED_PATH, NOOK_PATH } from "@/lib/dog-bed";
+import { GIFTS_PATH, giftsActive } from "@/lib/holiday";
 
 const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://ashwickhome.com";
 
@@ -35,6 +36,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/pages/privacy`, priority: 0.2 },
     { url: `${BASE}/pages/terms`, priority: 0.2 },
   ]
+    .concat(giftsActive() ? [{ url: `${BASE}${GIFTS_PATH}`, priority: 0.9 }] : [])
     .concat(SALE.active ? [{ url: `${BASE}${SALE.path}`, priority: 0.9 }, { url: `${BASE}${BUNDLE.path}`, priority: 0.8 }, { url: `${BASE}${SLEEP_SUITE.path}`, priority: 0.8 }] : [])
     .map((p) => ({ ...p, lastModified: now, changeFrequency: "monthly" as const }));
 

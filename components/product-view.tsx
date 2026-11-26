@@ -14,6 +14,7 @@ import { TintedPhoto } from "@/components/tinted-photo";
 import { Lightbox } from "@/components/lightbox";
 import { track } from "@/lib/pixel";
 import { tintFor } from "@/lib/photos";
+import { withHolidayPhotos } from "@/lib/holiday";
 import { Price, SaleNote } from "@/components/sale";
 import { NO_WAS_PRICE, salePrice } from "@/lib/sale";
 import { CUSTOM_LEAD_TIME, FABRICS, LEAD_TIME, WOODS, fmt, getProduct, PHOTO_WOODS, nearestPhoto, photoFor, priceFor, colorsFor, type FabricId, type Option, type PhotoTag } from "@/lib/products";
@@ -79,7 +80,8 @@ function CustomRequest({ about }: { about: string }) {
 
 /** Gallery + purchase column. Takes the id (not the product) so it can be rendered from a server page. */
 export function ProductView({ id, initialMode }: { id: string; initialMode: Mode }) {
-  const p = getProduct(id)!;
+  // Over the holidays the Christmas living room is the Marlowe's second photo (lib/holiday.ts).
+  const p = withHolidayPhotos(getProduct(id)!);
   const cart = useCart();
   // Priced upon request (Shopify tag price-on-request): no price, no Add to cart; "Request pricing" instead.
   const por = usePriceOnRequest().has(p.id);
