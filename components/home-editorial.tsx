@@ -116,7 +116,7 @@ export function LivingRoom() {
       {/* Over the holidays (through Jan 4): the Marlowe at dusk in winter, snow outside, pine on the shelf. */}
       <div className="he-living-img">
         {holidayActive()
-          ? <Photo src="holiday-marlowe-dusk" label="The Marlowe Sofa in white Irish Linen on its fluted oak plinth at dusk in winter, snow outside the window, pine on the shelf and candles lit on a stone table" fill sizes="(max-width: 860px) 100vw, 50vw" />
+          ? <Photo src="holiday-marlowe-dusk" className="he-living-holiday" label="The Marlowe Sofa in white Irish Linen on its fluted oak plinth at dusk in winter, snow outside the window, pine on the shelf and candles lit on a stone table" fill sizes="(max-width: 860px) 100vw, 50vw" />
           : <Photo src="marlowe-room-linen" label="The Marlowe Sofa in white Irish Linen on its fluted red oak plinth, in a sunlit room" fill sizes="(max-width: 860px) 100vw, 50vw" />}
       </div>
       <div className="he-living-t">
