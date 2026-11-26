@@ -209,6 +209,7 @@ import holidayPembroke from "@/assets/photos/holiday-pembroke.jpg";
 import holidayGiftsTree from "@/assets/photos/holiday-gifts-tree.jpg";
 import holidayDogBedFleece from "@/assets/photos/holiday-dog-bed-fleece.jpg";
 import holidayPillowsGift from "@/assets/photos/holiday-pillows-gift.jpg";
+import holidayMarloweDusk from "@/assets/photos/holiday-marlowe-dusk.jpg";
 import holidaySuite from "@/assets/photos/holiday-suite.jpg";
 import holidaySuiteFleece from "@/assets/photos/holiday-suite-fleece.jpg";
 import holidaySuiteFlint from "@/assets/photos/holiday-suite-flint.jpg";
@@ -454,6 +455,7 @@ export const PHOTOS = {
   "holiday-gifts-tree": holidayGiftsTree,
   "holiday-dog-bed-fleece": holidayDogBedFleece,
   "holiday-pillows-gift": holidayPillowsGift,
+  "holiday-marlowe-dusk": holidayMarloweDusk,
   "holiday-suite": holidaySuite,
   "holiday-suite-fleece": holidaySuiteFleece,
   "holiday-suite-flint": holidaySuiteFlint,
