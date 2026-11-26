@@ -5,6 +5,7 @@ import { Photo } from "@/components/photo";
 import { MATERIALS, cardPrice, fmt, type Product } from "@/lib/products";
 import { Price, SaleTag } from "@/components/sale";
 import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
+import { holidayCardPhoto } from "@/lib/holiday";
 
 const CARD_SIZES = "(max-width: 620px) 100vw, (max-width: 1180px) 50vw, 460px";
 
@@ -12,7 +13,7 @@ export function ProductCard({ p, custom, por }: { p: Product; custom?: boolean; 
   return (
     <Link href={"/products/" + p.id + (custom ? "/customize" : "")} className="card" data-price={por ? undefined : cardPrice(p).price} data-por={por ? "1" : undefined} data-name={p.name}>
       <div className="card-img">
-        <Photo src={p.cardPhoto ?? p.photos[0]} label={p.name} fill sizes={CARD_SIZES} />
+        <Photo src={holidayCardPhoto(p.id) ?? p.cardPhoto ?? p.photos[0]} label={p.name} fill sizes={CARD_SIZES} />
         {p.photos[1] && !p.cardSingle && <Photo src={p.photos[1]} label={p.name} className="alt" fill sizes={CARD_SIZES} />}
         {!custom && !por && <SaleTag />}
         <span className="card-cta">{custom ? "Customize" : "Shop now"}</span>

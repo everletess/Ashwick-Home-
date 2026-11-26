@@ -9,7 +9,7 @@ import { useRef, useState } from "react";
 import { Photo } from "@/components/photo";
 import { fmtWhole } from "@/components/sale";
 import { DOG_BED, NOOK } from "@/lib/dog-bed";
-import { GIFTS_PATH, WINTER_ROOM_BY_COLOR, giftsActive, holidayActive } from "@/lib/holiday";
+import { GIFTS_PATH, WINTER_ROOM_BY_COLOR, giftsActive, holidayActive, holidayCardPhoto } from "@/lib/holiday";
 import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
 import { PILLOW_PATH, pillowFromPrice } from "@/lib/pillow";
 import type { PhotoKey } from "@/lib/photos";
@@ -56,7 +56,7 @@ type Pick = { key: string; name: string; href: string; photo: PhotoKey; price: n
 const minOf = (sizes: { price: number }[]) => Math.min(...sizes.map((z) => z.price));
 const furniture = (id: string, photo?: PhotoKey): Pick | null => {
   const p = getProduct(id);
-  return p ? { key: p.id, name: p.name, href: "/products/" + p.id, photo: photo ?? ((p.cardPhoto ?? p.photos[0]) as PhotoKey), price: cardPrice(p).price } : null;
+  return p ? { key: p.id, name: p.name, href: "/products/" + p.id, photo: photo ?? ((holidayCardPhoto(p.id) ?? p.cardPhoto ?? p.photos[0]) as PhotoKey), price: cardPrice(p).price } : null;
 };
 const ASHBURY = (photo: PhotoKey): Pick => ({ key: "ashbury", name: MATTRESS.title, href: MATTRESS_PATH, photo, price: minOf(MATTRESS.sizes) });
 const PILLOW: Pick = { key: "pillow", name: "The Ashwick Pillow", href: PILLOW_PATH, photo: "pillow-stack-ledge", price: pillowFromPrice("organic-cotton") };

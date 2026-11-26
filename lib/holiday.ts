@@ -73,11 +73,25 @@ export function holidayBarLine(now = Date.now()): string | null {
 }
 
 /** Winter shots of the dog beds, by `${bed id}:${color id}`: the Ashbury Dog Bed in Flint by a frosty window, the Nook in Olive by the fire. */
-export const HOLIDAY_DOG_BED_PHOTOS: Record<string, PhotoKey> = { "ashbury-dog-bed:dove": "holiday-best-friends", "nook-dog-bed:olive": "holiday-nook" };
+export const HOLIDAY_DOG_BED_PHOTOS: Record<string, PhotoKey> = { "ashbury-dog-bed:natural": "holiday-dog-bed-fleece", "ashbury-dog-bed:dove": "holiday-best-friends", "nook-dog-bed:olive": "holiday-nook" };
 
-/** The Christmas living room (the Marlowe Sofa and Chair) goes second in their galleries over the holidays. */
-const HOLIDAY_GALLERY: Record<string, PhotoKey> = { marlowe: "holiday-living-room", "marlowe-chair": "holiday-living-room" };
+/**
+ * Holiday photos in the furniture galleries. `first` leads the gallery (and the collection card); otherwise the photo
+ * goes second, after the photo of the selected fabric. Tessa's Higgsfield set, Nov 26.
+ */
+const HOLIDAY_GALLERY: Record<string, { photo: PhotoKey; first?: true }> = {
+  marlowe: { photo: "holiday-living-room" },
+  "marlowe-chair": { photo: "holiday-living-room" },
+  cotswold: { photo: "holiday-cotswold", first: true },
+  pembroke: { photo: "holiday-pembroke" },
+};
 export function withHolidayPhotos<T extends { id: string; photos: PhotoKey[] }>(p: T): T {
   const extra = holidayActive() ? HOLIDAY_GALLERY[p.id] : undefined;
-  return extra && !p.photos.includes(extra) ? { ...p, photos: [p.photos[0], extra, ...p.photos.slice(1)] } : p;
+  if (!extra || p.photos.includes(extra.photo)) return p;
+  return { ...p, photos: extra.first ? [extra.photo, ...p.photos] : [p.photos[0], extra.photo, ...p.photos.slice(1)] };
 }
+/** The collection card photo over the holidays, for pieces whose holiday photo leads. */
+export const holidayCardPhoto = (id: string): PhotoKey | undefined => {
+  const extra = holidayActive() ? HOLIDAY_GALLERY[id] : undefined;
+  return extra?.first ? extra.photo : undefined;
+};
