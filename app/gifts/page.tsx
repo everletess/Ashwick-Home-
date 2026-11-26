@@ -7,7 +7,7 @@ import { getLivePrices } from "@/lib/live-prices";
 import { PHOTOS } from "@/lib/photos";
 
 export const metadata: Metadata = {
-  title: "Holiday Gifts — Ashwick Home",
+  title: "Holiday Gifts",
   description: "Organic gifts, handmade to order in the USA: pillows and dog beds under $300, the Complete Sleep Suite, and furniture to be handed down. Order-by dates for delivery before Christmas.",
   alternates: { canonical: GIFTS_PATH },
   openGraph: {
