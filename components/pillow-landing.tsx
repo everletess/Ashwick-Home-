@@ -18,7 +18,8 @@ import {
   PILLOW_STORY, PILLOW_TRY_TWO, bestForText, pillowFromPrice, pillowPrice, type SleepPosition,
 } from "@/lib/pillow";
 import { fmt } from "@/lib/products";
-import { SLEEP_SUITE, pillowSizeNameFor, salePrice } from "@/lib/sale";
+import { GIFT, SALE, SLEEP_SUITE, giftActive, pillowSizeNameFor, salePrice } from "@/lib/sale";
+import { useNow } from "@/components/bf-push";
 
 /** The brief's order: Horsehair, Latex, Cotton (cards, compare and tabs). */
 const ORDER = ["living-wool-horse-hair", "living-wool-latex", "organic-cotton"];
@@ -105,6 +106,8 @@ function useAddPillow() {
 const HERO: { photo: PhotoKey; alt: string } = { photo: "pillows-hero", alt: "Four Ashwick pillows in Fleece, Flax, Sorrel and Flint stacked on a rustic wooden stool in warm sunlight" };
 
 export function PillowHero() {
+  // The Black Friday gift, so the pillow ads (which promise it) land on a page that says it too (Tessa, Nov 26).
+  const now = useNow();
   return (
     <>
       <section className="pl-hero">
@@ -115,6 +118,12 @@ export function PillowHero() {
           <div className="eyebrow">The Ashwick Pillow</div>
           <h1 className="pl-hero-h">Rest your head on something real.</h1>
           <p className="pl-hero-sub">Three natural fills, handmade to order in the USA, in a removable organic cotton cover.</p>
+          {now != null && giftActive(now) && (
+            <p className="pl-hero-gift">
+              <strong>{SALE.name}:</strong> two free organic cotton pillows when you spend ${GIFT.threshold.toLocaleString("en-US")}+ on furniture or a mattress, through Dec 1.{" "}
+              <Link href={SALE.path}>See the offer</Link>
+            </p>
+          )}
           <div className="pl-hero-btns">
             <a href="#find" className="btn light">Find your pillow</a>
             <a href="#pillows" className="btn outline-light">Shop all three</a>
