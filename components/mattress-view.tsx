@@ -21,6 +21,7 @@ import { Price, SaleNote } from "@/components/sale";
 import { SALE, mattressDelivery, salePrice } from "@/lib/sale";
 import { track, trackThen } from "@/lib/pixel";
 import { trackAddedToCart } from "@/lib/subscribe";
+import { attributionAttributes } from "@/lib/attribution";
 
 const M = MATTRESS;
 
@@ -107,7 +108,7 @@ export function MattressView({ initialColor }: { initialColor?: string }) {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ lines: [{ productId: M.id, qty: 1, options }] }),
+        body: JSON.stringify({ lines: [{ productId: M.id, qty: 1, options }], attribution: attributionAttributes() }),
       });
       const data = await res.json();
       if (!res.ok || !data.checkoutUrl) throw new Error(data.error ?? "Checkout failed");

@@ -36,7 +36,8 @@ export type CheckoutLine = {
  * Each line must supply a Shopify variant GID:
  *   "gid://shopify/ProductVariant/<numeric_id>"
  */
-export async function createCheckout(lines: CheckoutLine[]): Promise<string> {
+/** `attributes` become the order's cart attributes (lib/attribution.ts: where the shopper came from). */
+export async function createCheckout(lines: CheckoutLine[], attributes: { key: string; value: string }[] = []): Promise<string> {
   const data = await storefrontFetch(
     `mutation cartCreate($input: CartInput!) {
       cartCreate(input: $input) {
@@ -46,6 +47,7 @@ export async function createCheckout(lines: CheckoutLine[]): Promise<string> {
     }`,
     {
       input: {
+        ...(attributes.length ? { attributes } : {}),
         lines: lines.map((l) => ({
           merchandiseId: l.variantId,
           quantity: l.quantity,

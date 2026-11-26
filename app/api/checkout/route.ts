@@ -1,7 +1,8 @@
 /**
  * POST /api/checkout
  *
- * Body: { lines: { productId: string; qty: number; options: [string, string][] }[] }
+ * Body: { lines: { productId: string; qty: number; options: [string, string][] }[], giftCover?: string,
+ *         attribution?: { key, value }[] (where the shopper came from, lib/attribution.ts; saved on the order) }
  *
  * Returns: { checkoutUrl: string, skipped: number[] }
  *
@@ -17,12 +18,13 @@ import { variantForLine, type CheckoutRequestLine } from "@/lib/checkout-match";
 import { getPriceOnRequestIds } from "@/lib/price-on-request";
 import { GIFT, SALE, defaultGiftCover, giftActive, giftCounts, giftOptions, isGiftCover } from "@/lib/sale";
 import { PILLOW_ID } from "@/lib/pillow";
+import { cleanAttribution } from "@/lib/attribution";
 
 export type { CheckoutRequestLine };
 
 export async function POST(req: Request) {
   try {
-    const { lines, giftCover } = (await req.json()) as { lines: CheckoutRequestLine[]; giftCover?: string };
+    const { lines, giftCover, attribution } = (await req.json()) as { lines: CheckoutRequestLine[]; giftCover?: string; attribution?: unknown };
     if (!lines?.length) return NextResponse.json({ error: "Empty cart" }, { status: 400 });
 
     const [variants, por] = await Promise.all([fetchProductVariants(), getPriceOnRequestIds()]);
@@ -58,7 +60,7 @@ export async function POST(req: Request) {
       }
     }
 
-    const rawUrl = await createCheckout(checkoutLines);
+    const rawUrl = await createCheckout(checkoutLines, cleanAttribution(attribution));
     // Shopify returns the checkoutUrl using the store's custom domain (ashwickhome.com),
     // but Next.js intercepts /cart/... paths. Send the browser directly to Shopify's own domain instead.
     const checkoutUrl = rawUrl.replace("https://ashwickhome.com", "https://1j0scj-ce.myshopify.com");
