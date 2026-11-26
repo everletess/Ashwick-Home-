@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import { Photo } from "@/components/photo";
+import { holidayCardPhoto } from "@/lib/holiday";
 import { useCart } from "@/components/cart";
 import { Stars } from "@/components/reviews";
 import { POR_LABEL, usePriceOnRequest } from "@/components/price-on-request";
@@ -43,7 +44,7 @@ export function CatalogCard({ item, priority }: { item: CatalogItem; priority?: 
       <div className="cc-media">
         <Link href={item.href} className="cc-link" aria-label={item.name} tabIndex={-1}>
           <div className={"cc-img" + (String(item.photo).startsWith("mattress-room") ? " crop-cap" : "")}>
-            <Photo src={item.photo} label={item.name} fill sizes="(max-width: 640px) 50vw, (max-width: 1180px) 33vw, 310px" preload={priority} />
+            <Photo src={holidayCardPhoto(item.id) ?? item.photo} label={item.name} fill sizes="(max-width: 640px) 50vw, (max-width: 1180px) 33vw, 310px" preload={priority} />
             {item.hover && <Photo src={item.hover} label="" className="alt" fill sizes="(max-width: 640px) 50vw, 310px" />}
           </div>
         </Link>

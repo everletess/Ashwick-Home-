@@ -10,10 +10,11 @@ import { getProduct } from "@/lib/products";
 import { BUNDLE, BUNDLE_CONFIG, BUNDLE_HERO, SALE, SLEEP_SUITE, bundlePrice, giftActive, giftLine, salePrice } from "@/lib/sale";
 import { fmt } from "@/lib/products";
 import type { PhotoKey } from "@/lib/photos";
+import { holidayCardPhoto } from "@/lib/holiday";
 
 const first = (id: string): PhotoKey => {
   const p = getProduct(id)!;
-  return (p.cardPhoto ?? p.photos[0]) as PhotoKey;
+  return (holidayCardPhoto(p.id) ?? p.cardPhoto ?? p.photos[0]) as PhotoKey;
 };
 
 /** Shop by category: a swipeable row of 4:5 tiles on a phone (a peek of the next one), a row of six on desktop. */

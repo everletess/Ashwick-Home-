@@ -19,7 +19,7 @@ import type { PhotoKey } from "@/lib/photos";
 import { PILLOW_PATH } from "@/lib/pillow";
 import { getProduct } from "@/lib/products";
 import { usePriceOnRequest } from "@/components/price-on-request";
-import { HOLIDAY_ORDER_BY } from "@/lib/holiday";
+import { HOLIDAY_ORDER_BY, holidayCardPhoto } from "@/lib/holiday";
 import { BUNDLE, BUNDLE_PILLOWS, SALE, SLEEP_SUITE, giftActive, giftLine, countdownFrom, mattressDelivery, saleEndShort, salePrice, sleepSuiteLines } from "@/lib/sale";
 
 /** The page's photographs: Tessa's (05/11), except the Gifts band, a stand-in for now. */
@@ -27,7 +27,7 @@ export const HOLIDAY_PHOTOS: Record<"hero" | "suite" | "bestFriends" | "gifts", 
   hero: { photo: "holiday-hero", alt: "The Marlowe Sofa in white linen on its fluted oak plinth, in a sunlit living room with a marble fireplace and a travertine coffee table" },
   suite: { photo: "holiday-suite", alt: "The Ashbury in Sorrel made up with matching pillows and a throw, in a winter bedroom with a wreath in the window" },
   bestFriends: { photo: "holiday-best-friends", alt: "The Ashbury in Flint with a matching Ashbury Dog Bed beside it, a dog asleep on it by a frosty window" },
-  gifts: { photo: "holiday-gifts", alt: "A stack of Ashwick pillows in cream, oat, sorrel and grey" },
+  gifts: { photo: "holiday-gifts-tree", alt: "Ashwick pillows and a Sorrel dog bed under a lit Christmas tree, among gifts tied with burgundy ribbon" },
 };
 
 /** The Sleep Suite's first photo by mattress color id (ids keep the old names: natural = Fleece, dove = Flint, safari = Flax, mocha = Sorrel). */
@@ -250,7 +250,7 @@ function FurnitureCard({ id, prices }: { id: string; prices: LivePrices }) {
   const p = getProduct(id);
   if (!p) return null;
   const list = prices.furniture[id] ?? 0;
-  const main = (p.cardPhoto ?? p.photos[0]) as PhotoKey;
+  const main = (holidayCardPhoto(p.id) ?? p.cardPhoto ?? p.photos[0]) as PhotoKey;
   const second = p.cardSingle ? undefined : (p.photos.find((x) => x !== main) as PhotoKey | undefined);
   return (
     <li className="hx-card">

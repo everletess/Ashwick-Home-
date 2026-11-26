@@ -204,6 +204,10 @@ import mattressRoomSorrelClean from "@/assets/photos/mattress-room-sorrel-clean.
 // The Holiday Edit (/black-friday): Tessa's photos (05/11).
 import holidayHero from "@/assets/photos/holiday-hero.jpg";
 import holidayLivingRoom from "@/assets/photos/holiday-living-room.jpg";
+import holidayCotswold from "@/assets/photos/holiday-cotswold.jpg";
+import holidayPembroke from "@/assets/photos/holiday-pembroke.jpg";
+import holidayGiftsTree from "@/assets/photos/holiday-gifts-tree.jpg";
+import holidayDogBedFleece from "@/assets/photos/holiday-dog-bed-fleece.jpg";
 import holidaySuite from "@/assets/photos/holiday-suite.jpg";
 import holidaySuiteFleece from "@/assets/photos/holiday-suite-fleece.jpg";
 import holidaySuiteFlint from "@/assets/photos/holiday-suite-flint.jpg";
@@ -444,6 +448,10 @@ export const PHOTOS = {
   // The Holiday Edit (/black-friday): Tessa's photos, except the Gifts band (a stand-in).
   "holiday-hero": holidayHero,
   "holiday-living-room": holidayLivingRoom,
+  "holiday-cotswold": holidayCotswold,
+  "holiday-pembroke": holidayPembroke,
+  "holiday-gifts-tree": holidayGiftsTree,
+  "holiday-dog-bed-fleece": holidayDogBedFleece,
   "holiday-suite": holidaySuite,
   "holiday-suite-fleece": holidaySuiteFleece,
   "holiday-suite-flint": holidaySuiteFlint,
