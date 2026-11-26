@@ -2283,7 +2283,7 @@ button.chip{cursor:pointer}
 /* Gifts */
 .hx-gifts{padding:0 0 88px}
 .hx-gifts-band{position:relative;height:min(52vh,520px);overflow:hidden}
-.hx-gifts-band img{object-fit:cover}
+.hx-gifts-band img{object-fit:cover;object-position:50% 26%}
 .hx-gifts-head{padding-top:56px}
 .hx-rail{list-style:none;margin:32px auto 0;padding:0 var(--gut);max-width:1280px;display:grid;grid-auto-flow:column;grid-auto-columns:calc((min(100vw,1280px) - 2 * var(--gut) - 3 * 24px) / 4);gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--gut);scrollbar-width:none}
 .hx-rail::-webkit-scrollbar{display:none}
