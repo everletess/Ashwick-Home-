@@ -60,7 +60,13 @@ export async function POST(req: Request) {
       }
     }
 
-    const rawUrl = await createCheckout(checkoutLines, cleanAttribution(attribution));
+    // Where the shopper came from goes on the order; if Shopify ever refuses it, check out without it rather than fail.
+    const attrs = cleanAttribution(attribution);
+    const rawUrl = await createCheckout(checkoutLines, attrs).catch((err) => {
+      if (!attrs.length) throw err;
+      console.error("[/api/checkout] attribution refused, retrying without", err instanceof Error ? err.message : err);
+      return createCheckout(checkoutLines);
+    });
     // Shopify returns the checkoutUrl using the store's custom domain (ashwickhome.com),
     // but Next.js intercepts /cart/... paths. Send the browser directly to Shopify's own domain instead.
     const checkoutUrl = rawUrl.replace("https://ashwickhome.com", "https://1j0scj-ce.myshopify.com");
