@@ -17,6 +17,7 @@ import { PILLOW_COVERS, PILLOW_COVER_PHOTOS, PILLOW_FAQ, PILLOW_ID, PILLOW_PATH,
 import { SleepIcon } from "@/components/pillow-landing";
 import { NewBadge } from "@/components/bf-push";
 import type { PhotoKey } from "@/lib/photos";
+import { PILLOW_SETS, pillowSetUnit } from "@/lib/pillow-sets";
 
 const FILLS = PILLOW_STANDALONE_FILLS;
 /** Each fill's own photo: the pillow with the fill in bowls beside it. */
@@ -32,12 +33,19 @@ export function PillowView({ fillId }: { fillId: string }) {
   const buyRef = useRef<HTMLButtonElement>(null);
   const [sizeId, setSize] = useState<string>(PILLOW_SIZES[0].id);
   const [coverId, setCover] = useState<string>("mocha");
+  const [setId, setSet] = useState<string>("1");
+  const set = PILLOW_SETS.find((x) => x.id === setId) ?? PILLOW_SETS[0];
   const fill = FILLS.find((f) => f.id === fillId) ?? FILLS[0];
   const story = PILLOW_STORY[fill.id];
   const others = FILLS.filter((f) => f.id !== fill.id);
   const price = pillowPrice(fill.id, sizeId);
   const size = PILLOW_SIZES.find((s) => s.id === sizeId) ?? PILLOW_SIZES[0];
   const cover = PILLOW_COVERS.find((c) => c.id === coverId) ?? PILLOW_COVERS[0];
+  // A set is the same pillow `set.qty` times, one cover color; the set saving comes off each pillow.
+  const each = pillowSetUnit(price, set.qty);
+  const total = Math.round(each * set.qty * 100) / 100;
+  const full = price * set.qty;
+  const setLabel = set.qty > 1 ? `${set.label} · ` : "";
   // The gallery: the chosen color first, then the other shots. Picking a cover swaps the main photo.
   const gallery = ([
     PILLOW_COVER_PHOTOS[coverId as keyof typeof PILLOW_COVER_PHOTOS] ?? PILLOW_COVER_PHOTOS.natural,
@@ -55,7 +63,7 @@ export function PillowView({ fillId }: { fillId: string }) {
       name: "The Ashwick Pillow",
       photo: PILLOW_HERO.photo,
       price,
-      qty: 1,
+      qty: set.qty,
       mode: "As designed",
       options: [["Fill", fill.label], ["Size", size.label], ["Cover color", cover.label]],
     });
@@ -105,7 +113,14 @@ export function PillowView({ fillId }: { fillId: string }) {
         <div className="pillow-head">
           <div className="eyebrow">The Ashwick Pillow · Made to order <NewBadge /></div>
           <h1 className="pdp-name">{fill.label} Pillow</h1>
-          <div className="pdp-price"><Price price={price} /></div>
+          <div className="pdp-price">
+            {set.qty === 1 ? <Price price={price} /> : (
+              <>
+                <span className="price-now">{fmt(total)}</span> <s className="price-was">{fmt(full)}</s>
+                <span className="set-each"> · {fmt(each)} each</span>
+              </>
+            )}
+          </div>
           <SaleNote />
           <p className="pillow-blurb">{story.personality}</p>
           <p className="pillow-best">
@@ -117,6 +132,17 @@ export function PillowView({ fillId }: { fillId: string }) {
         <div className="choices" id={BUY_OPTIONS_ID}>
           <OptGroup label="Size" value={size.label}>
             <Pills options={PILLOW_SIZES.map((s) => ({ id: s.id as string, label: s.label }))} value={sizeId} onChange={setSize} />
+          </OptGroup>
+          <OptGroup label="Quantity" value={set.label}>
+            <div className="pillow-sets">
+              {PILLOW_SETS.map((x) => (
+                <button key={x.id} type="button" className={"pill set-pill" + (setId === x.id ? " on" : "")} aria-pressed={setId === x.id} onClick={() => setSet(x.id)}>
+                  {x.label}
+                  {"save" in x && <span className="set-save">Save {x.save}%</span>}
+                </button>
+              ))}
+            </div>
+            {set.qty > 1 && <p className="set-note">{set.qty} matching pillows in {cover.label}. Save {fmt(salePrice(price) * set.qty - total)} with the set.</p>}
           </OptGroup>
           <OptGroup label="Cover color" value={cover.label}>
             <div className="pillow-covers">
@@ -137,12 +163,12 @@ export function PillowView({ fillId }: { fillId: string }) {
           <Link href={`/pages/fabric-swatches?fabric=twill&color=${cover.id}`} className="ulink sw-link">Order free swatches</Link>
         </div>
         <div className="designed">
-          <button ref={buyRef} className="btn full" onClick={add}>Add to cart · {fmt(salePrice(price))}</button>
-          <BuyAssure ship="pillow" price={salePrice(price)} />
+          <button ref={buyRef} className="btn full" onClick={add}>Add to cart · {fmt(total)}</button>
+          <BuyAssure ship="pillow" price={total} />
           <ShipsFast when="1–2 business days" note="Fast, free delivery. Handmade to order in the USA." />
           <TrustRow items={[["truck", "Fast & free delivery"], ["hand", "Handmade to order"], ["returns", PILLOW_RETURNS.short, "/pages/terms#returns"]]} />
           <p className="fine"><Link href="/pages/terms#returns" className="ulink-inline">{PILLOW_RETURNS.line}</Link></p>
-          <StickyBuy watch={buyRef} photo={main.photo} name={`${fill.label} Pillow`} summary={`${size.label} · ${cover.label}`} price={salePrice(price)} cta="Add to cart" onAdd={add} />
+          <StickyBuy watch={buyRef} photo={main.photo} name={`${fill.label} Pillow`} summary={`${setLabel}${size.label} · ${cover.label}`} price={total} cta="Add to cart" onAdd={add} />
         </div>
         <Accordion items={details} />
         <div className="pillow-others">

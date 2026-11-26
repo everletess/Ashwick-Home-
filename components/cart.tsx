@@ -7,6 +7,8 @@ import type { PhotoKey } from "@/lib/photos";
 import { BUNDLES, SALE, bundlePrice, bundleTitleFor, orderDelivery, salePrice } from "@/lib/sale";
 import { isUnavailable, migrateLine, productPathOf } from "@/lib/cart-migrate";
 import { usePriceOnRequest } from "@/components/price-on-request";
+import { pillowCount, pillowSetUnit } from "@/lib/pillow-sets";
+import { PILLOW_ID } from "@/lib/pillow";
 
 /** The bundle id a line belongs to (all lines of the bundle share it), if any. */
 export const bundleIdOf = (l: { options: [string, string][] }) =>
@@ -173,7 +175,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const value = useMemo<Cart>(() => {
     const count = items.reduce((s, i) => s + i.qty, 0);
     const unpriced = items.some((i) => i.price == null);
-    const subtotal = unpriced ? null : items.reduce((s, i) => s + unitTotal(i) * i.qty, 0) + orderDelivery(items);
+    // Pillows: the set saving counts every pillow in the cart (lib/pillow-sets).
+    const pc = pillowCount(items);
+    const unit = (i: CartLine) => (i.id === PILLOW_ID && i.price != null ? pillowSetUnit(i.price, pc) : unitTotal(i));
+    const subtotal = unpriced ? null : items.reduce((s, i) => s + unit(i) * i.qty, 0) + orderDelivery(items);
     const dismissNotice = () => setNotice([]);
     const drop = (ids: string[]) => {
       const r = withoutLines(items, new Set(ids));

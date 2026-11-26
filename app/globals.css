@@ -2469,3 +2469,11 @@ button.chip{cursor:pointer}
 .gift-pick-row{display:flex;flex-wrap:wrap;gap:6px}
 .gift-pick-opt{min-height:36px;padding:6px 14px;border:1px solid var(--oat);border-radius:999px;background:transparent;font:400 13px/1 var(--sans);color:var(--ink);cursor:pointer}
 .gift-pick-opt[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--alabaster)}
+
+/* Pillow sets: Single / Set of 2 / Set of 4 */
+.pillow-sets{display:flex;flex-wrap:wrap;gap:8px}
+.set-pill{display:inline-flex;flex-direction:column;align-items:center;gap:2px;line-height:1.2}
+.set-save{font-size:11px;letter-spacing:.04em;color:var(--sorrel-deep)}
+.set-pill.on .set-save{color:inherit;opacity:.85}
+.set-note{margin:8px 0 0;font-size:13px;color:var(--ink);opacity:.8}
+.set-each{font-size:.6em;opacity:.7;white-space:nowrap}
