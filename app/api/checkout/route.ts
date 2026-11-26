@@ -2,7 +2,8 @@
  * POST /api/checkout
  *
  * Body: { lines: { productId: string; qty: number; options: [string, string][] }[], giftCover?: string,
- *         attribution?: { key, value }[] (where the shopper came from, lib/attribution.ts; saved on the order) }
+ *         attribution?: { key, value }[] (where the shopper came from, lib/attribution.ts; saved on the order),
+ *         gift?: { message?: string } ("This is a gift" in the cart: becomes the order note) }
  *
  * Returns: { checkoutUrl: string, skipped: number[] }
  *
@@ -24,7 +25,7 @@ export type { CheckoutRequestLine };
 
 export async function POST(req: Request) {
   try {
-    const { lines, giftCover, attribution } = (await req.json()) as { lines: CheckoutRequestLine[]; giftCover?: string; attribution?: unknown };
+    const { lines, giftCover, attribution, gift } = (await req.json()) as { lines: CheckoutRequestLine[]; giftCover?: string; attribution?: unknown; gift?: { message?: unknown } };
     if (!lines?.length) return NextResponse.json({ error: "Empty cart" }, { status: 400 });
 
     const [variants, por] = await Promise.all([fetchProductVariants(), getPriceOnRequestIds()]);
@@ -62,9 +63,13 @@ export async function POST(req: Request) {
 
     // Where the shopper came from goes on the order; if Shopify ever refuses it, check out without it rather than fail.
     const attrs = cleanAttribution(attribution);
-    const rawUrl = await createCheckout(checkoutLines, attrs).catch((err) => {
-      if (!attrs.length) throw err;
-      console.error("[/api/checkout] attribution refused, retrying without", err instanceof Error ? err.message : err);
+    // "This is a gift" in the cart: the order's note, so whoever packs it sees the message (and the _Gift order flag).
+    const giftMsg = gift ? (typeof gift.message === "string" ? gift.message.replace(/\s+/g, " ").trim().slice(0, 300) : "") : null;
+    if (giftMsg != null) attrs.push({ key: "_Gift order", value: "Yes" });
+    const note = giftMsg != null ? (giftMsg ? `GIFT. Message to include: "${giftMsg}"` : "GIFT (no message).") : undefined;
+    const rawUrl = await createCheckout(checkoutLines, attrs, note).catch((err) => {
+      if (!attrs.length && !note) throw err;
+      console.error("[/api/checkout] attributes or note refused, retrying without", err instanceof Error ? err.message : err);
       return createCheckout(checkoutLines);
     });
     // Shopify returns the checkoutUrl using the store's custom domain (ashwickhome.com),

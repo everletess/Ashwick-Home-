@@ -7,7 +7,7 @@ import { Newsletter } from "@/components/forms";
 import { Bedroom, Favorites, HandedDown, LivingRoom, ShopTheHome } from "@/components/home-editorial";
 import { OfferBand, SaleHero, StickySuite } from "@/components/bf-push";
 import { MATTRESS_PATH } from "@/lib/mattress";
-import { homeHeroPhoto } from "@/lib/holiday";
+import { GIFTS_PATH, giftsActive, homeHeroPhoto } from "@/lib/holiday";
 import { SALE } from "@/lib/sale";
 import { INSTAGRAM_URL, PINTEREST_URL, STUDIO_EMAIL } from "@/lib/site";
 
@@ -27,21 +27,38 @@ const ORG_JSON_LD = {
 
 function HomeHero() {
   const hero = homeHeroPhoto();
+  // Through Christmas the hero leads to the Holiday Gifts page (Tessa, Nov 26).
+  const gifts = giftsActive();
   return (
     <section className="hero home-hero">
       <Photo src={hero.photo} label={hero.alt} className={hero.holiday ? "hero-img holiday-pos" : "hero-img"} fill preload />
-      <HeroSlides />
+      {/* The year-round slides (a meadow, a sunlit bedroom) would fade over the Christmas room, so not over the holidays. */}
+      {!hero.holiday && <HeroSlides />}
       <div className="hero-scrim home-scrim"></div>
       <div className="hero-txt">
-        <div className="eyebrow">Organic furniture · Handmade in the USA</div>
-        <h1 className="h1">Made of nature. Built to last.</h1>
-        <p className="hero-body">
-          Furniture made by hand and born in nature.
-        </p>
-        <div className="btns">
-          <Link href={SALE.active ? SALE.path : MATTRESS_PATH} className="btn light">{SALE.active ? `Shop ${SALE.name}` : "Shop the Ashbury"}</Link>
-          <Link href="/collections/all" className="btn outline-light">Shop all</Link>
-        </div>
+        {gifts ? (
+          <>
+            <div className="eyebrow">The holiday edit · Handmade in the USA</div>
+            <h1 className="h1">Home for the holidays.</h1>
+            <p className="hero-body">Gifts made by hand, from nature, to be handed down.</p>
+            <div className="btns">
+              <Link href={GIFTS_PATH} className="btn light">Shop gifts</Link>
+              <Link href="/collections/all" className="btn outline-light">Shop all</Link>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="eyebrow">Organic furniture · Handmade in the USA</div>
+            <h1 className="h1">Made of nature. Built to last.</h1>
+            <p className="hero-body">
+              Furniture made by hand and born in nature.
+            </p>
+            <div className="btns">
+              <Link href={SALE.active ? SALE.path : MATTRESS_PATH} className="btn light">{SALE.active ? `Shop ${SALE.name}` : "Shop the Ashbury"}</Link>
+              <Link href="/collections/all" className="btn outline-light">Shop all</Link>
+            </div>
+          </>
+        )}
       </div>
     </section>
   );

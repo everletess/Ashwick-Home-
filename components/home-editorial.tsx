@@ -9,7 +9,7 @@ import { useRef, useState } from "react";
 import { Photo } from "@/components/photo";
 import { fmtWhole } from "@/components/sale";
 import { DOG_BED, NOOK } from "@/lib/dog-bed";
-import { WINTER_ROOM_BY_COLOR, holidayActive } from "@/lib/holiday";
+import { GIFTS_PATH, WINTER_ROOM_BY_COLOR, giftsActive, holidayActive } from "@/lib/holiday";
 import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
 import { PILLOW_PATH, pillowFromPrice } from "@/lib/pillow";
 import type { PhotoKey } from "@/lib/photos";
@@ -32,7 +32,8 @@ export function ShopTheHome() {
       <div className="wrap">
         <h2 className="eyebrow he-eyebrow" id="he-rooms-h">Shop the home</h2>
         <ul className="he-rooms-grid">
-          {ROOMS.map((r) => (
+          {/* Through Christmas the Gifts tile opens the Holiday Gifts page, on the Nook by the fire. */}
+          {ROOMS.map((r) => (r.name === "Gifts" && giftsActive() ? { ...r, href: GIFTS_PATH, photo: "holiday-nook" as PhotoKey, alt: "A dog asleep in the Nook Dog Bed in Olive by a lit fireplace hung with garland" } : r)).map((r) => (
             <li key={r.name}>
               <Link href={r.href} className="he-room">
                 <span className="he-room-img"><Photo src={r.photo} label={r.alt} fill sizes="(max-width: 860px) 100vw, 640px" className={r.pos ? "he-pos-right" : undefined} /></span>

@@ -19,6 +19,7 @@ import type { PhotoKey } from "@/lib/photos";
 import { PILLOW_PATH } from "@/lib/pillow";
 import { getProduct } from "@/lib/products";
 import { usePriceOnRequest } from "@/components/price-on-request";
+import { HOLIDAY_ORDER_BY } from "@/lib/holiday";
 import { BUNDLE, BUNDLE_PILLOWS, SALE, SLEEP_SUITE, giftActive, giftLine, countdownFrom, mattressDelivery, saleEndShort, salePrice, sleepSuiteLines } from "@/lib/sale";
 
 /** The page's photographs: Tessa's (05/11), except the Gifts band, a stand-in for now. */
@@ -32,15 +33,7 @@ export const HOLIDAY_PHOTOS: Record<"hero" | "suite" | "bestFriends" | "gifts", 
 /** The Sleep Suite's first photo by mattress color id (ids keep the old names: natural = Fleece, dove = Flint, safari = Flax, mocha = Sorrel). */
 const SUITE_ROOM_BY_COLOR: Record<string, PhotoKey> = { natural: "holiday-suite-fleece", dove: "holiday-suite-flint", safari: "holiday-suite-flax", mocha: "holiday-suite" };
 
-/**
- * Holiday delivery: the last day to order for delivery before Christmas, by category (Tessa, 05/11). Each line drops
- * off on its own once its day has passed (end of day, Pacific).
- */
-export const HOLIDAY_ORDER_BY: { what: string; by: string }[] = [
-  { what: "Furniture", by: "2026-11-23T23:59:59-08:00" },
-  { what: "Mattresses and dog beds", by: "2026-12-10T23:59:59-08:00" },
-  { what: "Pillows", by: "2026-12-19T23:59:59-08:00" },
-];
+
 
 const money = (n: number) => fmtWhole(n);
 function PriceLine({ list, sale, big }: { list: number; sale: number; big?: boolean }) {
@@ -134,7 +127,8 @@ function SizeChips({ sizes, value, onChange, label }: { sizes: { id: string; lab
 
 /* ---------- 4 · No. 1, the Complete Sleep Suite ---------- */
 
-export function SuiteDeal({ prices }: { prices: LivePrices }) {
+/** `kicker` replaces "No. 1" (the Holiday Gifts page calls it "The big gift"). */
+export function SuiteDeal({ prices, kicker }: { prices: LivePrices; kicker?: string }) {
   const cart = useCart();
   const [size, setSize] = useState("queen");
   const [color, setColor] = useState(MATTRESS.defaultColor);
@@ -163,7 +157,7 @@ export function SuiteDeal({ prices }: { prices: LivePrices }) {
     <section className="hx-deal hx-oat" id="sleep-suite" aria-labelledby="hx-suite-h">
       <div className="hx-deal-img hx-gal"><SwipeGallery shots={shots} index={shot} onIndex={setShot} aspect="4/5" /></div>
       <div className="hx-deal-t">
-        <p className="hx-no"><em>No. 1</em> · The Sleep Suite</p>
+        <p className="hx-no"><em>{kicker ?? "No. 1"}</em> · The Sleep Suite</p>
         <h2 className="hx-h2" id="hx-suite-h"><Link href={pageHref} className="hx-h2-link">Everything for the bed.</Link></h2>
         <ul className="hx-inc" aria-label="What's included">
           <li><IncIcon k="mattress" /><span>Ashbury mattress</span></li>
@@ -199,7 +193,7 @@ export function SuiteDeal({ prices }: { prices: LivePrices }) {
 
 /* ---------- 5 · No. 2, the Best Friends Bundle ---------- */
 
-export function BestFriendsDeal({ prices }: { prices: LivePrices }) {
+export function BestFriendsDeal({ prices, kicker }: { prices: LivePrices; kicker?: string }) {
   const [size, setSize] = useState("queen");
   const [dog, setDog] = useState(DOG_BED.sizes.find((z) => z.id === "medium")?.id ?? DOG_BED.sizes[0].id);
   const m = prices.mattress[size] ?? MATTRESS.sizes[0].price;
@@ -210,7 +204,7 @@ export function BestFriendsDeal({ prices }: { prices: LivePrices }) {
     <section className="hx-deal hx-evergreen hx-mirror" id="best-friends" aria-labelledby="hx-bf-h">
       <div className="hx-deal-img"><Photo src={HOLIDAY_PHOTOS.bestFriends.photo} label={HOLIDAY_PHOTOS.bestFriends.alt} fill sizes="(max-width: 860px) 170vw, 55vw" /></div>
       <div className="hx-deal-t">
-        <p className="hx-no"><em>No. 2</em> · {BUNDLE.title}</p>
+        <p className="hx-no"><em>{kicker ?? "No. 2"}</em> · {BUNDLE.title}</p>
         <h2 className="hx-h2" id="hx-bf-h">One for you. One for them.</h2>
         <p className="hx-line">An Ashbury mattress and a matching Ashbury Dog Bed, in the colors you love.</p>
         <ul className="hx-inc" aria-label="What's included">
@@ -272,14 +266,16 @@ function FurnitureCard({ id, prices }: { id: string; prices: LivePrices }) {
   );
 }
 
-export function FurnitureDeal({ prices }: { prices: LivePrices }) {
+/** On the Holiday Gifts page: its own kicker, heading and a line (furniture arrives in the new year). */
+export function FurnitureDeal({ prices, kicker, title, line }: { prices: LivePrices; kicker?: string; title?: string; line?: string }) {
   const [tab, setTab] = useState<keyof typeof FURNITURE>("Sofas");
   const por = usePriceOnRequest();
   return (
     <section className="hx-sec hx-alabaster" id="furniture" aria-labelledby="hx-fur-h">
       <div className="wrap">
-        <p className="hx-no"><em>No. 3</em> · {SALE.percent}% off furniture</p>
-        <h2 className="hx-h2" id="hx-fur-h">For every room.</h2>
+        <p className="hx-no">{kicker ? <em>{kicker}</em> : <><em>No. 3</em> · {SALE.percent}% off furniture</>}</p>
+        <h2 className="hx-h2" id="hx-fur-h">{title ?? "For every room."}</h2>
+        {line && <p className="hx-line">{line}</p>}
         <div className="hx-filters" role="tablist" aria-label="Furniture">
           {(Object.keys(FURNITURE) as (keyof typeof FURNITURE)[]).map((t) => (
             <button key={t} type="button" role="tab" aria-selected={tab === t} className={"hx-filter" + (tab === t ? " on" : "")} onClick={() => setTab(t)}>{t}</button>

@@ -28,6 +28,7 @@ import { SHOW_SIGNUP_EVENT } from "@/components/email-popup";
 import { SUBSCRIBED_EVENT, SUBSCRIBED_KEY } from "@/lib/subscribe";
 import { trackThen } from "@/lib/pixel";
 import { attributionAttributes } from "@/lib/attribution";
+import { GIFTS_PATH, cartHolidayNote, giftsActive, holidayBarLine, type HolidayKind } from "@/lib/holiday";
 import { saveCart, normalizePhone } from "@/lib/subscribe";
 import { MATTRESS, MATTRESS_PATH } from "@/lib/mattress";
 import { NewBadge, useNow } from "@/components/bf-push";
@@ -159,6 +160,37 @@ import upsell from "@/components/cart-upsell.module.css";
 import { fmt } from "@/lib/products";
 
 const isDogBed = (id: string) => id === DOG_BED_ID || id === NOOK.id;
+/** How a cart line ships, for the holiday order-by dates (lib/holiday.ts). */
+const holidayKind = (i: CartLine): HolidayKind =>
+  isFurnitureLine(i) ? "furniture" : i.id === PILLOW_ID || i.id === BUNDLE_CONFIG.beddingSet.handle ? "pillow" : isDogBed(i.id) ? "dog-bed" : "days";
+
+/** The longest gift message we pass on (it goes on the Shopify order as its note). */
+const GIFT_MSG_MAX = 300;
+
+/**
+ * Through Christmas: the order-by date for what's in the cart, and "This is a gift" with a message (Tessa, Nov 26).
+ * The message goes on the Shopify order as its note, so whoever packs the order sees it.
+ */
+function CartHoliday({ items, gift, onGift }: { items: CartLine[]; gift: { on: boolean; msg: string }; onGift: (g: { on: boolean; msg: string }) => void }) {
+  useNow();
+  const note = cartHolidayNote([...new Set(items.map(holidayKind))]);
+  return (
+    <div className="cart-holiday">
+      {note && <p className="cart-holiday-note">{note}</p>}
+      <label className="cart-gift-toggle">
+        <input type="checkbox" checked={gift.on} onChange={(e) => onGift({ ...gift, on: e.target.checked })} />
+        <span>This is a gift</span>
+      </label>
+      {gift.on && (
+        <div className="cart-gift-msg">
+          <label htmlFor="cart-gift-msg">Gift message (optional)</label>
+          <textarea id="cart-gift-msg" rows={3} maxLength={GIFT_MSG_MAX} placeholder="Merry Christmas! With love…" value={gift.msg} onChange={(e) => onGift({ ...gift, msg: e.target.value })} />
+          <p className="fine">We&rsquo;ll include your message with the delivery.</p>
+        </div>
+      )}
+    </div>
+  );
+}
 
 /** The line under the cart subtotal: delivery (white glove for furniture and the mattress, free for dog beds), ship time and payment. */
 /** What the cart's qualifying products cost after the sale: the gift's threshold (mirrors /api/checkout). */
@@ -306,6 +338,28 @@ export function AnnouncementBar() {
     );
   }
 
+  // After Black Friday, through Christmas: the order-by dates, linking to the Holiday Gifts page.
+  const holidayLine = holidayBarLine();
+  if (holidayLine) {
+    if (dismissed) return null;
+    return (
+      <div className="announce announce-sale">
+        <Link href={GIFTS_PATH} className="announce-link"><span>{holidayLine}</span></Link>
+        <button
+          type="button"
+          className="announce-x"
+          aria-label="Dismiss announcement"
+          onClick={() => {
+            setDismissed(true);
+            try { sessionStorage.setItem(SALE_BAR_KEY, "1"); } catch {}
+          }}
+        >
+          ×
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="announce" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocus={() => setPaused(true)} onBlur={() => setPaused(false)}>
       <span className={showOffer ? "announce-msg" : "announce-msg on"} aria-hidden={showOffer}>Free shipping on pillows · {MATTRESS.guaranteeNights}-night trial on the Ashbury</span>
@@ -350,6 +404,7 @@ export function Header() {
       <div className="hdr-in">
         <nav className="nav" aria-label="Shop">
           <Link href="/collections/all">Shop</Link>
+          {giftsActive() && <Link href={GIFTS_PATH}>Gifts</Link>}
           <NavMenu label="Sleep" id="sleep-menu" links={SLEEP_LINKS} all={["Shop the bedroom", "/collections/bedroom"]} align="left" feature={{ photo: "mattress-room-sorrel", alt: "The Ashbury in Sorrel in a sunlit bedroom", href: MATTRESS_PATH, caption: "The Ashbury in Sorrel" }} />
           <NavMenu label="Living" id="living-menu" links={LIVING_LINKS} all={["Shop the living room", "/collections/sofas"]} align="left" feature={{ photo: MARLOWE_PHOTO, alt: "The Marlowe sofa", href: "/products/marlowe", caption: "The Marlowe" }} />
           <Link href="/pages/bespoke">Bespoke</Link>
@@ -384,6 +439,7 @@ export function Header() {
           <MenuSearch />
           <nav className="mmenu-words" aria-label="Shop">
             {SALE.active && <Link href={SALE.path} className="mmenu-sale">{SALE.name}: {SALE.percent}% off</Link>}
+            {giftsActive() && <Link href={GIFTS_PATH} className="mmenu-sale">Holiday gifts</Link>}
             <Link href="/collections/all">Shop all</Link>
             <p className="mmenu-group">Sleep</p>
             {MENU_SLEEP.map(([t, href]) => <Link key={t} href={href}>{t}{t === "Pillows" && <NewBadge />}</Link>)}
@@ -416,6 +472,7 @@ export function CartDrawer({ page = false }: { page?: boolean }) {
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
   // The free pillows' cover: the shopper's pick, else the color matching their mattress.
   const [giftPick, setGiftPick] = useState<GiftCover | null>(null);
+  const [giftMsg, setGiftMsg] = useState<{ on: boolean; msg: string }>({ on: false, msg: "" });
   const giftCover = giftPick ?? defaultGiftCover(cart.items.map((i) => ({ productId: i.id, options: i.options })));
   const [saveEmail, setSaveEmail] = useState("");
   const [savePhone, setSavePhone] = useState("");
@@ -485,6 +542,7 @@ export function CartDrawer({ page = false }: { page?: boolean }) {
           })),
           giftCover,
           attribution: attributionAttributes(),
+          ...(giftMsg.on ? { gift: { message: giftMsg.msg.slice(0, GIFT_MSG_MAX) } } : {}),
         }),
       });
       const data = await res.json();
@@ -601,6 +659,7 @@ export function CartDrawer({ page = false }: { page?: boolean }) {
           <div className="drawer-more">
             <CartUpsell items={cart.items} onNavigate={close} />
             {giftEarned(cart.items) && <GiftPicker cover={giftCover} onPick={setGiftPick} />}
+            <CartHoliday items={cart.items} gift={giftMsg} onGift={setGiftMsg} />
             <p className="fine">
               {cartNote(cart.items)}
             </p>

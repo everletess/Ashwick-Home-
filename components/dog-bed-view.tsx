@@ -16,6 +16,7 @@ import { MattressTeaser } from "@/components/mattress-teaser";
 import { BUY_OPTIONS_ID, StickyBuy } from "@/components/sticky-buy";
 import { DOG_BED, type DogBed } from "@/lib/dog-bed";
 import { PHOTOS } from "@/lib/photos";
+import { HOLIDAY_DOG_BED_PHOTOS, holidayActive } from "@/lib/holiday";
 import { Price, SaleNote } from "@/components/sale";
 import { salePrice } from "@/lib/sale";
 import { fmt } from "@/lib/products";
@@ -33,7 +34,10 @@ export function DogBedView({ bed: D = DOG_BED, children }: { bed?: DogBed; child
   const alt = `${D.title} in ${sel.label}`;
   // The chosen size's shot, where this color has one, comes second, right after the product shot.
   const sizePhoto = sel.sizePhotos?.[size];
-  const gallery = sizePhoto ? [sel.photos[0], sizePhoto, ...sel.photos.slice(1)] : sel.photos;
+  const base = sizePhoto ? [sel.photos[0], sizePhoto, ...sel.photos.slice(1)] : sel.photos;
+  // Over the holidays, the winter shot of this bed and color comes first, where there is one (lib/holiday.ts).
+  const winter = holidayActive() ? HOLIDAY_DOG_BED_PHOTOS[`${D.id}:${sel.id}`] : undefined;
+  const gallery = winter ? [winter, ...base] : base;
   const setColor = (c: string) => {
     setColorState(c);
     setImg(0);
@@ -41,7 +45,7 @@ export function DogBedView({ bed: D = DOG_BED, children }: { bed?: DogBed; child
   // Picking a size shows that size's shot.
   const pickSize = (s: string) => {
     setSize(s);
-    if (sel.sizePhotos?.[s]) setImg(1);
+    if (sel.sizePhotos?.[s]) setImg(winter ? 2 : 1);
   };
 
   // Beside the gallery on wide screens, after the buy box on phones.
@@ -68,7 +72,7 @@ export function DogBedView({ bed: D = DOG_BED, children }: { bed?: DogBed; child
       <div className="gal">
         <div className="gal-main">
           <div className="gal-photo zoomable" onClick={() => setZoom(img)}>
-            <Photo src={gallery[img] ?? gallery[0]} label={img === 1 && sizePhoto ? `${alt}, ${sz.label}` : alt} sizes="(max-width: 960px) 100vw, 56vw" preload={img === 0} />
+            <Photo src={gallery[img] ?? gallery[0]} label={sizePhoto && gallery[img] === sizePhoto ? `${alt}, ${sz.label}` : alt} sizes="(max-width: 960px) 100vw, 56vw" preload={img === 0} />
             <button type="button" className="gal-zoom" aria-label="Enlarge photo" onClick={(e) => { e.stopPropagation(); setZoom(img); }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="M15.5 15.5 21 21M10.5 7.5v6M7.5 10.5h6" /></svg></button>
           </div>
         </div>
@@ -81,7 +85,7 @@ export function DogBedView({ bed: D = DOG_BED, children }: { bed?: DogBed; child
             ))}
           </div>
         )}
-        {zoom != null && <Lightbox items={gallery.map((ph, k) => ({ photo: ph, alt: k === 1 && sizePhoto ? `${alt}, ${sz.label}` : alt }))} start={zoom} onClose={() => setZoom(null)} />}
+        {zoom != null && <Lightbox items={gallery.map((ph) => ({ photo: ph, alt: sizePhoto && ph === sizePhoto ? `${alt}, ${sz.label}` : alt }))} start={zoom} onClose={() => setZoom(null)} />}
         {/* Beside the gallery on wide screens; below the buy box on phones (the second copy). */}
         {D.matchesMattress && <div className="teaser-wide"><MattressTeaser color={sel.id} /></div>}
         {faqs && <div className="teaser-wide">{faqs}</div>}
