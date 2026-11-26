@@ -10,6 +10,7 @@ import { QuickAddSheet } from "@/components/catalog-card";
 import { Photo } from "@/components/photo";
 import { Price, fmtWhole } from "@/components/sale";
 import { DOG_BED, NOOK } from "@/lib/dog-bed";
+import { homeHeroPhoto } from "@/lib/holiday";
 import { MATTRESS } from "@/lib/mattress";
 import { PILLOW_PATH, PILLOW_STANDALONE_FILLS, PILLOW_STORY, pillowFromPrice } from "@/lib/pillow";
 import { fmt } from "@/lib/products";
@@ -60,9 +61,10 @@ export const SUITE_HERO: { photo: PhotoKey; alt: string } = { photo: "mattress-m
  */
 export function SaleHero({ page = "home" }: { page?: "home" | "sale" }) {
   const home = page === "home";
+  const hero = homeHeroPhoto();
   return (
     <section className="sh">
-      <Photo src="hero-family" label="A mother and daughter reading on the Cotswold sofa beside the Cotswold chair, a spaniel asleep beside them, in a sunlit living room" className="sh-img" fill preload sizes="100vw" />
+      <Photo src={hero.photo} label={hero.alt} className={hero.holiday ? "sh-img holiday-pos" : "sh-img"} fill preload sizes="100vw" />
       <div className="sh-scrim" />
       <div className="sh-txt">
         <p className="sh-eyebrow">{SALE.name}</p>

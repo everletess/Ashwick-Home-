@@ -7,6 +7,7 @@ import { Newsletter } from "@/components/forms";
 import { Bedroom, Favorites, HandedDown, LivingRoom, ShopTheHome } from "@/components/home-editorial";
 import { OfferBand, SaleHero, StickySuite } from "@/components/bf-push";
 import { MATTRESS_PATH } from "@/lib/mattress";
+import { homeHeroPhoto } from "@/lib/holiday";
 import { SALE } from "@/lib/sale";
 import { INSTAGRAM_URL, PINTEREST_URL, STUDIO_EMAIL } from "@/lib/site";
 
@@ -25,9 +26,10 @@ const ORG_JSON_LD = {
 
 
 function HomeHero() {
+  const hero = homeHeroPhoto();
   return (
     <section className="hero home-hero">
-      <Photo src="hero-family" label="A mother and daughter reading on the Cotswold sofa beside the Cotswold chair, a spaniel asleep beside them, in a sunlit living room" className="hero-img" fill preload />
+      <Photo src={hero.photo} label={hero.alt} className={hero.holiday ? "hero-img holiday-pos" : "hero-img"} fill preload />
       <HeroSlides />
       <div className="hero-scrim home-scrim"></div>
       <div className="hero-txt">
