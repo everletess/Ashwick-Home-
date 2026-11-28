@@ -66,6 +66,9 @@ export function CartUpsell({ items, onNavigate }: { items: CartLine[]; onNavigat
   const hasBed = items.some((i) => i.id === MATTRESS.id);
   const onlyPillows = items.length > 0 && items.every((i) => i.id === PILLOW_ID);
   if (hasBed) return <ExtraPillows />;
+  // A dog bed on its own: two pillows for the owner make it a set (the step toward a $1,000 order).
+  const hasDogBed = items.some((i) => i.id === DOG_BED.id || i.id === NOOK.id);
+  if (hasDogBed && !items.some((i) => i.id === PILLOW_ID)) return <ExtraPillows label="Two pillows for you, too" />;
   if (!onlyPillows) return null;
   const gifts = [DOG_BED, NOOK].filter((b) => !items.some((i) => i.id === b.id));
   return (
@@ -87,13 +90,13 @@ export function CartUpsell({ items, onNavigate }: { items: CartLine[]; onNavigat
 }
 
 /** One compact line in the cart footer: extra pillows, with Quick add (fill, size and color in the sheet). */
-function ExtraPillows() {
+function ExtraPillows({ label = "Add extra pillows" }: { label?: string }) {
   const [open, setOpen] = useState(false);
   return (
     <div className={styles.wrap}>
       <div className={styles.row}>
         <div className={styles.thumb}><Photo src="pillow-sorrel" label="Ashwick pillows" className="line-img" sizes="48px" /></div>
-        <div className={styles.name}>Add extra pillows<small>from {fmt(pillowsFrom())}</small></div>
+        <div className={styles.name}>{label}<small>from {fmt(pillowsFrom())}</small></div>
         <button type="button" className={styles.add} style={{ background: "none", cursor: "pointer" }} onClick={() => setOpen(true)}>Quick add</button>
       </div>
       {open && <QuickAddSheet kind="pillow" href={PILLOW_PATH} onClose={() => setOpen(false)} />}
