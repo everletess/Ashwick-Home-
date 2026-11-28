@@ -5,6 +5,7 @@ import { BuyAssure } from "@/components/buy-assure";
 import { SALE } from "@/lib/sale";
 import { useRef, useState } from "react";
 import { DogBedNotify } from "@/components/dog-bed-notify";
+import { DogBedSet } from "@/components/dog-bed-set";
 import { Photo } from "@/components/photo";
 import { Lightbox } from "@/components/lightbox";
 import { RatingLink } from "@/components/reviews";
@@ -56,16 +57,16 @@ export function DogBedView({ bed: D = DOG_BED, children }: { bed?: DogBed; child
     </section>
   );
 
-  const add = () =>
-    cart.add({
-      id: D.id,
-      name: D.title,
-      photo: sel.photos[0] ?? sel.swatch,
-      price: sz.price,
-      qty: 1,
-      mode: "As designed",
-      options: [["Size", `${sz.label} (${sz.dims})`], ["Color", sel.label]],
-    });
+  const bedLine = {
+    id: D.id,
+    name: D.title,
+    photo: sel.photos[0] ?? sel.swatch,
+    price: sz.price,
+    qty: 1,
+    mode: "As designed" as const,
+    options: [["Size", `${sz.label} (${sz.dims})`], ["Color", sel.label]] as [string, string][],
+  };
+  const add = () => cart.add(bedLine);
 
   return (
     <section className="pdp wrap">
@@ -130,6 +131,8 @@ export function DogBedView({ bed: D = DOG_BED, children }: { bed?: DogBed; child
           <div className="designed">
             <ShipsFast when="3–4 business days" note="Handmade to order in the USA. Free delivery." />
             <button ref={buyRef} className="btn full" onClick={add}>Add to cart · {fmt(salePrice(sz.price))}</button>
+            {/* The Ashbury's colors are the pillow cover colors, so its set matches; the Nook's colors aren't. */}
+            {D.matchesMattress && <DogBedSet bedLine={bedLine} colorId={sel.id} />}
             <BuyAssure ship="dog-bed" price={salePrice(sz.price)} />
             <TrustRow items={[["hand", "Handmade to order"], ["truck", "Free delivery"], ["returns", "14-day returns"]]} />
             <StickyBuy

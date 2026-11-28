@@ -1,0 +1,8 @@
+.card{display:grid;gap:12px;border:1px solid var(--hair);padding:14px;margin:12px 0 4px}
+.head{display:flex;gap:12px;align-items:flex-start}
+.thumb{width:64px;height:64px;flex:none;position:relative;overflow:hidden}
+.thumb :global(img){width:100%;height:100%;object-fit:cover}
+.title{font:400 15px/1.35 var(--sans);color:var(--ink);margin:4px 0 2px}
+.sub{font:400 12px/1.45 var(--sans);color:var(--walnut);margin:0}
+.sizes{display:flex;gap:6px;flex-wrap:wrap}
+.sizes :global(.pill){flex:1;padding:0 10px}
